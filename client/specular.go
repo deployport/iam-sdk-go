@@ -3823,6 +3823,61 @@ func (e *InternalQueryAssertionEntry) TypeFQTN() clientruntime.TypeFQTN {
 	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalQueryAssertionEntry")
 }
 
+// NewInternalServicesAssertActionCallerForbiddenProblem creates a new InternalServicesAssertActionCallerForbiddenProblem
+func NewInternalServicesAssertActionCallerForbiddenProblem() *InternalServicesAssertActionCallerForbiddenProblem {
+	s := &InternalServicesAssertActionCallerForbiddenProblem{}
+	return s
+}
+
+// InternalServicesAssertActionCallerForbiddenProblem entity
+type InternalServicesAssertActionCallerForbiddenProblem struct {
+	Message string
+}
+
+// Error implements the error interface
+func (e *InternalServicesAssertActionCallerForbiddenProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InternalServicesAssertActionCallerForbiddenProblem]
+func (e *InternalServicesAssertActionCallerForbiddenProblem) Is(err error) bool {
+	_, ok := err.(*InternalServicesAssertActionCallerForbiddenProblem)
+	return ok
+}
+
+// IsInternalServicesAssertActionCallerForbiddenProblem indicates whether the given error chain contains an error of type [InternalServicesAssertActionCallerForbiddenProblem]
+func IsInternalServicesAssertActionCallerForbiddenProblem(err error) bool {
+	return errors.Is(err, &InternalServicesAssertActionCallerForbiddenProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InternalServicesAssertActionCallerForbiddenProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InternalServicesAssertActionCallerForbiddenProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+func (e *InternalServicesAssertActionCallerForbiddenProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
+	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (e *InternalServicesAssertActionCallerForbiddenProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
+	ctx.Content().SetStruct(e.TypeFQTN().String())
+	ctx.Content().SetProperty("message", e.Message)
+	return nil
+}
+
+// TypeFQTN returns the Allow Typq Fully Qualified Type Name
+func (e *InternalServicesAssertActionCallerForbiddenProblem) TypeFQTN() clientruntime.TypeFQTN {
+	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem")
+}
+
 // NewInternalServicesValidateAccessKeyInput creates a new InternalServicesValidateAccessKeyInput
 func NewInternalServicesValidateAccessKeyInput() *InternalServicesValidateAccessKeyInput {
 	s := &InternalServicesValidateAccessKeyInput{}
@@ -4073,61 +4128,6 @@ func (e *InternalServicesAssertActionOutput) Dehydrate(ctx *clientruntime.Dehydr
 // TypeFQTN returns the Allow Typq Fully Qualified Type Name
 func (e *InternalServicesAssertActionOutput) TypeFQTN() clientruntime.TypeFQTN {
 	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionOutput")
-}
-
-// NewInternalServicesAssertActionCallerForbiddenProblem creates a new InternalServicesAssertActionCallerForbiddenProblem
-func NewInternalServicesAssertActionCallerForbiddenProblem() *InternalServicesAssertActionCallerForbiddenProblem {
-	s := &InternalServicesAssertActionCallerForbiddenProblem{}
-	return s
-}
-
-// InternalServicesAssertActionCallerForbiddenProblem entity
-type InternalServicesAssertActionCallerForbiddenProblem struct {
-	Message string
-}
-
-// Error implements the error interface
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Error() string {
-	return e.GetMessage()
-}
-
-// Is indicates whether the given error chain contains an error of type [InternalServicesAssertActionCallerForbiddenProblem]
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Is(err error) bool {
-	_, ok := err.(*InternalServicesAssertActionCallerForbiddenProblem)
-	return ok
-}
-
-// IsInternalServicesAssertActionCallerForbiddenProblem indicates whether the given error chain contains an error of type [InternalServicesAssertActionCallerForbiddenProblem]
-func IsInternalServicesAssertActionCallerForbiddenProblem(err error) bool {
-	return errors.Is(err, &InternalServicesAssertActionCallerForbiddenProblem{})
-}
-
-// GetMessage returns the value for the field message
-func (e *InternalServicesAssertActionCallerForbiddenProblem) GetMessage() string {
-	return e.Message
-}
-
-// SetMessage sets the value for the field message
-func (e *InternalServicesAssertActionCallerForbiddenProblem) SetMessage(message string) {
-	e.Message = message
-}
-
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertActionCallerForbiddenProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem")
 }
 
 // NewInternalServicesAssertQueryInput creates a new InternalServicesAssertQueryInput
@@ -4941,6 +4941,14 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 	if _, err := pk.NewType(
+		"InternalServicesAssertActionCallerForbiddenProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalServicesAssertActionCallerForbiddenProblem()
+		}),
+	); err != nil {
+		return nil, err
+	}
+	if _, err := pk.NewType(
 		"InternalServicesValidateAccessKeyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesValidateAccessKeyInput()
@@ -4976,14 +4984,6 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		"InternalServicesAssertActionOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertActionOutput()
-		}),
-	); err != nil {
-		return nil, err
-	}
-	if _, err := pk.NewType(
-		"InternalServicesAssertActionCallerForbiddenProblem",
-		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInternalServicesAssertActionCallerForbiddenProblem()
 		}),
 	); err != nil {
 		return nil, err
@@ -5897,6 +5897,12 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 	op.RegisterProblemType(tp)
 
 	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
+	if err != nil {
+		return nil, err
+	}
+	op.RegisterProblemType(tp)
+
+	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem"))
 	if err != nil {
 		return nil, err
 	}
