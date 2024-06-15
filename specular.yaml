@@ -1,5 +1,9 @@
 packages:
   - origin: "file://../iam/package.specular"
+    version: 0.0.6
+    path:
+      workspace: deployport
+      project: iam
     generate:
       - language: go
         client:

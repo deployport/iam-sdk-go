@@ -3,7 +3,6 @@ package iam
 import (
 	"context"
 	"errors"
-	"sync"
 	"time"
 
 	clientruntime "go.deployport.com/specular-runtime/client"
@@ -35,6 +34,7 @@ func (e *UserInformationSSOProvider) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *UserInformationSSOProvider) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -42,15 +42,15 @@ func (e *UserInformationSSOProvider) Hydrate(ctx *clientruntime.HydratationConte
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserInformationSSOProvider) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserInformationSSOProvider) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserInformationSSOProvider")
+// StructPath returns StructPath
+func (e *UserInformationSSOProvider) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserInformationSSOProvider.Path()
 }
 
 // NewUserInformationSSOProfile creates a new UserInformationSSOProfile
@@ -96,6 +96,7 @@ func (e *UserInformationSSOProfile) SetPictureURL(pictureURL string) {
 	e.PictureURL = pictureURL
 }
 
+// Hydrate implements struct hydrate
 func (e *UserInformationSSOProfile) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "email", &e.Email); err != nil {
 		return err
@@ -109,17 +110,17 @@ func (e *UserInformationSSOProfile) Hydrate(ctx *clientruntime.HydratationContex
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserInformationSSOProfile) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("email", e.Email)
 	ctx.Content().SetProperty("fullname", e.Fullname)
 	ctx.Content().SetProperty("pictureURL", e.PictureURL)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserInformationSSOProfile) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserInformationSSOProfile")
+// StructPath returns StructPath
+func (e *UserInformationSSOProfile) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserInformationSSOProfile.Path()
 }
 
 // NewUserInformationSSO creates a new UserInformationSSO
@@ -154,18 +155,19 @@ func (e *UserInformationSSO) SetProvider(provider *UserInformationSSOProvider) {
 	e.Provider = provider
 }
 
+// Hydrate implements struct hydrate
 func (e *UserInformationSSO) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "profile", &e.Profile); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSOProfile().TypeBuilder(), ctx.Package(), "profile", &e.Profile); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "provider", &e.Provider); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSOProvider().TypeBuilder(), ctx.Package(), "provider", &e.Provider); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserInformationSSO) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentProfile clientruntime.Content
 	if v := e.Profile; v != nil {
@@ -193,9 +195,9 @@ func (e *UserInformationSSO) Dehydrate(ctx *clientruntime.DehydrationContext) (e
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserInformationSSO) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserInformationSSO")
+// StructPath returns StructPath
+func (e *UserInformationSSO) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserInformationSSO.Path()
 }
 
 // NewUserInformation creates a new UserInformation
@@ -242,11 +244,12 @@ func (e *UserInformation) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserInformation) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "description", &e.Description); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "sso", &e.Sso); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSO().TypeBuilder(), ctx.Package(), "sso", &e.Sso); err != nil {
 		return err
 	}
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
@@ -255,8 +258,8 @@ func (e *UserInformation) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserInformation) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("description", e.Description)
 
 	var fieldContentSso clientruntime.Content
@@ -271,9 +274,9 @@ func (e *UserInformation) Dehydrate(ctx *clientruntime.DehydrationContext) (err 
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserInformation) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserInformation")
+// StructPath returns StructPath
+func (e *UserInformation) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserInformation.Path()
 }
 
 // NewCredentials creates a new Credentials
@@ -308,6 +311,7 @@ func (e *Credentials) SetSecretAccessKey(secretAccessKey string) {
 	e.SecretAccessKey = secretAccessKey
 }
 
+// Hydrate implements struct hydrate
 func (e *Credentials) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
 		return err
@@ -318,16 +322,16 @@ func (e *Credentials) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *Credentials) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
 	ctx.Content().SetProperty("secretAccessKey", e.SecretAccessKey)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *Credentials) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "Credentials")
+// StructPath returns StructPath
+func (e *Credentials) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathCredentials.Path()
 }
 
 // NewSSOProviderUnavailableProblem creates a new SSOProviderUnavailableProblem
@@ -367,6 +371,7 @@ func (e *SSOProviderUnavailableProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *SSOProviderUnavailableProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -374,15 +379,15 @@ func (e *SSOProviderUnavailableProblem) Hydrate(ctx *clientruntime.HydratationCo
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *SSOProviderUnavailableProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *SSOProviderUnavailableProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "SSOProviderUnavailableProblem")
+// StructPath returns StructPath
+func (e *SSOProviderUnavailableProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSSOProviderUnavailableProblem.Path()
 }
 
 // NewSSOFlow creates a new SSOFlow
@@ -428,6 +433,7 @@ func (e *SSOFlow) SetExpiresAt(expiresAt time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
+// Hydrate implements struct hydrate
 func (e *SSOFlow) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "browseURL", &e.BrowseURL); err != nil {
 		return err
@@ -441,17 +447,17 @@ func (e *SSOFlow) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *SSOFlow) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("browseURL", e.BrowseURL)
 	ctx.Content().SetProperty("completionIntervalSeconds", e.CompletionIntervalSeconds)
 	ctx.Content().SetProperty("expiresAt", e.ExpiresAt)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *SSOFlow) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "SSOFlow")
+// StructPath returns StructPath
+func (e *SSOFlow) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSSOFlow.Path()
 }
 
 // NewAccount creates a new Account
@@ -475,6 +481,7 @@ func (e *Account) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *Account) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -482,15 +489,15 @@ func (e *Account) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *Account) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *Account) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "Account")
+// StructPath returns StructPath
+func (e *Account) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccount.Path()
 }
 
 // NewAccountSSOProvider creates a new AccountSSOProvider
@@ -525,6 +532,7 @@ func (e *AccountSSOProvider) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOProvider) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "displayName", &e.DisplayName); err != nil {
 		return err
@@ -535,16 +543,16 @@ func (e *AccountSSOProvider) Hydrate(ctx *clientruntime.HydratationContext) erro
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOProvider) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("displayName", e.DisplayName)
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOProvider) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOProvider")
+// StructPath returns StructPath
+func (e *AccountSSOProvider) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOProvider.Path()
 }
 
 // NewPolicyNotFoundProblem creates a new PolicyNotFoundProblem
@@ -584,6 +592,7 @@ func (e *PolicyNotFoundProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *PolicyNotFoundProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -591,15 +600,15 @@ func (e *PolicyNotFoundProblem) Hydrate(ctx *clientruntime.HydratationContext) e
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *PolicyNotFoundProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *PolicyNotFoundProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyNotFoundProblem")
+// StructPath returns StructPath
+func (e *PolicyNotFoundProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathPolicyNotFoundProblem.Path()
 }
 
 // NewAccountSSOAutoJoinPolicy creates a new AccountSSOAutoJoinPolicy
@@ -671,6 +680,7 @@ func (e *AccountSSOAutoJoinPolicy) SetOriginProviderName(originProviderName stri
 	e.OriginProviderName = originProviderName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicy) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "domain", &e.Domain); err != nil {
 		return err
@@ -690,8 +700,8 @@ func (e *AccountSSOAutoJoinPolicy) Hydrate(ctx *clientruntime.HydratationContext
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicy) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("domain", e.Domain)
 	ctx.Content().SetProperty("enabled", e.Enabled)
 	ctx.Content().SetProperty("name", e.Name)
@@ -700,9 +710,9 @@ func (e *AccountSSOAutoJoinPolicy) Dehydrate(ctx *clientruntime.DehydrationConte
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicy) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicy")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicy) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicy.Path()
 }
 
 // NewAccountCreateInput creates a new AccountCreateInput
@@ -726,6 +736,7 @@ func (e *AccountCreateInput) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -733,15 +744,15 @@ func (e *AccountCreateInput) Hydrate(ctx *clientruntime.HydratationContext) erro
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountCreateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateInput")
+// StructPath returns StructPath
+func (e *AccountCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCreateInput.Path()
 }
 
 // NewAccountCreateOutput creates a new AccountCreateOutput
@@ -765,15 +776,16 @@ func (e *AccountCreateOutput) SetAccount(account *Account) {
 	e.Account = account
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "account", &e.Account); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Account().TypeBuilder(), ctx.Package(), "account", &e.Account); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentAccount clientruntime.Content
 	if v := e.Account; v != nil {
@@ -789,9 +801,9 @@ func (e *AccountCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountCreateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateOutput")
+// StructPath returns StructPath
+func (e *AccountCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCreateOutput.Path()
 }
 
 // NewAccountCreateInvalidNameProblem creates a new AccountCreateInvalidNameProblem
@@ -831,6 +843,7 @@ func (e *AccountCreateInvalidNameProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountCreateInvalidNameProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -838,15 +851,15 @@ func (e *AccountCreateInvalidNameProblem) Hydrate(ctx *clientruntime.Hydratation
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountCreateInvalidNameProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountCreateInvalidNameProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateInvalidNameProblem")
+// StructPath returns StructPath
+func (e *AccountCreateInvalidNameProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCreateInvalidNameProblem.Path()
 }
 
 // NewAccountAssumeIdentityInput creates a new AccountAssumeIdentityInput
@@ -870,6 +883,7 @@ func (e *AccountAssumeIdentityInput) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountAssumeIdentityInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
 		return err
@@ -877,15 +891,15 @@ func (e *AccountAssumeIdentityInput) Hydrate(ctx *clientruntime.HydratationConte
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountAssumeIdentityInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accountName", e.AccountName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountAssumeIdentityInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountAssumeIdentityInput")
+// StructPath returns StructPath
+func (e *AccountAssumeIdentityInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountAssumeIdentityInput.Path()
 }
 
 // NewAccountAssumeIdentityOutput creates a new AccountAssumeIdentityOutput
@@ -909,15 +923,16 @@ func (e *AccountAssumeIdentityOutput) SetCredentials(credentials *Credentials) {
 	e.Credentials = credentials
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountAssumeIdentityOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "credentials", &e.Credentials); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountAssumeIdentityOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentCredentials clientruntime.Content
 	if v := e.Credentials; v != nil {
@@ -933,9 +948,9 @@ func (e *AccountAssumeIdentityOutput) Dehydrate(ctx *clientruntime.DehydrationCo
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountAssumeIdentityOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountAssumeIdentityOutput")
+// StructPath returns StructPath
+func (e *AccountAssumeIdentityOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountAssumeIdentityOutput.Path()
 }
 
 // NewAccountSSOBeginAuthenticationInput creates a new AccountSSOBeginAuthenticationInput
@@ -982,6 +997,7 @@ func (e *AccountSSOBeginAuthenticationInput) SetProviderName(providerName string
 	e.ProviderName = providerName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOBeginAuthenticationInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
 		return err
@@ -995,17 +1011,17 @@ func (e *AccountSSOBeginAuthenticationInput) Hydrate(ctx *clientruntime.Hydratat
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOBeginAuthenticationInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accountName", e.AccountName)
 	ctx.Content().SetProperty("codeChallenge", e.CodeChallenge)
 	ctx.Content().SetProperty("providerName", e.ProviderName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOBeginAuthenticationInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationInput")
+// StructPath returns StructPath
+func (e *AccountSSOBeginAuthenticationInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationInput.Path()
 }
 
 // NewAccountSSOBeginAuthenticationOutput creates a new AccountSSOBeginAuthenticationOutput
@@ -1029,15 +1045,16 @@ func (e *AccountSSOBeginAuthenticationOutput) SetFlow(flow *SSOFlow) {
 	e.Flow = flow
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOBeginAuthenticationOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "flow", &e.Flow); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().SSOFlow().TypeBuilder(), ctx.Package(), "flow", &e.Flow); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOBeginAuthenticationOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentFlow clientruntime.Content
 	if v := e.Flow; v != nil {
@@ -1053,9 +1070,9 @@ func (e *AccountSSOBeginAuthenticationOutput) Dehydrate(ctx *clientruntime.Dehyd
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOBeginAuthenticationOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationOutput")
+// StructPath returns StructPath
+func (e *AccountSSOBeginAuthenticationOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationOutput.Path()
 }
 
 // NewAccountSSOBeginAuthenticationParameterProblem creates a new AccountSSOBeginAuthenticationParameterProblem
@@ -1095,6 +1112,7 @@ func (e *AccountSSOBeginAuthenticationParameterProblem) SetMessage(message strin
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOBeginAuthenticationParameterProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -1102,15 +1120,15 @@ func (e *AccountSSOBeginAuthenticationParameterProblem) Hydrate(ctx *clientrunti
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOBeginAuthenticationParameterProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOBeginAuthenticationParameterProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationParameterProblem")
+// StructPath returns StructPath
+func (e *AccountSSOBeginAuthenticationParameterProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterProblem.Path()
 }
 
 // NewAccountSSOCompleteAuthenticationInput creates a new AccountSSOCompleteAuthenticationInput
@@ -1157,6 +1175,7 @@ func (e *AccountSSOCompleteAuthenticationInput) SetProviderName(providerName str
 	e.ProviderName = providerName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOCompleteAuthenticationInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
 		return err
@@ -1170,17 +1189,17 @@ func (e *AccountSSOCompleteAuthenticationInput) Hydrate(ctx *clientruntime.Hydra
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOCompleteAuthenticationInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accountName", e.AccountName)
 	ctx.Content().SetProperty("codeVerifierB64", e.CodeVerifierB64)
 	ctx.Content().SetProperty("providerName", e.ProviderName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOCompleteAuthenticationInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationInput")
+// StructPath returns StructPath
+func (e *AccountSSOCompleteAuthenticationInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInput.Path()
 }
 
 // NewAccountSSOCompleteAuthenticationOutput creates a new AccountSSOCompleteAuthenticationOutput
@@ -1204,15 +1223,16 @@ func (e *AccountSSOCompleteAuthenticationOutput) SetCredentials(credentials *Cre
 	e.Credentials = credentials
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOCompleteAuthenticationOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "credentials", &e.Credentials); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOCompleteAuthenticationOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentCredentials clientruntime.Content
 	if v := e.Credentials; v != nil {
@@ -1228,9 +1248,9 @@ func (e *AccountSSOCompleteAuthenticationOutput) Dehydrate(ctx *clientruntime.De
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOCompleteAuthenticationOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationOutput")
+// StructPath returns StructPath
+func (e *AccountSSOCompleteAuthenticationOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationOutput.Path()
 }
 
 // NewAccountSSOCompleteAuthenticationInvalidFlowProblem creates a new AccountSSOCompleteAuthenticationInvalidFlowProblem
@@ -1270,6 +1290,7 @@ func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) SetMessage(message 
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -1277,15 +1298,15 @@ func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Hydrate(ctx *client
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationInvalidFlowProblem")
+// StructPath returns StructPath
+func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem.Path()
 }
 
 // NewAccountSSOGetProvidersInput creates a new AccountSSOGetProvidersInput
@@ -1309,6 +1330,7 @@ func (e *AccountSSOGetProvidersInput) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOGetProvidersInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
 		return err
@@ -1316,15 +1338,15 @@ func (e *AccountSSOGetProvidersInput) Hydrate(ctx *clientruntime.HydratationCont
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOGetProvidersInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accountName", e.AccountName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOGetProvidersInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOGetProvidersInput")
+// StructPath returns StructPath
+func (e *AccountSSOGetProvidersInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOGetProvidersInput.Path()
 }
 
 // NewAccountSSOGetProvidersOutput creates a new AccountSSOGetProvidersOutput
@@ -1348,15 +1370,16 @@ func (e *AccountSSOGetProvidersOutput) SetProviders(providers []*AccountSSOProvi
 	e.Providers = providers
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOGetProvidersOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "providers", &e.Providers); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().AccountSSOProvider().TypeBuilder(), ctx.Package(), "providers", &e.Providers); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOGetProvidersOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesProviders []map[string]any
 
 	if fsv := e.Providers; fsv != nil {
@@ -1381,9 +1404,9 @@ func (e *AccountSSOGetProvidersOutput) Dehydrate(ctx *clientruntime.DehydrationC
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOGetProvidersOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOGetProvidersOutput")
+// StructPath returns StructPath
+func (e *AccountSSOGetProvidersOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOGetProvidersOutput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyCreateInput creates a new AccountSSOAutoJoinPolicyCreateInput
@@ -1429,6 +1452,7 @@ func (e *AccountSSOAutoJoinPolicyCreateInput) SetOriginProviderName(originProvid
 	e.OriginProviderName = originProviderName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "domain", &e.Domain); err != nil {
 		return err
@@ -1442,17 +1466,17 @@ func (e *AccountSSOAutoJoinPolicyCreateInput) Hydrate(ctx *clientruntime.Hydrata
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("domain", e.Domain)
 	ctx.Content().SetProperty("originAccountName", e.OriginAccountName)
 	ctx.Content().SetProperty("originProviderName", e.OriginProviderName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyCreateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyCreateInput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateInput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyCreateOutput creates a new AccountSSOAutoJoinPolicyCreateOutput
@@ -1476,15 +1500,16 @@ func (e *AccountSSOAutoJoinPolicyCreateOutput) SetPolicy(policy *AccountSSOAutoJ
 	e.Policy = policy
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "policy", &e.Policy); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().AccountSSOAutoJoinPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentPolicy clientruntime.Content
 	if v := e.Policy; v != nil {
@@ -1500,9 +1525,9 @@ func (e *AccountSSOAutoJoinPolicyCreateOutput) Dehydrate(ctx *clientruntime.Dehy
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyCreateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyCreateOutput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateOutput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyListInput creates a new AccountSSOAutoJoinPolicyListInput
@@ -1515,18 +1540,19 @@ func NewAccountSSOAutoJoinPolicyListInput() *AccountSSOAutoJoinPolicyListInput {
 type AccountSSOAutoJoinPolicyListInput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyListInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyListInput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyListInput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyListOutput creates a new AccountSSOAutoJoinPolicyListOutput
@@ -1550,15 +1576,16 @@ func (e *AccountSSOAutoJoinPolicyListOutput) SetPolicies(policies []*AccountSSOA
 	e.Policies = policies
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "policies", &e.Policies); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().AccountSSOAutoJoinPolicy().TypeBuilder(), ctx.Package(), "policies", &e.Policies); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesPolicies []map[string]any
 
 	if fsv := e.Policies; fsv != nil {
@@ -1583,9 +1610,9 @@ func (e *AccountSSOAutoJoinPolicyListOutput) Dehydrate(ctx *clientruntime.Dehydr
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyListOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyListOutput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyListOutput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyEnableInput creates a new AccountSSOAutoJoinPolicyEnableInput
@@ -1620,6 +1647,7 @@ func (e *AccountSSOAutoJoinPolicyEnableInput) SetPolicyName(policyName string) {
 	e.PolicyName = policyName
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyEnableInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireBoolProperty(ctx.Content(), "enabled", &e.Enabled); err != nil {
 		return err
@@ -1630,16 +1658,16 @@ func (e *AccountSSOAutoJoinPolicyEnableInput) Hydrate(ctx *clientruntime.Hydrata
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyEnableInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("enabled", e.Enabled)
 	ctx.Content().SetProperty("policyName", e.PolicyName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyEnableInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyEnableInput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyEnableInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableInput.Path()
 }
 
 // NewAccountSSOAutoJoinPolicyEnableOutput creates a new AccountSSOAutoJoinPolicyEnableOutput
@@ -1652,18 +1680,19 @@ func NewAccountSSOAutoJoinPolicyEnableOutput() *AccountSSOAutoJoinPolicyEnableOu
 type AccountSSOAutoJoinPolicyEnableOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *AccountSSOAutoJoinPolicyEnableOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *AccountSSOAutoJoinPolicyEnableOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *AccountSSOAutoJoinPolicyEnableOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyEnableOutput")
+// StructPath returns StructPath
+func (e *AccountSSOAutoJoinPolicyEnableOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableOutput.Path()
 }
 
 // NewInvalidUsernameProblem creates a new InvalidUsernameProblem
@@ -1703,6 +1732,7 @@ func (e *InvalidUsernameProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *InvalidUsernameProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -1710,15 +1740,15 @@ func (e *InvalidUsernameProblem) Hydrate(ctx *clientruntime.HydratationContext) 
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InvalidUsernameProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InvalidUsernameProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InvalidUsernameProblem")
+// StructPath returns StructPath
+func (e *InvalidUsernameProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidUsernameProblem.Path()
 }
 
 // NewMemberAccount creates a new MemberAccount
@@ -1742,6 +1772,7 @@ func (e *MemberAccount) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
+// Hydrate implements struct hydrate
 func (e *MemberAccount) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
 		return err
@@ -1749,15 +1780,15 @@ func (e *MemberAccount) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *MemberAccount) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accountName", e.AccountName)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *MemberAccount) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "MemberAccount")
+// StructPath returns StructPath
+func (e *MemberAccount) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathMemberAccount.Path()
 }
 
 // NewCredentialInfo creates a new CredentialInfo
@@ -1781,6 +1812,7 @@ func (e *CredentialInfo) SetAccessKeyID(accessKeyID string) {
 	e.AccessKeyID = accessKeyID
 }
 
+// Hydrate implements struct hydrate
 func (e *CredentialInfo) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
 		return err
@@ -1788,15 +1820,15 @@ func (e *CredentialInfo) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *CredentialInfo) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *CredentialInfo) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "CredentialInfo")
+// StructPath returns StructPath
+func (e *CredentialInfo) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathCredentialInfo.Path()
 }
 
 // NewIdentityPolicyStatement creates a new IdentityPolicyStatement
@@ -1831,6 +1863,7 @@ func (e *IdentityPolicyStatement) SetResources(resources []string) {
 	e.Resources = resources
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyStatement) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireBuiltinArrayProperty(ctx.Content(), "actions", &e.Actions); err != nil {
 		return err
@@ -1841,16 +1874,16 @@ func (e *IdentityPolicyStatement) Hydrate(ctx *clientruntime.HydratationContext)
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyStatement) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("actions", e.Actions)
 	ctx.Content().SetProperty("resources", e.Resources)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyStatement) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyStatement")
+// StructPath returns StructPath
+func (e *IdentityPolicyStatement) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyStatement.Path()
 }
 
 // NewIdentityPolicy creates a new IdentityPolicy
@@ -1896,6 +1929,7 @@ func (e *IdentityPolicy) SetStatements(statements []*IdentityPolicyStatement) {
 	e.Statements = statements
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicy) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireBoolProperty(ctx.Content(), "builtin", &e.Builtin); err != nil {
 		return err
@@ -1903,14 +1937,14 @@ func (e *IdentityPolicy) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "statements", &e.Statements); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicy) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("builtin", e.Builtin)
 	ctx.Content().SetProperty("name", e.Name)
 	var fieldValuesStatements []map[string]any
@@ -1937,9 +1971,9 @@ func (e *IdentityPolicy) Dehydrate(ctx *clientruntime.DehydrationContext) (err e
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicy) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicy")
+// StructPath returns StructPath
+func (e *IdentityPolicy) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicy.Path()
 }
 
 // NewIdentityPolicyAttachment creates a new IdentityPolicyAttachment
@@ -1963,15 +1997,16 @@ func (e *IdentityPolicyAttachment) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyAttachment) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "policy", &e.Policy); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyAttachment) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentPolicy clientruntime.Content
 	if v := e.Policy; v != nil {
@@ -1987,9 +2022,9 @@ func (e *IdentityPolicyAttachment) Dehydrate(ctx *clientruntime.DehydrationConte
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyAttachment) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyAttachment")
+// StructPath returns StructPath
+func (e *IdentityPolicyAttachment) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyAttachment.Path()
 }
 
 // NewUserCreateInput creates a new UserCreateInput
@@ -2024,6 +2059,7 @@ func (e *UserCreateInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "description", &e.Description); err != nil {
 		return err
@@ -2034,16 +2070,16 @@ func (e *UserCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("description", e.Description)
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserCreateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserCreateInput")
+// StructPath returns StructPath
+func (e *UserCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserCreateInput.Path()
 }
 
 // NewUserCreateOutput creates a new UserCreateOutput
@@ -2067,15 +2103,16 @@ func (e *UserCreateOutput) SetUser(user *UserInformation) {
 	e.User = user
 }
 
+// Hydrate implements struct hydrate
 func (e *UserCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "user", &e.User); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentUser clientruntime.Content
 	if v := e.User; v != nil {
@@ -2091,9 +2128,9 @@ func (e *UserCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserCreateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserCreateOutput")
+// StructPath returns StructPath
+func (e *UserCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserCreateOutput.Path()
 }
 
 // NewUserGetInput creates a new UserGetInput
@@ -2117,6 +2154,7 @@ func (e *UserGetInput) SetUsername(username *string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserGetInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -2124,15 +2162,15 @@ func (e *UserGetInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserGetInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserGetInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetInput")
+// StructPath returns StructPath
+func (e *UserGetInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGetInput.Path()
 }
 
 // NewUserGetOutput creates a new UserGetOutput
@@ -2156,15 +2194,16 @@ func (e *UserGetOutput) SetUser(user *UserInformation) {
 	e.User = user
 }
 
+// Hydrate implements struct hydrate
 func (e *UserGetOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "user", &e.User); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserGetOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentUser clientruntime.Content
 	if v := e.User; v != nil {
@@ -2180,9 +2219,9 @@ func (e *UserGetOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err er
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserGetOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetOutput")
+// StructPath returns StructPath
+func (e *UserGetOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGetOutput.Path()
 }
 
 // NewUserGetUserNotAvailableProblem creates a new UserGetUserNotAvailableProblem
@@ -2222,6 +2261,7 @@ func (e *UserGetUserNotAvailableProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *UserGetUserNotAvailableProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -2229,15 +2269,15 @@ func (e *UserGetUserNotAvailableProblem) Hydrate(ctx *clientruntime.HydratationC
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserGetUserNotAvailableProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserGetUserNotAvailableProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetUserNotAvailableProblem")
+// StructPath returns StructPath
+func (e *UserGetUserNotAvailableProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGetUserNotAvailableProblem.Path()
 }
 
 // NewUserDestroyInput creates a new UserDestroyInput
@@ -2261,6 +2301,7 @@ func (e *UserDestroyInput) SetUsername(username *string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -2268,15 +2309,15 @@ func (e *UserDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error 
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserDestroyInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserDestroyInput")
+// StructPath returns StructPath
+func (e *UserDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserDestroyInput.Path()
 }
 
 // NewUserDestroyOutput creates a new UserDestroyOutput
@@ -2289,18 +2330,19 @@ func NewUserDestroyOutput() *UserDestroyOutput {
 type UserDestroyOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserDestroyOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserDestroyOutput")
+// StructPath returns StructPath
+func (e *UserDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserDestroyOutput.Path()
 }
 
 // NewUserListInput creates a new UserListInput
@@ -2313,18 +2355,19 @@ func NewUserListInput() *UserListInput {
 type UserListInput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserListInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserListInput")
+// StructPath returns StructPath
+func (e *UserListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserListInput.Path()
 }
 
 // NewUserListOutput creates a new UserListOutput
@@ -2348,15 +2391,16 @@ func (e *UserListOutput) SetUsers(users []*UserInformation) {
 	e.Users = users
 }
 
+// Hydrate implements struct hydrate
 func (e *UserListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "users", &e.Users); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "users", &e.Users); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesUsers []map[string]any
 
 	if fsv := e.Users; fsv != nil {
@@ -2381,9 +2425,9 @@ func (e *UserListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err e
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserListOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserListOutput")
+// StructPath returns StructPath
+func (e *UserListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserListOutput.Path()
 }
 
 // NewUserMemberAccountsInput creates a new UserMemberAccountsInput
@@ -2396,18 +2440,19 @@ func NewUserMemberAccountsInput() *UserMemberAccountsInput {
 type UserMemberAccountsInput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserMemberAccountsInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserMemberAccountsInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserMemberAccountsInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserMemberAccountsInput")
+// StructPath returns StructPath
+func (e *UserMemberAccountsInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserMemberAccountsInput.Path()
 }
 
 // NewUserMemberAccountsOutput creates a new UserMemberAccountsOutput
@@ -2431,15 +2476,16 @@ func (e *UserMemberAccountsOutput) SetAccounts(accounts []*MemberAccount) {
 	e.Accounts = accounts
 }
 
+// Hydrate implements struct hydrate
 func (e *UserMemberAccountsOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "accounts", &e.Accounts); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().MemberAccount().TypeBuilder(), ctx.Package(), "accounts", &e.Accounts); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserMemberAccountsOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesAccounts []map[string]any
 
 	if fsv := e.Accounts; fsv != nil {
@@ -2464,9 +2510,9 @@ func (e *UserMemberAccountsOutput) Dehydrate(ctx *clientruntime.DehydrationConte
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserMemberAccountsOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserMemberAccountsOutput")
+// StructPath returns StructPath
+func (e *UserMemberAccountsOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserMemberAccountsOutput.Path()
 }
 
 // NewUserAccessKeyCreateInput creates a new UserAccessKeyCreateInput
@@ -2490,6 +2536,7 @@ func (e *UserAccessKeyCreateInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -2497,15 +2544,15 @@ func (e *UserAccessKeyCreateInput) Hydrate(ctx *clientruntime.HydratationContext
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyCreateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyCreateInput")
+// StructPath returns StructPath
+func (e *UserAccessKeyCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyCreateInput.Path()
 }
 
 // NewUserAccessKeyCreateOutput creates a new UserAccessKeyCreateOutput
@@ -2529,15 +2576,16 @@ func (e *UserAccessKeyCreateOutput) SetCredentials(credentials *Credentials) {
 	e.Credentials = credentials
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "credentials", &e.Credentials); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentCredentials clientruntime.Content
 	if v := e.Credentials; v != nil {
@@ -2553,9 +2601,9 @@ func (e *UserAccessKeyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationCont
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyCreateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyCreateOutput")
+// StructPath returns StructPath
+func (e *UserAccessKeyCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyCreateOutput.Path()
 }
 
 // NewUserAccessKeyListInput creates a new UserAccessKeyListInput
@@ -2579,6 +2627,7 @@ func (e *UserAccessKeyListInput) SetUsername(username *string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -2586,15 +2635,15 @@ func (e *UserAccessKeyListInput) Hydrate(ctx *clientruntime.HydratationContext) 
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyListInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyListInput")
+// StructPath returns StructPath
+func (e *UserAccessKeyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyListInput.Path()
 }
 
 // NewUserAccessKeyListOutput creates a new UserAccessKeyListOutput
@@ -2618,15 +2667,16 @@ func (e *UserAccessKeyListOutput) SetCredentials(credentials []*CredentialInfo) 
 	e.Credentials = credentials
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "credentials", &e.Credentials); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().CredentialInfo().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesCredentials []map[string]any
 
 	if fsv := e.Credentials; fsv != nil {
@@ -2651,9 +2701,9 @@ func (e *UserAccessKeyListOutput) Dehydrate(ctx *clientruntime.DehydrationContex
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyListOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyListOutput")
+// StructPath returns StructPath
+func (e *UserAccessKeyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyListOutput.Path()
 }
 
 // NewUserAccessKeyDestroyInput creates a new UserAccessKeyDestroyInput
@@ -2688,6 +2738,7 @@ func (e *UserAccessKeyDestroyInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
 		return err
@@ -2698,16 +2749,16 @@ func (e *UserAccessKeyDestroyInput) Hydrate(ctx *clientruntime.HydratationContex
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyDestroyInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyDestroyInput")
+// StructPath returns StructPath
+func (e *UserAccessKeyDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyDestroyInput.Path()
 }
 
 // NewUserAccessKeyDestroyOutput creates a new UserAccessKeyDestroyOutput
@@ -2720,18 +2771,19 @@ func NewUserAccessKeyDestroyOutput() *UserAccessKeyDestroyOutput {
 type UserAccessKeyDestroyOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserAccessKeyDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserAccessKeyDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserAccessKeyDestroyOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyDestroyOutput")
+// StructPath returns StructPath
+func (e *UserAccessKeyDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserAccessKeyDestroyOutput.Path()
 }
 
 // NewUserIdentityPolicyAttachInput creates a new UserIdentityPolicyAttachInput
@@ -2766,6 +2818,7 @@ func (e *UserIdentityPolicyAttachInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyAttachInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "policyName", &e.PolicyName); err != nil {
 		return err
@@ -2776,16 +2829,16 @@ func (e *UserIdentityPolicyAttachInput) Hydrate(ctx *clientruntime.HydratationCo
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyAttachInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("policyName", e.PolicyName)
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyAttachInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyAttachInput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyAttachInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyAttachInput.Path()
 }
 
 // NewUserIdentityPolicyAttachOutput creates a new UserIdentityPolicyAttachOutput
@@ -2798,18 +2851,19 @@ func NewUserIdentityPolicyAttachOutput() *UserIdentityPolicyAttachOutput {
 type UserIdentityPolicyAttachOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyAttachOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyAttachOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyAttachOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyAttachOutput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyAttachOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyAttachOutput.Path()
 }
 
 // NewUserIdentityPolicyListInput creates a new UserIdentityPolicyListInput
@@ -2833,6 +2887,7 @@ func (e *UserIdentityPolicyListInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -2840,15 +2895,15 @@ func (e *UserIdentityPolicyListInput) Hydrate(ctx *clientruntime.HydratationCont
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyListInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyListInput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyListInput.Path()
 }
 
 // NewUserIdentityPolicyListOutput creates a new UserIdentityPolicyListOutput
@@ -2872,15 +2927,16 @@ func (e *UserIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPol
 	e.Attachments = attachments
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "attachments", &e.Attachments); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyAttachment().TypeBuilder(), ctx.Package(), "attachments", &e.Attachments); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesAttachments []map[string]any
 
 	if fsv := e.Attachments; fsv != nil {
@@ -2905,9 +2961,9 @@ func (e *UserIdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationC
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyListOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyListOutput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyListOutput.Path()
 }
 
 // NewUserIdentityPolicyDetachInput creates a new UserIdentityPolicyDetachInput
@@ -2942,6 +2998,7 @@ func (e *UserIdentityPolicyDetachInput) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyDetachInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "policyName", &e.PolicyName); err != nil {
 		return err
@@ -2952,16 +3009,16 @@ func (e *UserIdentityPolicyDetachInput) Hydrate(ctx *clientruntime.HydratationCo
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyDetachInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("policyName", e.PolicyName)
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyDetachInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyDetachInput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyDetachInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyDetachInput.Path()
 }
 
 // NewUserIdentityPolicyDetachOutput creates a new UserIdentityPolicyDetachOutput
@@ -2974,18 +3031,19 @@ func NewUserIdentityPolicyDetachOutput() *UserIdentityPolicyDetachOutput {
 type UserIdentityPolicyDetachOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *UserIdentityPolicyDetachOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *UserIdentityPolicyDetachOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *UserIdentityPolicyDetachOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyDetachOutput")
+// StructPath returns StructPath
+func (e *UserIdentityPolicyDetachOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserIdentityPolicyDetachOutput.Path()
 }
 
 // NewPolicyStructureProblem creates a new PolicyStructureProblem
@@ -3025,6 +3083,7 @@ func (e *PolicyStructureProblem) SetMessage(message string) {
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *PolicyStructureProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -3032,15 +3091,15 @@ func (e *PolicyStructureProblem) Hydrate(ctx *clientruntime.HydratationContext) 
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *PolicyStructureProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *PolicyStructureProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyStructureProblem")
+// StructPath returns StructPath
+func (e *PolicyStructureProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathPolicyStructureProblem.Path()
 }
 
 // NewIdentityPolicyCreateInput creates a new IdentityPolicyCreateInput
@@ -3075,18 +3134,19 @@ func (e *IdentityPolicyCreateInput) SetStatements(statements []*IdentityPolicySt
 	e.Statements = statements
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "statements", &e.Statements); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	var fieldValuesStatements []map[string]any
 
@@ -3112,9 +3172,9 @@ func (e *IdentityPolicyCreateInput) Dehydrate(ctx *clientruntime.DehydrationCont
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyCreateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyCreateInput")
+// StructPath returns StructPath
+func (e *IdentityPolicyCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyCreateInput.Path()
 }
 
 // NewIdentityPolicyCreateOutput creates a new IdentityPolicyCreateOutput
@@ -3138,15 +3198,16 @@ func (e *IdentityPolicyCreateOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "policy", &e.Policy); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentPolicy clientruntime.Content
 	if v := e.Policy; v != nil {
@@ -3162,9 +3223,9 @@ func (e *IdentityPolicyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationCon
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyCreateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyCreateOutput")
+// StructPath returns StructPath
+func (e *IdentityPolicyCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyCreateOutput.Path()
 }
 
 // NewIdentityPolicyListInput creates a new IdentityPolicyListInput
@@ -3177,18 +3238,19 @@ func NewIdentityPolicyListInput() *IdentityPolicyListInput {
 type IdentityPolicyListInput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyListInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyListInput")
+// StructPath returns StructPath
+func (e *IdentityPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyListInput.Path()
 }
 
 // NewIdentityPolicyListOutput creates a new IdentityPolicyListOutput
@@ -3212,15 +3274,16 @@ func (e *IdentityPolicyListOutput) SetPolicies(policies []*IdentityPolicy) {
 	e.Policies = policies
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "policies", &e.Policies); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policies", &e.Policies); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesPolicies []map[string]any
 
 	if fsv := e.Policies; fsv != nil {
@@ -3245,9 +3308,9 @@ func (e *IdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationConte
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyListOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyListOutput")
+// StructPath returns StructPath
+func (e *IdentityPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyListOutput.Path()
 }
 
 // NewIdentityPolicyRetrieveInput creates a new IdentityPolicyRetrieveInput
@@ -3271,6 +3334,7 @@ func (e *IdentityPolicyRetrieveInput) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyRetrieveInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -3278,15 +3342,15 @@ func (e *IdentityPolicyRetrieveInput) Hydrate(ctx *clientruntime.HydratationCont
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyRetrieveInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyRetrieveInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyRetrieveInput")
+// StructPath returns StructPath
+func (e *IdentityPolicyRetrieveInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyRetrieveInput.Path()
 }
 
 // NewIdentityPolicyRetrieveOutput creates a new IdentityPolicyRetrieveOutput
@@ -3310,15 +3374,16 @@ func (e *IdentityPolicyRetrieveOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyRetrieveOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "policy", &e.Policy); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyRetrieveOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentPolicy clientruntime.Content
 	if v := e.Policy; v != nil {
@@ -3334,9 +3399,9 @@ func (e *IdentityPolicyRetrieveOutput) Dehydrate(ctx *clientruntime.DehydrationC
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyRetrieveOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyRetrieveOutput")
+// StructPath returns StructPath
+func (e *IdentityPolicyRetrieveOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyRetrieveOutput.Path()
 }
 
 // NewIdentityPolicyDestroyInput creates a new IdentityPolicyDestroyInput
@@ -3360,6 +3425,7 @@ func (e *IdentityPolicyDestroyInput) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -3367,15 +3433,15 @@ func (e *IdentityPolicyDestroyInput) Hydrate(ctx *clientruntime.HydratationConte
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyDestroyInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyDestroyInput")
+// StructPath returns StructPath
+func (e *IdentityPolicyDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyDestroyInput.Path()
 }
 
 // NewIdentityPolicyDestroyOutput creates a new IdentityPolicyDestroyOutput
@@ -3388,18 +3454,19 @@ func NewIdentityPolicyDestroyOutput() *IdentityPolicyDestroyOutput {
 type IdentityPolicyDestroyOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyDestroyOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyDestroyOutput")
+// StructPath returns StructPath
+func (e *IdentityPolicyDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyDestroyOutput.Path()
 }
 
 // NewIdentityPolicyUpdateInput creates a new IdentityPolicyUpdateInput
@@ -3434,18 +3501,19 @@ func (e *IdentityPolicyUpdateInput) SetStatements(statements []*IdentityPolicySt
 	e.Statements = statements
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyUpdateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "statements", &e.Statements); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyUpdateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	var fieldValuesStatements []map[string]any
 
@@ -3471,9 +3539,9 @@ func (e *IdentityPolicyUpdateInput) Dehydrate(ctx *clientruntime.DehydrationCont
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyUpdateInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyUpdateInput")
+// StructPath returns StructPath
+func (e *IdentityPolicyUpdateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyUpdateInput.Path()
 }
 
 // NewIdentityPolicyUpdateOutput creates a new IdentityPolicyUpdateOutput
@@ -3497,15 +3565,16 @@ func (e *IdentityPolicyUpdateOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
+// Hydrate implements struct hydrate
 func (e *IdentityPolicyUpdateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "policy", &e.Policy); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *IdentityPolicyUpdateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentPolicy clientruntime.Content
 	if v := e.Policy; v != nil {
@@ -3521,9 +3590,9 @@ func (e *IdentityPolicyUpdateOutput) Dehydrate(ctx *clientruntime.DehydrationCon
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *IdentityPolicyUpdateOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyUpdateOutput")
+// StructPath returns StructPath
+func (e *IdentityPolicyUpdateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyUpdateOutput.Path()
 }
 
 // NewInternalAccessKeyUser creates a new InternalAccessKeyUser
@@ -3547,6 +3616,7 @@ func (e *InternalAccessKeyUser) SetUsername(username string) {
 	e.Username = username
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalAccessKeyUser) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
 		return err
@@ -3554,15 +3624,15 @@ func (e *InternalAccessKeyUser) Hydrate(ctx *clientruntime.HydratationContext) e
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalAccessKeyUser) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("username", e.Username)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalAccessKeyUser) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalAccessKeyUser")
+// StructPath returns StructPath
+func (e *InternalAccessKeyUser) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAccessKeyUser.Path()
 }
 
 // NewInternalAccessKeyAccount creates a new InternalAccessKeyAccount
@@ -3586,6 +3656,7 @@ func (e *InternalAccessKeyAccount) SetName(name string) {
 	e.Name = name
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalAccessKeyAccount) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
 		return err
@@ -3593,15 +3664,15 @@ func (e *InternalAccessKeyAccount) Hydrate(ctx *clientruntime.HydratationContext
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalAccessKeyAccount) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("name", e.Name)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalAccessKeyAccount) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalAccessKeyAccount")
+// StructPath returns StructPath
+func (e *InternalAccessKeyAccount) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAccessKeyAccount.Path()
 }
 
 // NewInternalAccessKey creates a new InternalAccessKey
@@ -3658,24 +3729,25 @@ func (e *InternalAccessKey) SetUser(user *InternalAccessKeyUser) {
 	e.User = user
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalAccessKey) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "account", &e.Account); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKeyAccount().TypeBuilder(), ctx.Package(), "account", &e.Account); err != nil {
 		return err
 	}
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "secretAccessKey", &e.SecretAccessKey); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "user", &e.User); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKeyUser().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalAccessKey) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
 
 	var fieldContentAccount clientruntime.Content
@@ -3702,9 +3774,9 @@ func (e *InternalAccessKey) Dehydrate(ctx *clientruntime.DehydrationContext) (er
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalAccessKey) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalAccessKey")
+// StructPath returns StructPath
+func (e *InternalAccessKey) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAccessKey.Path()
 }
 
 // NewInternalQueryAssertionEntryValue creates a new InternalQueryAssertionEntryValue
@@ -3739,6 +3811,7 @@ func (e *InternalQueryAssertionEntryValue) SetS(s *string) {
 	e.S = s
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalQueryAssertionEntryValue) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentOptionalBoolProperty(ctx.Content(), "b", &e.B); err != nil {
 		return err
@@ -3749,16 +3822,16 @@ func (e *InternalQueryAssertionEntryValue) Hydrate(ctx *clientruntime.Hydratatio
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalQueryAssertionEntryValue) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("b", e.B)
 	ctx.Content().SetProperty("s", e.S)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalQueryAssertionEntryValue) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalQueryAssertionEntryValue")
+// StructPath returns StructPath
+func (e *InternalQueryAssertionEntryValue) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalQueryAssertionEntryValue.Path()
 }
 
 // NewInternalQueryAssertionEntry creates a new InternalQueryAssertionEntry
@@ -3793,18 +3866,19 @@ func (e *InternalQueryAssertionEntry) SetValue(value *InternalQueryAssertionEntr
 	e.Value = value
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalQueryAssertionEntry) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "snippet", &e.Snippet); err != nil {
 		return err
 	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "value", &e.Value); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalQueryAssertionEntryValue().TypeBuilder(), ctx.Package(), "value", &e.Value); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalQueryAssertionEntry) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("snippet", e.Snippet)
 
 	var fieldContentValue clientruntime.Content
@@ -3818,9 +3892,9 @@ func (e *InternalQueryAssertionEntry) Dehydrate(ctx *clientruntime.DehydrationCo
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalQueryAssertionEntry) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalQueryAssertionEntry")
+// StructPath returns StructPath
+func (e *InternalQueryAssertionEntry) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalQueryAssertionEntry.Path()
 }
 
 // NewInternalServicesAssertActionCallerForbiddenProblem creates a new InternalServicesAssertActionCallerForbiddenProblem
@@ -3860,6 +3934,7 @@ func (e *InternalServicesAssertActionCallerForbiddenProblem) SetMessage(message 
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertActionCallerForbiddenProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -3867,15 +3942,15 @@ func (e *InternalServicesAssertActionCallerForbiddenProblem) Hydrate(ctx *client
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertActionCallerForbiddenProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertActionCallerForbiddenProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem")
+// StructPath returns StructPath
+func (e *InternalServicesAssertActionCallerForbiddenProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertActionCallerForbiddenProblem.Path()
 }
 
 // NewInternalServicesValidateAccessKeyInput creates a new InternalServicesValidateAccessKeyInput
@@ -3899,6 +3974,7 @@ func (e *InternalServicesValidateAccessKeyInput) SetRequestAccessKeyID(requestAc
 	e.RequestAccessKeyID = requestAccessKeyID
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesValidateAccessKeyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "requestAccessKeyID", &e.RequestAccessKeyID); err != nil {
 		return err
@@ -3906,15 +3982,15 @@ func (e *InternalServicesValidateAccessKeyInput) Hydrate(ctx *clientruntime.Hydr
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesValidateAccessKeyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("requestAccessKeyID", e.RequestAccessKeyID)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesValidateAccessKeyInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyInput")
+// StructPath returns StructPath
+func (e *InternalServicesValidateAccessKeyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyInput.Path()
 }
 
 // NewInternalServicesValidateAccessKeyOutput creates a new InternalServicesValidateAccessKeyOutput
@@ -3938,15 +4014,16 @@ func (e *InternalServicesValidateAccessKeyOutput) SetKey(key *InternalAccessKey)
 	e.Key = key
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesValidateAccessKeyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), ctx.Package(), "key", &e.Key); err != nil {
+	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKey().TypeBuilder(), ctx.Package(), "key", &e.Key); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesValidateAccessKeyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 
 	var fieldContentKey clientruntime.Content
 	if v := e.Key; v != nil {
@@ -3962,9 +4039,9 @@ func (e *InternalServicesValidateAccessKeyOutput) Dehydrate(ctx *clientruntime.D
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesValidateAccessKeyOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyOutput")
+// StructPath returns StructPath
+func (e *InternalServicesValidateAccessKeyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyOutput.Path()
 }
 
 // NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem creates a new InternalServicesValidateAccessKeyInvalidAccessKeyProblem
@@ -4004,6 +4081,7 @@ func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) SetMessage(me
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -4011,15 +4089,15 @@ func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) Hydrate(ctx *
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyInvalidAccessKeyProblem")
+// StructPath returns StructPath
+func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem.Path()
 }
 
 // NewInternalServicesAssertActionInput creates a new InternalServicesAssertActionInput
@@ -4076,6 +4154,7 @@ func (e *InternalServicesAssertActionInput) SetCallerResourceDRN(callerResourceD
 	e.CallerResourceDRN = callerResourceDRN
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertActionInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAccessKeyID", &e.CallerAccessKeyID); err != nil {
 		return err
@@ -4092,8 +4171,8 @@ func (e *InternalServicesAssertActionInput) Hydrate(ctx *clientruntime.Hydratati
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertActionInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("callerAccessKeyID", e.CallerAccessKeyID)
 	ctx.Content().SetProperty("callerAction", e.CallerAction)
 	ctx.Content().SetProperty("callerRegion", e.CallerRegion)
@@ -4101,9 +4180,9 @@ func (e *InternalServicesAssertActionInput) Dehydrate(ctx *clientruntime.Dehydra
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertActionInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionInput")
+// StructPath returns StructPath
+func (e *InternalServicesAssertActionInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertActionInput.Path()
 }
 
 // NewInternalServicesAssertActionOutput creates a new InternalServicesAssertActionOutput
@@ -4116,18 +4195,19 @@ func NewInternalServicesAssertActionOutput() *InternalServicesAssertActionOutput
 type InternalServicesAssertActionOutput struct {
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertActionOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertActionOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertActionOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionOutput")
+// StructPath returns StructPath
+func (e *InternalServicesAssertActionOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertActionOutput.Path()
 }
 
 // NewInternalServicesAssertQueryInput creates a new InternalServicesAssertQueryInput
@@ -4184,6 +4264,7 @@ func (e *InternalServicesAssertQueryInput) SetCallerResourceDRNReplacements(call
 	e.CallerResourceDRNReplacements = callerResourceDRNReplacements
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertQueryInput) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAccessKeyID", &e.CallerAccessKeyID); err != nil {
 		return err
@@ -4200,8 +4281,8 @@ func (e *InternalServicesAssertQueryInput) Hydrate(ctx *clientruntime.Hydratatio
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertQueryInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("callerAccessKeyID", e.CallerAccessKeyID)
 	ctx.Content().SetProperty("callerAction", e.CallerAction)
 	ctx.Content().SetProperty("callerRegion", e.CallerRegion)
@@ -4209,9 +4290,9 @@ func (e *InternalServicesAssertQueryInput) Dehydrate(ctx *clientruntime.Dehydrat
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertQueryInput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryInput")
+// StructPath returns StructPath
+func (e *InternalServicesAssertQueryInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertQueryInput.Path()
 }
 
 // NewInternalServicesAssertQueryOutput creates a new InternalServicesAssertQueryOutput
@@ -4235,15 +4316,16 @@ func (e *InternalServicesAssertQueryOutput) SetEntries(entries []*InternalQueryA
 	e.Entries = entries
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertQueryOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), ctx.Package(), "entries", &e.Entries); err != nil {
+	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().InternalQueryAssertionEntry().TypeBuilder(), ctx.Package(), "entries", &e.Entries); err != nil {
 		return err
 	}
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertQueryOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	var fieldValuesEntries []map[string]any
 
 	if fsv := e.Entries; fsv != nil {
@@ -4268,9 +4350,9 @@ func (e *InternalServicesAssertQueryOutput) Dehydrate(ctx *clientruntime.Dehydra
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertQueryOutput) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryOutput")
+// StructPath returns StructPath
+func (e *InternalServicesAssertQueryOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertQueryOutput.Path()
 }
 
 // NewInternalServicesAssertQueryReplacementProblem creates a new InternalServicesAssertQueryReplacementProblem
@@ -4310,6 +4392,7 @@ func (e *InternalServicesAssertQueryReplacementProblem) SetMessage(message strin
 	e.Message = message
 }
 
+// Hydrate implements struct hydrate
 func (e *InternalServicesAssertQueryReplacementProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
 	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
 		return err
@@ -4317,699 +4400,781 @@ func (e *InternalServicesAssertQueryReplacementProblem) Hydrate(ctx *clientrunti
 	return nil
 }
 
+// Dehydrate implements struct dehydrate
 func (e *InternalServicesAssertQueryReplacementProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetStruct(e.TypeFQTN().String())
 	ctx.Content().SetProperty("message", e.Message)
 	return nil
 }
 
-// TypeFQTN returns the Allow Typq Fully Qualified Type Name
-func (e *InternalServicesAssertQueryReplacementProblem) TypeFQTN() clientruntime.TypeFQTN {
-	return clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryReplacementProblem")
+// StructPath returns StructPath
+func (e *InternalServicesAssertQueryReplacementProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesAssertQueryReplacementProblem.Path()
 }
 
-// NewSpecularPackage returns a new package instance for Deployport/IAM
-func NewSpecularPackage() (*clientruntime.Package, error) {
-	pk := clientruntime.NewPackage(
-		"Deployport/IAM",
-	)
-	ipkg, err := godeployportcomapiservicescorelib.NewSpecularPackage()
-	if err != nil {
+var packagePath = clientruntime.ModulePathFromTrustedValues(
+	"deployport",
+	"iam",
+)
+
+func newSpecularPackage() (pk *clientruntime.Package, err error) {
+	pk = clientruntime.NewPackage(packagePath)
+	if err := pk.Import(godeployportcomapiservicescorelib.SpecularMeta().Module()); err != nil {
 		return nil, err
 	}
-	if err := pk.Import(ipkg); err != nil {
-		return nil, err
-	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserInformationSSOProvider, err = pk.NewType(
 		"UserInformationSSOProvider",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserInformationSSOProvider()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserInformationSSOProfile, err = pk.NewType(
 		"UserInformationSSOProfile",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserInformationSSOProfile()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserInformationSSO, err = pk.NewType(
 		"UserInformationSSO",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserInformationSSO()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserInformation, err = pk.NewType(
 		"UserInformation",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserInformation()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathCredentials, err = pk.NewType(
 		"Credentials",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewCredentials()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathSSOProviderUnavailableProblem, err = pk.NewType(
 		"SSOProviderUnavailableProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewSSOProviderUnavailableProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathSSOFlow, err = pk.NewType(
 		"SSOFlow",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewSSOFlow()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccount, err = pk.NewType(
 		"Account",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccount()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOProvider, err = pk.NewType(
 		"AccountSSOProvider",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOProvider()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathPolicyNotFoundProblem, err = pk.NewType(
 		"PolicyNotFoundProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewPolicyNotFoundProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicy, err = pk.NewType(
 		"AccountSSOAutoJoinPolicy",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicy()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountCreateInput, err = pk.NewType(
 		"AccountCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountCreateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountCreateOutput, err = pk.NewType(
 		"AccountCreateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountCreateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountCreateInvalidNameProblem, err = pk.NewType(
 		"AccountCreateInvalidNameProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountCreateInvalidNameProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountAssumeIdentityInput, err = pk.NewType(
 		"AccountAssumeIdentityInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountAssumeIdentityInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountAssumeIdentityOutput, err = pk.NewType(
 		"AccountAssumeIdentityOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountAssumeIdentityOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOBeginAuthenticationInput, err = pk.NewType(
 		"AccountSSOBeginAuthenticationInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOBeginAuthenticationInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOBeginAuthenticationOutput, err = pk.NewType(
 		"AccountSSOBeginAuthenticationOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOBeginAuthenticationOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterProblem, err = pk.NewType(
 		"AccountSSOBeginAuthenticationParameterProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOBeginAuthenticationParameterProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOCompleteAuthenticationInput, err = pk.NewType(
 		"AccountSSOCompleteAuthenticationInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOCompleteAuthenticationInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOCompleteAuthenticationOutput, err = pk.NewType(
 		"AccountSSOCompleteAuthenticationOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOCompleteAuthenticationOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem, err = pk.NewType(
 		"AccountSSOCompleteAuthenticationInvalidFlowProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOCompleteAuthenticationInvalidFlowProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOGetProvidersInput, err = pk.NewType(
 		"AccountSSOGetProvidersInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOGetProvidersInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOGetProvidersOutput, err = pk.NewType(
 		"AccountSSOGetProvidersOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOGetProvidersOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateInput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyCreateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateOutput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyCreateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyCreateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyListInput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyListInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyListOutput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyListOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableInput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyEnableInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyEnableInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableOutput, err = pk.NewType(
 		"AccountSSOAutoJoinPolicyEnableOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicyEnableOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInvalidUsernameProblem, err = pk.NewType(
 		"InvalidUsernameProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInvalidUsernameProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathMemberAccount, err = pk.NewType(
 		"MemberAccount",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewMemberAccount()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathCredentialInfo, err = pk.NewType(
 		"CredentialInfo",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewCredentialInfo()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyStatement, err = pk.NewType(
 		"IdentityPolicyStatement",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyStatement()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicy, err = pk.NewType(
 		"IdentityPolicy",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicy()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyAttachment, err = pk.NewType(
 		"IdentityPolicyAttachment",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyAttachment()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserCreateInput, err = pk.NewType(
 		"UserCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserCreateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserCreateOutput, err = pk.NewType(
 		"UserCreateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserCreateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserGetInput, err = pk.NewType(
 		"UserGetInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserGetInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserGetOutput, err = pk.NewType(
 		"UserGetOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserGetOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserGetUserNotAvailableProblem, err = pk.NewType(
 		"UserGetUserNotAvailableProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserGetUserNotAvailableProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserDestroyInput, err = pk.NewType(
 		"UserDestroyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserDestroyInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserDestroyOutput, err = pk.NewType(
 		"UserDestroyOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserDestroyOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserListInput, err = pk.NewType(
 		"UserListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserListInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserListOutput, err = pk.NewType(
 		"UserListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserListOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserMemberAccountsInput, err = pk.NewType(
 		"UserMemberAccountsInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserMemberAccountsInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserMemberAccountsOutput, err = pk.NewType(
 		"UserMemberAccountsOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserMemberAccountsOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyCreateInput, err = pk.NewType(
 		"UserAccessKeyCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyCreateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyCreateOutput, err = pk.NewType(
 		"UserAccessKeyCreateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyCreateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyListInput, err = pk.NewType(
 		"UserAccessKeyListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyListInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyListOutput, err = pk.NewType(
 		"UserAccessKeyListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyListOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyDestroyInput, err = pk.NewType(
 		"UserAccessKeyDestroyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyDestroyInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserAccessKeyDestroyOutput, err = pk.NewType(
 		"UserAccessKeyDestroyOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserAccessKeyDestroyOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyAttachInput, err = pk.NewType(
 		"UserIdentityPolicyAttachInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyAttachInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyAttachOutput, err = pk.NewType(
 		"UserIdentityPolicyAttachOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyAttachOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyListInput, err = pk.NewType(
 		"UserIdentityPolicyListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyListInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyListOutput, err = pk.NewType(
 		"UserIdentityPolicyListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyListOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyDetachInput, err = pk.NewType(
 		"UserIdentityPolicyDetachInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyDetachInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathUserIdentityPolicyDetachOutput, err = pk.NewType(
 		"UserIdentityPolicyDetachOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserIdentityPolicyDetachOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathPolicyStructureProblem, err = pk.NewType(
 		"PolicyStructureProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewPolicyStructureProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyCreateInput, err = pk.NewType(
 		"IdentityPolicyCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyCreateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyCreateOutput, err = pk.NewType(
 		"IdentityPolicyCreateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyCreateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyListInput, err = pk.NewType(
 		"IdentityPolicyListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyListInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyListOutput, err = pk.NewType(
 		"IdentityPolicyListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyListOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyRetrieveInput, err = pk.NewType(
 		"IdentityPolicyRetrieveInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyRetrieveInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyRetrieveOutput, err = pk.NewType(
 		"IdentityPolicyRetrieveOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyRetrieveOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyDestroyInput, err = pk.NewType(
 		"IdentityPolicyDestroyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyDestroyInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyDestroyOutput, err = pk.NewType(
 		"IdentityPolicyDestroyOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyDestroyOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyUpdateInput, err = pk.NewType(
 		"IdentityPolicyUpdateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyUpdateInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathIdentityPolicyUpdateOutput, err = pk.NewType(
 		"IdentityPolicyUpdateOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyUpdateOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalAccessKeyUser, err = pk.NewType(
 		"InternalAccessKeyUser",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalAccessKeyUser()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalAccessKeyAccount, err = pk.NewType(
 		"InternalAccessKeyAccount",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalAccessKeyAccount()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalAccessKey, err = pk.NewType(
 		"InternalAccessKey",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalAccessKey()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalQueryAssertionEntryValue, err = pk.NewType(
 		"InternalQueryAssertionEntryValue",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalQueryAssertionEntryValue()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalQueryAssertionEntry, err = pk.NewType(
 		"InternalQueryAssertionEntry",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalQueryAssertionEntry()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertActionCallerForbiddenProblem, err = pk.NewType(
 		"InternalServicesAssertActionCallerForbiddenProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertActionCallerForbiddenProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesValidateAccessKeyInput, err = pk.NewType(
 		"InternalServicesValidateAccessKeyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesValidateAccessKeyInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesValidateAccessKeyOutput, err = pk.NewType(
 		"InternalServicesValidateAccessKeyOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesValidateAccessKeyOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem, err = pk.NewType(
 		"InternalServicesValidateAccessKeyInvalidAccessKeyProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertActionInput, err = pk.NewType(
 		"InternalServicesAssertActionInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertActionInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertActionOutput, err = pk.NewType(
 		"InternalServicesAssertActionOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertActionOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertQueryInput, err = pk.NewType(
 		"InternalServicesAssertQueryInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertQueryInput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertQueryOutput, err = pk.NewType(
 		"InternalServicesAssertQueryOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertQueryOutput()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
-	if _, err := pk.NewType(
+	localSpecularMeta.structPathInternalServicesAssertQueryReplacementProblem, err = pk.NewType(
 		"InternalServicesAssertQueryReplacementProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesAssertQueryReplacementProblem()
 		}),
-	); err != nil {
+	)
+	if err != nil {
 		return nil, err
 	}
 	resAccount, err := pk.NewResource("Account")
@@ -5023,35 +5188,12 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 	if err != nil {
 		return nil, err
 	}
-	var tp *clientruntime.StructDefinition
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountCreateInvalidNameProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountCreateInput())
+	op.SetOutput(SpecularMeta().AccountCreateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().AccountCreateInvalidNameProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5060,28 +5202,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountAssumeIdentityInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountAssumeIdentityOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountAssumeIdentityInput())
+	op.SetOutput(SpecularMeta().AccountAssumeIdentityInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource AccountSSO
@@ -5096,66 +5220,27 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "SSOProviderUnavailableProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOBeginAuthenticationParameterProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountSSOBeginAuthenticationInput())
+	op.SetOutput(SpecularMeta().AccountSSOBeginAuthenticationInput())
+	op.RegisterProblemType(SpecularMeta().SSOProviderUnavailableProblem())
+	op.RegisterProblemType(SpecularMeta().AccountSSOBeginAuthenticationParameterProblem())
 
 	op, err = resAccountSSO.NewOperation("CompleteAuthentication")
 	if err != nil {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOCompleteAuthenticationInvalidFlowProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountSSOCompleteAuthenticationInput())
+	op.SetOutput(SpecularMeta().AccountSSOCompleteAuthenticationInput())
+	op.RegisterProblemType(SpecularMeta().AccountSSOCompleteAuthenticationInvalidFlowProblem())
 
 	op, err = resAccountSSO.NewOperation("GetProviders")
 	if err != nil {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOGetProvidersInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOGetProvidersOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
+	op.SetInput(SpecularMeta().AccountSSOGetProvidersInput())
+	op.SetOutput(SpecularMeta().AccountSSOGetProvidersInput())
 
 	// subresource AccountSSOAutoJoinPolicy
 	resAccountSSOAutoJoinPolicy, err := resAccountSSO.NewSubResource("AutoJoinPolicy")
@@ -5169,28 +5254,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyCreateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyCreateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInput())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5199,28 +5266,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyListInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyListOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyListInput())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyListInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5229,28 +5278,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyEnableInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "AccountSSOAutoJoinPolicyEnableOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInput())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5265,34 +5296,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserCreateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserCreateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InvalidUsernameProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserCreateInput())
+	op.SetOutput(SpecularMeta().UserCreateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5301,28 +5309,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserGetUserNotAvailableProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserGetInput())
+	op.SetOutput(SpecularMeta().UserGetInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(SpecularMeta().UserGetUserNotAvailableProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5331,28 +5321,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserDestroyInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserDestroyOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserDestroyInput())
+	op.SetOutput(SpecularMeta().UserDestroyInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5361,28 +5333,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserListInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserListOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserListInput())
+	op.SetOutput(SpecularMeta().UserListInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5391,22 +5345,9 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserMemberAccountsInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserMemberAccountsOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserMemberAccountsInput())
+	op.SetOutput(SpecularMeta().UserMemberAccountsInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource UserAccessKey
@@ -5421,28 +5362,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyCreateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyCreateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserAccessKeyCreateInput())
+	op.SetOutput(SpecularMeta().UserAccessKeyCreateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5451,28 +5374,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyListInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyListOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserAccessKeyListInput())
+	op.SetOutput(SpecularMeta().UserAccessKeyListInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5481,28 +5386,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyDestroyInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserAccessKeyDestroyOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserAccessKeyDestroyInput())
+	op.SetOutput(SpecularMeta().UserAccessKeyDestroyInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5518,34 +5405,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyAttachInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyAttachOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyNotFoundProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserIdentityPolicyAttachInput())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyAttachInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5554,28 +5418,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyListInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyListOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserIdentityPolicyListInput())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyListInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5584,34 +5430,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyDetachInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "UserIdentityPolicyDetachOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyNotFoundProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().UserIdentityPolicyDetachInput())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyDetachInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5626,34 +5449,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyCreateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyCreateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyStructureProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().IdentityPolicyCreateInput())
+	op.SetOutput(SpecularMeta().IdentityPolicyCreateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5662,28 +5462,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyListInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyListOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().IdentityPolicyListInput())
+	op.SetOutput(SpecularMeta().IdentityPolicyListInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5692,34 +5474,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyRetrieveInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyRetrieveOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyNotFoundProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().IdentityPolicyRetrieveInput())
+	op.SetOutput(SpecularMeta().IdentityPolicyRetrieveInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5728,28 +5487,10 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyDestroyInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyDestroyOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().IdentityPolicyDestroyInput())
+	op.SetOutput(SpecularMeta().IdentityPolicyDestroyInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5758,34 +5499,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyUpdateInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "IdentityPolicyUpdateOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "PolicyStructureProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().IdentityPolicyUpdateInput())
+	op.SetOutput(SpecularMeta().IdentityPolicyUpdateInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5807,34 +5525,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesValidateAccessKeyInvalidAccessKeyProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().InternalServicesValidateAccessKeyInput())
+	op.SetOutput(SpecularMeta().InternalServicesValidateAccessKeyInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().InternalServicesValidateAccessKeyInvalidAccessKeyProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5843,34 +5538,11 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().InternalServicesAssertActionInput())
+	op.SetOutput(SpecularMeta().InternalServicesAssertActionInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5879,40 +5551,12 @@ func NewSpecularPackage() (*clientruntime.Package, error) {
 		return nil, err
 	}
 
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryInput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetInput(tp)
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryOutput"))
-	if err != nil {
-		return nil, err
-	}
-	op.SetOutput(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "AccessDeniedProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/CoreLib", "ForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertActionCallerForbiddenProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
-
-	tp, err = pk.TypeByFQDN(clientruntime.NewTypeFQTN("Deployport/IAM", "InternalServicesAssertQueryReplacementProblem"))
-	if err != nil {
-		return nil, err
-	}
-	op.RegisterProblemType(tp)
+	op.SetInput(SpecularMeta().InternalServicesAssertQueryInput())
+	op.SetOutput(SpecularMeta().InternalServicesAssertQueryInput())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblem())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertQueryReplacementProblem())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -6594,7 +6238,7 @@ func NewEndpointTransport(options ...clientruntime.Option) (clientruntime.Transp
 
 // NewClient returns a new instance of Client
 func NewClient(options ...clientruntime.Option) (*Client, error) {
-	pk := SpecularPackage()
+	pk := SpecularMeta().Module()
 	c := &Client{
 		pk: pk,
 	}
@@ -6630,15 +6274,535 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	return c, nil
 }
 
-var specularPackageOnce = sync.OnceValue(func() *clientruntime.Package {
-	pk, err := NewSpecularPackage()
-	if err != nil {
-		panic(errors.New("failed to initialize shared allow package Deployport/IAM"))
-	}
-	return pk
-})
+func init() {
+	initSpecularMeta()
+}
 
-// SpecularPackage returns a shared package instance for Deployport/IAM, panics when errors are found
-func SpecularPackage() *clientruntime.Package {
-	return specularPackageOnce()
+func initSpecularMeta() {
+	pk, err := newSpecularPackage()
+	if err != nil {
+		panic(errors.New("failed to initialize shared allow package deployport/iam"))
+	}
+	localSpecularMeta.mod = pk
+}
+
+// SpecularMetaInfo defines metadata of the specular module
+type SpecularMetaInfo struct {
+	mod                                                                *clientruntime.Package
+	structPathUserInformationSSOProvider                               *clientruntime.StructDefinition
+	structPathUserInformationSSOProfile                                *clientruntime.StructDefinition
+	structPathUserInformationSSO                                       *clientruntime.StructDefinition
+	structPathUserInformation                                          *clientruntime.StructDefinition
+	structPathCredentials                                              *clientruntime.StructDefinition
+	structPathSSOProviderUnavailableProblem                            *clientruntime.StructDefinition
+	structPathSSOFlow                                                  *clientruntime.StructDefinition
+	structPathAccount                                                  *clientruntime.StructDefinition
+	structPathAccountSSOProvider                                       *clientruntime.StructDefinition
+	structPathPolicyNotFoundProblem                                    *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicy                                 *clientruntime.StructDefinition
+	structPathAccountCreateInput                                       *clientruntime.StructDefinition
+	structPathAccountCreateOutput                                      *clientruntime.StructDefinition
+	structPathAccountCreateInvalidNameProblem                          *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityInput                               *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityOutput                              *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationInput                       *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationOutput                      *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationParameterProblem            *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInput                    *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationOutput                   *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInvalidFlowProblem       *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersInput                              *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersOutput                             *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyCreateInput                      *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyCreateOutput                     *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyListInput                        *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyListOutput                       *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyEnableInput                      *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyEnableOutput                     *clientruntime.StructDefinition
+	structPathInvalidUsernameProblem                                   *clientruntime.StructDefinition
+	structPathMemberAccount                                            *clientruntime.StructDefinition
+	structPathCredentialInfo                                           *clientruntime.StructDefinition
+	structPathIdentityPolicyStatement                                  *clientruntime.StructDefinition
+	structPathIdentityPolicy                                           *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachment                                 *clientruntime.StructDefinition
+	structPathUserCreateInput                                          *clientruntime.StructDefinition
+	structPathUserCreateOutput                                         *clientruntime.StructDefinition
+	structPathUserGetInput                                             *clientruntime.StructDefinition
+	structPathUserGetOutput                                            *clientruntime.StructDefinition
+	structPathUserGetUserNotAvailableProblem                           *clientruntime.StructDefinition
+	structPathUserDestroyInput                                         *clientruntime.StructDefinition
+	structPathUserDestroyOutput                                        *clientruntime.StructDefinition
+	structPathUserListInput                                            *clientruntime.StructDefinition
+	structPathUserListOutput                                           *clientruntime.StructDefinition
+	structPathUserMemberAccountsInput                                  *clientruntime.StructDefinition
+	structPathUserMemberAccountsOutput                                 *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateInput                                 *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateOutput                                *clientruntime.StructDefinition
+	structPathUserAccessKeyListInput                                   *clientruntime.StructDefinition
+	structPathUserAccessKeyListOutput                                  *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyInput                                *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyOutput                               *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachInput                            *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachOutput                           *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListInput                              *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListOutput                             *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachInput                            *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachOutput                           *clientruntime.StructDefinition
+	structPathPolicyStructureProblem                                   *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateInput                                *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateOutput                               *clientruntime.StructDefinition
+	structPathIdentityPolicyListInput                                  *clientruntime.StructDefinition
+	structPathIdentityPolicyListOutput                                 *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveInput                              *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveOutput                             *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyInput                               *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyOutput                              *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateInput                                *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateOutput                               *clientruntime.StructDefinition
+	structPathInternalAccessKeyUser                                    *clientruntime.StructDefinition
+	structPathInternalAccessKeyAccount                                 *clientruntime.StructDefinition
+	structPathInternalAccessKey                                        *clientruntime.StructDefinition
+	structPathInternalQueryAssertionEntryValue                         *clientruntime.StructDefinition
+	structPathInternalQueryAssertionEntry                              *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionCallerForbiddenProblem       *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyInput                   *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyOutput                  *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionInput                        *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionOutput                       *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryInput                         *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryOutput                        *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryReplacementProblem            *clientruntime.StructDefinition
+}
+
+// Module returns the module definition
+func (m *SpecularMetaInfo) Module() *clientruntime.Package {
+	return m.mod
+}
+
+// UserInformationSSOProvider allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSOProvider() *clientruntime.StructDefinition {
+	return m.structPathUserInformationSSOProvider
+}
+
+// UserInformationSSOProfile allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSOProfile() *clientruntime.StructDefinition {
+	return m.structPathUserInformationSSOProfile
+}
+
+// UserInformationSSO allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSO() *clientruntime.StructDefinition {
+	return m.structPathUserInformationSSO
+}
+
+// UserInformation allows easy access to structure
+func (m *SpecularMetaInfo) UserInformation() *clientruntime.StructDefinition {
+	return m.structPathUserInformation
+}
+
+// Credentials allows easy access to structure
+func (m *SpecularMetaInfo) Credentials() *clientruntime.StructDefinition {
+	return m.structPathCredentials
+}
+
+// SSOProviderUnavailableProblem allows easy access to structure
+func (m *SpecularMetaInfo) SSOProviderUnavailableProblem() *clientruntime.StructDefinition {
+	return m.structPathSSOProviderUnavailableProblem
+}
+
+// SSOFlow allows easy access to structure
+func (m *SpecularMetaInfo) SSOFlow() *clientruntime.StructDefinition {
+	return m.structPathSSOFlow
+}
+
+// Account allows easy access to structure
+func (m *SpecularMetaInfo) Account() *clientruntime.StructDefinition {
+	return m.structPathAccount
+}
+
+// AccountSSOProvider allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOProvider() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOProvider
+}
+
+// PolicyNotFoundProblem allows easy access to structure
+func (m *SpecularMetaInfo) PolicyNotFoundProblem() *clientruntime.StructDefinition {
+	return m.structPathPolicyNotFoundProblem
+}
+
+// AccountSSOAutoJoinPolicy allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicy() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicy
+}
+
+// AccountCreateInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateInput() *clientruntime.StructDefinition {
+	return m.structPathAccountCreateInput
+}
+
+// AccountCreateOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountCreateOutput
+}
+
+// AccountCreateInvalidNameProblem allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateInvalidNameProblem() *clientruntime.StructDefinition {
+	return m.structPathAccountCreateInvalidNameProblem
+}
+
+// AccountAssumeIdentityInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountAssumeIdentityInput() *clientruntime.StructDefinition {
+	return m.structPathAccountAssumeIdentityInput
+}
+
+// AccountAssumeIdentityOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountAssumeIdentityOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountAssumeIdentityOutput
+}
+
+// AccountSSOBeginAuthenticationInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOBeginAuthenticationInput
+}
+
+// AccountSSOBeginAuthenticationOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOBeginAuthenticationOutput
+}
+
+// AccountSSOBeginAuthenticationParameterProblem allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationParameterProblem() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOBeginAuthenticationParameterProblem
+}
+
+// AccountSSOCompleteAuthenticationInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOCompleteAuthenticationInput
+}
+
+// AccountSSOCompleteAuthenticationOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOCompleteAuthenticationOutput
+}
+
+// AccountSSOCompleteAuthenticationInvalidFlowProblem allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInvalidFlowProblem() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem
+}
+
+// AccountSSOGetProvidersInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOGetProvidersInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOGetProvidersInput
+}
+
+// AccountSSOGetProvidersOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOGetProvidersOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOGetProvidersOutput
+}
+
+// AccountSSOAutoJoinPolicyCreateInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyCreateInput
+}
+
+// AccountSSOAutoJoinPolicyCreateOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyCreateOutput
+}
+
+// AccountSSOAutoJoinPolicyListInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyListInput
+}
+
+// AccountSSOAutoJoinPolicyListOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyListOutput
+}
+
+// AccountSSOAutoJoinPolicyEnableInput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableInput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyEnableInput
+}
+
+// AccountSSOAutoJoinPolicyEnableOutput allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableOutput() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOAutoJoinPolicyEnableOutput
+}
+
+// InvalidUsernameProblem allows easy access to structure
+func (m *SpecularMetaInfo) InvalidUsernameProblem() *clientruntime.StructDefinition {
+	return m.structPathInvalidUsernameProblem
+}
+
+// MemberAccount allows easy access to structure
+func (m *SpecularMetaInfo) MemberAccount() *clientruntime.StructDefinition {
+	return m.structPathMemberAccount
+}
+
+// CredentialInfo allows easy access to structure
+func (m *SpecularMetaInfo) CredentialInfo() *clientruntime.StructDefinition {
+	return m.structPathCredentialInfo
+}
+
+// IdentityPolicyStatement allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyStatement() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyStatement
+}
+
+// IdentityPolicy allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicy() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicy
+}
+
+// IdentityPolicyAttachment allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyAttachment() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyAttachment
+}
+
+// UserCreateInput allows easy access to structure
+func (m *SpecularMetaInfo) UserCreateInput() *clientruntime.StructDefinition {
+	return m.structPathUserCreateInput
+}
+
+// UserCreateOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserCreateOutput() *clientruntime.StructDefinition {
+	return m.structPathUserCreateOutput
+}
+
+// UserGetInput allows easy access to structure
+func (m *SpecularMetaInfo) UserGetInput() *clientruntime.StructDefinition {
+	return m.structPathUserGetInput
+}
+
+// UserGetOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserGetOutput() *clientruntime.StructDefinition {
+	return m.structPathUserGetOutput
+}
+
+// UserGetUserNotAvailableProblem allows easy access to structure
+func (m *SpecularMetaInfo) UserGetUserNotAvailableProblem() *clientruntime.StructDefinition {
+	return m.structPathUserGetUserNotAvailableProblem
+}
+
+// UserDestroyInput allows easy access to structure
+func (m *SpecularMetaInfo) UserDestroyInput() *clientruntime.StructDefinition {
+	return m.structPathUserDestroyInput
+}
+
+// UserDestroyOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserDestroyOutput() *clientruntime.StructDefinition {
+	return m.structPathUserDestroyOutput
+}
+
+// UserListInput allows easy access to structure
+func (m *SpecularMetaInfo) UserListInput() *clientruntime.StructDefinition {
+	return m.structPathUserListInput
+}
+
+// UserListOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserListOutput() *clientruntime.StructDefinition {
+	return m.structPathUserListOutput
+}
+
+// UserMemberAccountsInput allows easy access to structure
+func (m *SpecularMetaInfo) UserMemberAccountsInput() *clientruntime.StructDefinition {
+	return m.structPathUserMemberAccountsInput
+}
+
+// UserMemberAccountsOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserMemberAccountsOutput() *clientruntime.StructDefinition {
+	return m.structPathUserMemberAccountsOutput
+}
+
+// UserAccessKeyCreateInput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyCreateInput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyCreateInput
+}
+
+// UserAccessKeyCreateOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyCreateOutput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyCreateOutput
+}
+
+// UserAccessKeyListInput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyListInput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyListInput
+}
+
+// UserAccessKeyListOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyListOutput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyListOutput
+}
+
+// UserAccessKeyDestroyInput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyDestroyInput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyDestroyInput
+}
+
+// UserAccessKeyDestroyOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyDestroyOutput() *clientruntime.StructDefinition {
+	return m.structPathUserAccessKeyDestroyOutput
+}
+
+// UserIdentityPolicyAttachInput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyAttachInput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyAttachInput
+}
+
+// UserIdentityPolicyAttachOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyAttachOutput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyAttachOutput
+}
+
+// UserIdentityPolicyListInput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyListInput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyListInput
+}
+
+// UserIdentityPolicyListOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyListOutput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyListOutput
+}
+
+// UserIdentityPolicyDetachInput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyDetachInput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyDetachInput
+}
+
+// UserIdentityPolicyDetachOutput allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyDetachOutput() *clientruntime.StructDefinition {
+	return m.structPathUserIdentityPolicyDetachOutput
+}
+
+// PolicyStructureProblem allows easy access to structure
+func (m *SpecularMetaInfo) PolicyStructureProblem() *clientruntime.StructDefinition {
+	return m.structPathPolicyStructureProblem
+}
+
+// IdentityPolicyCreateInput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyCreateInput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyCreateInput
+}
+
+// IdentityPolicyCreateOutput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyCreateOutput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyCreateOutput
+}
+
+// IdentityPolicyListInput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyListInput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyListInput
+}
+
+// IdentityPolicyListOutput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyListOutput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyListOutput
+}
+
+// IdentityPolicyRetrieveInput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyRetrieveInput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyRetrieveInput
+}
+
+// IdentityPolicyRetrieveOutput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyRetrieveOutput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyRetrieveOutput
+}
+
+// IdentityPolicyDestroyInput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyDestroyInput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyDestroyInput
+}
+
+// IdentityPolicyDestroyOutput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyDestroyOutput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyDestroyOutput
+}
+
+// IdentityPolicyUpdateInput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyUpdateInput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyUpdateInput
+}
+
+// IdentityPolicyUpdateOutput allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyUpdateOutput() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyUpdateOutput
+}
+
+// InternalAccessKeyUser allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyUser() *clientruntime.StructDefinition {
+	return m.structPathInternalAccessKeyUser
+}
+
+// InternalAccessKeyAccount allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyAccount() *clientruntime.StructDefinition {
+	return m.structPathInternalAccessKeyAccount
+}
+
+// InternalAccessKey allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKey() *clientruntime.StructDefinition {
+	return m.structPathInternalAccessKey
+}
+
+// InternalQueryAssertionEntryValue allows easy access to structure
+func (m *SpecularMetaInfo) InternalQueryAssertionEntryValue() *clientruntime.StructDefinition {
+	return m.structPathInternalQueryAssertionEntryValue
+}
+
+// InternalQueryAssertionEntry allows easy access to structure
+func (m *SpecularMetaInfo) InternalQueryAssertionEntry() *clientruntime.StructDefinition {
+	return m.structPathInternalQueryAssertionEntry
+}
+
+// InternalServicesAssertActionCallerForbiddenProblem allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionCallerForbiddenProblem() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertActionCallerForbiddenProblem
+}
+
+// InternalServicesValidateAccessKeyInput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateAccessKeyInput
+}
+
+// InternalServicesValidateAccessKeyOutput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyOutput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateAccessKeyOutput
+}
+
+// InternalServicesValidateAccessKeyInvalidAccessKeyProblem allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInvalidAccessKeyProblem() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem
+}
+
+// InternalServicesAssertActionInput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionInput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertActionInput
+}
+
+// InternalServicesAssertActionOutput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionOutput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertActionOutput
+}
+
+// InternalServicesAssertQueryInput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryInput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertQueryInput
+}
+
+// InternalServicesAssertQueryOutput allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryOutput() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertQueryOutput
+}
+
+// InternalServicesAssertQueryReplacementProblem allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryReplacementProblem() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesAssertQueryReplacementProblem
+}
+
+var localSpecularMeta *SpecularMetaInfo = &SpecularMetaInfo{}
+
+// SpecularMeta returns metadata of the specular module
+func SpecularMeta() *SpecularMetaInfo {
+	return localSpecularMeta
 }

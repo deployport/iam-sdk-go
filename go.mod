@@ -3,8 +3,8 @@ module go.deployport.com/iam-sdk
 go 1.22.0
 
 require (
-	go.deployport.com/api-services-corelib v0.2.0
-	go.deployport.com/specular-runtime v0.5.0
+	go.deployport.com/api-services-corelib v0.3.0
+	go.deployport.com/specular-runtime v0.6.0
 )
 
 require github.com/google/uuid v1.3.0 // indirect
