@@ -2,6 +2,7 @@ package iam
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"time"
 
@@ -15,13 +16,14 @@ import (
 // NewUserInformationSSOProvider creates a new UserInformationSSOProvider
 func NewUserInformationSSOProvider() *UserInformationSSOProvider {
 	s := &UserInformationSSOProvider{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserInformationSSOProvider entity
 type UserInformationSSOProvider struct {
 	// provider name
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -34,36 +36,47 @@ func (e *UserInformationSSOProvider) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *UserInformationSSOProvider) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserInformationSSOProvider) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserInformationSSOProvider) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserInformationSSOProvider.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserInformationSSOProvider) InitializeDefaults() {
+}
+
+// userInformationSSOProviderAlias is defined to help pre and post JSON marshaling without recursive loops
+type userInformationSSOProviderAlias UserInformationSSOProvider
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserInformationSSOProvider) UnmarshalJSON(data []byte) error {
+	var alias userInformationSSOProviderAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserInformationSSOProvider)(&alias)).InitializeDefaults()
+	*e = UserInformationSSOProvider(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserInformationSSOProvider) MarshalJSON() ([]byte, error) {
+	alias := userInformationSSOProviderAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserInformationSSOProfile creates a new UserInformationSSOProfile
 func NewUserInformationSSOProfile() *UserInformationSSOProfile {
 	s := &UserInformationSSOProfile{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserInformationSSOProfile entity
 type UserInformationSSOProfile struct {
-	Email      string
-	Fullname   string
-	PictureURL string
+	Email      string `json:"email,omitempty"`
+	Fullname   string `json:"fullname,omitempty"`
+	PictureURL string `json:"pictureURL,omitempty"`
 }
 
 // GetEmail returns the value for the field email
@@ -96,43 +109,46 @@ func (e *UserInformationSSOProfile) SetPictureURL(pictureURL string) {
 	e.PictureURL = pictureURL
 }
 
-// Hydrate implements struct hydrate
-func (e *UserInformationSSOProfile) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "email", &e.Email); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "fullname", &e.Fullname); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "pictureURL", &e.PictureURL); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserInformationSSOProfile) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("email", e.Email)
-	ctx.Content().SetProperty("fullname", e.Fullname)
-	ctx.Content().SetProperty("pictureURL", e.PictureURL)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserInformationSSOProfile) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserInformationSSOProfile.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserInformationSSOProfile) InitializeDefaults() {
+}
+
+// userInformationSSOProfileAlias is defined to help pre and post JSON marshaling without recursive loops
+type userInformationSSOProfileAlias UserInformationSSOProfile
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserInformationSSOProfile) UnmarshalJSON(data []byte) error {
+	var alias userInformationSSOProfileAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserInformationSSOProfile)(&alias)).InitializeDefaults()
+	*e = UserInformationSSOProfile(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserInformationSSOProfile) MarshalJSON() ([]byte, error) {
+	alias := userInformationSSOProfileAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserInformationSSO creates a new UserInformationSSO
 func NewUserInformationSSO() *UserInformationSSO {
 	s := &UserInformationSSO{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserInformationSSO entity
 type UserInformationSSO struct {
-	Profile  *UserInformationSSOProfile
-	Provider *UserInformationSSOProvider
+	Profile  *UserInformationSSOProfile  `json:"profile,omitempty"`
+	Provider *UserInformationSSOProvider `json:"provider,omitempty"`
 }
 
 // GetProfile returns the value for the field profile
@@ -155,63 +171,48 @@ func (e *UserInformationSSO) SetProvider(provider *UserInformationSSOProvider) {
 	e.Provider = provider
 }
 
-// Hydrate implements struct hydrate
-func (e *UserInformationSSO) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSOProfile().TypeBuilder(), ctx.Package(), "profile", &e.Profile); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSOProvider().TypeBuilder(), ctx.Package(), "provider", &e.Provider); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserInformationSSO) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentProfile clientruntime.Content
-	if v := e.Profile; v != nil {
-		fieldContentProfile = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentProfile)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("profile", err)
-		}
-	}
-	if fieldContentProfile == nil {
-		return clientruntime.NewPropertyRequiredError("profile")
-	}
-	ctx.Content().SetProperty("profile", fieldContentProfile.Map())
-
-	var fieldContentProvider clientruntime.Content
-	if v := e.Provider; v != nil {
-		fieldContentProvider = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentProvider)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("provider", err)
-		}
-	}
-	if fieldContentProvider == nil {
-		return clientruntime.NewPropertyRequiredError("provider")
-	}
-	ctx.Content().SetProperty("provider", fieldContentProvider.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserInformationSSO) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserInformationSSO.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserInformationSSO) InitializeDefaults() {
+}
+
+// userInformationSSOAlias is defined to help pre and post JSON marshaling without recursive loops
+type userInformationSSOAlias UserInformationSSO
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserInformationSSO) UnmarshalJSON(data []byte) error {
+	var alias userInformationSSOAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserInformationSSO)(&alias)).InitializeDefaults()
+	*e = UserInformationSSO(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserInformationSSO) MarshalJSON() ([]byte, error) {
+	alias := userInformationSSOAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserInformation creates a new UserInformation
 func NewUserInformation() *UserInformation {
 	s := &UserInformation{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserInformation entity
 type UserInformation struct {
-	Description string
+	Description string `json:"description,omitempty"`
 	// when the user comes from SSO, this field is populated with the extra information
-	Sso      *UserInformationSSO
-	Username string
+	Sso      *UserInformationSSO `json:"sso,omitempty"`
+	Username string              `json:"username,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -244,51 +245,46 @@ func (e *UserInformation) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserInformation) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "description", &e.Description); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformationSSO().TypeBuilder(), ctx.Package(), "sso", &e.Sso); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserInformation) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("description", e.Description)
-
-	var fieldContentSso clientruntime.Content
-	if v := e.Sso; v != nil {
-		fieldContentSso = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentSso)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("sso", err)
-		}
-	}
-	ctx.Content().SetProperty("sso", fieldContentSso.Map())
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserInformation) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserInformation.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserInformation) InitializeDefaults() {
+}
+
+// userInformationAlias is defined to help pre and post JSON marshaling without recursive loops
+type userInformationAlias UserInformation
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserInformation) UnmarshalJSON(data []byte) error {
+	var alias userInformationAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserInformation)(&alias)).InitializeDefaults()
+	*e = UserInformation(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserInformation) MarshalJSON() ([]byte, error) {
+	alias := userInformationAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewCredentials creates a new Credentials
 func NewCredentials() *Credentials {
 	s := &Credentials{}
+	s.InitializeDefaults()
 	return s
 }
 
 // Credentials entity
 type Credentials struct {
-	AccessKeyID     string
-	SecretAccessKey string
+	AccessKeyID     string `json:"accessKeyID,omitempty"`
+	SecretAccessKey string `json:"secretAccessKey,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -311,38 +307,45 @@ func (e *Credentials) SetSecretAccessKey(secretAccessKey string) {
 	e.SecretAccessKey = secretAccessKey
 }
 
-// Hydrate implements struct hydrate
-func (e *Credentials) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "secretAccessKey", &e.SecretAccessKey); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *Credentials) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
-	ctx.Content().SetProperty("secretAccessKey", e.SecretAccessKey)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *Credentials) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathCredentials.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *Credentials) InitializeDefaults() {
+}
+
+// credentialsAlias is defined to help pre and post JSON marshaling without recursive loops
+type credentialsAlias Credentials
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *Credentials) UnmarshalJSON(data []byte) error {
+	var alias credentialsAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*Credentials)(&alias)).InitializeDefaults()
+	*e = Credentials(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e Credentials) MarshalJSON() ([]byte, error) {
+	alias := credentialsAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewSSOProviderUnavailableProblem creates a new SSOProviderUnavailableProblem
 func NewSSOProviderUnavailableProblem() *SSOProviderUnavailableProblem {
 	s := &SSOProviderUnavailableProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // SSOProviderUnavailableProblem entity
 type SSOProviderUnavailableProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -371,36 +374,47 @@ func (e *SSOProviderUnavailableProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *SSOProviderUnavailableProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *SSOProviderUnavailableProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *SSOProviderUnavailableProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathSSOProviderUnavailableProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *SSOProviderUnavailableProblem) InitializeDefaults() {
+}
+
+// sSOProviderUnavailableProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type sSOProviderUnavailableProblemAlias SSOProviderUnavailableProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SSOProviderUnavailableProblem) UnmarshalJSON(data []byte) error {
+	var alias sSOProviderUnavailableProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SSOProviderUnavailableProblem)(&alias)).InitializeDefaults()
+	*e = SSOProviderUnavailableProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SSOProviderUnavailableProblem) MarshalJSON() ([]byte, error) {
+	alias := sSOProviderUnavailableProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewSSOFlow creates a new SSOFlow
 func NewSSOFlow() *SSOFlow {
 	s := &SSOFlow{}
+	s.InitializeDefaults()
 	return s
 }
 
 // SSOFlow entity
 type SSOFlow struct {
-	BrowseURL                 string
-	CompletionIntervalSeconds int32
-	ExpiresAt                 time.Time
+	BrowseURL                 string    `json:"browseURL,omitempty"`
+	CompletionIntervalSeconds int32     `json:"completionIntervalSeconds,omitempty"`
+	ExpiresAt                 time.Time `json:"expiresAt,omitempty"`
 }
 
 // GetBrowseURL returns the value for the field browseURL
@@ -433,42 +447,45 @@ func (e *SSOFlow) SetExpiresAt(expiresAt time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
-// Hydrate implements struct hydrate
-func (e *SSOFlow) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "browseURL", &e.BrowseURL); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireNumericProperty(ctx.Content(), "completionIntervalSeconds", &e.CompletionIntervalSeconds); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireTimeProperty(ctx.Content(), "expiresAt", &e.ExpiresAt); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *SSOFlow) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("browseURL", e.BrowseURL)
-	ctx.Content().SetProperty("completionIntervalSeconds", e.CompletionIntervalSeconds)
-	ctx.Content().SetProperty("expiresAt", e.ExpiresAt)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *SSOFlow) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathSSOFlow.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *SSOFlow) InitializeDefaults() {
+}
+
+// sSOFlowAlias is defined to help pre and post JSON marshaling without recursive loops
+type sSOFlowAlias SSOFlow
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SSOFlow) UnmarshalJSON(data []byte) error {
+	var alias sSOFlowAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SSOFlow)(&alias)).InitializeDefaults()
+	*e = SSOFlow(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SSOFlow) MarshalJSON() ([]byte, error) {
+	alias := sSOFlowAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccount creates a new Account
 func NewAccount() *Account {
 	s := &Account{}
+	s.InitializeDefaults()
 	return s
 }
 
 // Account entity
 type Account struct {
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -481,35 +498,46 @@ func (e *Account) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *Account) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *Account) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *Account) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccount.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *Account) InitializeDefaults() {
+}
+
+// accountAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountAlias Account
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *Account) UnmarshalJSON(data []byte) error {
+	var alias accountAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*Account)(&alias)).InitializeDefaults()
+	*e = Account(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e Account) MarshalJSON() ([]byte, error) {
+	alias := accountAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOProvider creates a new AccountSSOProvider
 func NewAccountSSOProvider() *AccountSSOProvider {
 	s := &AccountSSOProvider{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOProvider entity
 type AccountSSOProvider struct {
-	DisplayName string
-	Name        string
+	DisplayName string `json:"displayName,omitempty"`
+	Name        string `json:"name,omitempty"`
 }
 
 // GetDisplayName returns the value for the field displayName
@@ -532,38 +560,45 @@ func (e *AccountSSOProvider) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOProvider) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "displayName", &e.DisplayName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOProvider) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("displayName", e.DisplayName)
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOProvider) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOProvider.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOProvider) InitializeDefaults() {
+}
+
+// accountSSOProviderAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOProviderAlias AccountSSOProvider
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOProvider) UnmarshalJSON(data []byte) error {
+	var alias accountSSOProviderAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOProvider)(&alias)).InitializeDefaults()
+	*e = AccountSSOProvider(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOProvider) MarshalJSON() ([]byte, error) {
+	alias := accountSSOProviderAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewPolicyNotFoundProblem creates a new PolicyNotFoundProblem
 func NewPolicyNotFoundProblem() *PolicyNotFoundProblem {
 	s := &PolicyNotFoundProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // PolicyNotFoundProblem entity
 type PolicyNotFoundProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -592,42 +627,53 @@ func (e *PolicyNotFoundProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *PolicyNotFoundProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *PolicyNotFoundProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *PolicyNotFoundProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathPolicyNotFoundProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *PolicyNotFoundProblem) InitializeDefaults() {
+}
+
+// policyNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type policyNotFoundProblemAlias PolicyNotFoundProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *PolicyNotFoundProblem) UnmarshalJSON(data []byte) error {
+	var alias policyNotFoundProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*PolicyNotFoundProblem)(&alias)).InitializeDefaults()
+	*e = PolicyNotFoundProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e PolicyNotFoundProblem) MarshalJSON() ([]byte, error) {
+	alias := policyNotFoundProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicy creates a new AccountSSOAutoJoinPolicy
 func NewAccountSSOAutoJoinPolicy() *AccountSSOAutoJoinPolicy {
 	s := &AccountSSOAutoJoinPolicy{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOAutoJoinPolicy entity
 type AccountSSOAutoJoinPolicy struct {
 	// email-domain users come from, example "deployport.com"
-	Domain  string
-	Enabled bool
+	Domain  string `json:"domain,omitempty"`
+	Enabled bool   `json:"enabled,omitempty"`
 	// unique identifer of the auto-join policy
-	Name string
+	Name string `json:"name,omitempty"`
 	// where the users are coming from
-	OriginAccountName string
+	OriginAccountName string `json:"originAccountName,omitempty"`
 	// SSO provider in the source account
-	OriginProviderName string
+	OriginProviderName string `json:"originProviderName,omitempty"`
 }
 
 // GetDomain returns the value for the field domain
@@ -680,50 +726,45 @@ func (e *AccountSSOAutoJoinPolicy) SetOriginProviderName(originProviderName stri
 	e.OriginProviderName = originProviderName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicy) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "domain", &e.Domain); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireBoolProperty(ctx.Content(), "enabled", &e.Enabled); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "originAccountName", &e.OriginAccountName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "originProviderName", &e.OriginProviderName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicy) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("domain", e.Domain)
-	ctx.Content().SetProperty("enabled", e.Enabled)
-	ctx.Content().SetProperty("name", e.Name)
-	ctx.Content().SetProperty("originAccountName", e.OriginAccountName)
-	ctx.Content().SetProperty("originProviderName", e.OriginProviderName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicy) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicy.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicy) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyAlias AccountSSOAutoJoinPolicy
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicy) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicy)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicy(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicy) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateInput creates a new AccountCreateInput
 func NewAccountCreateInput() *AccountCreateInput {
 	s := &AccountCreateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountCreateInput entity
 type AccountCreateInput struct {
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -736,34 +777,45 @@ func (e *AccountCreateInput) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountCreateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountCreateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCreateInput) InitializeDefaults() {
+}
+
+// accountCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCreateInputAlias AccountCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCreateInput) UnmarshalJSON(data []byte) error {
+	var alias accountCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCreateInput)(&alias)).InitializeDefaults()
+	*e = AccountCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCreateInput) MarshalJSON() ([]byte, error) {
+	alias := accountCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateOutput creates a new AccountCreateOutput
 func NewAccountCreateOutput() *AccountCreateOutput {
 	s := &AccountCreateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountCreateOutput entity
 type AccountCreateOutput struct {
-	Account *Account
+	Account *Account `json:"account,omitempty"`
 }
 
 // GetAccount returns the value for the field account
@@ -776,45 +828,45 @@ func (e *AccountCreateOutput) SetAccount(account *Account) {
 	e.Account = account
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Account().TypeBuilder(), ctx.Package(), "account", &e.Account); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentAccount clientruntime.Content
-	if v := e.Account; v != nil {
-		fieldContentAccount = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentAccount)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("account", err)
-		}
-	}
-	if fieldContentAccount == nil {
-		return clientruntime.NewPropertyRequiredError("account")
-	}
-	ctx.Content().SetProperty("account", fieldContentAccount.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountCreateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCreateOutput) InitializeDefaults() {
+}
+
+// accountCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCreateOutputAlias AccountCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias accountCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCreateOutput)(&alias)).InitializeDefaults()
+	*e = AccountCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := accountCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateInvalidNameProblem creates a new AccountCreateInvalidNameProblem
 func NewAccountCreateInvalidNameProblem() *AccountCreateInvalidNameProblem {
 	s := &AccountCreateInvalidNameProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountCreateInvalidNameProblem entity
 type AccountCreateInvalidNameProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -843,34 +895,45 @@ func (e *AccountCreateInvalidNameProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountCreateInvalidNameProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountCreateInvalidNameProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountCreateInvalidNameProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountCreateInvalidNameProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCreateInvalidNameProblem) InitializeDefaults() {
+}
+
+// accountCreateInvalidNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCreateInvalidNameProblemAlias AccountCreateInvalidNameProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCreateInvalidNameProblem) UnmarshalJSON(data []byte) error {
+	var alias accountCreateInvalidNameProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCreateInvalidNameProblem)(&alias)).InitializeDefaults()
+	*e = AccountCreateInvalidNameProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCreateInvalidNameProblem) MarshalJSON() ([]byte, error) {
+	alias := accountCreateInvalidNameProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountAssumeIdentityInput creates a new AccountAssumeIdentityInput
 func NewAccountAssumeIdentityInput() *AccountAssumeIdentityInput {
 	s := &AccountAssumeIdentityInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountAssumeIdentityInput entity
 type AccountAssumeIdentityInput struct {
-	AccountName string
+	AccountName string `json:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -883,34 +946,45 @@ func (e *AccountAssumeIdentityInput) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountAssumeIdentityInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountAssumeIdentityInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accountName", e.AccountName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountAssumeIdentityInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountAssumeIdentityInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountAssumeIdentityInput) InitializeDefaults() {
+}
+
+// accountAssumeIdentityInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountAssumeIdentityInputAlias AccountAssumeIdentityInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountAssumeIdentityInput) UnmarshalJSON(data []byte) error {
+	var alias accountAssumeIdentityInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountAssumeIdentityInput)(&alias)).InitializeDefaults()
+	*e = AccountAssumeIdentityInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountAssumeIdentityInput) MarshalJSON() ([]byte, error) {
+	alias := accountAssumeIdentityInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountAssumeIdentityOutput creates a new AccountAssumeIdentityOutput
 func NewAccountAssumeIdentityOutput() *AccountAssumeIdentityOutput {
 	s := &AccountAssumeIdentityOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountAssumeIdentityOutput entity
 type AccountAssumeIdentityOutput struct {
-	Credentials *Credentials
+	Credentials *Credentials `json:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -923,48 +997,48 @@ func (e *AccountAssumeIdentityOutput) SetCredentials(credentials *Credentials) {
 	e.Credentials = credentials
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountAssumeIdentityOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountAssumeIdentityOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentCredentials clientruntime.Content
-	if v := e.Credentials; v != nil {
-		fieldContentCredentials = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentCredentials)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("credentials", err)
-		}
-	}
-	if fieldContentCredentials == nil {
-		return clientruntime.NewPropertyRequiredError("credentials")
-	}
-	ctx.Content().SetProperty("credentials", fieldContentCredentials.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountAssumeIdentityOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountAssumeIdentityOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountAssumeIdentityOutput) InitializeDefaults() {
+}
+
+// accountAssumeIdentityOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountAssumeIdentityOutputAlias AccountAssumeIdentityOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountAssumeIdentityOutput) UnmarshalJSON(data []byte) error {
+	var alias accountAssumeIdentityOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountAssumeIdentityOutput)(&alias)).InitializeDefaults()
+	*e = AccountAssumeIdentityOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountAssumeIdentityOutput) MarshalJSON() ([]byte, error) {
+	alias := accountAssumeIdentityOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOBeginAuthenticationInput creates a new AccountSSOBeginAuthenticationInput
 func NewAccountSSOBeginAuthenticationInput() *AccountSSOBeginAuthenticationInput {
 	s := &AccountSSOBeginAuthenticationInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOBeginAuthenticationInput entity
 type AccountSSOBeginAuthenticationInput struct {
-	AccountName string
+	AccountName string `json:"accountName,omitempty"`
 	// client generated code challenge that will be used to verify the completion code, SHA-256 of the codeVerifier
-	CodeChallenge string
-	ProviderName  string
+	CodeChallenge string `json:"codeChallenge,omitempty"`
+	ProviderName  string `json:"providerName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -997,42 +1071,45 @@ func (e *AccountSSOBeginAuthenticationInput) SetProviderName(providerName string
 	e.ProviderName = providerName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOBeginAuthenticationInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "codeChallenge", &e.CodeChallenge); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "providerName", &e.ProviderName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOBeginAuthenticationInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accountName", e.AccountName)
-	ctx.Content().SetProperty("codeChallenge", e.CodeChallenge)
-	ctx.Content().SetProperty("providerName", e.ProviderName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOBeginAuthenticationInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOBeginAuthenticationInput) InitializeDefaults() {
+}
+
+// accountSSOBeginAuthenticationInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOBeginAuthenticationInputAlias AccountSSOBeginAuthenticationInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOBeginAuthenticationInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOBeginAuthenticationInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOBeginAuthenticationInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOBeginAuthenticationInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOBeginAuthenticationInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOBeginAuthenticationInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOBeginAuthenticationOutput creates a new AccountSSOBeginAuthenticationOutput
 func NewAccountSSOBeginAuthenticationOutput() *AccountSSOBeginAuthenticationOutput {
 	s := &AccountSSOBeginAuthenticationOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOBeginAuthenticationOutput entity
 type AccountSSOBeginAuthenticationOutput struct {
-	Flow *SSOFlow
+	Flow *SSOFlow `json:"flow,omitempty"`
 }
 
 // GetFlow returns the value for the field flow
@@ -1045,45 +1122,45 @@ func (e *AccountSSOBeginAuthenticationOutput) SetFlow(flow *SSOFlow) {
 	e.Flow = flow
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOBeginAuthenticationOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().SSOFlow().TypeBuilder(), ctx.Package(), "flow", &e.Flow); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOBeginAuthenticationOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentFlow clientruntime.Content
-	if v := e.Flow; v != nil {
-		fieldContentFlow = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentFlow)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("flow", err)
-		}
-	}
-	if fieldContentFlow == nil {
-		return clientruntime.NewPropertyRequiredError("flow")
-	}
-	ctx.Content().SetProperty("flow", fieldContentFlow.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOBeginAuthenticationOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOBeginAuthenticationOutput) InitializeDefaults() {
+}
+
+// accountSSOBeginAuthenticationOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOBeginAuthenticationOutputAlias AccountSSOBeginAuthenticationOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOBeginAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOBeginAuthenticationOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOBeginAuthenticationOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOBeginAuthenticationOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOBeginAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOBeginAuthenticationOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOBeginAuthenticationParameterProblem creates a new AccountSSOBeginAuthenticationParameterProblem
 func NewAccountSSOBeginAuthenticationParameterProblem() *AccountSSOBeginAuthenticationParameterProblem {
 	s := &AccountSSOBeginAuthenticationParameterProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOBeginAuthenticationParameterProblem entity
 type AccountSSOBeginAuthenticationParameterProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1112,37 +1189,48 @@ func (e *AccountSSOBeginAuthenticationParameterProblem) SetMessage(message strin
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOBeginAuthenticationParameterProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOBeginAuthenticationParameterProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOBeginAuthenticationParameterProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOBeginAuthenticationParameterProblem) InitializeDefaults() {
+}
+
+// accountSSOBeginAuthenticationParameterProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOBeginAuthenticationParameterProblemAlias AccountSSOBeginAuthenticationParameterProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOBeginAuthenticationParameterProblem) UnmarshalJSON(data []byte) error {
+	var alias accountSSOBeginAuthenticationParameterProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOBeginAuthenticationParameterProblem)(&alias)).InitializeDefaults()
+	*e = AccountSSOBeginAuthenticationParameterProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOBeginAuthenticationParameterProblem) MarshalJSON() ([]byte, error) {
+	alias := accountSSOBeginAuthenticationParameterProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOCompleteAuthenticationInput creates a new AccountSSOCompleteAuthenticationInput
 func NewAccountSSOCompleteAuthenticationInput() *AccountSSOCompleteAuthenticationInput {
 	s := &AccountSSOCompleteAuthenticationInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOCompleteAuthenticationInput entity
 type AccountSSOCompleteAuthenticationInput struct {
-	AccountName string
+	AccountName string `json:"accountName,omitempty"`
 	// base64-url-encoded client generated code challenge that will be used to verify the completion code
-	CodeVerifierB64 string
-	ProviderName    string
+	CodeVerifierB64 string `json:"codeVerifierB64,omitempty"`
+	ProviderName    string `json:"providerName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1175,42 +1263,45 @@ func (e *AccountSSOCompleteAuthenticationInput) SetProviderName(providerName str
 	e.ProviderName = providerName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOCompleteAuthenticationInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "codeVerifierB64", &e.CodeVerifierB64); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "providerName", &e.ProviderName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOCompleteAuthenticationInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accountName", e.AccountName)
-	ctx.Content().SetProperty("codeVerifierB64", e.CodeVerifierB64)
-	ctx.Content().SetProperty("providerName", e.ProviderName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOCompleteAuthenticationInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOCompleteAuthenticationInput) InitializeDefaults() {
+}
+
+// accountSSOCompleteAuthenticationInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOCompleteAuthenticationInputAlias AccountSSOCompleteAuthenticationInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOCompleteAuthenticationInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOCompleteAuthenticationInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOCompleteAuthenticationInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOCompleteAuthenticationInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOCompleteAuthenticationInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOCompleteAuthenticationInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOCompleteAuthenticationOutput creates a new AccountSSOCompleteAuthenticationOutput
 func NewAccountSSOCompleteAuthenticationOutput() *AccountSSOCompleteAuthenticationOutput {
 	s := &AccountSSOCompleteAuthenticationOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOCompleteAuthenticationOutput entity
 type AccountSSOCompleteAuthenticationOutput struct {
-	Credentials *Credentials
+	Credentials *Credentials `json:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -1223,45 +1314,45 @@ func (e *AccountSSOCompleteAuthenticationOutput) SetCredentials(credentials *Cre
 	e.Credentials = credentials
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOCompleteAuthenticationOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOCompleteAuthenticationOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentCredentials clientruntime.Content
-	if v := e.Credentials; v != nil {
-		fieldContentCredentials = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentCredentials)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("credentials", err)
-		}
-	}
-	if fieldContentCredentials == nil {
-		return clientruntime.NewPropertyRequiredError("credentials")
-	}
-	ctx.Content().SetProperty("credentials", fieldContentCredentials.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOCompleteAuthenticationOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOCompleteAuthenticationOutput) InitializeDefaults() {
+}
+
+// accountSSOCompleteAuthenticationOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOCompleteAuthenticationOutputAlias AccountSSOCompleteAuthenticationOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOCompleteAuthenticationOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOCompleteAuthenticationOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOCompleteAuthenticationOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOCompleteAuthenticationOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOCompleteAuthenticationOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOCompleteAuthenticationOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOCompleteAuthenticationInvalidFlowProblem creates a new AccountSSOCompleteAuthenticationInvalidFlowProblem
 func NewAccountSSOCompleteAuthenticationInvalidFlowProblem() *AccountSSOCompleteAuthenticationInvalidFlowProblem {
 	s := &AccountSSOCompleteAuthenticationInvalidFlowProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOCompleteAuthenticationInvalidFlowProblem entity
 type AccountSSOCompleteAuthenticationInvalidFlowProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1290,34 +1381,45 @@ func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) SetMessage(message 
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) InitializeDefaults() {
+}
+
+// accountSSOCompleteAuthenticationInvalidFlowProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOCompleteAuthenticationInvalidFlowProblemAlias AccountSSOCompleteAuthenticationInvalidFlowProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) UnmarshalJSON(data []byte) error {
+	var alias accountSSOCompleteAuthenticationInvalidFlowProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOCompleteAuthenticationInvalidFlowProblem)(&alias)).InitializeDefaults()
+	*e = AccountSSOCompleteAuthenticationInvalidFlowProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOCompleteAuthenticationInvalidFlowProblem) MarshalJSON() ([]byte, error) {
+	alias := accountSSOCompleteAuthenticationInvalidFlowProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOGetProvidersInput creates a new AccountSSOGetProvidersInput
 func NewAccountSSOGetProvidersInput() *AccountSSOGetProvidersInput {
 	s := &AccountSSOGetProvidersInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOGetProvidersInput entity
 type AccountSSOGetProvidersInput struct {
-	AccountName string
+	AccountName string `json:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1330,34 +1432,45 @@ func (e *AccountSSOGetProvidersInput) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOGetProvidersInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOGetProvidersInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accountName", e.AccountName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOGetProvidersInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOGetProvidersInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOGetProvidersInput) InitializeDefaults() {
+}
+
+// accountSSOGetProvidersInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOGetProvidersInputAlias AccountSSOGetProvidersInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOGetProvidersInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOGetProvidersInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOGetProvidersInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOGetProvidersInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOGetProvidersInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOGetProvidersInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOGetProvidersOutput creates a new AccountSSOGetProvidersOutput
 func NewAccountSSOGetProvidersOutput() *AccountSSOGetProvidersOutput {
 	s := &AccountSSOGetProvidersOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOGetProvidersOutput entity
 type AccountSSOGetProvidersOutput struct {
-	Providers []*AccountSSOProvider
+	Providers []*AccountSSOProvider `json:"providers,omitempty"`
 }
 
 // GetProviders returns the value for the field providers
@@ -1370,56 +1483,47 @@ func (e *AccountSSOGetProvidersOutput) SetProviders(providers []*AccountSSOProvi
 	e.Providers = providers
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOGetProvidersOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().AccountSSOProvider().TypeBuilder(), ctx.Package(), "providers", &e.Providers); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOGetProvidersOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesProviders []map[string]any
-
-	if fsv := e.Providers; fsv != nil {
-		fieldValuesProviders = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("providers", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("providers", ix)
-			}
-			fieldValuesProviders = append(fieldValuesProviders, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("providers", fieldValuesProviders)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOGetProvidersOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOGetProvidersOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOGetProvidersOutput) InitializeDefaults() {
+}
+
+// accountSSOGetProvidersOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOGetProvidersOutputAlias AccountSSOGetProvidersOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOGetProvidersOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOGetProvidersOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOGetProvidersOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOGetProvidersOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOGetProvidersOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOGetProvidersOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyCreateInput creates a new AccountSSOAutoJoinPolicyCreateInput
 func NewAccountSSOAutoJoinPolicyCreateInput() *AccountSSOAutoJoinPolicyCreateInput {
 	s := &AccountSSOAutoJoinPolicyCreateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOAutoJoinPolicyCreateInput entity
 type AccountSSOAutoJoinPolicyCreateInput struct {
-	Domain             string
-	OriginAccountName  string
-	OriginProviderName string
+	Domain             string `json:"domain,omitempty"`
+	OriginAccountName  string `json:"originAccountName,omitempty"`
+	OriginProviderName string `json:"originProviderName,omitempty"`
 }
 
 // GetDomain returns the value for the field domain
@@ -1452,42 +1556,45 @@ func (e *AccountSSOAutoJoinPolicyCreateInput) SetOriginProviderName(originProvid
 	e.OriginProviderName = originProviderName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "domain", &e.Domain); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "originAccountName", &e.OriginAccountName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "originProviderName", &e.OriginProviderName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("domain", e.Domain)
-	ctx.Content().SetProperty("originAccountName", e.OriginAccountName)
-	ctx.Content().SetProperty("originProviderName", e.OriginProviderName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyCreateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyCreateInput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyCreateInputAlias AccountSSOAutoJoinPolicyCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyCreateInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyCreateInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyCreateInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyCreateOutput creates a new AccountSSOAutoJoinPolicyCreateOutput
 func NewAccountSSOAutoJoinPolicyCreateOutput() *AccountSSOAutoJoinPolicyCreateOutput {
 	s := &AccountSSOAutoJoinPolicyCreateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOAutoJoinPolicyCreateOutput entity
 type AccountSSOAutoJoinPolicyCreateOutput struct {
-	Policy *AccountSSOAutoJoinPolicy
+	Policy *AccountSSOAutoJoinPolicy `json:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -1500,39 +1607,39 @@ func (e *AccountSSOAutoJoinPolicyCreateOutput) SetPolicy(policy *AccountSSOAutoJ
 	e.Policy = policy
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().AccountSSOAutoJoinPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentPolicy clientruntime.Content
-	if v := e.Policy; v != nil {
-		fieldContentPolicy = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentPolicy)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("policy", err)
-		}
-	}
-	if fieldContentPolicy == nil {
-		return clientruntime.NewPropertyRequiredError("policy")
-	}
-	ctx.Content().SetProperty("policy", fieldContentPolicy.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyCreateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyCreateOutput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyCreateOutputAlias AccountSSOAutoJoinPolicyCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyCreateOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyListInput creates a new AccountSSOAutoJoinPolicyListInput
 func NewAccountSSOAutoJoinPolicyListInput() *AccountSSOAutoJoinPolicyListInput {
 	s := &AccountSSOAutoJoinPolicyListInput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -1540,30 +1647,45 @@ func NewAccountSSOAutoJoinPolicyListInput() *AccountSSOAutoJoinPolicyListInput {
 type AccountSSOAutoJoinPolicyListInput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyListInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyListInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyListInput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyListInputAlias AccountSSOAutoJoinPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyListInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyListOutput creates a new AccountSSOAutoJoinPolicyListOutput
 func NewAccountSSOAutoJoinPolicyListOutput() *AccountSSOAutoJoinPolicyListOutput {
 	s := &AccountSSOAutoJoinPolicyListOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOAutoJoinPolicyListOutput entity
 type AccountSSOAutoJoinPolicyListOutput struct {
-	Policies []*AccountSSOAutoJoinPolicy
+	Policies []*AccountSSOAutoJoinPolicy `json:"policies,omitempty"`
 }
 
 // GetPolicies returns the value for the field policies
@@ -1576,55 +1698,46 @@ func (e *AccountSSOAutoJoinPolicyListOutput) SetPolicies(policies []*AccountSSOA
 	e.Policies = policies
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().AccountSSOAutoJoinPolicy().TypeBuilder(), ctx.Package(), "policies", &e.Policies); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesPolicies []map[string]any
-
-	if fsv := e.Policies; fsv != nil {
-		fieldValuesPolicies = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("policies", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("policies", ix)
-			}
-			fieldValuesPolicies = append(fieldValuesPolicies, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("policies", fieldValuesPolicies)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyListOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyListOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyListOutput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyListOutputAlias AccountSSOAutoJoinPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyEnableInput creates a new AccountSSOAutoJoinPolicyEnableInput
 func NewAccountSSOAutoJoinPolicyEnableInput() *AccountSSOAutoJoinPolicyEnableInput {
 	s := &AccountSSOAutoJoinPolicyEnableInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // AccountSSOAutoJoinPolicyEnableInput entity
 type AccountSSOAutoJoinPolicyEnableInput struct {
-	Enabled    bool
-	PolicyName string
+	Enabled    bool   `json:"enabled,omitempty"`
+	PolicyName string `json:"policyName,omitempty"`
 }
 
 // GetEnabled returns the value for the field enabled
@@ -1647,32 +1760,39 @@ func (e *AccountSSOAutoJoinPolicyEnableInput) SetPolicyName(policyName string) {
 	e.PolicyName = policyName
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyEnableInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireBoolProperty(ctx.Content(), "enabled", &e.Enabled); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "policyName", &e.PolicyName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyEnableInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("enabled", e.Enabled)
-	ctx.Content().SetProperty("policyName", e.PolicyName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyEnableInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyEnableInput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyEnableInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyEnableInputAlias AccountSSOAutoJoinPolicyEnableInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyEnableInput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyEnableInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyEnableInput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyEnableInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyEnableInput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyEnableInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOAutoJoinPolicyEnableOutput creates a new AccountSSOAutoJoinPolicyEnableOutput
 func NewAccountSSOAutoJoinPolicyEnableOutput() *AccountSSOAutoJoinPolicyEnableOutput {
 	s := &AccountSSOAutoJoinPolicyEnableOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -1680,30 +1800,45 @@ func NewAccountSSOAutoJoinPolicyEnableOutput() *AccountSSOAutoJoinPolicyEnableOu
 type AccountSSOAutoJoinPolicyEnableOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *AccountSSOAutoJoinPolicyEnableOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *AccountSSOAutoJoinPolicyEnableOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *AccountSSOAutoJoinPolicyEnableOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountSSOAutoJoinPolicyEnableOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSSOAutoJoinPolicyEnableOutput) InitializeDefaults() {
+}
+
+// accountSSOAutoJoinPolicyEnableOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOAutoJoinPolicyEnableOutputAlias AccountSSOAutoJoinPolicyEnableOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSSOAutoJoinPolicyEnableOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSSOAutoJoinPolicyEnableOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSSOAutoJoinPolicyEnableOutput)(&alias)).InitializeDefaults()
+	*e = AccountSSOAutoJoinPolicyEnableOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSSOAutoJoinPolicyEnableOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSSOAutoJoinPolicyEnableOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInvalidUsernameProblem creates a new InvalidUsernameProblem
 func NewInvalidUsernameProblem() *InvalidUsernameProblem {
 	s := &InvalidUsernameProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InvalidUsernameProblem entity
 type InvalidUsernameProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1732,34 +1867,45 @@ func (e *InvalidUsernameProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *InvalidUsernameProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InvalidUsernameProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InvalidUsernameProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInvalidUsernameProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidUsernameProblem) InitializeDefaults() {
+}
+
+// invalidUsernameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidUsernameProblemAlias InvalidUsernameProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidUsernameProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidUsernameProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidUsernameProblem)(&alias)).InitializeDefaults()
+	*e = InvalidUsernameProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidUsernameProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidUsernameProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewMemberAccount creates a new MemberAccount
 func NewMemberAccount() *MemberAccount {
 	s := &MemberAccount{}
+	s.InitializeDefaults()
 	return s
 }
 
 // MemberAccount entity
 type MemberAccount struct {
-	AccountName string
+	AccountName string `json:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1772,34 +1918,45 @@ func (e *MemberAccount) SetAccountName(accountName string) {
 	e.AccountName = accountName
 }
 
-// Hydrate implements struct hydrate
-func (e *MemberAccount) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accountName", &e.AccountName); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *MemberAccount) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accountName", e.AccountName)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *MemberAccount) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathMemberAccount.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *MemberAccount) InitializeDefaults() {
+}
+
+// memberAccountAlias is defined to help pre and post JSON marshaling without recursive loops
+type memberAccountAlias MemberAccount
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *MemberAccount) UnmarshalJSON(data []byte) error {
+	var alias memberAccountAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*MemberAccount)(&alias)).InitializeDefaults()
+	*e = MemberAccount(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e MemberAccount) MarshalJSON() ([]byte, error) {
+	alias := memberAccountAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewCredentialInfo creates a new CredentialInfo
 func NewCredentialInfo() *CredentialInfo {
 	s := &CredentialInfo{}
+	s.InitializeDefaults()
 	return s
 }
 
 // CredentialInfo entity
 type CredentialInfo struct {
-	AccessKeyID string
+	AccessKeyID string `json:"accessKeyID,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -1812,35 +1969,46 @@ func (e *CredentialInfo) SetAccessKeyID(accessKeyID string) {
 	e.AccessKeyID = accessKeyID
 }
 
-// Hydrate implements struct hydrate
-func (e *CredentialInfo) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *CredentialInfo) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *CredentialInfo) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathCredentialInfo.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *CredentialInfo) InitializeDefaults() {
+}
+
+// credentialInfoAlias is defined to help pre and post JSON marshaling without recursive loops
+type credentialInfoAlias CredentialInfo
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *CredentialInfo) UnmarshalJSON(data []byte) error {
+	var alias credentialInfoAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*CredentialInfo)(&alias)).InitializeDefaults()
+	*e = CredentialInfo(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e CredentialInfo) MarshalJSON() ([]byte, error) {
+	alias := credentialInfoAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyStatement creates a new IdentityPolicyStatement
 func NewIdentityPolicyStatement() *IdentityPolicyStatement {
 	s := &IdentityPolicyStatement{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyStatement entity
 type IdentityPolicyStatement struct {
-	Actions   []string
-	Resources []string
+	Actions   []string `json:"actions,omitempty"`
+	Resources []string `json:"resources,omitempty"`
 }
 
 // GetActions returns the value for the field actions
@@ -1863,40 +2031,47 @@ func (e *IdentityPolicyStatement) SetResources(resources []string) {
 	e.Resources = resources
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyStatement) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireBuiltinArrayProperty(ctx.Content(), "actions", &e.Actions); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireBuiltinArrayProperty(ctx.Content(), "resources", &e.Resources); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyStatement) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("actions", e.Actions)
-	ctx.Content().SetProperty("resources", e.Resources)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyStatement) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyStatement.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyStatement) InitializeDefaults() {
+}
+
+// identityPolicyStatementAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyStatementAlias IdentityPolicyStatement
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyStatement) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyStatementAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyStatement)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyStatement(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyStatement) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyStatementAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicy creates a new IdentityPolicy
 func NewIdentityPolicy() *IdentityPolicy {
 	s := &IdentityPolicy{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicy entity
 type IdentityPolicy struct {
-	Builtin    bool
-	Name       string
-	Statements []*IdentityPolicyStatement
+	Builtin    bool                       `json:"builtin,omitempty"`
+	Name       string                     `json:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
 }
 
 // GetBuiltin returns the value for the field builtin
@@ -1929,62 +2104,45 @@ func (e *IdentityPolicy) SetStatements(statements []*IdentityPolicyStatement) {
 	e.Statements = statements
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicy) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireBoolProperty(ctx.Content(), "builtin", &e.Builtin); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicy) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("builtin", e.Builtin)
-	ctx.Content().SetProperty("name", e.Name)
-	var fieldValuesStatements []map[string]any
-
-	if fsv := e.Statements; fsv != nil {
-		fieldValuesStatements = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("statements", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("statements", ix)
-			}
-			fieldValuesStatements = append(fieldValuesStatements, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("statements", fieldValuesStatements)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicy) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicy.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicy) InitializeDefaults() {
+}
+
+// identityPolicyAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyAlias IdentityPolicy
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicy) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicy)(&alias)).InitializeDefaults()
+	*e = IdentityPolicy(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicy) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyAttachment creates a new IdentityPolicyAttachment
 func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 	s := &IdentityPolicyAttachment{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyAttachment entity
 type IdentityPolicyAttachment struct {
-	Policy *IdentityPolicy
+	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -1997,46 +2155,46 @@ func (e *IdentityPolicyAttachment) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyAttachment) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyAttachment) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentPolicy clientruntime.Content
-	if v := e.Policy; v != nil {
-		fieldContentPolicy = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentPolicy)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("policy", err)
-		}
-	}
-	if fieldContentPolicy == nil {
-		return clientruntime.NewPropertyRequiredError("policy")
-	}
-	ctx.Content().SetProperty("policy", fieldContentPolicy.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyAttachment) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyAttachment.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyAttachment) InitializeDefaults() {
+}
+
+// identityPolicyAttachmentAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyAttachmentAlias IdentityPolicyAttachment
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyAttachment) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyAttachmentAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyAttachment)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyAttachment(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyAttachment) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyAttachmentAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserCreateInput creates a new UserCreateInput
 func NewUserCreateInput() *UserCreateInput {
 	s := &UserCreateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserCreateInput entity
 type UserCreateInput struct {
-	Description string
-	Username    string
+	Description string `json:"description,omitempty"`
+	Username    string `json:"username,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -2059,38 +2217,45 @@ func (e *UserCreateInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "description", &e.Description); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("description", e.Description)
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserCreateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserCreateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserCreateInput) InitializeDefaults() {
+}
+
+// userCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userCreateInputAlias UserCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserCreateInput) UnmarshalJSON(data []byte) error {
+	var alias userCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserCreateInput)(&alias)).InitializeDefaults()
+	*e = UserCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserCreateInput) MarshalJSON() ([]byte, error) {
+	alias := userCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserCreateOutput creates a new UserCreateOutput
 func NewUserCreateOutput() *UserCreateOutput {
 	s := &UserCreateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserCreateOutput entity
 type UserCreateOutput struct {
-	User *UserInformation
+	User *UserInformation `json:"user,omitempty"`
 }
 
 // GetUser returns the value for the field user
@@ -2103,45 +2268,45 @@ func (e *UserCreateOutput) SetUser(user *UserInformation) {
 	e.User = user
 }
 
-// Hydrate implements struct hydrate
-func (e *UserCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentUser clientruntime.Content
-	if v := e.User; v != nil {
-		fieldContentUser = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentUser)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("user", err)
-		}
-	}
-	if fieldContentUser == nil {
-		return clientruntime.NewPropertyRequiredError("user")
-	}
-	ctx.Content().SetProperty("user", fieldContentUser.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserCreateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserCreateOutput) InitializeDefaults() {
+}
+
+// userCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userCreateOutputAlias UserCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias userCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserCreateOutput)(&alias)).InitializeDefaults()
+	*e = UserCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := userCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserGetInput creates a new UserGetInput
 func NewUserGetInput() *UserGetInput {
 	s := &UserGetInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserGetInput entity
 type UserGetInput struct {
-	Username *string
+	Username *string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2154,34 +2319,45 @@ func (e *UserGetInput) SetUsername(username *string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserGetInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserGetInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserGetInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserGetInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGetInput) InitializeDefaults() {
+}
+
+// userGetInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGetInputAlias UserGetInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGetInput) UnmarshalJSON(data []byte) error {
+	var alias userGetInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGetInput)(&alias)).InitializeDefaults()
+	*e = UserGetInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGetInput) MarshalJSON() ([]byte, error) {
+	alias := userGetInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserGetOutput creates a new UserGetOutput
 func NewUserGetOutput() *UserGetOutput {
 	s := &UserGetOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserGetOutput entity
 type UserGetOutput struct {
-	User *UserInformation
+	User *UserInformation `json:"user,omitempty"`
 }
 
 // GetUser returns the value for the field user
@@ -2194,45 +2370,45 @@ func (e *UserGetOutput) SetUser(user *UserInformation) {
 	e.User = user
 }
 
-// Hydrate implements struct hydrate
-func (e *UserGetOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserGetOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentUser clientruntime.Content
-	if v := e.User; v != nil {
-		fieldContentUser = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentUser)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("user", err)
-		}
-	}
-	if fieldContentUser == nil {
-		return clientruntime.NewPropertyRequiredError("user")
-	}
-	ctx.Content().SetProperty("user", fieldContentUser.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserGetOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserGetOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGetOutput) InitializeDefaults() {
+}
+
+// userGetOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGetOutputAlias UserGetOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGetOutput) UnmarshalJSON(data []byte) error {
+	var alias userGetOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGetOutput)(&alias)).InitializeDefaults()
+	*e = UserGetOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGetOutput) MarshalJSON() ([]byte, error) {
+	alias := userGetOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserGetUserNotAvailableProblem creates a new UserGetUserNotAvailableProblem
 func NewUserGetUserNotAvailableProblem() *UserGetUserNotAvailableProblem {
 	s := &UserGetUserNotAvailableProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserGetUserNotAvailableProblem entity
 type UserGetUserNotAvailableProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -2261,34 +2437,45 @@ func (e *UserGetUserNotAvailableProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *UserGetUserNotAvailableProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserGetUserNotAvailableProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserGetUserNotAvailableProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserGetUserNotAvailableProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGetUserNotAvailableProblem) InitializeDefaults() {
+}
+
+// userGetUserNotAvailableProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGetUserNotAvailableProblemAlias UserGetUserNotAvailableProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGetUserNotAvailableProblem) UnmarshalJSON(data []byte) error {
+	var alias userGetUserNotAvailableProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGetUserNotAvailableProblem)(&alias)).InitializeDefaults()
+	*e = UserGetUserNotAvailableProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGetUserNotAvailableProblem) MarshalJSON() ([]byte, error) {
+	alias := userGetUserNotAvailableProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserDestroyInput creates a new UserDestroyInput
 func NewUserDestroyInput() *UserDestroyInput {
 	s := &UserDestroyInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserDestroyInput entity
 type UserDestroyInput struct {
-	Username *string
+	Username *string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2301,28 +2488,39 @@ func (e *UserDestroyInput) SetUsername(username *string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserDestroyInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserDestroyInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserDestroyInput) InitializeDefaults() {
+}
+
+// userDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userDestroyInputAlias UserDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias userDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserDestroyInput)(&alias)).InitializeDefaults()
+	*e = UserDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := userDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserDestroyOutput creates a new UserDestroyOutput
 func NewUserDestroyOutput() *UserDestroyOutput {
 	s := &UserDestroyOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -2330,24 +2528,39 @@ func NewUserDestroyOutput() *UserDestroyOutput {
 type UserDestroyOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserDestroyOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserDestroyOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserDestroyOutput) InitializeDefaults() {
+}
+
+// userDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userDestroyOutputAlias UserDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias userDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserDestroyOutput)(&alias)).InitializeDefaults()
+	*e = UserDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := userDestroyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserListInput creates a new UserListInput
 func NewUserListInput() *UserListInput {
 	s := &UserListInput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -2355,30 +2568,45 @@ func NewUserListInput() *UserListInput {
 type UserListInput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserListInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserListInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserListInput) InitializeDefaults() {
+}
+
+// userListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userListInputAlias UserListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserListInput) UnmarshalJSON(data []byte) error {
+	var alias userListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserListInput)(&alias)).InitializeDefaults()
+	*e = UserListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserListInput) MarshalJSON() ([]byte, error) {
+	alias := userListInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserListOutput creates a new UserListOutput
 func NewUserListOutput() *UserListOutput {
 	s := &UserListOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserListOutput entity
 type UserListOutput struct {
-	Users []*UserInformation
+	Users []*UserInformation `json:"users,omitempty"`
 }
 
 // GetUsers returns the value for the field users
@@ -2391,48 +2619,39 @@ func (e *UserListOutput) SetUsers(users []*UserInformation) {
 	e.Users = users
 }
 
-// Hydrate implements struct hydrate
-func (e *UserListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().UserInformation().TypeBuilder(), ctx.Package(), "users", &e.Users); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesUsers []map[string]any
-
-	if fsv := e.Users; fsv != nil {
-		fieldValuesUsers = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("users", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("users", ix)
-			}
-			fieldValuesUsers = append(fieldValuesUsers, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("users", fieldValuesUsers)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserListOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserListOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserListOutput) InitializeDefaults() {
+}
+
+// userListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userListOutputAlias UserListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserListOutput) UnmarshalJSON(data []byte) error {
+	var alias userListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserListOutput)(&alias)).InitializeDefaults()
+	*e = UserListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserListOutput) MarshalJSON() ([]byte, error) {
+	alias := userListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserMemberAccountsInput creates a new UserMemberAccountsInput
 func NewUserMemberAccountsInput() *UserMemberAccountsInput {
 	s := &UserMemberAccountsInput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -2440,30 +2659,45 @@ func NewUserMemberAccountsInput() *UserMemberAccountsInput {
 type UserMemberAccountsInput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserMemberAccountsInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserMemberAccountsInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserMemberAccountsInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserMemberAccountsInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserMemberAccountsInput) InitializeDefaults() {
+}
+
+// userMemberAccountsInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userMemberAccountsInputAlias UserMemberAccountsInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserMemberAccountsInput) UnmarshalJSON(data []byte) error {
+	var alias userMemberAccountsInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserMemberAccountsInput)(&alias)).InitializeDefaults()
+	*e = UserMemberAccountsInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserMemberAccountsInput) MarshalJSON() ([]byte, error) {
+	alias := userMemberAccountsInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserMemberAccountsOutput creates a new UserMemberAccountsOutput
 func NewUserMemberAccountsOutput() *UserMemberAccountsOutput {
 	s := &UserMemberAccountsOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserMemberAccountsOutput entity
 type UserMemberAccountsOutput struct {
-	Accounts []*MemberAccount
+	Accounts []*MemberAccount `json:"accounts,omitempty"`
 }
 
 // GetAccounts returns the value for the field accounts
@@ -2476,54 +2710,45 @@ func (e *UserMemberAccountsOutput) SetAccounts(accounts []*MemberAccount) {
 	e.Accounts = accounts
 }
 
-// Hydrate implements struct hydrate
-func (e *UserMemberAccountsOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().MemberAccount().TypeBuilder(), ctx.Package(), "accounts", &e.Accounts); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserMemberAccountsOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesAccounts []map[string]any
-
-	if fsv := e.Accounts; fsv != nil {
-		fieldValuesAccounts = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("accounts", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("accounts", ix)
-			}
-			fieldValuesAccounts = append(fieldValuesAccounts, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("accounts", fieldValuesAccounts)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserMemberAccountsOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserMemberAccountsOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserMemberAccountsOutput) InitializeDefaults() {
+}
+
+// userMemberAccountsOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userMemberAccountsOutputAlias UserMemberAccountsOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserMemberAccountsOutput) UnmarshalJSON(data []byte) error {
+	var alias userMemberAccountsOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserMemberAccountsOutput)(&alias)).InitializeDefaults()
+	*e = UserMemberAccountsOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserMemberAccountsOutput) MarshalJSON() ([]byte, error) {
+	alias := userMemberAccountsOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyCreateInput creates a new UserAccessKeyCreateInput
 func NewUserAccessKeyCreateInput() *UserAccessKeyCreateInput {
 	s := &UserAccessKeyCreateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserAccessKeyCreateInput entity
 type UserAccessKeyCreateInput struct {
-	Username string
+	Username string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2536,34 +2761,45 @@ func (e *UserAccessKeyCreateInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyCreateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyCreateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyCreateInput) InitializeDefaults() {
+}
+
+// userAccessKeyCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyCreateInputAlias UserAccessKeyCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyCreateInput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyCreateInput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyCreateInput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyCreateOutput creates a new UserAccessKeyCreateOutput
 func NewUserAccessKeyCreateOutput() *UserAccessKeyCreateOutput {
 	s := &UserAccessKeyCreateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserAccessKeyCreateOutput entity
 type UserAccessKeyCreateOutput struct {
-	Credentials *Credentials
+	Credentials *Credentials `json:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -2576,45 +2812,45 @@ func (e *UserAccessKeyCreateOutput) SetCredentials(credentials *Credentials) {
 	e.Credentials = credentials
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().Credentials().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentCredentials clientruntime.Content
-	if v := e.Credentials; v != nil {
-		fieldContentCredentials = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentCredentials)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("credentials", err)
-		}
-	}
-	if fieldContentCredentials == nil {
-		return clientruntime.NewPropertyRequiredError("credentials")
-	}
-	ctx.Content().SetProperty("credentials", fieldContentCredentials.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyCreateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyCreateOutput) InitializeDefaults() {
+}
+
+// userAccessKeyCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyCreateOutputAlias UserAccessKeyCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyCreateOutput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyListInput creates a new UserAccessKeyListInput
 func NewUserAccessKeyListInput() *UserAccessKeyListInput {
 	s := &UserAccessKeyListInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserAccessKeyListInput entity
 type UserAccessKeyListInput struct {
-	Username *string
+	Username *string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2627,34 +2863,45 @@ func (e *UserAccessKeyListInput) SetUsername(username *string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyListInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyListInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyListInput) InitializeDefaults() {
+}
+
+// userAccessKeyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyListInputAlias UserAccessKeyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyListInput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyListInput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyListInput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyListOutput creates a new UserAccessKeyListOutput
 func NewUserAccessKeyListOutput() *UserAccessKeyListOutput {
 	s := &UserAccessKeyListOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserAccessKeyListOutput entity
 type UserAccessKeyListOutput struct {
-	Credentials []*CredentialInfo
+	Credentials []*CredentialInfo `json:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -2667,55 +2914,46 @@ func (e *UserAccessKeyListOutput) SetCredentials(credentials []*CredentialInfo) 
 	e.Credentials = credentials
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().CredentialInfo().TypeBuilder(), ctx.Package(), "credentials", &e.Credentials); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesCredentials []map[string]any
-
-	if fsv := e.Credentials; fsv != nil {
-		fieldValuesCredentials = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("credentials", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("credentials", ix)
-			}
-			fieldValuesCredentials = append(fieldValuesCredentials, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("credentials", fieldValuesCredentials)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyListOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyListOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyListOutput) InitializeDefaults() {
+}
+
+// userAccessKeyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyListOutputAlias UserAccessKeyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyListOutput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyListOutput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyListOutput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyDestroyInput creates a new UserAccessKeyDestroyInput
 func NewUserAccessKeyDestroyInput() *UserAccessKeyDestroyInput {
 	s := &UserAccessKeyDestroyInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserAccessKeyDestroyInput entity
 type UserAccessKeyDestroyInput struct {
-	AccessKeyID string
-	Username    string
+	AccessKeyID string `json:"accessKeyID,omitempty"`
+	Username    string `json:"username,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -2738,32 +2976,39 @@ func (e *UserAccessKeyDestroyInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyDestroyInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyDestroyInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyDestroyInput) InitializeDefaults() {
+}
+
+// userAccessKeyDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyDestroyInputAlias UserAccessKeyDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyDestroyInput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserAccessKeyDestroyOutput creates a new UserAccessKeyDestroyOutput
 func NewUserAccessKeyDestroyOutput() *UserAccessKeyDestroyOutput {
 	s := &UserAccessKeyDestroyOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -2771,31 +3016,46 @@ func NewUserAccessKeyDestroyOutput() *UserAccessKeyDestroyOutput {
 type UserAccessKeyDestroyOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserAccessKeyDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserAccessKeyDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserAccessKeyDestroyOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserAccessKeyDestroyOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserAccessKeyDestroyOutput) InitializeDefaults() {
+}
+
+// userAccessKeyDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userAccessKeyDestroyOutputAlias UserAccessKeyDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserAccessKeyDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias userAccessKeyDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserAccessKeyDestroyOutput)(&alias)).InitializeDefaults()
+	*e = UserAccessKeyDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserAccessKeyDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := userAccessKeyDestroyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyAttachInput creates a new UserIdentityPolicyAttachInput
 func NewUserIdentityPolicyAttachInput() *UserIdentityPolicyAttachInput {
 	s := &UserIdentityPolicyAttachInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserIdentityPolicyAttachInput entity
 type UserIdentityPolicyAttachInput struct {
-	PolicyName string
-	Username   string
+	PolicyName string `json:"policyName,omitempty"`
+	Username   string `json:"username,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -2818,32 +3078,39 @@ func (e *UserIdentityPolicyAttachInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyAttachInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "policyName", &e.PolicyName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyAttachInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("policyName", e.PolicyName)
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyAttachInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyAttachInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyAttachInput) InitializeDefaults() {
+}
+
+// userIdentityPolicyAttachInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyAttachInputAlias UserIdentityPolicyAttachInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyAttachInput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyAttachInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyAttachInput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyAttachInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyAttachInput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyAttachInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyAttachOutput creates a new UserIdentityPolicyAttachOutput
 func NewUserIdentityPolicyAttachOutput() *UserIdentityPolicyAttachOutput {
 	s := &UserIdentityPolicyAttachOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -2851,30 +3118,45 @@ func NewUserIdentityPolicyAttachOutput() *UserIdentityPolicyAttachOutput {
 type UserIdentityPolicyAttachOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyAttachOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyAttachOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyAttachOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyAttachOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyAttachOutput) InitializeDefaults() {
+}
+
+// userIdentityPolicyAttachOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyAttachOutputAlias UserIdentityPolicyAttachOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyAttachOutput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyAttachOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyAttachOutput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyAttachOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyAttachOutput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyAttachOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyListInput creates a new UserIdentityPolicyListInput
 func NewUserIdentityPolicyListInput() *UserIdentityPolicyListInput {
 	s := &UserIdentityPolicyListInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserIdentityPolicyListInput entity
 type UserIdentityPolicyListInput struct {
-	Username string
+	Username string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2887,34 +3169,45 @@ func (e *UserIdentityPolicyListInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyListInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyListInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyListInput) InitializeDefaults() {
+}
+
+// userIdentityPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyListInputAlias UserIdentityPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyListInput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyListOutput creates a new UserIdentityPolicyListOutput
 func NewUserIdentityPolicyListOutput() *UserIdentityPolicyListOutput {
 	s := &UserIdentityPolicyListOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserIdentityPolicyListOutput entity
 type UserIdentityPolicyListOutput struct {
-	Attachments []*IdentityPolicyAttachment
+	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty"`
 }
 
 // GetAttachments returns the value for the field attachments
@@ -2927,55 +3220,46 @@ func (e *UserIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPol
 	e.Attachments = attachments
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyAttachment().TypeBuilder(), ctx.Package(), "attachments", &e.Attachments); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesAttachments []map[string]any
-
-	if fsv := e.Attachments; fsv != nil {
-		fieldValuesAttachments = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("attachments", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("attachments", ix)
-			}
-			fieldValuesAttachments = append(fieldValuesAttachments, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("attachments", fieldValuesAttachments)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyListOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyListOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyListOutput) InitializeDefaults() {
+}
+
+// userIdentityPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyListOutputAlias UserIdentityPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyDetachInput creates a new UserIdentityPolicyDetachInput
 func NewUserIdentityPolicyDetachInput() *UserIdentityPolicyDetachInput {
 	s := &UserIdentityPolicyDetachInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // UserIdentityPolicyDetachInput entity
 type UserIdentityPolicyDetachInput struct {
-	PolicyName string
-	Username   string
+	PolicyName string `json:"policyName,omitempty"`
+	Username   string `json:"username,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -2998,32 +3282,39 @@ func (e *UserIdentityPolicyDetachInput) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyDetachInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "policyName", &e.PolicyName); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyDetachInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("policyName", e.PolicyName)
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyDetachInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyDetachInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyDetachInput) InitializeDefaults() {
+}
+
+// userIdentityPolicyDetachInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyDetachInputAlias UserIdentityPolicyDetachInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyDetachInput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyDetachInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyDetachInput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyDetachInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyDetachInput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyDetachInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserIdentityPolicyDetachOutput creates a new UserIdentityPolicyDetachOutput
 func NewUserIdentityPolicyDetachOutput() *UserIdentityPolicyDetachOutput {
 	s := &UserIdentityPolicyDetachOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -3031,30 +3322,45 @@ func NewUserIdentityPolicyDetachOutput() *UserIdentityPolicyDetachOutput {
 type UserIdentityPolicyDetachOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *UserIdentityPolicyDetachOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *UserIdentityPolicyDetachOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *UserIdentityPolicyDetachOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathUserIdentityPolicyDetachOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *UserIdentityPolicyDetachOutput) InitializeDefaults() {
+}
+
+// userIdentityPolicyDetachOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userIdentityPolicyDetachOutputAlias UserIdentityPolicyDetachOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserIdentityPolicyDetachOutput) UnmarshalJSON(data []byte) error {
+	var alias userIdentityPolicyDetachOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserIdentityPolicyDetachOutput)(&alias)).InitializeDefaults()
+	*e = UserIdentityPolicyDetachOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserIdentityPolicyDetachOutput) MarshalJSON() ([]byte, error) {
+	alias := userIdentityPolicyDetachOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewPolicyStructureProblem creates a new PolicyStructureProblem
 func NewPolicyStructureProblem() *PolicyStructureProblem {
 	s := &PolicyStructureProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // PolicyStructureProblem entity
 type PolicyStructureProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -3083,35 +3389,46 @@ func (e *PolicyStructureProblem) SetMessage(message string) {
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *PolicyStructureProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *PolicyStructureProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *PolicyStructureProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathPolicyStructureProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *PolicyStructureProblem) InitializeDefaults() {
+}
+
+// policyStructureProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type policyStructureProblemAlias PolicyStructureProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *PolicyStructureProblem) UnmarshalJSON(data []byte) error {
+	var alias policyStructureProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*PolicyStructureProblem)(&alias)).InitializeDefaults()
+	*e = PolicyStructureProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e PolicyStructureProblem) MarshalJSON() ([]byte, error) {
+	alias := policyStructureProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyCreateInput creates a new IdentityPolicyCreateInput
 func NewIdentityPolicyCreateInput() *IdentityPolicyCreateInput {
 	s := &IdentityPolicyCreateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyCreateInput entity
 type IdentityPolicyCreateInput struct {
-	Name       string
-	Statements []*IdentityPolicyStatement
+	Name       string                     `json:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3134,58 +3451,45 @@ func (e *IdentityPolicyCreateInput) SetStatements(statements []*IdentityPolicySt
 	e.Statements = statements
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyCreateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyCreateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	var fieldValuesStatements []map[string]any
-
-	if fsv := e.Statements; fsv != nil {
-		fieldValuesStatements = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("statements", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("statements", ix)
-			}
-			fieldValuesStatements = append(fieldValuesStatements, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("statements", fieldValuesStatements)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyCreateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyCreateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyCreateInput) InitializeDefaults() {
+}
+
+// identityPolicyCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyCreateInputAlias IdentityPolicyCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyCreateInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyCreateInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyCreateInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyCreateOutput creates a new IdentityPolicyCreateOutput
 func NewIdentityPolicyCreateOutput() *IdentityPolicyCreateOutput {
 	s := &IdentityPolicyCreateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyCreateOutput entity
 type IdentityPolicyCreateOutput struct {
-	Policy *IdentityPolicy
+	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -3198,39 +3502,39 @@ func (e *IdentityPolicyCreateOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyCreateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyCreateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentPolicy clientruntime.Content
-	if v := e.Policy; v != nil {
-		fieldContentPolicy = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentPolicy)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("policy", err)
-		}
-	}
-	if fieldContentPolicy == nil {
-		return clientruntime.NewPropertyRequiredError("policy")
-	}
-	ctx.Content().SetProperty("policy", fieldContentPolicy.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyCreateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyCreateOutput) InitializeDefaults() {
+}
+
+// identityPolicyCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyCreateOutputAlias IdentityPolicyCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyCreateOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyListInput creates a new IdentityPolicyListInput
 func NewIdentityPolicyListInput() *IdentityPolicyListInput {
 	s := &IdentityPolicyListInput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -3238,30 +3542,45 @@ func NewIdentityPolicyListInput() *IdentityPolicyListInput {
 type IdentityPolicyListInput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyListInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyListInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyListInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyListInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyListInput) InitializeDefaults() {
+}
+
+// identityPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyListInputAlias IdentityPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyListInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyListOutput creates a new IdentityPolicyListOutput
 func NewIdentityPolicyListOutput() *IdentityPolicyListOutput {
 	s := &IdentityPolicyListOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyListOutput entity
 type IdentityPolicyListOutput struct {
-	Policies []*IdentityPolicy
+	Policies []*IdentityPolicy `json:"policies,omitempty"`
 }
 
 // GetPolicies returns the value for the field policies
@@ -3274,54 +3593,45 @@ func (e *IdentityPolicyListOutput) SetPolicies(policies []*IdentityPolicy) {
 	e.Policies = policies
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyListOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policies", &e.Policies); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyListOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesPolicies []map[string]any
-
-	if fsv := e.Policies; fsv != nil {
-		fieldValuesPolicies = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("policies", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("policies", ix)
-			}
-			fieldValuesPolicies = append(fieldValuesPolicies, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("policies", fieldValuesPolicies)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyListOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyListOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyListOutput) InitializeDefaults() {
+}
+
+// identityPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyListOutputAlias IdentityPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyRetrieveInput creates a new IdentityPolicyRetrieveInput
 func NewIdentityPolicyRetrieveInput() *IdentityPolicyRetrieveInput {
 	s := &IdentityPolicyRetrieveInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyRetrieveInput entity
 type IdentityPolicyRetrieveInput struct {
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3334,34 +3644,45 @@ func (e *IdentityPolicyRetrieveInput) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyRetrieveInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyRetrieveInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyRetrieveInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyRetrieveInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyRetrieveInput) InitializeDefaults() {
+}
+
+// identityPolicyRetrieveInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyRetrieveInputAlias IdentityPolicyRetrieveInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyRetrieveInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyRetrieveInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyRetrieveInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyRetrieveInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyRetrieveInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyRetrieveInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyRetrieveOutput creates a new IdentityPolicyRetrieveOutput
 func NewIdentityPolicyRetrieveOutput() *IdentityPolicyRetrieveOutput {
 	s := &IdentityPolicyRetrieveOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyRetrieveOutput entity
 type IdentityPolicyRetrieveOutput struct {
-	Policy *IdentityPolicy
+	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -3374,45 +3695,45 @@ func (e *IdentityPolicyRetrieveOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyRetrieveOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyRetrieveOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentPolicy clientruntime.Content
-	if v := e.Policy; v != nil {
-		fieldContentPolicy = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentPolicy)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("policy", err)
-		}
-	}
-	if fieldContentPolicy == nil {
-		return clientruntime.NewPropertyRequiredError("policy")
-	}
-	ctx.Content().SetProperty("policy", fieldContentPolicy.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyRetrieveOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyRetrieveOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyRetrieveOutput) InitializeDefaults() {
+}
+
+// identityPolicyRetrieveOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyRetrieveOutputAlias IdentityPolicyRetrieveOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyRetrieveOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyRetrieveOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyRetrieveOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyRetrieveOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyRetrieveOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyRetrieveOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyDestroyInput creates a new IdentityPolicyDestroyInput
 func NewIdentityPolicyDestroyInput() *IdentityPolicyDestroyInput {
 	s := &IdentityPolicyDestroyInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyDestroyInput entity
 type IdentityPolicyDestroyInput struct {
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3425,28 +3746,39 @@ func (e *IdentityPolicyDestroyInput) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyDestroyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyDestroyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyDestroyInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyDestroyInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyDestroyInput) InitializeDefaults() {
+}
+
+// identityPolicyDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyDestroyInputAlias IdentityPolicyDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyDestroyInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyDestroyOutput creates a new IdentityPolicyDestroyOutput
 func NewIdentityPolicyDestroyOutput() *IdentityPolicyDestroyOutput {
 	s := &IdentityPolicyDestroyOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -3454,31 +3786,46 @@ func NewIdentityPolicyDestroyOutput() *IdentityPolicyDestroyOutput {
 type IdentityPolicyDestroyOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyDestroyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyDestroyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyDestroyOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyDestroyOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyDestroyOutput) InitializeDefaults() {
+}
+
+// identityPolicyDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyDestroyOutputAlias IdentityPolicyDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyDestroyOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyDestroyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyUpdateInput creates a new IdentityPolicyUpdateInput
 func NewIdentityPolicyUpdateInput() *IdentityPolicyUpdateInput {
 	s := &IdentityPolicyUpdateInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyUpdateInput entity
 type IdentityPolicyUpdateInput struct {
-	Name       string
-	Statements []*IdentityPolicyStatement
+	Name       string                     `json:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3501,58 +3848,45 @@ func (e *IdentityPolicyUpdateInput) SetStatements(statements []*IdentityPolicySt
 	e.Statements = statements
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyUpdateInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().IdentityPolicyStatement().TypeBuilder(), ctx.Package(), "statements", &e.Statements); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyUpdateInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	var fieldValuesStatements []map[string]any
-
-	if fsv := e.Statements; fsv != nil {
-		fieldValuesStatements = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("statements", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("statements", ix)
-			}
-			fieldValuesStatements = append(fieldValuesStatements, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("statements", fieldValuesStatements)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyUpdateInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyUpdateInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyUpdateInput) InitializeDefaults() {
+}
+
+// identityPolicyUpdateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyUpdateInputAlias IdentityPolicyUpdateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyUpdateInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyUpdateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyUpdateInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyUpdateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyUpdateInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyUpdateInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewIdentityPolicyUpdateOutput creates a new IdentityPolicyUpdateOutput
 func NewIdentityPolicyUpdateOutput() *IdentityPolicyUpdateOutput {
 	s := &IdentityPolicyUpdateOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // IdentityPolicyUpdateOutput entity
 type IdentityPolicyUpdateOutput struct {
-	Policy *IdentityPolicy
+	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -3565,45 +3899,45 @@ func (e *IdentityPolicyUpdateOutput) SetPolicy(policy *IdentityPolicy) {
 	e.Policy = policy
 }
 
-// Hydrate implements struct hydrate
-func (e *IdentityPolicyUpdateOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().IdentityPolicy().TypeBuilder(), ctx.Package(), "policy", &e.Policy); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *IdentityPolicyUpdateOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentPolicy clientruntime.Content
-	if v := e.Policy; v != nil {
-		fieldContentPolicy = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentPolicy)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("policy", err)
-		}
-	}
-	if fieldContentPolicy == nil {
-		return clientruntime.NewPropertyRequiredError("policy")
-	}
-	ctx.Content().SetProperty("policy", fieldContentPolicy.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *IdentityPolicyUpdateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathIdentityPolicyUpdateOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyUpdateOutput) InitializeDefaults() {
+}
+
+// identityPolicyUpdateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyUpdateOutputAlias IdentityPolicyUpdateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyUpdateOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyUpdateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyUpdateOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyUpdateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyUpdateOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyUpdateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalAccessKeyUser creates a new InternalAccessKeyUser
 func NewInternalAccessKeyUser() *InternalAccessKeyUser {
 	s := &InternalAccessKeyUser{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalAccessKeyUser entity
 type InternalAccessKeyUser struct {
-	Username string
+	Username string `json:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -3616,34 +3950,45 @@ func (e *InternalAccessKeyUser) SetUsername(username string) {
 	e.Username = username
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalAccessKeyUser) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "username", &e.Username); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalAccessKeyUser) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("username", e.Username)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalAccessKeyUser) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalAccessKeyUser.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAccessKeyUser) InitializeDefaults() {
+}
+
+// internalAccessKeyUserAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAccessKeyUserAlias InternalAccessKeyUser
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAccessKeyUser) UnmarshalJSON(data []byte) error {
+	var alias internalAccessKeyUserAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAccessKeyUser)(&alias)).InitializeDefaults()
+	*e = InternalAccessKeyUser(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAccessKeyUser) MarshalJSON() ([]byte, error) {
+	alias := internalAccessKeyUserAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalAccessKeyAccount creates a new InternalAccessKeyAccount
 func NewInternalAccessKeyAccount() *InternalAccessKeyAccount {
 	s := &InternalAccessKeyAccount{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalAccessKeyAccount entity
 type InternalAccessKeyAccount struct {
-	Name string
+	Name string `json:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3656,37 +4001,48 @@ func (e *InternalAccessKeyAccount) SetName(name string) {
 	e.Name = name
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalAccessKeyAccount) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "name", &e.Name); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalAccessKeyAccount) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("name", e.Name)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalAccessKeyAccount) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalAccessKeyAccount.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAccessKeyAccount) InitializeDefaults() {
+}
+
+// internalAccessKeyAccountAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAccessKeyAccountAlias InternalAccessKeyAccount
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAccessKeyAccount) UnmarshalJSON(data []byte) error {
+	var alias internalAccessKeyAccountAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAccessKeyAccount)(&alias)).InitializeDefaults()
+	*e = InternalAccessKeyAccount(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAccessKeyAccount) MarshalJSON() ([]byte, error) {
+	alias := internalAccessKeyAccountAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalAccessKey creates a new InternalAccessKey
 func NewInternalAccessKey() *InternalAccessKey {
 	s := &InternalAccessKey{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalAccessKey entity
 type InternalAccessKey struct {
-	AccessKeyID     string
-	Account         *InternalAccessKeyAccount
-	SecretAccessKey string
-	User            *InternalAccessKeyUser
+	AccessKeyID     string                    `json:"accessKeyID,omitempty"`
+	Account         *InternalAccessKeyAccount `json:"account,omitempty"`
+	SecretAccessKey string                    `json:"secretAccessKey,omitempty"`
+	User            *InternalAccessKeyUser    `json:"user,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -3729,66 +4085,46 @@ func (e *InternalAccessKey) SetUser(user *InternalAccessKeyUser) {
 	e.User = user
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalAccessKey) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "accessKeyID", &e.AccessKeyID); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKeyAccount().TypeBuilder(), ctx.Package(), "account", &e.Account); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "secretAccessKey", &e.SecretAccessKey); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKeyUser().TypeBuilder(), ctx.Package(), "user", &e.User); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalAccessKey) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("accessKeyID", e.AccessKeyID)
-
-	var fieldContentAccount clientruntime.Content
-	if v := e.Account; v != nil {
-		fieldContentAccount = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentAccount)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("account", err)
-		}
-	}
-	if fieldContentAccount == nil {
-		return clientruntime.NewPropertyRequiredError("account")
-	}
-	ctx.Content().SetProperty("account", fieldContentAccount.Map())
-	ctx.Content().SetProperty("secretAccessKey", e.SecretAccessKey)
-
-	var fieldContentUser clientruntime.Content
-	if v := e.User; v != nil {
-		fieldContentUser = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentUser)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("user", err)
-		}
-	}
-	ctx.Content().SetProperty("user", fieldContentUser.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalAccessKey) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalAccessKey.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAccessKey) InitializeDefaults() {
+}
+
+// internalAccessKeyAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAccessKeyAlias InternalAccessKey
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAccessKey) UnmarshalJSON(data []byte) error {
+	var alias internalAccessKeyAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAccessKey)(&alias)).InitializeDefaults()
+	*e = InternalAccessKey(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAccessKey) MarshalJSON() ([]byte, error) {
+	alias := internalAccessKeyAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalQueryAssertionEntryValue creates a new InternalQueryAssertionEntryValue
 func NewInternalQueryAssertionEntryValue() *InternalQueryAssertionEntryValue {
 	s := &InternalQueryAssertionEntryValue{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalQueryAssertionEntryValue entity
 type InternalQueryAssertionEntryValue struct {
-	B *bool
-	S *string
+	B *bool   `json:"b,omitempty"`
+	S *string `json:"s,omitempty"`
 }
 
 // GetB returns the value for the field b
@@ -3811,39 +4147,46 @@ func (e *InternalQueryAssertionEntryValue) SetS(s *string) {
 	e.S = s
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalQueryAssertionEntryValue) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentOptionalBoolProperty(ctx.Content(), "b", &e.B); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "s", &e.S); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalQueryAssertionEntryValue) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("b", e.B)
-	ctx.Content().SetProperty("s", e.S)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalQueryAssertionEntryValue) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalQueryAssertionEntryValue.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalQueryAssertionEntryValue) InitializeDefaults() {
+}
+
+// internalQueryAssertionEntryValueAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalQueryAssertionEntryValueAlias InternalQueryAssertionEntryValue
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalQueryAssertionEntryValue) UnmarshalJSON(data []byte) error {
+	var alias internalQueryAssertionEntryValueAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalQueryAssertionEntryValue)(&alias)).InitializeDefaults()
+	*e = InternalQueryAssertionEntryValue(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalQueryAssertionEntryValue) MarshalJSON() ([]byte, error) {
+	alias := internalQueryAssertionEntryValueAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalQueryAssertionEntry creates a new InternalQueryAssertionEntry
 func NewInternalQueryAssertionEntry() *InternalQueryAssertionEntry {
 	s := &InternalQueryAssertionEntry{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalQueryAssertionEntry entity
 type InternalQueryAssertionEntry struct {
-	Snippet *string
-	Value   *InternalQueryAssertionEntryValue
+	Snippet *string                           `json:"snippet,omitempty"`
+	Value   *InternalQueryAssertionEntryValue `json:"value,omitempty"`
 }
 
 // GetSnippet returns the value for the field snippet
@@ -3866,46 +4209,45 @@ func (e *InternalQueryAssertionEntry) SetValue(value *InternalQueryAssertionEntr
 	e.Value = value
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalQueryAssertionEntry) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentOptionalStringProperty(ctx.Content(), "snippet", &e.Snippet); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalQueryAssertionEntryValue().TypeBuilder(), ctx.Package(), "value", &e.Value); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalQueryAssertionEntry) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("snippet", e.Snippet)
-
-	var fieldContentValue clientruntime.Content
-	if v := e.Value; v != nil {
-		fieldContentValue = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentValue)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("value", err)
-		}
-	}
-	ctx.Content().SetProperty("value", fieldContentValue.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalQueryAssertionEntry) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalQueryAssertionEntry.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalQueryAssertionEntry) InitializeDefaults() {
+}
+
+// internalQueryAssertionEntryAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalQueryAssertionEntryAlias InternalQueryAssertionEntry
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalQueryAssertionEntry) UnmarshalJSON(data []byte) error {
+	var alias internalQueryAssertionEntryAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalQueryAssertionEntry)(&alias)).InitializeDefaults()
+	*e = InternalQueryAssertionEntry(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalQueryAssertionEntry) MarshalJSON() ([]byte, error) {
+	alias := internalQueryAssertionEntryAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertActionCallerForbiddenProblem creates a new InternalServicesAssertActionCallerForbiddenProblem
 func NewInternalServicesAssertActionCallerForbiddenProblem() *InternalServicesAssertActionCallerForbiddenProblem {
 	s := &InternalServicesAssertActionCallerForbiddenProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesAssertActionCallerForbiddenProblem entity
 type InternalServicesAssertActionCallerForbiddenProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -3934,34 +4276,45 @@ func (e *InternalServicesAssertActionCallerForbiddenProblem) SetMessage(message 
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertActionCallerForbiddenProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertActionCallerForbiddenProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertActionCallerForbiddenProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertActionCallerForbiddenProblem) InitializeDefaults() {
+}
+
+// internalServicesAssertActionCallerForbiddenProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertActionCallerForbiddenProblemAlias InternalServicesAssertActionCallerForbiddenProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertActionCallerForbiddenProblem) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertActionCallerForbiddenProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertActionCallerForbiddenProblem)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertActionCallerForbiddenProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertActionCallerForbiddenProblem) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertActionCallerForbiddenProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesValidateAccessKeyInput creates a new InternalServicesValidateAccessKeyInput
 func NewInternalServicesValidateAccessKeyInput() *InternalServicesValidateAccessKeyInput {
 	s := &InternalServicesValidateAccessKeyInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesValidateAccessKeyInput entity
 type InternalServicesValidateAccessKeyInput struct {
-	RequestAccessKeyID string
+	RequestAccessKeyID string `json:"requestAccessKeyID,omitempty"`
 }
 
 // GetRequestAccessKeyID returns the value for the field requestAccessKeyID
@@ -3974,34 +4327,45 @@ func (e *InternalServicesValidateAccessKeyInput) SetRequestAccessKeyID(requestAc
 	e.RequestAccessKeyID = requestAccessKeyID
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesValidateAccessKeyInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "requestAccessKeyID", &e.RequestAccessKeyID); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesValidateAccessKeyInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("requestAccessKeyID", e.RequestAccessKeyID)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesValidateAccessKeyInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateAccessKeyInput) InitializeDefaults() {
+}
+
+// internalServicesValidateAccessKeyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateAccessKeyInputAlias InternalServicesValidateAccessKeyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateAccessKeyInput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateAccessKeyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateAccessKeyInput)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateAccessKeyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateAccessKeyInput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateAccessKeyInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesValidateAccessKeyOutput creates a new InternalServicesValidateAccessKeyOutput
 func NewInternalServicesValidateAccessKeyOutput() *InternalServicesValidateAccessKeyOutput {
 	s := &InternalServicesValidateAccessKeyOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesValidateAccessKeyOutput entity
 type InternalServicesValidateAccessKeyOutput struct {
-	Key *InternalAccessKey
+	Key *InternalAccessKey `json:"key,omitempty"`
 }
 
 // GetKey returns the value for the field key
@@ -4014,45 +4378,45 @@ func (e *InternalServicesValidateAccessKeyOutput) SetKey(key *InternalAccessKey)
 	e.Key = key
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesValidateAccessKeyOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectProperty(ctx.Content(), SpecularMeta().InternalAccessKey().TypeBuilder(), ctx.Package(), "key", &e.Key); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesValidateAccessKeyOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-
-	var fieldContentKey clientruntime.Content
-	if v := e.Key; v != nil {
-		fieldContentKey = clientruntime.NewContent()
-		if err := v.Dehydrate(ctx.CopyWithContent(fieldContentKey)); err != nil {
-			return clientruntime.NewPropertyDehydrationError("key", err)
-		}
-	}
-	if fieldContentKey == nil {
-		return clientruntime.NewPropertyRequiredError("key")
-	}
-	ctx.Content().SetProperty("key", fieldContentKey.Map())
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesValidateAccessKeyOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateAccessKeyOutput) InitializeDefaults() {
+}
+
+// internalServicesValidateAccessKeyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateAccessKeyOutputAlias InternalServicesValidateAccessKeyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateAccessKeyOutput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateAccessKeyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateAccessKeyOutput)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateAccessKeyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateAccessKeyOutput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateAccessKeyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem creates a new InternalServicesValidateAccessKeyInvalidAccessKeyProblem
 func NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem() *InternalServicesValidateAccessKeyInvalidAccessKeyProblem {
 	s := &InternalServicesValidateAccessKeyInvalidAccessKeyProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesValidateAccessKeyInvalidAccessKeyProblem entity
 type InternalServicesValidateAccessKeyInvalidAccessKeyProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -4081,37 +4445,48 @@ func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) SetMessage(me
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) InitializeDefaults() {
+}
+
+// internalServicesValidateAccessKeyInvalidAccessKeyProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateAccessKeyInvalidAccessKeyProblemAlias InternalServicesValidateAccessKeyInvalidAccessKeyProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateAccessKeyInvalidAccessKeyProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateAccessKeyInvalidAccessKeyProblem)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateAccessKeyInvalidAccessKeyProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateAccessKeyInvalidAccessKeyProblem) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateAccessKeyInvalidAccessKeyProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertActionInput creates a new InternalServicesAssertActionInput
 func NewInternalServicesAssertActionInput() *InternalServicesAssertActionInput {
 	s := &InternalServicesAssertActionInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesAssertActionInput entity
 type InternalServicesAssertActionInput struct {
-	CallerAccessKeyID string
-	CallerAction      string
-	CallerRegion      string
-	CallerResourceDRN string
+	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
+	CallerAction      string `json:"callerAction,omitempty"`
+	CallerRegion      string `json:"callerRegion,omitempty"`
+	CallerResourceDRN string `json:"callerResourceDRN,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -4154,40 +4529,39 @@ func (e *InternalServicesAssertActionInput) SetCallerResourceDRN(callerResourceD
 	e.CallerResourceDRN = callerResourceDRN
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertActionInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAccessKeyID", &e.CallerAccessKeyID); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAction", &e.CallerAction); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerRegion", &e.CallerRegion); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerResourceDRN", &e.CallerResourceDRN); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertActionInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("callerAccessKeyID", e.CallerAccessKeyID)
-	ctx.Content().SetProperty("callerAction", e.CallerAction)
-	ctx.Content().SetProperty("callerRegion", e.CallerRegion)
-	ctx.Content().SetProperty("callerResourceDRN", e.CallerResourceDRN)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertActionInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertActionInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertActionInput) InitializeDefaults() {
+}
+
+// internalServicesAssertActionInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertActionInputAlias InternalServicesAssertActionInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertActionInput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertActionInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertActionInput)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertActionInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertActionInput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertActionInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertActionOutput creates a new InternalServicesAssertActionOutput
 func NewInternalServicesAssertActionOutput() *InternalServicesAssertActionOutput {
 	s := &InternalServicesAssertActionOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
@@ -4195,33 +4569,48 @@ func NewInternalServicesAssertActionOutput() *InternalServicesAssertActionOutput
 type InternalServicesAssertActionOutput struct {
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertActionOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertActionOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertActionOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertActionOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertActionOutput) InitializeDefaults() {
+}
+
+// internalServicesAssertActionOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertActionOutputAlias InternalServicesAssertActionOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertActionOutput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertActionOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertActionOutput)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertActionOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertActionOutput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertActionOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertQueryInput creates a new InternalServicesAssertQueryInput
 func NewInternalServicesAssertQueryInput() *InternalServicesAssertQueryInput {
 	s := &InternalServicesAssertQueryInput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesAssertQueryInput entity
 type InternalServicesAssertQueryInput struct {
-	CallerAccessKeyID             string
-	CallerAction                  string
-	CallerRegion                  string
-	CallerResourceDRNReplacements string
+	CallerAccessKeyID             string `json:"callerAccessKeyID,omitempty"`
+	CallerAction                  string `json:"callerAction,omitempty"`
+	CallerRegion                  string `json:"callerRegion,omitempty"`
+	CallerResourceDRNReplacements string `json:"callerResourceDRNReplacements,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -4264,46 +4653,45 @@ func (e *InternalServicesAssertQueryInput) SetCallerResourceDRNReplacements(call
 	e.CallerResourceDRNReplacements = callerResourceDRNReplacements
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertQueryInput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAccessKeyID", &e.CallerAccessKeyID); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerAction", &e.CallerAction); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerRegion", &e.CallerRegion); err != nil {
-		return err
-	}
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "callerResourceDRNReplacements", &e.CallerResourceDRNReplacements); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertQueryInput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("callerAccessKeyID", e.CallerAccessKeyID)
-	ctx.Content().SetProperty("callerAction", e.CallerAction)
-	ctx.Content().SetProperty("callerRegion", e.CallerRegion)
-	ctx.Content().SetProperty("callerResourceDRNReplacements", e.CallerResourceDRNReplacements)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertQueryInput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertQueryInput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertQueryInput) InitializeDefaults() {
+}
+
+// internalServicesAssertQueryInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertQueryInputAlias InternalServicesAssertQueryInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertQueryInput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertQueryInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertQueryInput)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertQueryInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertQueryInput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertQueryInputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertQueryOutput creates a new InternalServicesAssertQueryOutput
 func NewInternalServicesAssertQueryOutput() *InternalServicesAssertQueryOutput {
 	s := &InternalServicesAssertQueryOutput{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesAssertQueryOutput entity
 type InternalServicesAssertQueryOutput struct {
-	Entries []*InternalQueryAssertionEntry
+	Entries []*InternalQueryAssertionEntry `json:"entries,omitempty"`
 }
 
 // GetEntries returns the value for the field entries
@@ -4316,54 +4704,45 @@ func (e *InternalServicesAssertQueryOutput) SetEntries(entries []*InternalQueryA
 	e.Entries = entries
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertQueryOutput) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentObjectArrayProperty(ctx.Content(), SpecularMeta().InternalQueryAssertionEntry().TypeBuilder(), ctx.Package(), "entries", &e.Entries); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertQueryOutput) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	var fieldValuesEntries []map[string]any
-
-	if fsv := e.Entries; fsv != nil {
-		fieldValuesEntries = make([]map[string]any, 0, len(fsv))
-		for ix, fsvitem := range fsv {
-			var fsvm map[string]any
-			if fsvitem != nil {
-				ct := clientruntime.NewContent()
-				if err := fsvitem.Dehydrate(ctx.CopyWithContent(ct)); err != nil {
-					return clientruntime.NewPropertyItemDehydrationError("entries", ix, err)
-				}
-				fsvm = ct.Map()
-			}
-			if fsvm == nil {
-				return clientruntime.NewArrayItemMissingError("entries", ix)
-			}
-			fieldValuesEntries = append(fieldValuesEntries, fsvm)
-		}
-	}
-
-	ctx.Content().SetProperty("entries", fieldValuesEntries)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertQueryOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertQueryOutput.Path()
 }
 
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertQueryOutput) InitializeDefaults() {
+}
+
+// internalServicesAssertQueryOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertQueryOutputAlias InternalServicesAssertQueryOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertQueryOutput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertQueryOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertQueryOutput)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertQueryOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertQueryOutput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertQueryOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesAssertQueryReplacementProblem creates a new InternalServicesAssertQueryReplacementProblem
 func NewInternalServicesAssertQueryReplacementProblem() *InternalServicesAssertQueryReplacementProblem {
 	s := &InternalServicesAssertQueryReplacementProblem{}
+	s.InitializeDefaults()
 	return s
 }
 
 // InternalServicesAssertQueryReplacementProblem entity
 type InternalServicesAssertQueryReplacementProblem struct {
-	Message string
+	Message string `json:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -4392,23 +4771,33 @@ func (e *InternalServicesAssertQueryReplacementProblem) SetMessage(message strin
 	e.Message = message
 }
 
-// Hydrate implements struct hydrate
-func (e *InternalServicesAssertQueryReplacementProblem) Hydrate(ctx *clientruntime.HydratationContext) error {
-	if err := clientruntime.ContentRequireStringProperty(ctx.Content(), "message", &e.Message); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Dehydrate implements struct dehydrate
-func (e *InternalServicesAssertQueryReplacementProblem) Dehydrate(ctx *clientruntime.DehydrationContext) (err error) {
-	ctx.Content().SetProperty("message", e.Message)
-	return nil
-}
-
 // StructPath returns StructPath
 func (e *InternalServicesAssertQueryReplacementProblem) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathInternalServicesAssertQueryReplacementProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesAssertQueryReplacementProblem) InitializeDefaults() {
+}
+
+// internalServicesAssertQueryReplacementProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesAssertQueryReplacementProblemAlias InternalServicesAssertQueryReplacementProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesAssertQueryReplacementProblem) UnmarshalJSON(data []byte) error {
+	var alias internalServicesAssertQueryReplacementProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesAssertQueryReplacementProblem)(&alias)).InitializeDefaults()
+	*e = InternalServicesAssertQueryReplacementProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesAssertQueryReplacementProblem) MarshalJSON() ([]byte, error) {
+	alias := internalServicesAssertQueryReplacementProblemAlias(e)
+	return json.Marshal(alias)
 }
 
 var packagePath = clientruntime.ModulePathFromTrustedValues(
