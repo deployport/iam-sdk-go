@@ -20,7 +20,7 @@ func NewUserInformationSSOProvider() *UserInformationSSOProvider {
 	return s
 }
 
-// UserInformationSSOProvider entity
+// UserInformationSSOProvider struct
 type UserInformationSSOProvider struct {
 	// provider name
 	Name string `json:"name,omitempty"`
@@ -72,7 +72,7 @@ func NewUserInformationSSOProfile() *UserInformationSSOProfile {
 	return s
 }
 
-// UserInformationSSOProfile entity
+// UserInformationSSOProfile struct
 type UserInformationSSOProfile struct {
 	Email      string `json:"email,omitempty"`
 	Fullname   string `json:"fullname,omitempty"`
@@ -145,7 +145,7 @@ func NewUserInformationSSO() *UserInformationSSO {
 	return s
 }
 
-// UserInformationSSO entity
+// UserInformationSSO struct
 type UserInformationSSO struct {
 	Profile  *UserInformationSSOProfile  `json:"profile,omitempty"`
 	Provider *UserInformationSSOProvider `json:"provider,omitempty"`
@@ -207,7 +207,7 @@ func NewUserInformation() *UserInformation {
 	return s
 }
 
-// UserInformation entity
+// UserInformation struct
 type UserInformation struct {
 	Description string `json:"description,omitempty"`
 	// when the user comes from SSO, this field is populated with the extra information
@@ -281,7 +281,7 @@ func NewCredentials() *Credentials {
 	return s
 }
 
-// Credentials entity
+// Credentials struct
 type Credentials struct {
 	AccessKeyID     string `json:"accessKeyID,omitempty"`
 	SecretAccessKey string `json:"secretAccessKey,omitempty"`
@@ -343,7 +343,7 @@ func NewSSOProviderUnavailableProblem() *SSOProviderUnavailableProblem {
 	return s
 }
 
-// SSOProviderUnavailableProblem entity
+// SSOProviderUnavailableProblem struct
 type SSOProviderUnavailableProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -410,7 +410,7 @@ func NewSSOFlow() *SSOFlow {
 	return s
 }
 
-// SSOFlow entity
+// SSOFlow struct
 type SSOFlow struct {
 	BrowseURL                 string    `json:"browseURL,omitempty"`
 	CompletionIntervalSeconds int32     `json:"completionIntervalSeconds,omitempty"`
@@ -483,7 +483,7 @@ func NewAccount() *Account {
 	return s
 }
 
-// Account entity
+// Account struct
 type Account struct {
 	Name string `json:"name,omitempty"`
 }
@@ -534,7 +534,7 @@ func NewAccountSSOProvider() *AccountSSOProvider {
 	return s
 }
 
-// AccountSSOProvider entity
+// AccountSSOProvider struct
 type AccountSSOProvider struct {
 	DisplayName string `json:"displayName,omitempty"`
 	Name        string `json:"name,omitempty"`
@@ -596,7 +596,7 @@ func NewPolicyNotFoundProblem() *PolicyNotFoundProblem {
 	return s
 }
 
-// PolicyNotFoundProblem entity
+// PolicyNotFoundProblem struct
 type PolicyNotFoundProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -663,7 +663,7 @@ func NewAccountSSOAutoJoinPolicy() *AccountSSOAutoJoinPolicy {
 	return s
 }
 
-// AccountSSOAutoJoinPolicy entity
+// AccountSSOAutoJoinPolicy struct
 type AccountSSOAutoJoinPolicy struct {
 	// email-domain users come from, example "deployport.com"
 	Domain  string `json:"domain,omitempty"`
@@ -762,7 +762,7 @@ func NewAccountCreateInput() *AccountCreateInput {
 	return s
 }
 
-// AccountCreateInput entity
+// AccountCreateInput struct
 type AccountCreateInput struct {
 	Name string `json:"name,omitempty"`
 }
@@ -813,7 +813,7 @@ func NewAccountCreateOutput() *AccountCreateOutput {
 	return s
 }
 
-// AccountCreateOutput entity
+// AccountCreateOutput struct
 type AccountCreateOutput struct {
 	Account *Account `json:"account,omitempty"`
 }
@@ -864,7 +864,7 @@ func NewAccountCreateInvalidNameProblem() *AccountCreateInvalidNameProblem {
 	return s
 }
 
-// AccountCreateInvalidNameProblem entity
+// AccountCreateInvalidNameProblem struct
 type AccountCreateInvalidNameProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -931,7 +931,7 @@ func NewAccountAssumeIdentityInput() *AccountAssumeIdentityInput {
 	return s
 }
 
-// AccountAssumeIdentityInput entity
+// AccountAssumeIdentityInput struct
 type AccountAssumeIdentityInput struct {
 	AccountName string `json:"accountName,omitempty"`
 }
@@ -982,7 +982,7 @@ func NewAccountAssumeIdentityOutput() *AccountAssumeIdentityOutput {
 	return s
 }
 
-// AccountAssumeIdentityOutput entity
+// AccountAssumeIdentityOutput struct
 type AccountAssumeIdentityOutput struct {
 	Credentials *Credentials `json:"credentials,omitempty"`
 }
@@ -1033,7 +1033,7 @@ func NewAccountSSOBeginAuthenticationInput() *AccountSSOBeginAuthenticationInput
 	return s
 }
 
-// AccountSSOBeginAuthenticationInput entity
+// AccountSSOBeginAuthenticationInput struct
 type AccountSSOBeginAuthenticationInput struct {
 	AccountName string `json:"accountName,omitempty"`
 	// client generated code challenge that will be used to verify the completion code, SHA-256 of the codeVerifier
@@ -1107,7 +1107,7 @@ func NewAccountSSOBeginAuthenticationOutput() *AccountSSOBeginAuthenticationOutp
 	return s
 }
 
-// AccountSSOBeginAuthenticationOutput entity
+// AccountSSOBeginAuthenticationOutput struct
 type AccountSSOBeginAuthenticationOutput struct {
 	Flow *SSOFlow `json:"flow,omitempty"`
 }
@@ -1158,7 +1158,7 @@ func NewAccountSSOBeginAuthenticationParameterProblem() *AccountSSOBeginAuthenti
 	return s
 }
 
-// AccountSSOBeginAuthenticationParameterProblem entity
+// AccountSSOBeginAuthenticationParameterProblem struct
 type AccountSSOBeginAuthenticationParameterProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -1225,7 +1225,7 @@ func NewAccountSSOCompleteAuthenticationInput() *AccountSSOCompleteAuthenticatio
 	return s
 }
 
-// AccountSSOCompleteAuthenticationInput entity
+// AccountSSOCompleteAuthenticationInput struct
 type AccountSSOCompleteAuthenticationInput struct {
 	AccountName string `json:"accountName,omitempty"`
 	// base64-url-encoded client generated code challenge that will be used to verify the completion code
@@ -1299,7 +1299,7 @@ func NewAccountSSOCompleteAuthenticationOutput() *AccountSSOCompleteAuthenticati
 	return s
 }
 
-// AccountSSOCompleteAuthenticationOutput entity
+// AccountSSOCompleteAuthenticationOutput struct
 type AccountSSOCompleteAuthenticationOutput struct {
 	Credentials *Credentials `json:"credentials,omitempty"`
 }
@@ -1350,7 +1350,7 @@ func NewAccountSSOCompleteAuthenticationInvalidFlowProblem() *AccountSSOComplete
 	return s
 }
 
-// AccountSSOCompleteAuthenticationInvalidFlowProblem entity
+// AccountSSOCompleteAuthenticationInvalidFlowProblem struct
 type AccountSSOCompleteAuthenticationInvalidFlowProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -1417,7 +1417,7 @@ func NewAccountSSOGetProvidersInput() *AccountSSOGetProvidersInput {
 	return s
 }
 
-// AccountSSOGetProvidersInput entity
+// AccountSSOGetProvidersInput struct
 type AccountSSOGetProvidersInput struct {
 	AccountName string `json:"accountName,omitempty"`
 }
@@ -1468,7 +1468,7 @@ func NewAccountSSOGetProvidersOutput() *AccountSSOGetProvidersOutput {
 	return s
 }
 
-// AccountSSOGetProvidersOutput entity
+// AccountSSOGetProvidersOutput struct
 type AccountSSOGetProvidersOutput struct {
 	Providers []*AccountSSOProvider `json:"providers,omitempty"`
 }
@@ -1519,7 +1519,7 @@ func NewAccountSSOAutoJoinPolicyCreateInput() *AccountSSOAutoJoinPolicyCreateInp
 	return s
 }
 
-// AccountSSOAutoJoinPolicyCreateInput entity
+// AccountSSOAutoJoinPolicyCreateInput struct
 type AccountSSOAutoJoinPolicyCreateInput struct {
 	Domain             string `json:"domain,omitempty"`
 	OriginAccountName  string `json:"originAccountName,omitempty"`
@@ -1592,7 +1592,7 @@ func NewAccountSSOAutoJoinPolicyCreateOutput() *AccountSSOAutoJoinPolicyCreateOu
 	return s
 }
 
-// AccountSSOAutoJoinPolicyCreateOutput entity
+// AccountSSOAutoJoinPolicyCreateOutput struct
 type AccountSSOAutoJoinPolicyCreateOutput struct {
 	Policy *AccountSSOAutoJoinPolicy `json:"policy,omitempty"`
 }
@@ -1643,7 +1643,7 @@ func NewAccountSSOAutoJoinPolicyListInput() *AccountSSOAutoJoinPolicyListInput {
 	return s
 }
 
-// AccountSSOAutoJoinPolicyListInput entity
+// AccountSSOAutoJoinPolicyListInput struct
 type AccountSSOAutoJoinPolicyListInput struct {
 }
 
@@ -1683,7 +1683,7 @@ func NewAccountSSOAutoJoinPolicyListOutput() *AccountSSOAutoJoinPolicyListOutput
 	return s
 }
 
-// AccountSSOAutoJoinPolicyListOutput entity
+// AccountSSOAutoJoinPolicyListOutput struct
 type AccountSSOAutoJoinPolicyListOutput struct {
 	Policies []*AccountSSOAutoJoinPolicy `json:"policies,omitempty"`
 }
@@ -1734,7 +1734,7 @@ func NewAccountSSOAutoJoinPolicyEnableInput() *AccountSSOAutoJoinPolicyEnableInp
 	return s
 }
 
-// AccountSSOAutoJoinPolicyEnableInput entity
+// AccountSSOAutoJoinPolicyEnableInput struct
 type AccountSSOAutoJoinPolicyEnableInput struct {
 	Enabled    bool   `json:"enabled,omitempty"`
 	PolicyName string `json:"policyName,omitempty"`
@@ -1796,7 +1796,7 @@ func NewAccountSSOAutoJoinPolicyEnableOutput() *AccountSSOAutoJoinPolicyEnableOu
 	return s
 }
 
-// AccountSSOAutoJoinPolicyEnableOutput entity
+// AccountSSOAutoJoinPolicyEnableOutput struct
 type AccountSSOAutoJoinPolicyEnableOutput struct {
 }
 
@@ -1836,7 +1836,7 @@ func NewInvalidUsernameProblem() *InvalidUsernameProblem {
 	return s
 }
 
-// InvalidUsernameProblem entity
+// InvalidUsernameProblem struct
 type InvalidUsernameProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -1903,7 +1903,7 @@ func NewMemberAccount() *MemberAccount {
 	return s
 }
 
-// MemberAccount entity
+// MemberAccount struct
 type MemberAccount struct {
 	AccountName string `json:"accountName,omitempty"`
 }
@@ -1954,7 +1954,7 @@ func NewCredentialInfo() *CredentialInfo {
 	return s
 }
 
-// CredentialInfo entity
+// CredentialInfo struct
 type CredentialInfo struct {
 	AccessKeyID string `json:"accessKeyID,omitempty"`
 }
@@ -2005,7 +2005,7 @@ func NewIdentityPolicyStatement() *IdentityPolicyStatement {
 	return s
 }
 
-// IdentityPolicyStatement entity
+// IdentityPolicyStatement struct
 type IdentityPolicyStatement struct {
 	Actions   []string `json:"actions,omitempty"`
 	Resources []string `json:"resources,omitempty"`
@@ -2067,7 +2067,7 @@ func NewIdentityPolicy() *IdentityPolicy {
 	return s
 }
 
-// IdentityPolicy entity
+// IdentityPolicy struct
 type IdentityPolicy struct {
 	Builtin    bool                       `json:"builtin,omitempty"`
 	Name       string                     `json:"name,omitempty"`
@@ -2140,7 +2140,7 @@ func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 	return s
 }
 
-// IdentityPolicyAttachment entity
+// IdentityPolicyAttachment struct
 type IdentityPolicyAttachment struct {
 	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
@@ -2191,7 +2191,7 @@ func NewUserCreateInput() *UserCreateInput {
 	return s
 }
 
-// UserCreateInput entity
+// UserCreateInput struct
 type UserCreateInput struct {
 	Description string `json:"description,omitempty"`
 	Username    string `json:"username,omitempty"`
@@ -2253,7 +2253,7 @@ func NewUserCreateOutput() *UserCreateOutput {
 	return s
 }
 
-// UserCreateOutput entity
+// UserCreateOutput struct
 type UserCreateOutput struct {
 	User *UserInformation `json:"user,omitempty"`
 }
@@ -2304,7 +2304,7 @@ func NewUserGetInput() *UserGetInput {
 	return s
 }
 
-// UserGetInput entity
+// UserGetInput struct
 type UserGetInput struct {
 	Username *string `json:"username,omitempty"`
 }
@@ -2355,7 +2355,7 @@ func NewUserGetOutput() *UserGetOutput {
 	return s
 }
 
-// UserGetOutput entity
+// UserGetOutput struct
 type UserGetOutput struct {
 	User *UserInformation `json:"user,omitempty"`
 }
@@ -2406,7 +2406,7 @@ func NewUserGetUserNotAvailableProblem() *UserGetUserNotAvailableProblem {
 	return s
 }
 
-// UserGetUserNotAvailableProblem entity
+// UserGetUserNotAvailableProblem struct
 type UserGetUserNotAvailableProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -2473,7 +2473,7 @@ func NewUserDestroyInput() *UserDestroyInput {
 	return s
 }
 
-// UserDestroyInput entity
+// UserDestroyInput struct
 type UserDestroyInput struct {
 	Username *string `json:"username,omitempty"`
 }
@@ -2524,7 +2524,7 @@ func NewUserDestroyOutput() *UserDestroyOutput {
 	return s
 }
 
-// UserDestroyOutput entity
+// UserDestroyOutput struct
 type UserDestroyOutput struct {
 }
 
@@ -2564,7 +2564,7 @@ func NewUserListInput() *UserListInput {
 	return s
 }
 
-// UserListInput entity
+// UserListInput struct
 type UserListInput struct {
 }
 
@@ -2604,7 +2604,7 @@ func NewUserListOutput() *UserListOutput {
 	return s
 }
 
-// UserListOutput entity
+// UserListOutput struct
 type UserListOutput struct {
 	Users []*UserInformation `json:"users,omitempty"`
 }
@@ -2655,7 +2655,7 @@ func NewUserMemberAccountsInput() *UserMemberAccountsInput {
 	return s
 }
 
-// UserMemberAccountsInput entity
+// UserMemberAccountsInput struct
 type UserMemberAccountsInput struct {
 }
 
@@ -2695,7 +2695,7 @@ func NewUserMemberAccountsOutput() *UserMemberAccountsOutput {
 	return s
 }
 
-// UserMemberAccountsOutput entity
+// UserMemberAccountsOutput struct
 type UserMemberAccountsOutput struct {
 	Accounts []*MemberAccount `json:"accounts,omitempty"`
 }
@@ -2746,7 +2746,7 @@ func NewUserAccessKeyCreateInput() *UserAccessKeyCreateInput {
 	return s
 }
 
-// UserAccessKeyCreateInput entity
+// UserAccessKeyCreateInput struct
 type UserAccessKeyCreateInput struct {
 	Username string `json:"username,omitempty"`
 }
@@ -2797,7 +2797,7 @@ func NewUserAccessKeyCreateOutput() *UserAccessKeyCreateOutput {
 	return s
 }
 
-// UserAccessKeyCreateOutput entity
+// UserAccessKeyCreateOutput struct
 type UserAccessKeyCreateOutput struct {
 	Credentials *Credentials `json:"credentials,omitempty"`
 }
@@ -2848,7 +2848,7 @@ func NewUserAccessKeyListInput() *UserAccessKeyListInput {
 	return s
 }
 
-// UserAccessKeyListInput entity
+// UserAccessKeyListInput struct
 type UserAccessKeyListInput struct {
 	Username *string `json:"username,omitempty"`
 }
@@ -2899,7 +2899,7 @@ func NewUserAccessKeyListOutput() *UserAccessKeyListOutput {
 	return s
 }
 
-// UserAccessKeyListOutput entity
+// UserAccessKeyListOutput struct
 type UserAccessKeyListOutput struct {
 	Credentials []*CredentialInfo `json:"credentials,omitempty"`
 }
@@ -2950,7 +2950,7 @@ func NewUserAccessKeyDestroyInput() *UserAccessKeyDestroyInput {
 	return s
 }
 
-// UserAccessKeyDestroyInput entity
+// UserAccessKeyDestroyInput struct
 type UserAccessKeyDestroyInput struct {
 	AccessKeyID string `json:"accessKeyID,omitempty"`
 	Username    string `json:"username,omitempty"`
@@ -3012,7 +3012,7 @@ func NewUserAccessKeyDestroyOutput() *UserAccessKeyDestroyOutput {
 	return s
 }
 
-// UserAccessKeyDestroyOutput entity
+// UserAccessKeyDestroyOutput struct
 type UserAccessKeyDestroyOutput struct {
 }
 
@@ -3052,7 +3052,7 @@ func NewUserIdentityPolicyAttachInput() *UserIdentityPolicyAttachInput {
 	return s
 }
 
-// UserIdentityPolicyAttachInput entity
+// UserIdentityPolicyAttachInput struct
 type UserIdentityPolicyAttachInput struct {
 	PolicyName string `json:"policyName,omitempty"`
 	Username   string `json:"username,omitempty"`
@@ -3114,7 +3114,7 @@ func NewUserIdentityPolicyAttachOutput() *UserIdentityPolicyAttachOutput {
 	return s
 }
 
-// UserIdentityPolicyAttachOutput entity
+// UserIdentityPolicyAttachOutput struct
 type UserIdentityPolicyAttachOutput struct {
 }
 
@@ -3154,7 +3154,7 @@ func NewUserIdentityPolicyListInput() *UserIdentityPolicyListInput {
 	return s
 }
 
-// UserIdentityPolicyListInput entity
+// UserIdentityPolicyListInput struct
 type UserIdentityPolicyListInput struct {
 	Username string `json:"username,omitempty"`
 }
@@ -3205,7 +3205,7 @@ func NewUserIdentityPolicyListOutput() *UserIdentityPolicyListOutput {
 	return s
 }
 
-// UserIdentityPolicyListOutput entity
+// UserIdentityPolicyListOutput struct
 type UserIdentityPolicyListOutput struct {
 	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty"`
 }
@@ -3256,7 +3256,7 @@ func NewUserIdentityPolicyDetachInput() *UserIdentityPolicyDetachInput {
 	return s
 }
 
-// UserIdentityPolicyDetachInput entity
+// UserIdentityPolicyDetachInput struct
 type UserIdentityPolicyDetachInput struct {
 	PolicyName string `json:"policyName,omitempty"`
 	Username   string `json:"username,omitempty"`
@@ -3318,7 +3318,7 @@ func NewUserIdentityPolicyDetachOutput() *UserIdentityPolicyDetachOutput {
 	return s
 }
 
-// UserIdentityPolicyDetachOutput entity
+// UserIdentityPolicyDetachOutput struct
 type UserIdentityPolicyDetachOutput struct {
 }
 
@@ -3358,7 +3358,7 @@ func NewPolicyStructureProblem() *PolicyStructureProblem {
 	return s
 }
 
-// PolicyStructureProblem entity
+// PolicyStructureProblem struct
 type PolicyStructureProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -3425,7 +3425,7 @@ func NewIdentityPolicyCreateInput() *IdentityPolicyCreateInput {
 	return s
 }
 
-// IdentityPolicyCreateInput entity
+// IdentityPolicyCreateInput struct
 type IdentityPolicyCreateInput struct {
 	Name       string                     `json:"name,omitempty"`
 	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
@@ -3487,7 +3487,7 @@ func NewIdentityPolicyCreateOutput() *IdentityPolicyCreateOutput {
 	return s
 }
 
-// IdentityPolicyCreateOutput entity
+// IdentityPolicyCreateOutput struct
 type IdentityPolicyCreateOutput struct {
 	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
@@ -3538,7 +3538,7 @@ func NewIdentityPolicyListInput() *IdentityPolicyListInput {
 	return s
 }
 
-// IdentityPolicyListInput entity
+// IdentityPolicyListInput struct
 type IdentityPolicyListInput struct {
 }
 
@@ -3578,7 +3578,7 @@ func NewIdentityPolicyListOutput() *IdentityPolicyListOutput {
 	return s
 }
 
-// IdentityPolicyListOutput entity
+// IdentityPolicyListOutput struct
 type IdentityPolicyListOutput struct {
 	Policies []*IdentityPolicy `json:"policies,omitempty"`
 }
@@ -3629,7 +3629,7 @@ func NewIdentityPolicyRetrieveInput() *IdentityPolicyRetrieveInput {
 	return s
 }
 
-// IdentityPolicyRetrieveInput entity
+// IdentityPolicyRetrieveInput struct
 type IdentityPolicyRetrieveInput struct {
 	Name string `json:"name,omitempty"`
 }
@@ -3680,7 +3680,7 @@ func NewIdentityPolicyRetrieveOutput() *IdentityPolicyRetrieveOutput {
 	return s
 }
 
-// IdentityPolicyRetrieveOutput entity
+// IdentityPolicyRetrieveOutput struct
 type IdentityPolicyRetrieveOutput struct {
 	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
@@ -3731,7 +3731,7 @@ func NewIdentityPolicyDestroyInput() *IdentityPolicyDestroyInput {
 	return s
 }
 
-// IdentityPolicyDestroyInput entity
+// IdentityPolicyDestroyInput struct
 type IdentityPolicyDestroyInput struct {
 	Name string `json:"name,omitempty"`
 }
@@ -3782,7 +3782,7 @@ func NewIdentityPolicyDestroyOutput() *IdentityPolicyDestroyOutput {
 	return s
 }
 
-// IdentityPolicyDestroyOutput entity
+// IdentityPolicyDestroyOutput struct
 type IdentityPolicyDestroyOutput struct {
 }
 
@@ -3822,7 +3822,7 @@ func NewIdentityPolicyUpdateInput() *IdentityPolicyUpdateInput {
 	return s
 }
 
-// IdentityPolicyUpdateInput entity
+// IdentityPolicyUpdateInput struct
 type IdentityPolicyUpdateInput struct {
 	Name       string                     `json:"name,omitempty"`
 	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
@@ -3884,7 +3884,7 @@ func NewIdentityPolicyUpdateOutput() *IdentityPolicyUpdateOutput {
 	return s
 }
 
-// IdentityPolicyUpdateOutput entity
+// IdentityPolicyUpdateOutput struct
 type IdentityPolicyUpdateOutput struct {
 	Policy *IdentityPolicy `json:"policy,omitempty"`
 }
@@ -3935,7 +3935,7 @@ func NewInternalAccessKeyUser() *InternalAccessKeyUser {
 	return s
 }
 
-// InternalAccessKeyUser entity
+// InternalAccessKeyUser struct
 type InternalAccessKeyUser struct {
 	Username string `json:"username,omitempty"`
 }
@@ -3986,7 +3986,7 @@ func NewInternalAccessKeyAccount() *InternalAccessKeyAccount {
 	return s
 }
 
-// InternalAccessKeyAccount entity
+// InternalAccessKeyAccount struct
 type InternalAccessKeyAccount struct {
 	Name string `json:"name,omitempty"`
 }
@@ -4037,7 +4037,7 @@ func NewInternalAccessKey() *InternalAccessKey {
 	return s
 }
 
-// InternalAccessKey entity
+// InternalAccessKey struct
 type InternalAccessKey struct {
 	AccessKeyID     string                    `json:"accessKeyID,omitempty"`
 	Account         *InternalAccessKeyAccount `json:"account,omitempty"`
@@ -4121,7 +4121,7 @@ func NewInternalQueryAssertionEntryValue() *InternalQueryAssertionEntryValue {
 	return s
 }
 
-// InternalQueryAssertionEntryValue entity
+// InternalQueryAssertionEntryValue struct
 type InternalQueryAssertionEntryValue struct {
 	B *bool   `json:"b,omitempty"`
 	S *string `json:"s,omitempty"`
@@ -4183,7 +4183,7 @@ func NewInternalQueryAssertionEntry() *InternalQueryAssertionEntry {
 	return s
 }
 
-// InternalQueryAssertionEntry entity
+// InternalQueryAssertionEntry struct
 type InternalQueryAssertionEntry struct {
 	Snippet *string                           `json:"snippet,omitempty"`
 	Value   *InternalQueryAssertionEntryValue `json:"value,omitempty"`
@@ -4245,7 +4245,7 @@ func NewInternalServicesAssertActionCallerForbiddenProblem() *InternalServicesAs
 	return s
 }
 
-// InternalServicesAssertActionCallerForbiddenProblem entity
+// InternalServicesAssertActionCallerForbiddenProblem struct
 type InternalServicesAssertActionCallerForbiddenProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -4305,6 +4305,146 @@ func (e InternalServicesAssertActionCallerForbiddenProblem) MarshalJSON() ([]byt
 	return json.Marshal(alias)
 }
 
+// NewInternalAssertActionQualifierValue creates a new InternalAssertActionQualifierValue
+func NewInternalAssertActionQualifierValue() *InternalAssertActionQualifierValue {
+	s := &InternalAssertActionQualifierValue{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalAssertActionQualifierValue struct
+type InternalAssertActionQualifierValue struct {
+	// optional child qualifier, example: if the resource to assert is "s3:Bucket(myimages).Object(myimage.jpg)", the child would be {"resourceName": "Object", "value": "myimage.jpg}
+	Child *InternalAssertActionQualifierValue `json:"child,omitempty"`
+	// name of the resource, example: if the resource to assert is "s3:Bucket(myimages)", the name would be "Bucket"
+	ResourceName string `json:"resourceName,omitempty"`
+	// value to match the qualifier, example: if the resource to assert is "s3:Bucket(myimages)", the value would be "myimages"
+	Value string `json:"value,omitempty"`
+}
+
+// GetChild returns the value for the field child
+func (e *InternalAssertActionQualifierValue) GetChild() *InternalAssertActionQualifierValue {
+	return e.Child
+}
+
+// SetChild sets the value for the field child
+func (e *InternalAssertActionQualifierValue) SetChild(child *InternalAssertActionQualifierValue) {
+	e.Child = child
+}
+
+// GetResourceName returns the value for the field resourceName
+func (e *InternalAssertActionQualifierValue) GetResourceName() string {
+	return e.ResourceName
+}
+
+// SetResourceName sets the value for the field resourceName
+func (e *InternalAssertActionQualifierValue) SetResourceName(resourceName string) {
+	e.ResourceName = resourceName
+}
+
+// GetValue returns the value for the field value
+func (e *InternalAssertActionQualifierValue) GetValue() string {
+	return e.Value
+}
+
+// SetValue sets the value for the field value
+func (e *InternalAssertActionQualifierValue) SetValue(value string) {
+	e.Value = value
+}
+
+// StructPath returns StructPath
+func (e *InternalAssertActionQualifierValue) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAssertActionQualifierValue.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAssertActionQualifierValue) InitializeDefaults() {
+}
+
+// internalAssertActionQualifierValueAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAssertActionQualifierValueAlias InternalAssertActionQualifierValue
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAssertActionQualifierValue) UnmarshalJSON(data []byte) error {
+	var alias internalAssertActionQualifierValueAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAssertActionQualifierValue)(&alias)).InitializeDefaults()
+	*e = InternalAssertActionQualifierValue(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAssertActionQualifierValue) MarshalJSON() ([]byte, error) {
+	alias := internalAssertActionQualifierValueAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInternalAssertActionResourceName creates a new InternalAssertActionResourceName
+func NewInternalAssertActionResourceName() *InternalAssertActionResourceName {
+	s := &InternalAssertActionResourceName{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalAssertActionResourceName struct
+type InternalAssertActionResourceName struct {
+	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
+	Namespace string `json:"namespace,omitempty"`
+	// root resource qualifier
+	RootQualifier *InternalAssertActionQualifierValue `json:"rootQualifier,omitempty"`
+}
+
+// GetNamespace returns the value for the field namespace
+func (e *InternalAssertActionResourceName) GetNamespace() string {
+	return e.Namespace
+}
+
+// SetNamespace sets the value for the field namespace
+func (e *InternalAssertActionResourceName) SetNamespace(namespace string) {
+	e.Namespace = namespace
+}
+
+// GetRootQualifier returns the value for the field rootQualifier
+func (e *InternalAssertActionResourceName) GetRootQualifier() *InternalAssertActionQualifierValue {
+	return e.RootQualifier
+}
+
+// SetRootQualifier sets the value for the field rootQualifier
+func (e *InternalAssertActionResourceName) SetRootQualifier(rootQualifier *InternalAssertActionQualifierValue) {
+	e.RootQualifier = rootQualifier
+}
+
+// StructPath returns StructPath
+func (e *InternalAssertActionResourceName) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAssertActionResourceName.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAssertActionResourceName) InitializeDefaults() {
+}
+
+// internalAssertActionResourceNameAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAssertActionResourceNameAlias InternalAssertActionResourceName
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAssertActionResourceName) UnmarshalJSON(data []byte) error {
+	var alias internalAssertActionResourceNameAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAssertActionResourceName)(&alias)).InitializeDefaults()
+	*e = InternalAssertActionResourceName(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAssertActionResourceName) MarshalJSON() ([]byte, error) {
+	alias := internalAssertActionResourceNameAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalServicesValidateAccessKeyInput creates a new InternalServicesValidateAccessKeyInput
 func NewInternalServicesValidateAccessKeyInput() *InternalServicesValidateAccessKeyInput {
 	s := &InternalServicesValidateAccessKeyInput{}
@@ -4312,7 +4452,7 @@ func NewInternalServicesValidateAccessKeyInput() *InternalServicesValidateAccess
 	return s
 }
 
-// InternalServicesValidateAccessKeyInput entity
+// InternalServicesValidateAccessKeyInput struct
 type InternalServicesValidateAccessKeyInput struct {
 	RequestAccessKeyID string `json:"requestAccessKeyID,omitempty"`
 }
@@ -4363,7 +4503,7 @@ func NewInternalServicesValidateAccessKeyOutput() *InternalServicesValidateAcces
 	return s
 }
 
-// InternalServicesValidateAccessKeyOutput entity
+// InternalServicesValidateAccessKeyOutput struct
 type InternalServicesValidateAccessKeyOutput struct {
 	Key *InternalAccessKey `json:"key,omitempty"`
 }
@@ -4414,7 +4554,7 @@ func NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem() *InternalServ
 	return s
 }
 
-// InternalServicesValidateAccessKeyInvalidAccessKeyProblem entity
+// InternalServicesValidateAccessKeyInvalidAccessKeyProblem struct
 type InternalServicesValidateAccessKeyInvalidAccessKeyProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -4481,12 +4621,13 @@ func NewInternalServicesAssertActionInput() *InternalServicesAssertActionInput {
 	return s
 }
 
-// InternalServicesAssertActionInput entity
+// InternalServicesAssertActionInput struct
 type InternalServicesAssertActionInput struct {
-	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
-	CallerAction      string `json:"callerAction,omitempty"`
-	CallerRegion      string `json:"callerRegion,omitempty"`
-	CallerResourceDRN string `json:"callerResourceDRN,omitempty"`
+	CallerAccessKeyID string                            `json:"callerAccessKeyID,omitempty"`
+	CallerAction      string                            `json:"callerAction,omitempty"`
+	CallerRegion      string                            `json:"callerRegion,omitempty"`
+	CallerResource    *InternalAssertActionResourceName `json:"callerResource,omitempty"`
+	CallerResourceDRN string                            `json:"callerResourceDRN,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -4517,6 +4658,16 @@ func (e *InternalServicesAssertActionInput) GetCallerRegion() string {
 // SetCallerRegion sets the value for the field callerRegion
 func (e *InternalServicesAssertActionInput) SetCallerRegion(callerRegion string) {
 	e.CallerRegion = callerRegion
+}
+
+// GetCallerResource returns the value for the field callerResource
+func (e *InternalServicesAssertActionInput) GetCallerResource() *InternalAssertActionResourceName {
+	return e.CallerResource
+}
+
+// SetCallerResource sets the value for the field callerResource
+func (e *InternalServicesAssertActionInput) SetCallerResource(callerResource *InternalAssertActionResourceName) {
+	e.CallerResource = callerResource
 }
 
 // GetCallerResourceDRN returns the value for the field callerResourceDRN
@@ -4565,7 +4716,7 @@ func NewInternalServicesAssertActionOutput() *InternalServicesAssertActionOutput
 	return s
 }
 
-// InternalServicesAssertActionOutput entity
+// InternalServicesAssertActionOutput struct
 type InternalServicesAssertActionOutput struct {
 }
 
@@ -4605,7 +4756,7 @@ func NewInternalServicesAssertQueryInput() *InternalServicesAssertQueryInput {
 	return s
 }
 
-// InternalServicesAssertQueryInput entity
+// InternalServicesAssertQueryInput struct
 type InternalServicesAssertQueryInput struct {
 	CallerAccessKeyID             string `json:"callerAccessKeyID,omitempty"`
 	CallerAction                  string `json:"callerAction,omitempty"`
@@ -4689,7 +4840,7 @@ func NewInternalServicesAssertQueryOutput() *InternalServicesAssertQueryOutput {
 	return s
 }
 
-// InternalServicesAssertQueryOutput entity
+// InternalServicesAssertQueryOutput struct
 type InternalServicesAssertQueryOutput struct {
 	Entries []*InternalQueryAssertionEntry `json:"entries,omitempty"`
 }
@@ -4740,7 +4891,7 @@ func NewInternalServicesAssertQueryReplacementProblem() *InternalServicesAssertQ
 	return s
 }
 
-// InternalServicesAssertQueryReplacementProblem entity
+// InternalServicesAssertQueryReplacementProblem struct
 type InternalServicesAssertQueryReplacementProblem struct {
 	Message string `json:"message,omitempty"`
 }
@@ -5494,6 +5645,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathInternalAssertActionQualifierValue, err = pk.NewType(
+		"InternalAssertActionQualifierValue",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalAssertActionQualifierValue()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInternalAssertActionResourceName, err = pk.NewType(
+		"InternalAssertActionResourceName",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalAssertActionResourceName()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathInternalServicesValidateAccessKeyInput, err = pk.NewType(
 		"InternalServicesValidateAccessKeyInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -5578,11 +5747,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountCreateInput())
-	op.SetOutput(SpecularMeta().AccountCreateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().AccountCreateInvalidNameProblem())
+	op.SetInput(SpecularMeta().AccountCreateInputStruct())
+	op.SetOutput(SpecularMeta().AccountCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().AccountCreateInvalidNameProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5591,10 +5760,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountAssumeIdentityInput())
-	op.SetOutput(SpecularMeta().AccountAssumeIdentityInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().AccountAssumeIdentityInputStruct())
+	op.SetOutput(SpecularMeta().AccountAssumeIdentityInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource AccountSSO
@@ -5609,27 +5778,27 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOBeginAuthenticationInput())
-	op.SetOutput(SpecularMeta().AccountSSOBeginAuthenticationInput())
-	op.RegisterProblemType(SpecularMeta().SSOProviderUnavailableProblem())
-	op.RegisterProblemType(SpecularMeta().AccountSSOBeginAuthenticationParameterProblem())
+	op.SetInput(SpecularMeta().AccountSSOBeginAuthenticationInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOBeginAuthenticationInputStruct())
+	op.RegisterProblemType(SpecularMeta().SSOProviderUnavailableProblemStruct())
+	op.RegisterProblemType(SpecularMeta().AccountSSOBeginAuthenticationParameterProblemStruct())
 
 	op, err = resAccountSSO.NewOperation("CompleteAuthentication")
 	if err != nil {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOCompleteAuthenticationInput())
-	op.SetOutput(SpecularMeta().AccountSSOCompleteAuthenticationInput())
-	op.RegisterProblemType(SpecularMeta().AccountSSOCompleteAuthenticationInvalidFlowProblem())
+	op.SetInput(SpecularMeta().AccountSSOCompleteAuthenticationInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOCompleteAuthenticationInputStruct())
+	op.RegisterProblemType(SpecularMeta().AccountSSOCompleteAuthenticationInvalidFlowProblemStruct())
 
 	op, err = resAccountSSO.NewOperation("GetProviders")
 	if err != nil {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOGetProvidersInput())
-	op.SetOutput(SpecularMeta().AccountSSOGetProvidersInput())
+	op.SetInput(SpecularMeta().AccountSSOGetProvidersInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOGetProvidersInputStruct())
 
 	// subresource AccountSSOAutoJoinPolicy
 	resAccountSSOAutoJoinPolicy, err := resAccountSSO.NewSubResource("AutoJoinPolicy")
@@ -5643,10 +5812,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInput())
-	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5655,10 +5824,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyListInput())
-	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyListInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5667,10 +5836,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInput())
-	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInputStruct())
+	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5685,11 +5854,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserCreateInput())
-	op.SetOutput(SpecularMeta().UserCreateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblem())
+	op.SetInput(SpecularMeta().UserCreateInputStruct())
+	op.SetOutput(SpecularMeta().UserCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5698,10 +5867,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserGetInput())
-	op.SetOutput(SpecularMeta().UserGetInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(SpecularMeta().UserGetUserNotAvailableProblem())
+	op.SetInput(SpecularMeta().UserGetInputStruct())
+	op.SetOutput(SpecularMeta().UserGetInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(SpecularMeta().UserGetUserNotAvailableProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5710,10 +5879,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserDestroyInput())
-	op.SetOutput(SpecularMeta().UserDestroyInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserDestroyInputStruct())
+	op.SetOutput(SpecularMeta().UserDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5722,10 +5891,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserListInput())
-	op.SetOutput(SpecularMeta().UserListInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserListInputStruct())
+	op.SetOutput(SpecularMeta().UserListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5734,9 +5903,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserMemberAccountsInput())
-	op.SetOutput(SpecularMeta().UserMemberAccountsInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
+	op.SetInput(SpecularMeta().UserMemberAccountsInputStruct())
+	op.SetOutput(SpecularMeta().UserMemberAccountsInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource UserAccessKey
@@ -5751,10 +5920,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserAccessKeyCreateInput())
-	op.SetOutput(SpecularMeta().UserAccessKeyCreateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserAccessKeyCreateInputStruct())
+	op.SetOutput(SpecularMeta().UserAccessKeyCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5763,10 +5932,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserAccessKeyListInput())
-	op.SetOutput(SpecularMeta().UserAccessKeyListInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserAccessKeyListInputStruct())
+	op.SetOutput(SpecularMeta().UserAccessKeyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5775,10 +5944,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserAccessKeyDestroyInput())
-	op.SetOutput(SpecularMeta().UserAccessKeyDestroyInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserAccessKeyDestroyInputStruct())
+	op.SetOutput(SpecularMeta().UserAccessKeyDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5794,11 +5963,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserIdentityPolicyAttachInput())
-	op.SetOutput(SpecularMeta().UserIdentityPolicyAttachInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
+	op.SetInput(SpecularMeta().UserIdentityPolicyAttachInputStruct())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyAttachInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5807,10 +5976,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserIdentityPolicyListInput())
-	op.SetOutput(SpecularMeta().UserIdentityPolicyListInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().UserIdentityPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5819,11 +5988,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().UserIdentityPolicyDetachInput())
-	op.SetOutput(SpecularMeta().UserIdentityPolicyDetachInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
+	op.SetInput(SpecularMeta().UserIdentityPolicyDetachInputStruct())
+	op.SetOutput(SpecularMeta().UserIdentityPolicyDetachInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5838,11 +6007,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().IdentityPolicyCreateInput())
-	op.SetOutput(SpecularMeta().IdentityPolicyCreateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblem())
+	op.SetInput(SpecularMeta().IdentityPolicyCreateInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5851,10 +6020,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().IdentityPolicyListInput())
-	op.SetOutput(SpecularMeta().IdentityPolicyListInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().IdentityPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5863,11 +6032,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().IdentityPolicyRetrieveInput())
-	op.SetOutput(SpecularMeta().IdentityPolicyRetrieveInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblem())
+	op.SetInput(SpecularMeta().IdentityPolicyRetrieveInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyRetrieveInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5876,10 +6045,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().IdentityPolicyDestroyInput())
-	op.SetOutput(SpecularMeta().IdentityPolicyDestroyInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
+	op.SetInput(SpecularMeta().IdentityPolicyDestroyInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5888,11 +6057,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().IdentityPolicyUpdateInput())
-	op.SetOutput(SpecularMeta().IdentityPolicyUpdateInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblem())
+	op.SetInput(SpecularMeta().IdentityPolicyUpdateInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyUpdateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5914,11 +6083,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().InternalServicesValidateAccessKeyInput())
-	op.SetOutput(SpecularMeta().InternalServicesValidateAccessKeyInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().InternalServicesValidateAccessKeyInvalidAccessKeyProblem())
+	op.SetInput(SpecularMeta().InternalServicesValidateAccessKeyInputStruct())
+	op.SetOutput(SpecularMeta().InternalServicesValidateAccessKeyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5927,11 +6096,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().InternalServicesAssertActionInput())
-	op.SetOutput(SpecularMeta().InternalServicesAssertActionInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblem())
+	op.SetInput(SpecularMeta().InternalServicesAssertActionInputStruct())
+	op.SetOutput(SpecularMeta().InternalServicesAssertActionInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5940,12 +6109,12 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		return nil, err
 	}
 
-	op.SetInput(SpecularMeta().InternalServicesAssertQueryInput())
-	op.SetOutput(SpecularMeta().InternalServicesAssertQueryInput())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblem())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblem())
-	op.RegisterProblemType(SpecularMeta().InternalServicesAssertQueryReplacementProblem())
+	op.SetInput(SpecularMeta().InternalServicesAssertQueryInputStruct())
+	op.SetOutput(SpecularMeta().InternalServicesAssertQueryInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertActionCallerForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InternalServicesAssertQueryReplacementProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -5983,8 +6152,7 @@ func newAccountResource(
 	return r, nil
 }
 
-// Create entity
-// Creates a new Account with the given name
+// Create - Creates a new Account with the given name
 // Create account only works for users of the "global" account
 func (res *AccountResource) Create(ctx context.Context, input *AccountCreateInput) (*AccountCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -5998,8 +6166,7 @@ func (res *AccountResource) Create(ctx context.Context, input *AccountCreateInpu
 	return output, nil
 }
 
-// AssumeIdentity entity
-// Assume identity in the given account
+// AssumeIdentity - Assume identity in the given account
 func (res *AccountResource) AssumeIdentity(ctx context.Context, input *AccountAssumeIdentityInput) (*AccountAssumeIdentityOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assumeIdentity,
@@ -6042,8 +6209,7 @@ func newAccountSSOResource(
 	return r, nil
 }
 
-// BeginAuthentication entity
-// Returns the public link to the login page for the given SSO provider
+// BeginAuthentication - Returns the public link to the login page for the given SSO provider
 func (res *AccountSSOResource) BeginAuthentication(ctx context.Context, input *AccountSSOBeginAuthenticationInput) (*AccountSSOBeginAuthenticationOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.beginAuthentication,
@@ -6056,8 +6222,7 @@ func (res *AccountSSOResource) BeginAuthentication(ctx context.Context, input *A
 	return output, nil
 }
 
-// CompleteAuthentication entity
-// Authorizes the user with the given code and returns a token
+// CompleteAuthentication - Authorizes the user with the given code and returns a token
 func (res *AccountSSOResource) CompleteAuthentication(ctx context.Context, input *AccountSSOCompleteAuthenticationInput) (*AccountSSOCompleteAuthenticationOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.completeAuthentication,
@@ -6070,8 +6235,7 @@ func (res *AccountSSOResource) CompleteAuthentication(ctx context.Context, input
 	return output, nil
 }
 
-// GetProviders entity
-// Returns the providers available for the given account
+// GetProviders - Returns the providers available for the given account
 // This is a public operation that does not require any authentication
 func (res *AccountSSOResource) GetProviders(ctx context.Context, input *AccountSSOGetProvidersInput) (*AccountSSOGetProvidersOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6109,8 +6273,7 @@ func newAccountSSOAutoJoinPolicyResource(
 	return r, nil
 }
 
-// Create entity
-// Creates an auto-join policy in the account
+// Create - Creates an auto-join policy in the account
 func (res *AccountSSOAutoJoinPolicyResource) Create(ctx context.Context, input *AccountSSOAutoJoinPolicyCreateInput) (*AccountSSOAutoJoinPolicyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
@@ -6123,8 +6286,7 @@ func (res *AccountSSOAutoJoinPolicyResource) Create(ctx context.Context, input *
 	return output, nil
 }
 
-// List entity
-// Lists policies in the account that allow users in other accounts to join automatically
+// List - Lists policies in the account that allow users in other accounts to join automatically
 // if they match certain criteria
 func (res *AccountSSOAutoJoinPolicyResource) List(ctx context.Context, input *AccountSSOAutoJoinPolicyListInput) (*AccountSSOAutoJoinPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6138,8 +6300,7 @@ func (res *AccountSSOAutoJoinPolicyResource) List(ctx context.Context, input *Ac
 	return output, nil
 }
 
-// Enable entity
-// Enables the auto-join policy
+// Enable - Enables the auto-join policy
 func (res *AccountSSOAutoJoinPolicyResource) Enable(ctx context.Context, input *AccountSSOAutoJoinPolicyEnableInput) (*AccountSSOAutoJoinPolicyEnableOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.enable,
@@ -6191,8 +6352,7 @@ func newUserResource(
 	return r, nil
 }
 
-// Create entity
-// Creates a new user with the given username in the current account
+// Create - Creates a new user with the given username in the current account
 // Requires permission action iam:CreateUser over resource iam:User(<username>)
 func (res *UserResource) Create(ctx context.Context, input *UserCreateInput) (*UserCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6206,8 +6366,7 @@ func (res *UserResource) Create(ctx context.Context, input *UserCreateInput) (*U
 	return output, nil
 }
 
-// Get entity
-// Returns information about the current user or the user with the given username
+// Get - Returns information about the current user or the user with the given username
 func (res *UserResource) Get(ctx context.Context, input *UserGetInput) (*UserGetOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.get,
@@ -6220,8 +6379,7 @@ func (res *UserResource) Get(ctx context.Context, input *UserGetInput) (*UserGet
 	return output, nil
 }
 
-// Destroy entity
-// Destroys the user with the given username
+// Destroy - Destroys the user with the given username
 func (res *UserResource) Destroy(ctx context.Context, input *UserDestroyInput) (*UserDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.destroy,
@@ -6234,8 +6392,7 @@ func (res *UserResource) Destroy(ctx context.Context, input *UserDestroyInput) (
 	return output, nil
 }
 
-// List entity
-// Returns the list of users in the current account
+// List - Returns the list of users in the current account
 func (res *UserResource) List(ctx context.Context, input *UserListInput) (*UserListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
@@ -6248,8 +6405,7 @@ func (res *UserResource) List(ctx context.Context, input *UserListInput) (*UserL
 	return output, nil
 }
 
-// MemberAccounts entity
-// Returns the accounts the user is member of
+// MemberAccounts - Returns the accounts the user is member of
 // this operation is available only to User identities
 func (res *UserResource) MemberAccounts(ctx context.Context, input *UserMemberAccountsInput) (*UserMemberAccountsOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6287,8 +6443,7 @@ func newUserAccessKeyResource(
 	return r, nil
 }
 
-// Create entity
-// Creates a new access key for the given user
+// Create - Creates a new access key for the given user
 // Requires permission action iam:CreateUserAccessKey over resource iam:User(<username>).AccessKey
 func (res *UserAccessKeyResource) Create(ctx context.Context, input *UserAccessKeyCreateInput) (*UserAccessKeyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6302,8 +6457,7 @@ func (res *UserAccessKeyResource) Create(ctx context.Context, input *UserAccessK
 	return output, nil
 }
 
-// List entity
-// Returns the list of access keys for the given user or the current user
+// List - Returns the list of access keys for the given user or the current user
 // Requires permission action iam:ListUserAccessKeys over resource iam:User(<username>)
 func (res *UserAccessKeyResource) List(ctx context.Context, input *UserAccessKeyListInput) (*UserAccessKeyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6317,8 +6471,7 @@ func (res *UserAccessKeyResource) List(ctx context.Context, input *UserAccessKey
 	return output, nil
 }
 
-// Destroy entity
-// Destroy an access key for the given user
+// Destroy - Destroy an access key for the given user
 // Requires permission action iam:DeleteUserAccessKey over resource iam:User(<username>).AccessKey(<accessKeyID>)
 func (res *UserAccessKeyResource) Destroy(ctx context.Context, input *UserAccessKeyDestroyInput) (*UserAccessKeyDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6356,8 +6509,7 @@ func newUserIdentityPolicyResource(
 	return r, nil
 }
 
-// Attach entity
-// Attaches an identity policy to a user
+// Attach - Attaches an identity policy to a user
 // Requires permission action iam:AttachUserIdentityPolicy over resource iam:User(<username>).IdentityPolicy(<name>)
 func (res *UserIdentityPolicyResource) Attach(ctx context.Context, input *UserIdentityPolicyAttachInput) (*UserIdentityPolicyAttachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6371,8 +6523,7 @@ func (res *UserIdentityPolicyResource) Attach(ctx context.Context, input *UserId
 	return output, nil
 }
 
-// List entity
-// List returns the identity policies of a user
+// List - List returns the identity policies of a user
 // Requires permission action iam:ListUserPolicies over resource iam:User(<username>).IdentityPolicy
 func (res *UserIdentityPolicyResource) List(ctx context.Context, input *UserIdentityPolicyListInput) (*UserIdentityPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6386,8 +6537,7 @@ func (res *UserIdentityPolicyResource) List(ctx context.Context, input *UserIden
 	return output, nil
 }
 
-// Detach entity
-// Deatach an identity policy from a user
+// Detach - Deatach an identity policy from a user
 // Requires permission action iam:DeattachUserIdentityPolicy over resource iam:User(<username>).IdentityPolicy(<name>)
 func (res *UserIdentityPolicyResource) Detach(ctx context.Context, input *UserIdentityPolicyDetachInput) (*UserIdentityPolicyDetachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6429,8 +6579,7 @@ func newIdentityPolicyResource(
 	return r, nil
 }
 
-// Create entity
-// Creates a new identity policy
+// Create - Creates a new identity policy
 // Requires permission action iam:CreateIdentityPolicy over resource iam:IdentityPolicy(<name>)
 func (res *IdentityPolicyResource) Create(ctx context.Context, input *IdentityPolicyCreateInput) (*IdentityPolicyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6444,8 +6593,7 @@ func (res *IdentityPolicyResource) Create(ctx context.Context, input *IdentityPo
 	return output, nil
 }
 
-// List entity
-// Retrieves list of identity policies
+// List - Retrieves list of identity policies
 func (res *IdentityPolicyResource) List(ctx context.Context, input *IdentityPolicyListInput) (*IdentityPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
@@ -6458,8 +6606,7 @@ func (res *IdentityPolicyResource) List(ctx context.Context, input *IdentityPoli
 	return output, nil
 }
 
-// Retrieve entity
-// Retrieves identity policy by name
+// Retrieve - Retrieves identity policy by name
 func (res *IdentityPolicyResource) Retrieve(ctx context.Context, input *IdentityPolicyRetrieveInput) (*IdentityPolicyRetrieveOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.retrieve,
@@ -6472,8 +6619,7 @@ func (res *IdentityPolicyResource) Retrieve(ctx context.Context, input *Identity
 	return output, nil
 }
 
-// Destroy entity
-// Destroys an identity policy
+// Destroy - Destroys an identity policy
 // Requires permission action iam:DestroyIdentityPolicy over resource iam:IdentityPolicy(<name>)
 func (res *IdentityPolicyResource) Destroy(ctx context.Context, input *IdentityPolicyDestroyInput) (*IdentityPolicyDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6487,8 +6633,7 @@ func (res *IdentityPolicyResource) Destroy(ctx context.Context, input *IdentityP
 	return output, nil
 }
 
-// Update entity
-// Updates an identity policy
+// Update - Updates an identity policy
 // Requires permission action iam:UpdateIdentityPolicy over resource iam:IdentityPolicy(<name>)
 func (res *IdentityPolicyResource) Update(ctx context.Context, input *IdentityPolicyUpdateInput) (*IdentityPolicyUpdateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -6550,7 +6695,7 @@ func newInternalServicesResource(
 	return r, nil
 }
 
-// ValidateAccessKey entity
+// ValidateAccessKey operation
 func (res *InternalServicesResource) ValidateAccessKey(ctx context.Context, input *InternalServicesValidateAccessKeyInput) (*InternalServicesValidateAccessKeyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.validateAccessKey,
@@ -6563,7 +6708,7 @@ func (res *InternalServicesResource) ValidateAccessKey(ctx context.Context, inpu
 	return output, nil
 }
 
-// AssertAction entity
+// AssertAction operation
 func (res *InternalServicesResource) AssertAction(ctx context.Context, input *InternalServicesAssertActionInput) (*InternalServicesAssertActionOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assertAction,
@@ -6576,7 +6721,7 @@ func (res *InternalServicesResource) AssertAction(ctx context.Context, input *In
 	return output, nil
 }
 
-// AssertQuery entity
+// AssertQuery operation
 func (res *InternalServicesResource) AssertQuery(ctx context.Context, input *InternalServicesAssertQueryInput) (*InternalServicesAssertQueryOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assertQuery,
@@ -6589,14 +6734,18 @@ func (res *InternalServicesResource) AssertQuery(ctx context.Context, input *Int
 	return output, nil
 }
 
-// Client is the main client of the package
+// Client is the main client of the API
 type Client struct {
-	transport      clientruntime.Transport
-	pk             *clientruntime.Package
-	Account        *AccountResource
-	User           *UserResource
+	transport clientruntime.Transport
+	pk        *clientruntime.Package
+	// Account operations
+	Account *AccountResource
+	// User operations
+	User *UserResource
+	// IdentityPolicy operations
 	IdentityPolicy *IdentityPolicyResource
-	Internal       *InternalResource
+	// Internal - Internal operations exposed only to integrating services
+	Internal *InternalResource
 }
 
 // WithTransport configures the transport in the client
@@ -6754,6 +6903,8 @@ type SpecularMetaInfo struct {
 	structPathInternalQueryAssertionEntryValue                         *clientruntime.StructDefinition
 	structPathInternalQueryAssertionEntry                              *clientruntime.StructDefinition
 	structPathInternalServicesAssertActionCallerForbiddenProblem       *clientruntime.StructDefinition
+	structPathInternalAssertActionQualifierValue                       *clientruntime.StructDefinition
+	structPathInternalAssertActionResourceName                         *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyInput                   *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyOutput                  *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem *clientruntime.StructDefinition
@@ -6769,423 +6920,433 @@ func (m *SpecularMetaInfo) Module() *clientruntime.Package {
 	return m.mod
 }
 
-// UserInformationSSOProvider allows easy access to structure
-func (m *SpecularMetaInfo) UserInformationSSOProvider() *clientruntime.StructDefinition {
+// UserInformationSSOProviderStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSOProviderStruct() *clientruntime.StructDefinition {
 	return m.structPathUserInformationSSOProvider
 }
 
-// UserInformationSSOProfile allows easy access to structure
-func (m *SpecularMetaInfo) UserInformationSSOProfile() *clientruntime.StructDefinition {
+// UserInformationSSOProfileStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSOProfileStruct() *clientruntime.StructDefinition {
 	return m.structPathUserInformationSSOProfile
 }
 
-// UserInformationSSO allows easy access to structure
-func (m *SpecularMetaInfo) UserInformationSSO() *clientruntime.StructDefinition {
+// UserInformationSSOStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationSSOStruct() *clientruntime.StructDefinition {
 	return m.structPathUserInformationSSO
 }
 
-// UserInformation allows easy access to structure
-func (m *SpecularMetaInfo) UserInformation() *clientruntime.StructDefinition {
+// UserInformationStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserInformationStruct() *clientruntime.StructDefinition {
 	return m.structPathUserInformation
 }
 
-// Credentials allows easy access to structure
-func (m *SpecularMetaInfo) Credentials() *clientruntime.StructDefinition {
+// CredentialsStruct allows easy access to structure
+func (m *SpecularMetaInfo) CredentialsStruct() *clientruntime.StructDefinition {
 	return m.structPathCredentials
 }
 
-// SSOProviderUnavailableProblem allows easy access to structure
-func (m *SpecularMetaInfo) SSOProviderUnavailableProblem() *clientruntime.StructDefinition {
+// SSOProviderUnavailableProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) SSOProviderUnavailableProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathSSOProviderUnavailableProblem
 }
 
-// SSOFlow allows easy access to structure
-func (m *SpecularMetaInfo) SSOFlow() *clientruntime.StructDefinition {
+// SSOFlowStruct allows easy access to structure
+func (m *SpecularMetaInfo) SSOFlowStruct() *clientruntime.StructDefinition {
 	return m.structPathSSOFlow
 }
 
-// Account allows easy access to structure
-func (m *SpecularMetaInfo) Account() *clientruntime.StructDefinition {
+// AccountStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountStruct() *clientruntime.StructDefinition {
 	return m.structPathAccount
 }
 
-// AccountSSOProvider allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOProvider() *clientruntime.StructDefinition {
+// AccountSSOProviderStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOProviderStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOProvider
 }
 
-// PolicyNotFoundProblem allows easy access to structure
-func (m *SpecularMetaInfo) PolicyNotFoundProblem() *clientruntime.StructDefinition {
+// PolicyNotFoundProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) PolicyNotFoundProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathPolicyNotFoundProblem
 }
 
-// AccountSSOAutoJoinPolicy allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicy() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicy
 }
 
-// AccountCreateInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountCreateInput() *clientruntime.StructDefinition {
+// AccountCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInput
 }
 
-// AccountCreateOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountCreateOutput() *clientruntime.StructDefinition {
+// AccountCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateOutput
 }
 
-// AccountCreateInvalidNameProblem allows easy access to structure
-func (m *SpecularMetaInfo) AccountCreateInvalidNameProblem() *clientruntime.StructDefinition {
+// AccountCreateInvalidNameProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateInvalidNameProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInvalidNameProblem
 }
 
-// AccountAssumeIdentityInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountAssumeIdentityInput() *clientruntime.StructDefinition {
+// AccountAssumeIdentityInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountAssumeIdentityInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountAssumeIdentityInput
 }
 
-// AccountAssumeIdentityOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountAssumeIdentityOutput() *clientruntime.StructDefinition {
+// AccountAssumeIdentityOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountAssumeIdentityOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountAssumeIdentityOutput
 }
 
-// AccountSSOBeginAuthenticationInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationInput() *clientruntime.StructDefinition {
+// AccountSSOBeginAuthenticationInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOBeginAuthenticationInput
 }
 
-// AccountSSOBeginAuthenticationOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationOutput() *clientruntime.StructDefinition {
+// AccountSSOBeginAuthenticationOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOBeginAuthenticationOutput
 }
 
-// AccountSSOBeginAuthenticationParameterProblem allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationParameterProblem() *clientruntime.StructDefinition {
+// AccountSSOBeginAuthenticationParameterProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationParameterProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOBeginAuthenticationParameterProblem
 }
 
-// AccountSSOCompleteAuthenticationInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInput() *clientruntime.StructDefinition {
+// AccountSSOCompleteAuthenticationInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOCompleteAuthenticationInput
 }
 
-// AccountSSOCompleteAuthenticationOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationOutput() *clientruntime.StructDefinition {
+// AccountSSOCompleteAuthenticationOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOCompleteAuthenticationOutput
 }
 
-// AccountSSOCompleteAuthenticationInvalidFlowProblem allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInvalidFlowProblem() *clientruntime.StructDefinition {
+// AccountSSOCompleteAuthenticationInvalidFlowProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInvalidFlowProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem
 }
 
-// AccountSSOGetProvidersInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOGetProvidersInput() *clientruntime.StructDefinition {
+// AccountSSOGetProvidersInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOGetProvidersInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOGetProvidersInput
 }
 
-// AccountSSOGetProvidersOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOGetProvidersOutput() *clientruntime.StructDefinition {
+// AccountSSOGetProvidersOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOGetProvidersOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOGetProvidersOutput
 }
 
-// AccountSSOAutoJoinPolicyCreateInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateInput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyCreateInput
 }
 
-// AccountSSOAutoJoinPolicyCreateOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateOutput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyCreateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyCreateOutput
 }
 
-// AccountSSOAutoJoinPolicyListInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListInput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyListInput
 }
 
-// AccountSSOAutoJoinPolicyListOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListOutput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyListOutput
 }
 
-// AccountSSOAutoJoinPolicyEnableInput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableInput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyEnableInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyEnableInput
 }
 
-// AccountSSOAutoJoinPolicyEnableOutput allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableOutput() *clientruntime.StructDefinition {
+// AccountSSOAutoJoinPolicyEnableOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicyEnableOutput
 }
 
-// InvalidUsernameProblem allows easy access to structure
-func (m *SpecularMetaInfo) InvalidUsernameProblem() *clientruntime.StructDefinition {
+// InvalidUsernameProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidUsernameProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidUsernameProblem
 }
 
-// MemberAccount allows easy access to structure
-func (m *SpecularMetaInfo) MemberAccount() *clientruntime.StructDefinition {
+// MemberAccountStruct allows easy access to structure
+func (m *SpecularMetaInfo) MemberAccountStruct() *clientruntime.StructDefinition {
 	return m.structPathMemberAccount
 }
 
-// CredentialInfo allows easy access to structure
-func (m *SpecularMetaInfo) CredentialInfo() *clientruntime.StructDefinition {
+// CredentialInfoStruct allows easy access to structure
+func (m *SpecularMetaInfo) CredentialInfoStruct() *clientruntime.StructDefinition {
 	return m.structPathCredentialInfo
 }
 
-// IdentityPolicyStatement allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyStatement() *clientruntime.StructDefinition {
+// IdentityPolicyStatementStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyStatementStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyStatement
 }
 
-// IdentityPolicy allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicy() *clientruntime.StructDefinition {
+// IdentityPolicyStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicy
 }
 
-// IdentityPolicyAttachment allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyAttachment() *clientruntime.StructDefinition {
+// IdentityPolicyAttachmentStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyAttachmentStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyAttachment
 }
 
-// UserCreateInput allows easy access to structure
-func (m *SpecularMetaInfo) UserCreateInput() *clientruntime.StructDefinition {
+// UserCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserCreateInput
 }
 
-// UserCreateOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserCreateOutput() *clientruntime.StructDefinition {
+// UserCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserCreateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserCreateOutput
 }
 
-// UserGetInput allows easy access to structure
-func (m *SpecularMetaInfo) UserGetInput() *clientruntime.StructDefinition {
+// UserGetInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGetInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserGetInput
 }
 
-// UserGetOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserGetOutput() *clientruntime.StructDefinition {
+// UserGetOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGetOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserGetOutput
 }
 
-// UserGetUserNotAvailableProblem allows easy access to structure
-func (m *SpecularMetaInfo) UserGetUserNotAvailableProblem() *clientruntime.StructDefinition {
+// UserGetUserNotAvailableProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGetUserNotAvailableProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathUserGetUserNotAvailableProblem
 }
 
-// UserDestroyInput allows easy access to structure
-func (m *SpecularMetaInfo) UserDestroyInput() *clientruntime.StructDefinition {
+// UserDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserDestroyInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserDestroyInput
 }
 
-// UserDestroyOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserDestroyOutput() *clientruntime.StructDefinition {
+// UserDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserDestroyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserDestroyOutput
 }
 
-// UserListInput allows easy access to structure
-func (m *SpecularMetaInfo) UserListInput() *clientruntime.StructDefinition {
+// UserListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserListInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserListInput
 }
 
-// UserListOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserListOutput() *clientruntime.StructDefinition {
+// UserListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserListOutput
 }
 
-// UserMemberAccountsInput allows easy access to structure
-func (m *SpecularMetaInfo) UserMemberAccountsInput() *clientruntime.StructDefinition {
+// UserMemberAccountsInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserMemberAccountsInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserMemberAccountsInput
 }
 
-// UserMemberAccountsOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserMemberAccountsOutput() *clientruntime.StructDefinition {
+// UserMemberAccountsOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserMemberAccountsOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserMemberAccountsOutput
 }
 
-// UserAccessKeyCreateInput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyCreateInput() *clientruntime.StructDefinition {
+// UserAccessKeyCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyCreateInput
 }
 
-// UserAccessKeyCreateOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyCreateOutput() *clientruntime.StructDefinition {
+// UserAccessKeyCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyCreateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyCreateOutput
 }
 
-// UserAccessKeyListInput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyListInput() *clientruntime.StructDefinition {
+// UserAccessKeyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyListInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyListInput
 }
 
-// UserAccessKeyListOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyListOutput() *clientruntime.StructDefinition {
+// UserAccessKeyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyListOutput
 }
 
-// UserAccessKeyDestroyInput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyDestroyInput() *clientruntime.StructDefinition {
+// UserAccessKeyDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyDestroyInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyDestroyInput
 }
 
-// UserAccessKeyDestroyOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserAccessKeyDestroyOutput() *clientruntime.StructDefinition {
+// UserAccessKeyDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserAccessKeyDestroyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserAccessKeyDestroyOutput
 }
 
-// UserIdentityPolicyAttachInput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyAttachInput() *clientruntime.StructDefinition {
+// UserIdentityPolicyAttachInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyAttachInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyAttachInput
 }
 
-// UserIdentityPolicyAttachOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyAttachOutput() *clientruntime.StructDefinition {
+// UserIdentityPolicyAttachOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyAttachOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyAttachOutput
 }
 
-// UserIdentityPolicyListInput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyListInput() *clientruntime.StructDefinition {
+// UserIdentityPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyListInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyListInput
 }
 
-// UserIdentityPolicyListOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyListOutput() *clientruntime.StructDefinition {
+// UserIdentityPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyListOutput
 }
 
-// UserIdentityPolicyDetachInput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyDetachInput() *clientruntime.StructDefinition {
+// UserIdentityPolicyDetachInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyDetachInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyDetachInput
 }
 
-// UserIdentityPolicyDetachOutput allows easy access to structure
-func (m *SpecularMetaInfo) UserIdentityPolicyDetachOutput() *clientruntime.StructDefinition {
+// UserIdentityPolicyDetachOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserIdentityPolicyDetachOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserIdentityPolicyDetachOutput
 }
 
-// PolicyStructureProblem allows easy access to structure
-func (m *SpecularMetaInfo) PolicyStructureProblem() *clientruntime.StructDefinition {
+// PolicyStructureProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) PolicyStructureProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathPolicyStructureProblem
 }
 
-// IdentityPolicyCreateInput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyCreateInput() *clientruntime.StructDefinition {
+// IdentityPolicyCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyCreateInput
 }
 
-// IdentityPolicyCreateOutput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyCreateOutput() *clientruntime.StructDefinition {
+// IdentityPolicyCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyCreateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyCreateOutput
 }
 
-// IdentityPolicyListInput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyListInput() *clientruntime.StructDefinition {
+// IdentityPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyListInputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyListInput
 }
 
-// IdentityPolicyListOutput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyListOutput() *clientruntime.StructDefinition {
+// IdentityPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyListOutput
 }
 
-// IdentityPolicyRetrieveInput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyRetrieveInput() *clientruntime.StructDefinition {
+// IdentityPolicyRetrieveInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyRetrieveInputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyRetrieveInput
 }
 
-// IdentityPolicyRetrieveOutput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyRetrieveOutput() *clientruntime.StructDefinition {
+// IdentityPolicyRetrieveOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyRetrieveOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyRetrieveOutput
 }
 
-// IdentityPolicyDestroyInput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyDestroyInput() *clientruntime.StructDefinition {
+// IdentityPolicyDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyDestroyInputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyDestroyInput
 }
 
-// IdentityPolicyDestroyOutput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyDestroyOutput() *clientruntime.StructDefinition {
+// IdentityPolicyDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyDestroyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyDestroyOutput
 }
 
-// IdentityPolicyUpdateInput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyUpdateInput() *clientruntime.StructDefinition {
+// IdentityPolicyUpdateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyUpdateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyUpdateInput
 }
 
-// IdentityPolicyUpdateOutput allows easy access to structure
-func (m *SpecularMetaInfo) IdentityPolicyUpdateOutput() *clientruntime.StructDefinition {
+// IdentityPolicyUpdateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyUpdateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyUpdateOutput
 }
 
-// InternalAccessKeyUser allows easy access to structure
-func (m *SpecularMetaInfo) InternalAccessKeyUser() *clientruntime.StructDefinition {
+// InternalAccessKeyUserStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyUserStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalAccessKeyUser
 }
 
-// InternalAccessKeyAccount allows easy access to structure
-func (m *SpecularMetaInfo) InternalAccessKeyAccount() *clientruntime.StructDefinition {
+// InternalAccessKeyAccountStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyAccountStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalAccessKeyAccount
 }
 
-// InternalAccessKey allows easy access to structure
-func (m *SpecularMetaInfo) InternalAccessKey() *clientruntime.StructDefinition {
+// InternalAccessKeyStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalAccessKey
 }
 
-// InternalQueryAssertionEntryValue allows easy access to structure
-func (m *SpecularMetaInfo) InternalQueryAssertionEntryValue() *clientruntime.StructDefinition {
+// InternalQueryAssertionEntryValueStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalQueryAssertionEntryValueStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalQueryAssertionEntryValue
 }
 
-// InternalQueryAssertionEntry allows easy access to structure
-func (m *SpecularMetaInfo) InternalQueryAssertionEntry() *clientruntime.StructDefinition {
+// InternalQueryAssertionEntryStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalQueryAssertionEntryStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalQueryAssertionEntry
 }
 
-// InternalServicesAssertActionCallerForbiddenProblem allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertActionCallerForbiddenProblem() *clientruntime.StructDefinition {
+// InternalServicesAssertActionCallerForbiddenProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionCallerForbiddenProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertActionCallerForbiddenProblem
 }
 
-// InternalServicesValidateAccessKeyInput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInput() *clientruntime.StructDefinition {
+// InternalAssertActionQualifierValueStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAssertActionQualifierValueStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalAssertActionQualifierValue
+}
+
+// InternalAssertActionResourceNameStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAssertActionResourceNameStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalAssertActionResourceName
+}
+
+// InternalServicesValidateAccessKeyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesValidateAccessKeyInput
 }
 
-// InternalServicesValidateAccessKeyOutput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyOutput() *clientruntime.StructDefinition {
+// InternalServicesValidateAccessKeyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesValidateAccessKeyOutput
 }
 
-// InternalServicesValidateAccessKeyInvalidAccessKeyProblem allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInvalidAccessKeyProblem() *clientruntime.StructDefinition {
+// InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem
 }
 
-// InternalServicesAssertActionInput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertActionInput() *clientruntime.StructDefinition {
+// InternalServicesAssertActionInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionInputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertActionInput
 }
 
-// InternalServicesAssertActionOutput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertActionOutput() *clientruntime.StructDefinition {
+// InternalServicesAssertActionOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertActionOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertActionOutput
 }
 
-// InternalServicesAssertQueryInput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertQueryInput() *clientruntime.StructDefinition {
+// InternalServicesAssertQueryInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryInputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertQueryInput
 }
 
-// InternalServicesAssertQueryOutput allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertQueryOutput() *clientruntime.StructDefinition {
+// InternalServicesAssertQueryOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertQueryOutput
 }
 
-// InternalServicesAssertQueryReplacementProblem allows easy access to structure
-func (m *SpecularMetaInfo) InternalServicesAssertQueryReplacementProblem() *clientruntime.StructDefinition {
+// InternalServicesAssertQueryReplacementProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesAssertQueryReplacementProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesAssertQueryReplacementProblem
 }
 
