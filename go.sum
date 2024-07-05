@@ -10,8 +10,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
-go.deployport.com/api-services-corelib v0.4.0 h1:GQSQnMCnvRKbxzIRd3jX3TNT94+DzyrjiEafH5x5wDA=
-go.deployport.com/api-services-corelib v0.4.0/go.mod h1:d4G8CUwdeh5CO/JrqOMiDy7q9Afzg24B2F7f/nS56/s=
+go.deployport.com/api-services-corelib v0.5.0 h1:trd1VAg1eFZhfGrqStNA4PVrDiufVrvpk+foq7eZvsY=
+go.deployport.com/api-services-corelib v0.5.0/go.mod h1:d4G8CUwdeh5CO/JrqOMiDy7q9Afzg24B2F7f/nS56/s=
 go.deployport.com/specular-runtime v0.7.0 h1:dQ9f0KOwNJBOE7gsdSAJKEdZTz/mh0v66A97QFE2BJo=
 go.deployport.com/specular-runtime v0.7.0/go.mod h1:Rwqc+nTMDUcvrLjUzqIeUE8cynSY+AiE+FZ9MfEf5uM=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
