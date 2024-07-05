@@ -4305,143 +4305,79 @@ func (e InternalServicesAssertActionCallerForbiddenProblem) MarshalJSON() ([]byt
 	return json.Marshal(alias)
 }
 
-// NewInternalAssertActionQualifierValue creates a new InternalAssertActionQualifierValue
-func NewInternalAssertActionQualifierValue() *InternalAssertActionQualifierValue {
-	s := &InternalAssertActionQualifierValue{}
+// NewInternalAssertActionQualifier creates a new InternalAssertActionQualifier
+func NewInternalAssertActionQualifier() *InternalAssertActionQualifier {
+	s := &InternalAssertActionQualifier{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InternalAssertActionQualifierValue struct
-type InternalAssertActionQualifierValue struct {
+// InternalAssertActionQualifier struct
+type InternalAssertActionQualifier struct {
 	// optional child qualifier, example: if the resource to assert is "s3:Bucket(myimages).Object(myimage.jpg)", the child would be {"resourceName": "Object", "value": "myimage.jpg}
-	Child *InternalAssertActionQualifierValue `json:"child,omitempty"`
-	// name of the resource, example: if the resource to assert is "s3:Bucket(myimages)", the name would be "Bucket"
-	ResourceName string `json:"resourceName,omitempty"`
+	Child *InternalAssertActionQualifier `json:"child,omitempty"`
+	// name of the function to use, usually a resource, example: if the resource to assert is "s3:Bucket(myimages)", the name would be "Bucket"
+	Function string `json:"function,omitempty"`
 	// value to match the qualifier, example: if the resource to assert is "s3:Bucket(myimages)", the value would be "myimages"
 	Value string `json:"value,omitempty"`
 }
 
 // GetChild returns the value for the field child
-func (e *InternalAssertActionQualifierValue) GetChild() *InternalAssertActionQualifierValue {
+func (e *InternalAssertActionQualifier) GetChild() *InternalAssertActionQualifier {
 	return e.Child
 }
 
 // SetChild sets the value for the field child
-func (e *InternalAssertActionQualifierValue) SetChild(child *InternalAssertActionQualifierValue) {
+func (e *InternalAssertActionQualifier) SetChild(child *InternalAssertActionQualifier) {
 	e.Child = child
 }
 
-// GetResourceName returns the value for the field resourceName
-func (e *InternalAssertActionQualifierValue) GetResourceName() string {
-	return e.ResourceName
+// GetFunction returns the value for the field function
+func (e *InternalAssertActionQualifier) GetFunction() string {
+	return e.Function
 }
 
-// SetResourceName sets the value for the field resourceName
-func (e *InternalAssertActionQualifierValue) SetResourceName(resourceName string) {
-	e.ResourceName = resourceName
+// SetFunction sets the value for the field function
+func (e *InternalAssertActionQualifier) SetFunction(function string) {
+	e.Function = function
 }
 
 // GetValue returns the value for the field value
-func (e *InternalAssertActionQualifierValue) GetValue() string {
+func (e *InternalAssertActionQualifier) GetValue() string {
 	return e.Value
 }
 
 // SetValue sets the value for the field value
-func (e *InternalAssertActionQualifierValue) SetValue(value string) {
+func (e *InternalAssertActionQualifier) SetValue(value string) {
 	e.Value = value
 }
 
 // StructPath returns StructPath
-func (e *InternalAssertActionQualifierValue) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInternalAssertActionQualifierValue.Path()
+func (e *InternalAssertActionQualifier) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAssertActionQualifier.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InternalAssertActionQualifierValue) InitializeDefaults() {
+func (e *InternalAssertActionQualifier) InitializeDefaults() {
 }
 
-// internalAssertActionQualifierValueAlias is defined to help pre and post JSON marshaling without recursive loops
-type internalAssertActionQualifierValueAlias InternalAssertActionQualifierValue
+// internalAssertActionQualifierAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAssertActionQualifierAlias InternalAssertActionQualifier
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InternalAssertActionQualifierValue) UnmarshalJSON(data []byte) error {
-	var alias internalAssertActionQualifierValueAlias
+func (e *InternalAssertActionQualifier) UnmarshalJSON(data []byte) error {
+	var alias internalAssertActionQualifierAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InternalAssertActionQualifierValue)(&alias)).InitializeDefaults()
-	*e = InternalAssertActionQualifierValue(alias)
+	((*InternalAssertActionQualifier)(&alias)).InitializeDefaults()
+	*e = InternalAssertActionQualifier(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InternalAssertActionQualifierValue) MarshalJSON() ([]byte, error) {
-	alias := internalAssertActionQualifierValueAlias(e)
-	return json.Marshal(alias)
-}
-
-// NewInternalAssertActionResourceName creates a new InternalAssertActionResourceName
-func NewInternalAssertActionResourceName() *InternalAssertActionResourceName {
-	s := &InternalAssertActionResourceName{}
-	s.InitializeDefaults()
-	return s
-}
-
-// InternalAssertActionResourceName struct
-type InternalAssertActionResourceName struct {
-	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
-	Namespace string `json:"namespace,omitempty"`
-	// root resource qualifier
-	RootQualifier *InternalAssertActionQualifierValue `json:"rootQualifier,omitempty"`
-}
-
-// GetNamespace returns the value for the field namespace
-func (e *InternalAssertActionResourceName) GetNamespace() string {
-	return e.Namespace
-}
-
-// SetNamespace sets the value for the field namespace
-func (e *InternalAssertActionResourceName) SetNamespace(namespace string) {
-	e.Namespace = namespace
-}
-
-// GetRootQualifier returns the value for the field rootQualifier
-func (e *InternalAssertActionResourceName) GetRootQualifier() *InternalAssertActionQualifierValue {
-	return e.RootQualifier
-}
-
-// SetRootQualifier sets the value for the field rootQualifier
-func (e *InternalAssertActionResourceName) SetRootQualifier(rootQualifier *InternalAssertActionQualifierValue) {
-	e.RootQualifier = rootQualifier
-}
-
-// StructPath returns StructPath
-func (e *InternalAssertActionResourceName) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInternalAssertActionResourceName.Path()
-}
-
-// InitializeDefaults initializes the default values in the struct
-func (e *InternalAssertActionResourceName) InitializeDefaults() {
-}
-
-// internalAssertActionResourceNameAlias is defined to help pre and post JSON marshaling without recursive loops
-type internalAssertActionResourceNameAlias InternalAssertActionResourceName
-
-// UnmarshalJSON implements json.Unmarshaler
-func (e *InternalAssertActionResourceName) UnmarshalJSON(data []byte) error {
-	var alias internalAssertActionResourceNameAlias
-	if err := json.Unmarshal(data, &alias); err != nil {
-		return err
-	}
-	((*InternalAssertActionResourceName)(&alias)).InitializeDefaults()
-	*e = InternalAssertActionResourceName(alias)
-	return nil
-}
-
-// MarshalJSON implements json.Marshaler
-func (e InternalAssertActionResourceName) MarshalJSON() ([]byte, error) {
-	alias := internalAssertActionResourceNameAlias(e)
+func (e InternalAssertActionQualifier) MarshalJSON() ([]byte, error) {
+	alias := internalAssertActionQualifierAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -4623,11 +4559,12 @@ func NewInternalServicesAssertActionInput() *InternalServicesAssertActionInput {
 
 // InternalServicesAssertActionInput struct
 type InternalServicesAssertActionInput struct {
-	CallerAccessKeyID string                            `json:"callerAccessKeyID,omitempty"`
-	CallerAction      string                            `json:"callerAction,omitempty"`
-	CallerRegion      string                            `json:"callerRegion,omitempty"`
-	CallerResource    *InternalAssertActionResourceName `json:"callerResource,omitempty"`
-	CallerResourceDRN string                            `json:"callerResourceDRN,omitempty"`
+	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
+	CallerAction      string `json:"callerAction,omitempty"`
+	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
+	CallerNamespace string                         `json:"callerNamespace,omitempty"`
+	CallerRegion    string                         `json:"callerRegion,omitempty"`
+	CallerResource  *InternalAssertActionQualifier `json:"callerResource,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -4650,6 +4587,16 @@ func (e *InternalServicesAssertActionInput) SetCallerAction(callerAction string)
 	e.CallerAction = callerAction
 }
 
+// GetCallerNamespace returns the value for the field callerNamespace
+func (e *InternalServicesAssertActionInput) GetCallerNamespace() string {
+	return e.CallerNamespace
+}
+
+// SetCallerNamespace sets the value for the field callerNamespace
+func (e *InternalServicesAssertActionInput) SetCallerNamespace(callerNamespace string) {
+	e.CallerNamespace = callerNamespace
+}
+
 // GetCallerRegion returns the value for the field callerRegion
 func (e *InternalServicesAssertActionInput) GetCallerRegion() string {
 	return e.CallerRegion
@@ -4661,23 +4608,13 @@ func (e *InternalServicesAssertActionInput) SetCallerRegion(callerRegion string)
 }
 
 // GetCallerResource returns the value for the field callerResource
-func (e *InternalServicesAssertActionInput) GetCallerResource() *InternalAssertActionResourceName {
+func (e *InternalServicesAssertActionInput) GetCallerResource() *InternalAssertActionQualifier {
 	return e.CallerResource
 }
 
 // SetCallerResource sets the value for the field callerResource
-func (e *InternalServicesAssertActionInput) SetCallerResource(callerResource *InternalAssertActionResourceName) {
+func (e *InternalServicesAssertActionInput) SetCallerResource(callerResource *InternalAssertActionQualifier) {
 	e.CallerResource = callerResource
-}
-
-// GetCallerResourceDRN returns the value for the field callerResourceDRN
-func (e *InternalServicesAssertActionInput) GetCallerResourceDRN() string {
-	return e.CallerResourceDRN
-}
-
-// SetCallerResourceDRN sets the value for the field callerResourceDRN
-func (e *InternalServicesAssertActionInput) SetCallerResourceDRN(callerResourceDRN string) {
-	e.CallerResourceDRN = callerResourceDRN
 }
 
 // StructPath returns StructPath
@@ -4758,10 +4695,13 @@ func NewInternalServicesAssertQueryInput() *InternalServicesAssertQueryInput {
 
 // InternalServicesAssertQueryInput struct
 type InternalServicesAssertQueryInput struct {
-	CallerAccessKeyID             string `json:"callerAccessKeyID,omitempty"`
-	CallerAction                  string `json:"callerAction,omitempty"`
-	CallerRegion                  string `json:"callerRegion,omitempty"`
-	CallerResourceDRNReplacements string `json:"callerResourceDRNReplacements,omitempty"`
+	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
+	CallerAction      string `json:"callerAction,omitempty"`
+	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
+	CallerNamespace string `json:"callerNamespace,omitempty"`
+	CallerRegion    string `json:"callerRegion,omitempty"`
+	// resource replacements where each resource value is a replacement for a SQL expression in the query
+	CallerResourceReplacements *InternalAssertActionQualifier `json:"callerResourceReplacements,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -4784,6 +4724,16 @@ func (e *InternalServicesAssertQueryInput) SetCallerAction(callerAction string) 
 	e.CallerAction = callerAction
 }
 
+// GetCallerNamespace returns the value for the field callerNamespace
+func (e *InternalServicesAssertQueryInput) GetCallerNamespace() string {
+	return e.CallerNamespace
+}
+
+// SetCallerNamespace sets the value for the field callerNamespace
+func (e *InternalServicesAssertQueryInput) SetCallerNamespace(callerNamespace string) {
+	e.CallerNamespace = callerNamespace
+}
+
 // GetCallerRegion returns the value for the field callerRegion
 func (e *InternalServicesAssertQueryInput) GetCallerRegion() string {
 	return e.CallerRegion
@@ -4794,14 +4744,14 @@ func (e *InternalServicesAssertQueryInput) SetCallerRegion(callerRegion string) 
 	e.CallerRegion = callerRegion
 }
 
-// GetCallerResourceDRNReplacements returns the value for the field callerResourceDRNReplacements
-func (e *InternalServicesAssertQueryInput) GetCallerResourceDRNReplacements() string {
-	return e.CallerResourceDRNReplacements
+// GetCallerResourceReplacements returns the value for the field callerResourceReplacements
+func (e *InternalServicesAssertQueryInput) GetCallerResourceReplacements() *InternalAssertActionQualifier {
+	return e.CallerResourceReplacements
 }
 
-// SetCallerResourceDRNReplacements sets the value for the field callerResourceDRNReplacements
-func (e *InternalServicesAssertQueryInput) SetCallerResourceDRNReplacements(callerResourceDRNReplacements string) {
-	e.CallerResourceDRNReplacements = callerResourceDRNReplacements
+// SetCallerResourceReplacements sets the value for the field callerResourceReplacements
+func (e *InternalServicesAssertQueryInput) SetCallerResourceReplacements(callerResourceReplacements *InternalAssertActionQualifier) {
+	e.CallerResourceReplacements = callerResourceReplacements
 }
 
 // StructPath returns StructPath
@@ -5645,19 +5595,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInternalAssertActionQualifierValue, err = pk.NewType(
-		"InternalAssertActionQualifierValue",
+	localSpecularMeta.structPathInternalAssertActionQualifier, err = pk.NewType(
+		"InternalAssertActionQualifier",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInternalAssertActionQualifierValue()
-		}),
-	)
-	if err != nil {
-		return nil, err
-	}
-	localSpecularMeta.structPathInternalAssertActionResourceName, err = pk.NewType(
-		"InternalAssertActionResourceName",
-		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInternalAssertActionResourceName()
+			return NewInternalAssertActionQualifier()
 		}),
 	)
 	if err != nil {
@@ -6903,8 +6844,7 @@ type SpecularMetaInfo struct {
 	structPathInternalQueryAssertionEntryValue                         *clientruntime.StructDefinition
 	structPathInternalQueryAssertionEntry                              *clientruntime.StructDefinition
 	structPathInternalServicesAssertActionCallerForbiddenProblem       *clientruntime.StructDefinition
-	structPathInternalAssertActionQualifierValue                       *clientruntime.StructDefinition
-	structPathInternalAssertActionResourceName                         *clientruntime.StructDefinition
+	structPathInternalAssertActionQualifier                            *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyInput                   *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyOutput                  *clientruntime.StructDefinition
 	structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem *clientruntime.StructDefinition
@@ -7300,14 +7240,9 @@ func (m *SpecularMetaInfo) InternalServicesAssertActionCallerForbiddenProblemStr
 	return m.structPathInternalServicesAssertActionCallerForbiddenProblem
 }
 
-// InternalAssertActionQualifierValueStruct allows easy access to structure
-func (m *SpecularMetaInfo) InternalAssertActionQualifierValueStruct() *clientruntime.StructDefinition {
-	return m.structPathInternalAssertActionQualifierValue
-}
-
-// InternalAssertActionResourceNameStruct allows easy access to structure
-func (m *SpecularMetaInfo) InternalAssertActionResourceNameStruct() *clientruntime.StructDefinition {
-	return m.structPathInternalAssertActionResourceName
+// InternalAssertActionQualifierStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAssertActionQualifierStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalAssertActionQualifier
 }
 
 // InternalServicesValidateAccessKeyInputStruct allows easy access to structure
