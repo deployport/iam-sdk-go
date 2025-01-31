@@ -274,6 +274,68 @@ func (e UserInformation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewRoleInformation creates a new RoleInformation
+func NewRoleInformation() *RoleInformation {
+	s := &RoleInformation{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleInformation struct
+type RoleInformation struct {
+	Description string `json:"description,omitempty"`
+	Name        string `json:"name,omitempty"`
+}
+
+// GetDescription returns the value for the field description
+func (e *RoleInformation) GetDescription() string {
+	return e.Description
+}
+
+// SetDescription sets the value for the field description
+func (e *RoleInformation) SetDescription(description string) {
+	e.Description = description
+}
+
+// GetName returns the value for the field name
+func (e *RoleInformation) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RoleInformation) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *RoleInformation) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleInformation.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleInformation) InitializeDefaults() {
+}
+
+// roleInformationAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleInformationAlias RoleInformation
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleInformation) UnmarshalJSON(data []byte) error {
+	var alias roleInformationAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleInformation)(&alias)).InitializeDefaults()
+	*e = RoleInformation(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleInformation) MarshalJSON() ([]byte, error) {
+	alias := roleInformationAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewCredentials creates a new Credentials
 func NewCredentials() *Credentials {
 	s := &Credentials{}
@@ -1896,6 +1958,73 @@ func (e InvalidUsernameProblem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewInvalidRoleNameProblem creates a new InvalidRoleNameProblem
+func NewInvalidRoleNameProblem() *InvalidRoleNameProblem {
+	s := &InvalidRoleNameProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidRoleNameProblem struct
+type InvalidRoleNameProblem struct {
+	Message string `json:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidRoleNameProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidRoleNameProblem]
+func (e *InvalidRoleNameProblem) Is(err error) bool {
+	_, ok := err.(*InvalidRoleNameProblem)
+	return ok
+}
+
+// IsInvalidRoleNameProblem indicates whether the given error chain contains an error of type [InvalidRoleNameProblem]
+func IsInvalidRoleNameProblem(err error) bool {
+	return errors.Is(err, &InvalidRoleNameProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidRoleNameProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidRoleNameProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidRoleNameProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidRoleNameProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidRoleNameProblem) InitializeDefaults() {
+}
+
+// invalidRoleNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidRoleNameProblemAlias InvalidRoleNameProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidRoleNameProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidRoleNameProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidRoleNameProblem)(&alias)).InitializeDefaults()
+	*e = InvalidRoleNameProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidRoleNameProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidRoleNameProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewMemberAccount creates a new MemberAccount
 func NewMemberAccount() *MemberAccount {
 	s := &MemberAccount{}
@@ -3351,6 +3480,57 @@ func (e UserIdentityPolicyDetachOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewInlinePolicy creates a new InlinePolicy
+func NewInlinePolicy() *InlinePolicy {
+	s := &InlinePolicy{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InlinePolicy struct
+type InlinePolicy struct {
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
+}
+
+// GetStatements returns the value for the field statements
+func (e *InlinePolicy) GetStatements() []*IdentityPolicyStatement {
+	return e.Statements
+}
+
+// SetStatements sets the value for the field statements
+func (e *InlinePolicy) SetStatements(statements []*IdentityPolicyStatement) {
+	e.Statements = statements
+}
+
+// StructPath returns StructPath
+func (e *InlinePolicy) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInlinePolicy.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InlinePolicy) InitializeDefaults() {
+}
+
+// inlinePolicyAlias is defined to help pre and post JSON marshaling without recursive loops
+type inlinePolicyAlias InlinePolicy
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InlinePolicy) UnmarshalJSON(data []byte) error {
+	var alias inlinePolicyAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InlinePolicy)(&alias)).InitializeDefaults()
+	*e = InlinePolicy(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InlinePolicy) MarshalJSON() ([]byte, error) {
+	alias := inlinePolicyAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewPolicyStructureProblem creates a new PolicyStructureProblem
 func NewPolicyStructureProblem() *PolicyStructureProblem {
 	s := &PolicyStructureProblem{}
@@ -3415,6 +3595,531 @@ func (e *PolicyStructureProblem) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e PolicyStructureProblem) MarshalJSON() ([]byte, error) {
 	alias := policyStructureProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleCreateInput creates a new RoleCreateInput
+func NewRoleCreateInput() *RoleCreateInput {
+	s := &RoleCreateInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleCreateInput struct
+type RoleCreateInput struct {
+	Description string `json:"description,omitempty"`
+	Name        string `json:"name,omitempty"`
+}
+
+// GetDescription returns the value for the field description
+func (e *RoleCreateInput) GetDescription() string {
+	return e.Description
+}
+
+// SetDescription sets the value for the field description
+func (e *RoleCreateInput) SetDescription(description string) {
+	e.Description = description
+}
+
+// GetName returns the value for the field name
+func (e *RoleCreateInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RoleCreateInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *RoleCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleCreateInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleCreateInput) InitializeDefaults() {
+}
+
+// roleCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleCreateInputAlias RoleCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleCreateInput) UnmarshalJSON(data []byte) error {
+	var alias roleCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleCreateInput)(&alias)).InitializeDefaults()
+	*e = RoleCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleCreateInput) MarshalJSON() ([]byte, error) {
+	alias := roleCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleCreateOutput creates a new RoleCreateOutput
+func NewRoleCreateOutput() *RoleCreateOutput {
+	s := &RoleCreateOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleCreateOutput struct
+type RoleCreateOutput struct {
+	Role *RoleInformation `json:"role,omitempty"`
+}
+
+// GetRole returns the value for the field role
+func (e *RoleCreateOutput) GetRole() *RoleInformation {
+	return e.Role
+}
+
+// SetRole sets the value for the field role
+func (e *RoleCreateOutput) SetRole(role *RoleInformation) {
+	e.Role = role
+}
+
+// StructPath returns StructPath
+func (e *RoleCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleCreateOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleCreateOutput) InitializeDefaults() {
+}
+
+// roleCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleCreateOutputAlias RoleCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias roleCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleCreateOutput)(&alias)).InitializeDefaults()
+	*e = RoleCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := roleCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleGetInput creates a new RoleGetInput
+func NewRoleGetInput() *RoleGetInput {
+	s := &RoleGetInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleGetInput struct
+type RoleGetInput struct {
+	Name *string `json:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *RoleGetInput) GetName() *string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RoleGetInput) SetName(name *string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *RoleGetInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleGetInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleGetInput) InitializeDefaults() {
+}
+
+// roleGetInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleGetInputAlias RoleGetInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleGetInput) UnmarshalJSON(data []byte) error {
+	var alias roleGetInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleGetInput)(&alias)).InitializeDefaults()
+	*e = RoleGetInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleGetInput) MarshalJSON() ([]byte, error) {
+	alias := roleGetInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleGetOutput creates a new RoleGetOutput
+func NewRoleGetOutput() *RoleGetOutput {
+	s := &RoleGetOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleGetOutput struct
+type RoleGetOutput struct {
+	Role *RoleInformation `json:"role,omitempty"`
+}
+
+// GetRole returns the value for the field role
+func (e *RoleGetOutput) GetRole() *RoleInformation {
+	return e.Role
+}
+
+// SetRole sets the value for the field role
+func (e *RoleGetOutput) SetRole(role *RoleInformation) {
+	e.Role = role
+}
+
+// StructPath returns StructPath
+func (e *RoleGetOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleGetOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleGetOutput) InitializeDefaults() {
+}
+
+// roleGetOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleGetOutputAlias RoleGetOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleGetOutput) UnmarshalJSON(data []byte) error {
+	var alias roleGetOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleGetOutput)(&alias)).InitializeDefaults()
+	*e = RoleGetOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleGetOutput) MarshalJSON() ([]byte, error) {
+	alias := roleGetOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleDestroyInput creates a new RoleDestroyInput
+func NewRoleDestroyInput() *RoleDestroyInput {
+	s := &RoleDestroyInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleDestroyInput struct
+type RoleDestroyInput struct {
+	Name *string `json:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *RoleDestroyInput) GetName() *string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RoleDestroyInput) SetName(name *string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *RoleDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleDestroyInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleDestroyInput) InitializeDefaults() {
+}
+
+// roleDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleDestroyInputAlias RoleDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias roleDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleDestroyInput)(&alias)).InitializeDefaults()
+	*e = RoleDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := roleDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleDestroyOutput creates a new RoleDestroyOutput
+func NewRoleDestroyOutput() *RoleDestroyOutput {
+	s := &RoleDestroyOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleDestroyOutput struct
+type RoleDestroyOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *RoleDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleDestroyOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleDestroyOutput) InitializeDefaults() {
+}
+
+// roleDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleDestroyOutputAlias RoleDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias roleDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleDestroyOutput)(&alias)).InitializeDefaults()
+	*e = RoleDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := roleDestroyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleListInput creates a new RoleListInput
+func NewRoleListInput() *RoleListInput {
+	s := &RoleListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleListInput struct
+type RoleListInput struct {
+}
+
+// StructPath returns StructPath
+func (e *RoleListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleListInput) InitializeDefaults() {
+}
+
+// roleListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleListInputAlias RoleListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleListInput) UnmarshalJSON(data []byte) error {
+	var alias roleListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleListInput)(&alias)).InitializeDefaults()
+	*e = RoleListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleListInput) MarshalJSON() ([]byte, error) {
+	alias := roleListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleListOutput creates a new RoleListOutput
+func NewRoleListOutput() *RoleListOutput {
+	s := &RoleListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleListOutput struct
+type RoleListOutput struct {
+	Roles []*RoleInformation `json:"roles,omitempty"`
+}
+
+// GetRoles returns the value for the field roles
+func (e *RoleListOutput) GetRoles() []*RoleInformation {
+	return e.Roles
+}
+
+// SetRoles sets the value for the field roles
+func (e *RoleListOutput) SetRoles(roles []*RoleInformation) {
+	e.Roles = roles
+}
+
+// StructPath returns StructPath
+func (e *RoleListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleListOutput) InitializeDefaults() {
+}
+
+// roleListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleListOutputAlias RoleListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleListOutput) UnmarshalJSON(data []byte) error {
+	var alias roleListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleListOutput)(&alias)).InitializeDefaults()
+	*e = RoleListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleListOutput) MarshalJSON() ([]byte, error) {
+	alias := roleListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleAssumeInput creates a new RoleAssumeInput
+func NewRoleAssumeInput() *RoleAssumeInput {
+	s := &RoleAssumeInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleAssumeInput struct
+type RoleAssumeInput struct {
+	// duration in seconds for the assumed role
+	DurationSeconds int32 `json:"durationSeconds,omitempty"`
+	// optional inline policy to attach to the assumed role
+	InlinePolicy *InlinePolicy `json:"inlinePolicy,omitempty"`
+	// name of the role to assume
+	Name string `json:"name,omitempty"`
+}
+
+// GetDurationSeconds returns the value for the field durationSeconds
+func (e *RoleAssumeInput) GetDurationSeconds() int32 {
+	return e.DurationSeconds
+}
+
+// SetDurationSeconds sets the value for the field durationSeconds
+func (e *RoleAssumeInput) SetDurationSeconds(durationSeconds int32) {
+	e.DurationSeconds = durationSeconds
+}
+
+// GetInlinePolicy returns the value for the field inlinePolicy
+func (e *RoleAssumeInput) GetInlinePolicy() *InlinePolicy {
+	return e.InlinePolicy
+}
+
+// SetInlinePolicy sets the value for the field inlinePolicy
+func (e *RoleAssumeInput) SetInlinePolicy(inlinePolicy *InlinePolicy) {
+	e.InlinePolicy = inlinePolicy
+}
+
+// GetName returns the value for the field name
+func (e *RoleAssumeInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RoleAssumeInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *RoleAssumeInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleAssumeInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleAssumeInput) InitializeDefaults() {
+}
+
+// roleAssumeInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleAssumeInputAlias RoleAssumeInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleAssumeInput) UnmarshalJSON(data []byte) error {
+	var alias roleAssumeInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleAssumeInput)(&alias)).InitializeDefaults()
+	*e = RoleAssumeInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleAssumeInput) MarshalJSON() ([]byte, error) {
+	alias := roleAssumeInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleAssumeOutput creates a new RoleAssumeOutput
+func NewRoleAssumeOutput() *RoleAssumeOutput {
+	s := &RoleAssumeOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleAssumeOutput struct
+type RoleAssumeOutput struct {
+	// credentials for the assumed role
+	Credentials *Credentials `json:"credentials,omitempty"`
+}
+
+// GetCredentials returns the value for the field credentials
+func (e *RoleAssumeOutput) GetCredentials() *Credentials {
+	return e.Credentials
+}
+
+// SetCredentials sets the value for the field credentials
+func (e *RoleAssumeOutput) SetCredentials(credentials *Credentials) {
+	e.Credentials = credentials
+}
+
+// StructPath returns StructPath
+func (e *RoleAssumeOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleAssumeOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleAssumeOutput) InitializeDefaults() {
+}
+
+// roleAssumeOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleAssumeOutputAlias RoleAssumeOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleAssumeOutput) UnmarshalJSON(data []byte) error {
+	var alias roleAssumeOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleAssumeOutput)(&alias)).InitializeDefaults()
+	*e = RoleAssumeOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleAssumeOutput) MarshalJSON() ([]byte, error) {
+	alias := roleAssumeOutputAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3979,6 +4684,57 @@ func (e InternalAccessKeyUser) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewInternalAccessKeyRole creates a new InternalAccessKeyRole
+func NewInternalAccessKeyRole() *InternalAccessKeyRole {
+	s := &InternalAccessKeyRole{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalAccessKeyRole struct
+type InternalAccessKeyRole struct {
+	Name string `json:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *InternalAccessKeyRole) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *InternalAccessKeyRole) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *InternalAccessKeyRole) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalAccessKeyRole.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalAccessKeyRole) InitializeDefaults() {
+}
+
+// internalAccessKeyRoleAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalAccessKeyRoleAlias InternalAccessKeyRole
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalAccessKeyRole) UnmarshalJSON(data []byte) error {
+	var alias internalAccessKeyRoleAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalAccessKeyRole)(&alias)).InitializeDefaults()
+	*e = InternalAccessKeyRole(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalAccessKeyRole) MarshalJSON() ([]byte, error) {
+	alias := internalAccessKeyRoleAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalAccessKeyAccount creates a new InternalAccessKeyAccount
 func NewInternalAccessKeyAccount() *InternalAccessKeyAccount {
 	s := &InternalAccessKeyAccount{}
@@ -4041,6 +4797,7 @@ func NewInternalAccessKey() *InternalAccessKey {
 type InternalAccessKey struct {
 	AccessKeyID     string                    `json:"accessKeyID,omitempty"`
 	Account         *InternalAccessKeyAccount `json:"account,omitempty"`
+	Role            *InternalAccessKeyRole    `json:"role,omitempty"`
 	SecretAccessKey string                    `json:"secretAccessKey,omitempty"`
 	User            *InternalAccessKeyUser    `json:"user,omitempty"`
 }
@@ -4063,6 +4820,16 @@ func (e *InternalAccessKey) GetAccount() *InternalAccessKeyAccount {
 // SetAccount sets the value for the field account
 func (e *InternalAccessKey) SetAccount(account *InternalAccessKeyAccount) {
 	e.Account = account
+}
+
+// GetRole returns the value for the field role
+func (e *InternalAccessKey) GetRole() *InternalAccessKeyRole {
+	return e.Role
+}
+
+// SetRole sets the value for the field role
+func (e *InternalAccessKey) SetRole(role *InternalAccessKeyRole) {
+	e.Role = role
 }
 
 // GetSecretAccessKey returns the value for the field secretAccessKey
@@ -4947,6 +5714,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathRoleInformation, err = pk.NewType(
+		"RoleInformation",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleInformation()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathCredentials, err = pk.NewType(
 		"Credentials",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -5185,6 +5961,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"InvalidUsernameProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInvalidUsernameProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidRoleNameProblem, err = pk.NewType(
+		"InvalidRoleNameProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidRoleNameProblem()
 		}),
 	)
 	if err != nil {
@@ -5442,10 +6227,109 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathInlinePolicy, err = pk.NewType(
+		"InlinePolicy",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInlinePolicy()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathPolicyStructureProblem, err = pk.NewType(
 		"PolicyStructureProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewPolicyStructureProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleCreateInput, err = pk.NewType(
+		"RoleCreateInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleCreateInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleCreateOutput, err = pk.NewType(
+		"RoleCreateOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleCreateOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleGetInput, err = pk.NewType(
+		"RoleGetInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleGetInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleGetOutput, err = pk.NewType(
+		"RoleGetOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleGetOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleDestroyInput, err = pk.NewType(
+		"RoleDestroyInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleDestroyInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleDestroyOutput, err = pk.NewType(
+		"RoleDestroyOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleDestroyOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleListInput, err = pk.NewType(
+		"RoleListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleListOutput, err = pk.NewType(
+		"RoleListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleAssumeInput, err = pk.NewType(
+		"RoleAssumeInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleAssumeInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleAssumeOutput, err = pk.NewType(
+		"RoleAssumeOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleAssumeOutput()
 		}),
 	)
 	if err != nil {
@@ -5545,6 +6429,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"InternalAccessKeyUser",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalAccessKeyUser()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInternalAccessKeyRole, err = pk.NewType(
+		"InternalAccessKeyRole",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalAccessKeyRole()
 		}),
 	)
 	if err != nil {
@@ -5934,6 +6827,73 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	resRole, err := pk.NewResource("Role")
+	if err != nil {
+		return nil, err
+	}
+	_ = resRole
+
+	op, err = resRole.NewOperation("Create")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleCreateInputStruct())
+	op.SetOutput(SpecularMeta().RoleCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidRoleNameProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRole.NewOperation("Get")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleGetInputStruct())
+	op.SetOutput(SpecularMeta().RoleGetInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRole.NewOperation("Destroy")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleDestroyInputStruct())
+	op.SetOutput(SpecularMeta().RoleDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRole.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleListInputStruct())
+	op.SetOutput(SpecularMeta().RoleListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRole.NewOperation("Assume")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleAssumeInputStruct())
+	op.SetOutput(SpecularMeta().RoleAssumeInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -6492,6 +7452,101 @@ func (res *UserIdentityPolicyResource) Detach(ctx context.Context, input *UserId
 	return output, nil
 }
 
+// RoleResource is the RoleResource resource client
+type RoleResource struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	create    *clientruntime.Operation
+	get       *clientruntime.Operation
+	destroy   *clientruntime.Operation
+	list      *clientruntime.Operation
+	assume    *clientruntime.Operation
+}
+
+func newRoleResource(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*RoleResource, error) {
+	res := finder.FindResource("Role")
+	r := &RoleResource{
+		transport: transport,
+		res:       res,
+	}
+	r.create = res.FindOperation("Create")
+	r.get = res.FindOperation("Get")
+	r.destroy = res.FindOperation("Destroy")
+	r.list = res.FindOperation("List")
+	r.assume = res.FindOperation("Assume")
+	return r, nil
+}
+
+// Create - Creates a new role with the given name in the current account
+// Requires permission action iam:CreateRole over resource iam:Role(<name>)
+func (res *RoleResource) Create(ctx context.Context, input *RoleCreateInput) (*RoleCreateOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.create,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleCreateOutput)
+	return output, nil
+}
+
+// Get - Returns information about a role
+func (res *RoleResource) Get(ctx context.Context, input *RoleGetInput) (*RoleGetOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.get,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleGetOutput)
+	return output, nil
+}
+
+// Destroy - Destroys the role with the given name
+func (res *RoleResource) Destroy(ctx context.Context, input *RoleDestroyInput) (*RoleDestroyOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.destroy,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleDestroyOutput)
+	return output, nil
+}
+
+// List - Returns the list of roles in the current account
+func (res *RoleResource) List(ctx context.Context, input *RoleListInput) (*RoleListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleListOutput)
+	return output, nil
+}
+
+// Assume - Returns credentials for the given assumed role
+// the caller needs to have permission of action iam:AssumeRole over resource iam:Role(<roleName>)
+func (res *RoleResource) Assume(ctx context.Context, input *RoleAssumeInput) (*RoleAssumeOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.assume,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleAssumeOutput)
+	return output, nil
+}
+
 // IdentityPolicyResource is the IdentityPolicyResource resource client
 type IdentityPolicyResource struct {
 	transport clientruntime.Transport
@@ -6683,6 +7738,8 @@ type Client struct {
 	Account *AccountResource
 	// User operations
 	User *UserResource
+	// Role operations
+	Role *RoleResource
 	// IdentityPolicy operations
 	IdentityPolicy *IdentityPolicyResource
 	// Internal - Internal operations exposed only to integrating services
@@ -6741,6 +7798,10 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.Role, err = newRoleResource(transport, pk)
+	if err != nil {
+		return nil, err
+	}
 	c.IdentityPolicy, err = newIdentityPolicyResource(transport, pk)
 	if err != nil {
 		return nil, err
@@ -6772,6 +7833,7 @@ type SpecularMetaInfo struct {
 	structPathUserInformationSSOProfile                                *clientruntime.StructDefinition
 	structPathUserInformationSSO                                       *clientruntime.StructDefinition
 	structPathUserInformation                                          *clientruntime.StructDefinition
+	structPathRoleInformation                                          *clientruntime.StructDefinition
 	structPathCredentials                                              *clientruntime.StructDefinition
 	structPathSSOProviderUnavailableProblem                            *clientruntime.StructDefinition
 	structPathSSOFlow                                                  *clientruntime.StructDefinition
@@ -6799,6 +7861,7 @@ type SpecularMetaInfo struct {
 	structPathAccountSSOAutoJoinPolicyEnableInput                      *clientruntime.StructDefinition
 	structPathAccountSSOAutoJoinPolicyEnableOutput                     *clientruntime.StructDefinition
 	structPathInvalidUsernameProblem                                   *clientruntime.StructDefinition
+	structPathInvalidRoleNameProblem                                   *clientruntime.StructDefinition
 	structPathMemberAccount                                            *clientruntime.StructDefinition
 	structPathCredentialInfo                                           *clientruntime.StructDefinition
 	structPathIdentityPolicyStatement                                  *clientruntime.StructDefinition
@@ -6827,7 +7890,18 @@ type SpecularMetaInfo struct {
 	structPathUserIdentityPolicyListOutput                             *clientruntime.StructDefinition
 	structPathUserIdentityPolicyDetachInput                            *clientruntime.StructDefinition
 	structPathUserIdentityPolicyDetachOutput                           *clientruntime.StructDefinition
+	structPathInlinePolicy                                             *clientruntime.StructDefinition
 	structPathPolicyStructureProblem                                   *clientruntime.StructDefinition
+	structPathRoleCreateInput                                          *clientruntime.StructDefinition
+	structPathRoleCreateOutput                                         *clientruntime.StructDefinition
+	structPathRoleGetInput                                             *clientruntime.StructDefinition
+	structPathRoleGetOutput                                            *clientruntime.StructDefinition
+	structPathRoleDestroyInput                                         *clientruntime.StructDefinition
+	structPathRoleDestroyOutput                                        *clientruntime.StructDefinition
+	structPathRoleListInput                                            *clientruntime.StructDefinition
+	structPathRoleListOutput                                           *clientruntime.StructDefinition
+	structPathRoleAssumeInput                                          *clientruntime.StructDefinition
+	structPathRoleAssumeOutput                                         *clientruntime.StructDefinition
 	structPathIdentityPolicyCreateInput                                *clientruntime.StructDefinition
 	structPathIdentityPolicyCreateOutput                               *clientruntime.StructDefinition
 	structPathIdentityPolicyListInput                                  *clientruntime.StructDefinition
@@ -6839,6 +7913,7 @@ type SpecularMetaInfo struct {
 	structPathIdentityPolicyUpdateInput                                *clientruntime.StructDefinition
 	structPathIdentityPolicyUpdateOutput                               *clientruntime.StructDefinition
 	structPathInternalAccessKeyUser                                    *clientruntime.StructDefinition
+	structPathInternalAccessKeyRole                                    *clientruntime.StructDefinition
 	structPathInternalAccessKeyAccount                                 *clientruntime.StructDefinition
 	structPathInternalAccessKey                                        *clientruntime.StructDefinition
 	structPathInternalQueryAssertionEntryValue                         *clientruntime.StructDefinition
@@ -6878,6 +7953,11 @@ func (m *SpecularMetaInfo) UserInformationSSOStruct() *clientruntime.StructDefin
 // UserInformationStruct allows easy access to structure
 func (m *SpecularMetaInfo) UserInformationStruct() *clientruntime.StructDefinition {
 	return m.structPathUserInformation
+}
+
+// RoleInformationStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleInformationStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleInformation
 }
 
 // CredentialsStruct allows easy access to structure
@@ -7013,6 +8093,11 @@ func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableOutputStruct() *clientr
 // InvalidUsernameProblemStruct allows easy access to structure
 func (m *SpecularMetaInfo) InvalidUsernameProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidUsernameProblem
+}
+
+// InvalidRoleNameProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidRoleNameProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidRoleNameProblem
 }
 
 // MemberAccountStruct allows easy access to structure
@@ -7155,9 +8240,64 @@ func (m *SpecularMetaInfo) UserIdentityPolicyDetachOutputStruct() *clientruntime
 	return m.structPathUserIdentityPolicyDetachOutput
 }
 
+// InlinePolicyStruct allows easy access to structure
+func (m *SpecularMetaInfo) InlinePolicyStruct() *clientruntime.StructDefinition {
+	return m.structPathInlinePolicy
+}
+
 // PolicyStructureProblemStruct allows easy access to structure
 func (m *SpecularMetaInfo) PolicyStructureProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathPolicyStructureProblem
+}
+
+// RoleCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleCreateInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleCreateInput
+}
+
+// RoleCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleCreateOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleCreateOutput
+}
+
+// RoleGetInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleGetInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleGetInput
+}
+
+// RoleGetOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleGetOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleGetOutput
+}
+
+// RoleDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleDestroyInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleDestroyInput
+}
+
+// RoleDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleDestroyOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleDestroyOutput
+}
+
+// RoleListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleListInput
+}
+
+// RoleListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleListOutput
+}
+
+// RoleAssumeInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleAssumeInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleAssumeInput
+}
+
+// RoleAssumeOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleAssumeOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleAssumeOutput
 }
 
 // IdentityPolicyCreateInputStruct allows easy access to structure
@@ -7213,6 +8353,11 @@ func (m *SpecularMetaInfo) IdentityPolicyUpdateOutputStruct() *clientruntime.Str
 // InternalAccessKeyUserStruct allows easy access to structure
 func (m *SpecularMetaInfo) InternalAccessKeyUserStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalAccessKeyUser
+}
+
+// InternalAccessKeyRoleStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalAccessKeyRoleStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalAccessKeyRole
 }
 
 // InternalAccessKeyAccountStruct allows easy access to structure
