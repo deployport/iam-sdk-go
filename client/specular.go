@@ -5073,6 +5073,318 @@ func (e IdentityPolicyUpdateOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewServiceBearerToken creates a new ServiceBearerToken
+func NewServiceBearerToken() *ServiceBearerToken {
+	s := &ServiceBearerToken{}
+	s.InitializeDefaults()
+	return s
+}
+
+// ServiceBearerToken - Token you can use to perform operations on your behalf
+type ServiceBearerToken struct {
+	ExpiresAt time.Time `json:"expiresAt,omitempty"`
+	Token     string    `json:"token,omitempty"`
+}
+
+// GetExpiresAt returns the value for the field expiresAt
+func (e *ServiceBearerToken) GetExpiresAt() time.Time {
+	return e.ExpiresAt
+}
+
+// SetExpiresAt sets the value for the field expiresAt
+func (e *ServiceBearerToken) SetExpiresAt(expiresAt time.Time) {
+	e.ExpiresAt = expiresAt
+}
+
+// GetToken returns the value for the field token
+func (e *ServiceBearerToken) GetToken() string {
+	return e.Token
+}
+
+// SetToken sets the value for the field token
+func (e *ServiceBearerToken) SetToken(token string) {
+	e.Token = token
+}
+
+// StructPath returns StructPath
+func (e *ServiceBearerToken) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathServiceBearerToken.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *ServiceBearerToken) InitializeDefaults() {
+}
+
+// serviceBearerTokenAlias is defined to help pre and post JSON marshaling without recursive loops
+type serviceBearerTokenAlias ServiceBearerToken
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *ServiceBearerToken) UnmarshalJSON(data []byte) error {
+	var alias serviceBearerTokenAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*ServiceBearerToken)(&alias)).InitializeDefaults()
+	*e = ServiceBearerToken(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e ServiceBearerToken) MarshalJSON() ([]byte, error) {
+	alias := serviceBearerTokenAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidServiceBearerTokenDurationProblem creates a new InvalidServiceBearerTokenDurationProblem
+func NewInvalidServiceBearerTokenDurationProblem() *InvalidServiceBearerTokenDurationProblem {
+	s := &InvalidServiceBearerTokenDurationProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidServiceBearerTokenDurationProblem struct
+type InvalidServiceBearerTokenDurationProblem struct {
+	Message string `json:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidServiceBearerTokenDurationProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationProblem]
+func (e *InvalidServiceBearerTokenDurationProblem) Is(err error) bool {
+	_, ok := err.(*InvalidServiceBearerTokenDurationProblem)
+	return ok
+}
+
+// IsInvalidServiceBearerTokenDurationProblem indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationProblem]
+func IsInvalidServiceBearerTokenDurationProblem(err error) bool {
+	return errors.Is(err, &InvalidServiceBearerTokenDurationProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidServiceBearerTokenDurationProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidServiceBearerTokenDurationProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidServiceBearerTokenDurationProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidServiceBearerTokenDurationProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidServiceBearerTokenDurationProblem) InitializeDefaults() {
+}
+
+// invalidServiceBearerTokenDurationProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidServiceBearerTokenDurationProblemAlias InvalidServiceBearerTokenDurationProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidServiceBearerTokenDurationProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidServiceBearerTokenDurationProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidServiceBearerTokenDurationProblem)(&alias)).InitializeDefaults()
+	*e = InvalidServiceBearerTokenDurationProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidServiceBearerTokenDurationProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidServiceBearerTokenDurationProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidServiceNameProblem creates a new InvalidServiceNameProblem
+func NewInvalidServiceNameProblem() *InvalidServiceNameProblem {
+	s := &InvalidServiceNameProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidServiceNameProblem struct
+type InvalidServiceNameProblem struct {
+	Message string `json:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidServiceNameProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidServiceNameProblem]
+func (e *InvalidServiceNameProblem) Is(err error) bool {
+	_, ok := err.(*InvalidServiceNameProblem)
+	return ok
+}
+
+// IsInvalidServiceNameProblem indicates whether the given error chain contains an error of type [InvalidServiceNameProblem]
+func IsInvalidServiceNameProblem(err error) bool {
+	return errors.Is(err, &InvalidServiceNameProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidServiceNameProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidServiceNameProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidServiceNameProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidServiceNameProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidServiceNameProblem) InitializeDefaults() {
+}
+
+// invalidServiceNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidServiceNameProblemAlias InvalidServiceNameProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidServiceNameProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidServiceNameProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidServiceNameProblem)(&alias)).InitializeDefaults()
+	*e = InvalidServiceNameProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidServiceNameProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidServiceNameProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewServiceBearerTokenGetInput creates a new ServiceBearerTokenGetInput
+func NewServiceBearerTokenGetInput() *ServiceBearerTokenGetInput {
+	s := &ServiceBearerTokenGetInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// ServiceBearerTokenGetInput struct
+type ServiceBearerTokenGetInput struct {
+	// duration in seconds for the token to be active
+	// the minimum value is 900 seconds (15 minutes)
+	// the maximum value is 43200 seconds (12 hours)
+	DurationSeconds int32  `json:"durationSeconds,omitempty"`
+	ServiceName     string `json:"serviceName,omitempty"`
+}
+
+// GetDurationSeconds returns the value for the field durationSeconds
+func (e *ServiceBearerTokenGetInput) GetDurationSeconds() int32 {
+	return e.DurationSeconds
+}
+
+// SetDurationSeconds sets the value for the field durationSeconds
+func (e *ServiceBearerTokenGetInput) SetDurationSeconds(durationSeconds int32) {
+	e.DurationSeconds = durationSeconds
+}
+
+// GetServiceName returns the value for the field serviceName
+func (e *ServiceBearerTokenGetInput) GetServiceName() string {
+	return e.ServiceName
+}
+
+// SetServiceName sets the value for the field serviceName
+func (e *ServiceBearerTokenGetInput) SetServiceName(serviceName string) {
+	e.ServiceName = serviceName
+}
+
+// StructPath returns StructPath
+func (e *ServiceBearerTokenGetInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathServiceBearerTokenGetInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *ServiceBearerTokenGetInput) InitializeDefaults() {
+}
+
+// serviceBearerTokenGetInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type serviceBearerTokenGetInputAlias ServiceBearerTokenGetInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *ServiceBearerTokenGetInput) UnmarshalJSON(data []byte) error {
+	var alias serviceBearerTokenGetInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*ServiceBearerTokenGetInput)(&alias)).InitializeDefaults()
+	*e = ServiceBearerTokenGetInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e ServiceBearerTokenGetInput) MarshalJSON() ([]byte, error) {
+	alias := serviceBearerTokenGetInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewServiceBearerTokenGetOutput creates a new ServiceBearerTokenGetOutput
+func NewServiceBearerTokenGetOutput() *ServiceBearerTokenGetOutput {
+	s := &ServiceBearerTokenGetOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// ServiceBearerTokenGetOutput struct
+type ServiceBearerTokenGetOutput struct {
+	Token *ServiceBearerToken `json:"token,omitempty"`
+}
+
+// GetToken returns the value for the field token
+func (e *ServiceBearerTokenGetOutput) GetToken() *ServiceBearerToken {
+	return e.Token
+}
+
+// SetToken sets the value for the field token
+func (e *ServiceBearerTokenGetOutput) SetToken(token *ServiceBearerToken) {
+	e.Token = token
+}
+
+// StructPath returns StructPath
+func (e *ServiceBearerTokenGetOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathServiceBearerTokenGetOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *ServiceBearerTokenGetOutput) InitializeDefaults() {
+}
+
+// serviceBearerTokenGetOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type serviceBearerTokenGetOutputAlias ServiceBearerTokenGetOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *ServiceBearerTokenGetOutput) UnmarshalJSON(data []byte) error {
+	var alias serviceBearerTokenGetOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*ServiceBearerTokenGetOutput)(&alias)).InitializeDefaults()
+	*e = ServiceBearerTokenGetOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e ServiceBearerTokenGetOutput) MarshalJSON() ([]byte, error) {
+	alias := serviceBearerTokenGetOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInternalAccessKeyUser creates a new InternalAccessKeyUser
 func NewInternalAccessKeyUser() *InternalAccessKeyUser {
 	s := &InternalAccessKeyUser{}
@@ -5754,6 +6066,175 @@ func (e *InternalServicesValidateAccessKeyInvalidAccessKeyProblem) UnmarshalJSON
 // MarshalJSON implements json.Marshaler
 func (e InternalServicesValidateAccessKeyInvalidAccessKeyProblem) MarshalJSON() ([]byte, error) {
 	alias := internalServicesValidateAccessKeyInvalidAccessKeyProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInternalServicesValidateServiceBearerTokenInput creates a new InternalServicesValidateServiceBearerTokenInput
+func NewInternalServicesValidateServiceBearerTokenInput() *InternalServicesValidateServiceBearerTokenInput {
+	s := &InternalServicesValidateServiceBearerTokenInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalServicesValidateServiceBearerTokenInput struct
+type InternalServicesValidateServiceBearerTokenInput struct {
+	RequestServiceBearerToken string `json:"requestServiceBearerToken,omitempty"`
+}
+
+// GetRequestServiceBearerToken returns the value for the field requestServiceBearerToken
+func (e *InternalServicesValidateServiceBearerTokenInput) GetRequestServiceBearerToken() string {
+	return e.RequestServiceBearerToken
+}
+
+// SetRequestServiceBearerToken sets the value for the field requestServiceBearerToken
+func (e *InternalServicesValidateServiceBearerTokenInput) SetRequestServiceBearerToken(requestServiceBearerToken string) {
+	e.RequestServiceBearerToken = requestServiceBearerToken
+}
+
+// StructPath returns StructPath
+func (e *InternalServicesValidateServiceBearerTokenInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateServiceBearerTokenInput) InitializeDefaults() {
+}
+
+// internalServicesValidateServiceBearerTokenInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateServiceBearerTokenInputAlias InternalServicesValidateServiceBearerTokenInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateServiceBearerTokenInput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateServiceBearerTokenInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateServiceBearerTokenInput)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateServiceBearerTokenInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateServiceBearerTokenInput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateServiceBearerTokenInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInternalServicesValidateServiceBearerTokenOutput creates a new InternalServicesValidateServiceBearerTokenOutput
+func NewInternalServicesValidateServiceBearerTokenOutput() *InternalServicesValidateServiceBearerTokenOutput {
+	s := &InternalServicesValidateServiceBearerTokenOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalServicesValidateServiceBearerTokenOutput struct
+type InternalServicesValidateServiceBearerTokenOutput struct {
+	Key *InternalAccessKey `json:"key,omitempty"`
+}
+
+// GetKey returns the value for the field key
+func (e *InternalServicesValidateServiceBearerTokenOutput) GetKey() *InternalAccessKey {
+	return e.Key
+}
+
+// SetKey sets the value for the field key
+func (e *InternalServicesValidateServiceBearerTokenOutput) SetKey(key *InternalAccessKey) {
+	e.Key = key
+}
+
+// StructPath returns StructPath
+func (e *InternalServicesValidateServiceBearerTokenOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateServiceBearerTokenOutput) InitializeDefaults() {
+}
+
+// internalServicesValidateServiceBearerTokenOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateServiceBearerTokenOutputAlias InternalServicesValidateServiceBearerTokenOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateServiceBearerTokenOutput) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateServiceBearerTokenOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateServiceBearerTokenOutput)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateServiceBearerTokenOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateServiceBearerTokenOutput) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateServiceBearerTokenOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem creates a new InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem
+func NewInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem() *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem {
+	s := &InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem struct
+type InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem struct {
+	Message string `json:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem]
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) Is(err error) bool {
+	_, ok := err.(*InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem)
+	return ok
+}
+
+// IsInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem indicates whether the given error chain contains an error of type [InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem]
+func IsInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem(err error) bool {
+	return errors.Is(err, &InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) InitializeDefaults() {
+}
+
+// internalServicesValidateServiceBearerTokenInvalidAccessKeyProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type internalServicesValidateServiceBearerTokenInvalidAccessKeyProblemAlias InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) UnmarshalJSON(data []byte) error {
+	var alias internalServicesValidateServiceBearerTokenInvalidAccessKeyProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem)(&alias)).InitializeDefaults()
+	*e = InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem) MarshalJSON() ([]byte, error) {
+	alias := internalServicesValidateServiceBearerTokenInvalidAccessKeyProblemAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -6937,6 +7418,51 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathServiceBearerToken, err = pk.NewType(
+		"ServiceBearerToken",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewServiceBearerToken()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidServiceBearerTokenDurationProblem, err = pk.NewType(
+		"InvalidServiceBearerTokenDurationProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidServiceBearerTokenDurationProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidServiceNameProblem, err = pk.NewType(
+		"InvalidServiceNameProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidServiceNameProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathServiceBearerTokenGetInput, err = pk.NewType(
+		"ServiceBearerTokenGetInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewServiceBearerTokenGetInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathServiceBearerTokenGetOutput, err = pk.NewType(
+		"ServiceBearerTokenGetOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewServiceBearerTokenGetOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathInternalAccessKeyUser, err = pk.NewType(
 		"InternalAccessKeyUser",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -7031,6 +7557,33 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"InternalServicesValidateAccessKeyInvalidAccessKeyProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenInput, err = pk.NewType(
+		"InternalServicesValidateServiceBearerTokenInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalServicesValidateServiceBearerTokenInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenOutput, err = pk.NewType(
+		"InternalServicesValidateServiceBearerTokenOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalServicesValidateServiceBearerTokenOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem, err = pk.NewType(
+		"InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem()
 		}),
 	)
 	if err != nil {
@@ -7524,6 +8077,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	resServiceBearerToken, err := pk.NewResource("ServiceBearerToken")
+	if err != nil {
+		return nil, err
+	}
+	_ = resServiceBearerToken
+
+	op, err = resServiceBearerToken.NewOperation("Get")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().ServiceBearerTokenGetInputStruct())
+	op.SetOutput(SpecularMeta().ServiceBearerTokenGetInputStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidServiceBearerTokenDurationProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidServiceNameProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
 	resInternal, err := pk.NewResource("Internal")
 	if err != nil {
 		return nil, err
@@ -7547,6 +8118,19 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resInternalServices.NewOperation("ValidateServiceBearerToken")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().InternalServicesValidateServiceBearerTokenInputStruct())
+	op.SetOutput(SpecularMeta().InternalServicesValidateServiceBearerTokenInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -8273,6 +8857,41 @@ func (res *IdentityPolicyResource) Update(ctx context.Context, input *IdentityPo
 	return output, nil
 }
 
+// ServiceBearerTokenResource is the ServiceBearerTokenResource resource client
+type ServiceBearerTokenResource struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	get       *clientruntime.Operation
+}
+
+func newServiceBearerTokenResource(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*ServiceBearerTokenResource, error) {
+	res := finder.FindResource("ServiceBearerToken")
+	r := &ServiceBearerTokenResource{
+		transport: transport,
+		res:       res,
+	}
+	r.get = res.FindOperation("Get")
+	return r, nil
+}
+
+// Get - Generates a temporary authorization token for accessing a a service or feature in a service that only supports bearer tokens
+// The operations the token are limited to IAM permissions
+// Requires permission to execute "iam:GetServiceBearerToken" over "*"
+func (res *ServiceBearerTokenResource) Get(ctx context.Context, input *ServiceBearerTokenGetInput) (*ServiceBearerTokenGetOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.get,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*ServiceBearerTokenGetOutput)
+	return output, nil
+}
+
 // InternalResource is the InternalResource resource client
 type InternalResource struct {
 	transport clientruntime.Transport
@@ -8299,11 +8918,12 @@ func newInternalResource(
 
 // InternalServicesResource is the InternalServicesResource resource client
 type InternalServicesResource struct {
-	transport         clientruntime.Transport
-	res               *clientruntime.Resource
-	validateAccessKey *clientruntime.Operation
-	assertAction      *clientruntime.Operation
-	assertQuery       *clientruntime.Operation
+	transport                  clientruntime.Transport
+	res                        *clientruntime.Resource
+	validateAccessKey          *clientruntime.Operation
+	validateServiceBearerToken *clientruntime.Operation
+	assertAction               *clientruntime.Operation
+	assertQuery                *clientruntime.Operation
 }
 
 func newInternalServicesResource(
@@ -8316,6 +8936,7 @@ func newInternalServicesResource(
 		res:       res,
 	}
 	r.validateAccessKey = res.FindOperation("ValidateAccessKey")
+	r.validateServiceBearerToken = res.FindOperation("ValidateServiceBearerToken")
 	r.assertAction = res.FindOperation("AssertAction")
 	r.assertQuery = res.FindOperation("AssertQuery")
 	return r, nil
@@ -8331,6 +8952,19 @@ func (res *InternalServicesResource) ValidateAccessKey(ctx context.Context, inpu
 		return nil, err
 	}
 	output := o.(*InternalServicesValidateAccessKeyOutput)
+	return output, nil
+}
+
+// ValidateServiceBearerToken operation
+func (res *InternalServicesResource) ValidateServiceBearerToken(ctx context.Context, input *InternalServicesValidateServiceBearerTokenInput) (*InternalServicesValidateServiceBearerTokenOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.validateServiceBearerToken,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*InternalServicesValidateServiceBearerTokenOutput)
 	return output, nil
 }
 
@@ -8372,6 +9006,8 @@ type Client struct {
 	Role *RoleResource
 	// IdentityPolicy operations
 	IdentityPolicy *IdentityPolicyResource
+	// ServiceBearerToken - Service Bearer Tokens
+	ServiceBearerToken *ServiceBearerTokenResource
 	// Internal - Internal operations exposed only to integrating services
 	Internal *InternalResource
 }
@@ -8436,6 +9072,10 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.ServiceBearerToken, err = newServiceBearerTokenResource(transport, pk)
+	if err != nil {
+		return nil, err
+	}
 	c.Internal, err = newInternalResource(transport, pk)
 	if err != nil {
 		return nil, err
@@ -8458,114 +9098,122 @@ func initSpecularMeta() {
 
 // SpecularMetaInfo defines metadata of the specular module
 type SpecularMetaInfo struct {
-	mod                                                                *clientruntime.Package
-	structPathUserInformationSSOProvider                               *clientruntime.StructDefinition
-	structPathUserInformationSSOProfile                                *clientruntime.StructDefinition
-	structPathUserInformationSSO                                       *clientruntime.StructDefinition
-	structPathUserInformation                                          *clientruntime.StructDefinition
-	structPathRoleInformation                                          *clientruntime.StructDefinition
-	structPathCredentials                                              *clientruntime.StructDefinition
-	structPathSSOProviderUnavailableProblem                            *clientruntime.StructDefinition
-	structPathSSOFlow                                                  *clientruntime.StructDefinition
-	structPathAccount                                                  *clientruntime.StructDefinition
-	structPathAccountSSOProvider                                       *clientruntime.StructDefinition
-	structPathPolicyNotFoundProblem                                    *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicy                                 *clientruntime.StructDefinition
-	structPathAccountCreateInput                                       *clientruntime.StructDefinition
-	structPathAccountCreateOutput                                      *clientruntime.StructDefinition
-	structPathAccountCreateInvalidNameProblem                          *clientruntime.StructDefinition
-	structPathAccountAssumeIdentityInput                               *clientruntime.StructDefinition
-	structPathAccountAssumeIdentityOutput                              *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationInput                       *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationOutput                      *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationParameterProblem            *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationInput                    *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationOutput                   *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationInvalidFlowProblem       *clientruntime.StructDefinition
-	structPathAccountSSOGetProvidersInput                              *clientruntime.StructDefinition
-	structPathAccountSSOGetProvidersOutput                             *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyCreateInput                      *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyCreateOutput                     *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyListInput                        *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyListOutput                       *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyEnableInput                      *clientruntime.StructDefinition
-	structPathAccountSSOAutoJoinPolicyEnableOutput                     *clientruntime.StructDefinition
-	structPathInvalidUsernameProblem                                   *clientruntime.StructDefinition
-	structPathInvalidRoleNameProblem                                   *clientruntime.StructDefinition
-	structPathMemberAccount                                            *clientruntime.StructDefinition
-	structPathCredentialInfo                                           *clientruntime.StructDefinition
-	structPathIdentityPolicyStatement                                  *clientruntime.StructDefinition
-	structPathIdentityPolicy                                           *clientruntime.StructDefinition
-	structPathIdentityPolicyAttachment                                 *clientruntime.StructDefinition
-	structPathUserNotFoundProblem                                      *clientruntime.StructDefinition
-	structPathRoleNotFoundProblem                                      *clientruntime.StructDefinition
-	structPathUserCreateInput                                          *clientruntime.StructDefinition
-	structPathUserCreateOutput                                         *clientruntime.StructDefinition
-	structPathUserGetInput                                             *clientruntime.StructDefinition
-	structPathUserGetOutput                                            *clientruntime.StructDefinition
-	structPathUserGetUserNotAvailableProblem                           *clientruntime.StructDefinition
-	structPathUserDestroyInput                                         *clientruntime.StructDefinition
-	structPathUserDestroyOutput                                        *clientruntime.StructDefinition
-	structPathUserListInput                                            *clientruntime.StructDefinition
-	structPathUserListOutput                                           *clientruntime.StructDefinition
-	structPathUserMemberAccountsInput                                  *clientruntime.StructDefinition
-	structPathUserMemberAccountsOutput                                 *clientruntime.StructDefinition
-	structPathUserAccessKeyCreateInput                                 *clientruntime.StructDefinition
-	structPathUserAccessKeyCreateOutput                                *clientruntime.StructDefinition
-	structPathUserAccessKeyListInput                                   *clientruntime.StructDefinition
-	structPathUserAccessKeyListOutput                                  *clientruntime.StructDefinition
-	structPathUserAccessKeyDestroyInput                                *clientruntime.StructDefinition
-	structPathUserAccessKeyDestroyOutput                               *clientruntime.StructDefinition
-	structPathUserIdentityPolicyAttachInput                            *clientruntime.StructDefinition
-	structPathUserIdentityPolicyAttachOutput                           *clientruntime.StructDefinition
-	structPathUserIdentityPolicyListInput                              *clientruntime.StructDefinition
-	structPathUserIdentityPolicyListOutput                             *clientruntime.StructDefinition
-	structPathUserIdentityPolicyDetachInput                            *clientruntime.StructDefinition
-	structPathUserIdentityPolicyDetachOutput                           *clientruntime.StructDefinition
-	structPathInlinePolicy                                             *clientruntime.StructDefinition
-	structPathPolicyStructureProblem                                   *clientruntime.StructDefinition
-	structPathRoleCreateInput                                          *clientruntime.StructDefinition
-	structPathRoleCreateOutput                                         *clientruntime.StructDefinition
-	structPathRoleGetInput                                             *clientruntime.StructDefinition
-	structPathRoleGetOutput                                            *clientruntime.StructDefinition
-	structPathRoleDestroyInput                                         *clientruntime.StructDefinition
-	structPathRoleDestroyOutput                                        *clientruntime.StructDefinition
-	structPathRoleListInput                                            *clientruntime.StructDefinition
-	structPathRoleListOutput                                           *clientruntime.StructDefinition
-	structPathRoleAssumeInput                                          *clientruntime.StructDefinition
-	structPathRoleAssumeOutput                                         *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyAttachInput                            *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyAttachOutput                           *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyListInput                              *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyListOutput                             *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyDetachInput                            *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyDetachOutput                           *clientruntime.StructDefinition
-	structPathIdentityPolicyCreateInput                                *clientruntime.StructDefinition
-	structPathIdentityPolicyCreateOutput                               *clientruntime.StructDefinition
-	structPathIdentityPolicyListInput                                  *clientruntime.StructDefinition
-	structPathIdentityPolicyListOutput                                 *clientruntime.StructDefinition
-	structPathIdentityPolicyRetrieveInput                              *clientruntime.StructDefinition
-	structPathIdentityPolicyRetrieveOutput                             *clientruntime.StructDefinition
-	structPathIdentityPolicyDestroyInput                               *clientruntime.StructDefinition
-	structPathIdentityPolicyDestroyOutput                              *clientruntime.StructDefinition
-	structPathIdentityPolicyUpdateInput                                *clientruntime.StructDefinition
-	structPathIdentityPolicyUpdateOutput                               *clientruntime.StructDefinition
-	structPathInternalAccessKeyUser                                    *clientruntime.StructDefinition
-	structPathInternalAccessKeyRole                                    *clientruntime.StructDefinition
-	structPathInternalAccessKeyAccount                                 *clientruntime.StructDefinition
-	structPathInternalAccessKey                                        *clientruntime.StructDefinition
-	structPathInternalQueryAssertionEntryValue                         *clientruntime.StructDefinition
-	structPathInternalQueryAssertionEntry                              *clientruntime.StructDefinition
-	structPathInternalServicesAssertActionCallerForbiddenProblem       *clientruntime.StructDefinition
-	structPathInternalAssertActionQualifier                            *clientruntime.StructDefinition
-	structPathInternalServicesValidateAccessKeyInput                   *clientruntime.StructDefinition
-	structPathInternalServicesValidateAccessKeyOutput                  *clientruntime.StructDefinition
-	structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem *clientruntime.StructDefinition
-	structPathInternalServicesAssertActionInput                        *clientruntime.StructDefinition
-	structPathInternalServicesAssertActionOutput                       *clientruntime.StructDefinition
-	structPathInternalServicesAssertQueryInput                         *clientruntime.StructDefinition
-	structPathInternalServicesAssertQueryOutput                        *clientruntime.StructDefinition
-	structPathInternalServicesAssertQueryReplacementProblem            *clientruntime.StructDefinition
+	mod                                                                         *clientruntime.Package
+	structPathUserInformationSSOProvider                                        *clientruntime.StructDefinition
+	structPathUserInformationSSOProfile                                         *clientruntime.StructDefinition
+	structPathUserInformationSSO                                                *clientruntime.StructDefinition
+	structPathUserInformation                                                   *clientruntime.StructDefinition
+	structPathRoleInformation                                                   *clientruntime.StructDefinition
+	structPathCredentials                                                       *clientruntime.StructDefinition
+	structPathSSOProviderUnavailableProblem                                     *clientruntime.StructDefinition
+	structPathSSOFlow                                                           *clientruntime.StructDefinition
+	structPathAccount                                                           *clientruntime.StructDefinition
+	structPathAccountSSOProvider                                                *clientruntime.StructDefinition
+	structPathPolicyNotFoundProblem                                             *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicy                                          *clientruntime.StructDefinition
+	structPathAccountCreateInput                                                *clientruntime.StructDefinition
+	structPathAccountCreateOutput                                               *clientruntime.StructDefinition
+	structPathAccountCreateInvalidNameProblem                                   *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityInput                                        *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityOutput                                       *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationInput                                *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationOutput                               *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationParameterProblem                     *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInput                             *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationOutput                            *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInvalidFlowProblem                *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersInput                                       *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersOutput                                      *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyCreateInput                               *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyCreateOutput                              *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyListInput                                 *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyListOutput                                *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyEnableInput                               *clientruntime.StructDefinition
+	structPathAccountSSOAutoJoinPolicyEnableOutput                              *clientruntime.StructDefinition
+	structPathInvalidUsernameProblem                                            *clientruntime.StructDefinition
+	structPathInvalidRoleNameProblem                                            *clientruntime.StructDefinition
+	structPathMemberAccount                                                     *clientruntime.StructDefinition
+	structPathCredentialInfo                                                    *clientruntime.StructDefinition
+	structPathIdentityPolicyStatement                                           *clientruntime.StructDefinition
+	structPathIdentityPolicy                                                    *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachment                                          *clientruntime.StructDefinition
+	structPathUserNotFoundProblem                                               *clientruntime.StructDefinition
+	structPathRoleNotFoundProblem                                               *clientruntime.StructDefinition
+	structPathUserCreateInput                                                   *clientruntime.StructDefinition
+	structPathUserCreateOutput                                                  *clientruntime.StructDefinition
+	structPathUserGetInput                                                      *clientruntime.StructDefinition
+	structPathUserGetOutput                                                     *clientruntime.StructDefinition
+	structPathUserGetUserNotAvailableProblem                                    *clientruntime.StructDefinition
+	structPathUserDestroyInput                                                  *clientruntime.StructDefinition
+	structPathUserDestroyOutput                                                 *clientruntime.StructDefinition
+	structPathUserListInput                                                     *clientruntime.StructDefinition
+	structPathUserListOutput                                                    *clientruntime.StructDefinition
+	structPathUserMemberAccountsInput                                           *clientruntime.StructDefinition
+	structPathUserMemberAccountsOutput                                          *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateInput                                          *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateOutput                                         *clientruntime.StructDefinition
+	structPathUserAccessKeyListInput                                            *clientruntime.StructDefinition
+	structPathUserAccessKeyListOutput                                           *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyInput                                         *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyOutput                                        *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachInput                                     *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachOutput                                    *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListInput                                       *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListOutput                                      *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachInput                                     *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachOutput                                    *clientruntime.StructDefinition
+	structPathInlinePolicy                                                      *clientruntime.StructDefinition
+	structPathPolicyStructureProblem                                            *clientruntime.StructDefinition
+	structPathRoleCreateInput                                                   *clientruntime.StructDefinition
+	structPathRoleCreateOutput                                                  *clientruntime.StructDefinition
+	structPathRoleGetInput                                                      *clientruntime.StructDefinition
+	structPathRoleGetOutput                                                     *clientruntime.StructDefinition
+	structPathRoleDestroyInput                                                  *clientruntime.StructDefinition
+	structPathRoleDestroyOutput                                                 *clientruntime.StructDefinition
+	structPathRoleListInput                                                     *clientruntime.StructDefinition
+	structPathRoleListOutput                                                    *clientruntime.StructDefinition
+	structPathRoleAssumeInput                                                   *clientruntime.StructDefinition
+	structPathRoleAssumeOutput                                                  *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyAttachInput                                     *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyAttachOutput                                    *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyListInput                                       *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyListOutput                                      *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyDetachInput                                     *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyDetachOutput                                    *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateInput                                         *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateOutput                                        *clientruntime.StructDefinition
+	structPathIdentityPolicyListInput                                           *clientruntime.StructDefinition
+	structPathIdentityPolicyListOutput                                          *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveInput                                       *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveOutput                                      *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyInput                                        *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyOutput                                       *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateInput                                         *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateOutput                                        *clientruntime.StructDefinition
+	structPathServiceBearerToken                                                *clientruntime.StructDefinition
+	structPathInvalidServiceBearerTokenDurationProblem                          *clientruntime.StructDefinition
+	structPathInvalidServiceNameProblem                                         *clientruntime.StructDefinition
+	structPathServiceBearerTokenGetInput                                        *clientruntime.StructDefinition
+	structPathServiceBearerTokenGetOutput                                       *clientruntime.StructDefinition
+	structPathInternalAccessKeyUser                                             *clientruntime.StructDefinition
+	structPathInternalAccessKeyRole                                             *clientruntime.StructDefinition
+	structPathInternalAccessKeyAccount                                          *clientruntime.StructDefinition
+	structPathInternalAccessKey                                                 *clientruntime.StructDefinition
+	structPathInternalQueryAssertionEntryValue                                  *clientruntime.StructDefinition
+	structPathInternalQueryAssertionEntry                                       *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionCallerForbiddenProblem                *clientruntime.StructDefinition
+	structPathInternalAssertActionQualifier                                     *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyInput                            *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyOutput                           *clientruntime.StructDefinition
+	structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem          *clientruntime.StructDefinition
+	structPathInternalServicesValidateServiceBearerTokenInput                   *clientruntime.StructDefinition
+	structPathInternalServicesValidateServiceBearerTokenOutput                  *clientruntime.StructDefinition
+	structPathInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionInput                                 *clientruntime.StructDefinition
+	structPathInternalServicesAssertActionOutput                                *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryInput                                  *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryOutput                                 *clientruntime.StructDefinition
+	structPathInternalServicesAssertQueryReplacementProblem                     *clientruntime.StructDefinition
 }
 
 // Module returns the module definition
@@ -9028,6 +9676,31 @@ func (m *SpecularMetaInfo) IdentityPolicyUpdateOutputStruct() *clientruntime.Str
 	return m.structPathIdentityPolicyUpdateOutput
 }
 
+// ServiceBearerTokenStruct allows easy access to structure
+func (m *SpecularMetaInfo) ServiceBearerTokenStruct() *clientruntime.StructDefinition {
+	return m.structPathServiceBearerToken
+}
+
+// InvalidServiceBearerTokenDurationProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidServiceBearerTokenDurationProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidServiceBearerTokenDurationProblem
+}
+
+// InvalidServiceNameProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidServiceNameProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidServiceNameProblem
+}
+
+// ServiceBearerTokenGetInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) ServiceBearerTokenGetInputStruct() *clientruntime.StructDefinition {
+	return m.structPathServiceBearerTokenGetInput
+}
+
+// ServiceBearerTokenGetOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) ServiceBearerTokenGetOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathServiceBearerTokenGetOutput
+}
+
 // InternalAccessKeyUserStruct allows easy access to structure
 func (m *SpecularMetaInfo) InternalAccessKeyUserStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalAccessKeyUser
@@ -9081,6 +9754,21 @@ func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyOutputStruct() *clie
 // InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct allows easy access to structure
 func (m *SpecularMetaInfo) InternalServicesValidateAccessKeyInvalidAccessKeyProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInternalServicesValidateAccessKeyInvalidAccessKeyProblem
+}
+
+// InternalServicesValidateServiceBearerTokenInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateServiceBearerTokenInputStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateServiceBearerTokenInput
+}
+
+// InternalServicesValidateServiceBearerTokenOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateServiceBearerTokenOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateServiceBearerTokenOutput
+}
+
+// InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem
 }
 
 // InternalServicesAssertActionInputStruct allows easy access to structure
