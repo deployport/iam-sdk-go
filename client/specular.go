@@ -23,7 +23,7 @@ func NewUserInformationSSOProvider() *UserInformationSSOProvider {
 // UserInformationSSOProvider struct
 type UserInformationSSOProvider struct {
 	// provider name
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -74,9 +74,9 @@ func NewUserInformationSSOProfile() *UserInformationSSOProfile {
 
 // UserInformationSSOProfile struct
 type UserInformationSSOProfile struct {
-	Email      string `json:"email,omitempty"`
-	Fullname   string `json:"fullname,omitempty"`
-	PictureURL string `json:"pictureURL,omitempty"`
+	Email      string `json:"email,omitempty" yaml:"email,omitempty"`
+	Fullname   string `json:"fullname,omitempty" yaml:"fullname,omitempty"`
+	PictureURL string `json:"pictureURL,omitempty" yaml:"pictureURL,omitempty"`
 }
 
 // GetEmail returns the value for the field email
@@ -147,8 +147,8 @@ func NewUserInformationSSO() *UserInformationSSO {
 
 // UserInformationSSO struct
 type UserInformationSSO struct {
-	Profile  *UserInformationSSOProfile  `json:"profile,omitempty"`
-	Provider *UserInformationSSOProvider `json:"provider,omitempty"`
+	Profile  *UserInformationSSOProfile  `json:"profile,omitempty" yaml:"profile,omitempty"`
+	Provider *UserInformationSSOProvider `json:"provider,omitempty" yaml:"provider,omitempty"`
 }
 
 // GetProfile returns the value for the field profile
@@ -209,10 +209,10 @@ func NewUserInformation() *UserInformation {
 
 // UserInformation struct
 type UserInformation struct {
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitempty" yaml:"description,omitempty"`
 	// when the user comes from SSO, this field is populated with the extra information
-	Sso      *UserInformationSSO `json:"sso,omitempty"`
-	Username string              `json:"username,omitempty"`
+	Sso      *UserInformationSSO `json:"sso,omitempty" yaml:"sso,omitempty"`
+	Username string              `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -283,8 +283,8 @@ func NewRoleInformation() *RoleInformation {
 
 // RoleInformation struct
 type RoleInformation struct {
-	Description string `json:"description,omitempty"`
-	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -345,8 +345,8 @@ func NewCredentials() *Credentials {
 
 // Credentials struct
 type Credentials struct {
-	AccessKeyID     string `json:"accessKeyID,omitempty"`
-	SecretAccessKey string `json:"secretAccessKey,omitempty"`
+	AccessKeyID     string `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
+	SecretAccessKey string `json:"secretAccessKey,omitempty" yaml:"secretAccessKey,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -407,7 +407,7 @@ func NewSSOProviderUnavailableProblem() *SSOProviderUnavailableProblem {
 
 // SSOProviderUnavailableProblem struct
 type SSOProviderUnavailableProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -474,9 +474,9 @@ func NewSSOFlow() *SSOFlow {
 
 // SSOFlow struct
 type SSOFlow struct {
-	BrowseURL                 string    `json:"browseURL,omitempty"`
-	CompletionIntervalSeconds int32     `json:"completionIntervalSeconds,omitempty"`
-	ExpiresAt                 time.Time `json:"expiresAt,omitempty"`
+	BrowseURL                 string    `json:"browseURL,omitempty" yaml:"browseURL,omitempty"`
+	CompletionIntervalSeconds int32     `json:"completionIntervalSeconds,omitempty" yaml:"completionIntervalSeconds,omitempty"`
+	ExpiresAt                 time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
 }
 
 // GetBrowseURL returns the value for the field browseURL
@@ -547,7 +547,7 @@ func NewAccount() *Account {
 
 // Account struct
 type Account struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -598,8 +598,8 @@ func NewAccountSSOProvider() *AccountSSOProvider {
 
 // AccountSSOProvider struct
 type AccountSSOProvider struct {
-	DisplayName string `json:"displayName,omitempty"`
-	Name        string `json:"name,omitempty"`
+	DisplayName string `json:"displayName,omitempty" yaml:"displayName,omitempty"`
+	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetDisplayName returns the value for the field displayName
@@ -660,7 +660,7 @@ func NewPolicyNotFoundProblem() *PolicyNotFoundProblem {
 
 // PolicyNotFoundProblem struct
 type PolicyNotFoundProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -728,14 +728,14 @@ func NewAccountSSOAutoJoinPolicy() *AccountSSOAutoJoinPolicy {
 // AccountSSOAutoJoinPolicy struct
 type AccountSSOAutoJoinPolicy struct {
 	// email-domain users come from, example "deployport.com"
-	Domain  string `json:"domain,omitempty"`
-	Enabled bool   `json:"enabled,omitempty"`
+	Domain  string `json:"domain,omitempty" yaml:"domain,omitempty"`
+	Enabled bool   `json:"enabled,omitempty" yaml:"enabled,omitempty"`
 	// unique identifer of the auto-join policy
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 	// where the users are coming from
-	OriginAccountName string `json:"originAccountName,omitempty"`
+	OriginAccountName string `json:"originAccountName,omitempty" yaml:"originAccountName,omitempty"`
 	// SSO provider in the source account
-	OriginProviderName string `json:"originProviderName,omitempty"`
+	OriginProviderName string `json:"originProviderName,omitempty" yaml:"originProviderName,omitempty"`
 }
 
 // GetDomain returns the value for the field domain
@@ -826,7 +826,7 @@ func NewAccountCreateInput() *AccountCreateInput {
 
 // AccountCreateInput struct
 type AccountCreateInput struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -877,7 +877,7 @@ func NewAccountCreateOutput() *AccountCreateOutput {
 
 // AccountCreateOutput struct
 type AccountCreateOutput struct {
-	Account *Account `json:"account,omitempty"`
+	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
 }
 
 // GetAccount returns the value for the field account
@@ -928,7 +928,7 @@ func NewAccountCreateInvalidNameProblem() *AccountCreateInvalidNameProblem {
 
 // AccountCreateInvalidNameProblem struct
 type AccountCreateInvalidNameProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -995,7 +995,7 @@ func NewAccountAssumeIdentityInput() *AccountAssumeIdentityInput {
 
 // AccountAssumeIdentityInput struct
 type AccountAssumeIdentityInput struct {
-	AccountName string `json:"accountName,omitempty"`
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1046,7 +1046,7 @@ func NewAccountAssumeIdentityOutput() *AccountAssumeIdentityOutput {
 
 // AccountAssumeIdentityOutput struct
 type AccountAssumeIdentityOutput struct {
-	Credentials *Credentials `json:"credentials,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -1097,10 +1097,10 @@ func NewAccountSSOBeginAuthenticationInput() *AccountSSOBeginAuthenticationInput
 
 // AccountSSOBeginAuthenticationInput struct
 type AccountSSOBeginAuthenticationInput struct {
-	AccountName string `json:"accountName,omitempty"`
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 	// client generated code challenge that will be used to verify the completion code, SHA-256 of the codeVerifier
-	CodeChallenge string `json:"codeChallenge,omitempty"`
-	ProviderName  string `json:"providerName,omitempty"`
+	CodeChallenge string `json:"codeChallenge,omitempty" yaml:"codeChallenge,omitempty"`
+	ProviderName  string `json:"providerName,omitempty" yaml:"providerName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1171,7 +1171,7 @@ func NewAccountSSOBeginAuthenticationOutput() *AccountSSOBeginAuthenticationOutp
 
 // AccountSSOBeginAuthenticationOutput struct
 type AccountSSOBeginAuthenticationOutput struct {
-	Flow *SSOFlow `json:"flow,omitempty"`
+	Flow *SSOFlow `json:"flow,omitempty" yaml:"flow,omitempty"`
 }
 
 // GetFlow returns the value for the field flow
@@ -1222,7 +1222,7 @@ func NewAccountSSOBeginAuthenticationParameterProblem() *AccountSSOBeginAuthenti
 
 // AccountSSOBeginAuthenticationParameterProblem struct
 type AccountSSOBeginAuthenticationParameterProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1289,10 +1289,10 @@ func NewAccountSSOCompleteAuthenticationInput() *AccountSSOCompleteAuthenticatio
 
 // AccountSSOCompleteAuthenticationInput struct
 type AccountSSOCompleteAuthenticationInput struct {
-	AccountName string `json:"accountName,omitempty"`
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 	// base64-url-encoded client generated code challenge that will be used to verify the completion code
-	CodeVerifierB64 string `json:"codeVerifierB64,omitempty"`
-	ProviderName    string `json:"providerName,omitempty"`
+	CodeVerifierB64 string `json:"codeVerifierB64,omitempty" yaml:"codeVerifierB64,omitempty"`
+	ProviderName    string `json:"providerName,omitempty" yaml:"providerName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1363,7 +1363,7 @@ func NewAccountSSOCompleteAuthenticationOutput() *AccountSSOCompleteAuthenticati
 
 // AccountSSOCompleteAuthenticationOutput struct
 type AccountSSOCompleteAuthenticationOutput struct {
-	Credentials *Credentials `json:"credentials,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -1414,7 +1414,7 @@ func NewAccountSSOCompleteAuthenticationInvalidFlowProblem() *AccountSSOComplete
 
 // AccountSSOCompleteAuthenticationInvalidFlowProblem struct
 type AccountSSOCompleteAuthenticationInvalidFlowProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1481,7 +1481,7 @@ func NewAccountSSOGetProvidersInput() *AccountSSOGetProvidersInput {
 
 // AccountSSOGetProvidersInput struct
 type AccountSSOGetProvidersInput struct {
-	AccountName string `json:"accountName,omitempty"`
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -1532,7 +1532,7 @@ func NewAccountSSOGetProvidersOutput() *AccountSSOGetProvidersOutput {
 
 // AccountSSOGetProvidersOutput struct
 type AccountSSOGetProvidersOutput struct {
-	Providers []*AccountSSOProvider `json:"providers,omitempty"`
+	Providers []*AccountSSOProvider `json:"providers,omitempty" yaml:"providers,omitempty"`
 }
 
 // GetProviders returns the value for the field providers
@@ -1583,9 +1583,9 @@ func NewAccountSSOAutoJoinPolicyCreateInput() *AccountSSOAutoJoinPolicyCreateInp
 
 // AccountSSOAutoJoinPolicyCreateInput struct
 type AccountSSOAutoJoinPolicyCreateInput struct {
-	Domain             string `json:"domain,omitempty"`
-	OriginAccountName  string `json:"originAccountName,omitempty"`
-	OriginProviderName string `json:"originProviderName,omitempty"`
+	Domain             string `json:"domain,omitempty" yaml:"domain,omitempty"`
+	OriginAccountName  string `json:"originAccountName,omitempty" yaml:"originAccountName,omitempty"`
+	OriginProviderName string `json:"originProviderName,omitempty" yaml:"originProviderName,omitempty"`
 }
 
 // GetDomain returns the value for the field domain
@@ -1656,7 +1656,7 @@ func NewAccountSSOAutoJoinPolicyCreateOutput() *AccountSSOAutoJoinPolicyCreateOu
 
 // AccountSSOAutoJoinPolicyCreateOutput struct
 type AccountSSOAutoJoinPolicyCreateOutput struct {
-	Policy *AccountSSOAutoJoinPolicy `json:"policy,omitempty"`
+	Policy *AccountSSOAutoJoinPolicy `json:"policy,omitempty" yaml:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -1747,7 +1747,7 @@ func NewAccountSSOAutoJoinPolicyListOutput() *AccountSSOAutoJoinPolicyListOutput
 
 // AccountSSOAutoJoinPolicyListOutput struct
 type AccountSSOAutoJoinPolicyListOutput struct {
-	Policies []*AccountSSOAutoJoinPolicy `json:"policies,omitempty"`
+	Policies []*AccountSSOAutoJoinPolicy `json:"policies,omitempty" yaml:"policies,omitempty"`
 }
 
 // GetPolicies returns the value for the field policies
@@ -1798,8 +1798,8 @@ func NewAccountSSOAutoJoinPolicyEnableInput() *AccountSSOAutoJoinPolicyEnableInp
 
 // AccountSSOAutoJoinPolicyEnableInput struct
 type AccountSSOAutoJoinPolicyEnableInput struct {
-	Enabled    bool   `json:"enabled,omitempty"`
-	PolicyName string `json:"policyName,omitempty"`
+	Enabled    bool   `json:"enabled,omitempty" yaml:"enabled,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
 }
 
 // GetEnabled returns the value for the field enabled
@@ -1900,7 +1900,7 @@ func NewInvalidUsernameProblem() *InvalidUsernameProblem {
 
 // InvalidUsernameProblem struct
 type InvalidUsernameProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -1967,7 +1967,7 @@ func NewInvalidRoleNameProblem() *InvalidRoleNameProblem {
 
 // InvalidRoleNameProblem struct
 type InvalidRoleNameProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -2034,7 +2034,7 @@ func NewMemberAccount() *MemberAccount {
 
 // MemberAccount struct
 type MemberAccount struct {
-	AccountName string `json:"accountName,omitempty"`
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -2085,7 +2085,7 @@ func NewCredentialInfo() *CredentialInfo {
 
 // CredentialInfo struct
 type CredentialInfo struct {
-	AccessKeyID string `json:"accessKeyID,omitempty"`
+	AccessKeyID string `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -2136,8 +2136,9 @@ func NewIdentityPolicyStatement() *IdentityPolicyStatement {
 
 // IdentityPolicyStatement struct
 type IdentityPolicyStatement struct {
-	Actions   []string `json:"actions,omitempty"`
-	Resources []string `json:"resources,omitempty"`
+	Actions   []string              `json:"actions,omitempty" yaml:"actions,omitempty"`
+	Effect    PolicyStatementEffect `json:"effect,omitempty" yaml:"effect,omitempty"`
+	Resources []string              `json:"resources,omitempty" yaml:"resources,omitempty"`
 }
 
 // GetActions returns the value for the field actions
@@ -2148,6 +2149,16 @@ func (e *IdentityPolicyStatement) GetActions() []string {
 // SetActions sets the value for the field actions
 func (e *IdentityPolicyStatement) SetActions(actions []string) {
 	e.Actions = actions
+}
+
+// GetEffect returns the value for the field effect
+func (e *IdentityPolicyStatement) GetEffect() PolicyStatementEffect {
+	return e.Effect
+}
+
+// SetEffect sets the value for the field effect
+func (e *IdentityPolicyStatement) SetEffect(effect PolicyStatementEffect) {
+	e.Effect = effect
 }
 
 // GetResources returns the value for the field resources
@@ -2167,6 +2178,9 @@ func (e *IdentityPolicyStatement) StructPath() clientruntime.StructPath {
 
 // InitializeDefaults initializes the default values in the struct
 func (e *IdentityPolicyStatement) InitializeDefaults() {
+	if e.Effect == "" {
+		e.Effect = PolicyStatementEffectDeny
+	}
 }
 
 // identityPolicyStatementAlias is defined to help pre and post JSON marshaling without recursive loops
@@ -2186,6 +2200,9 @@ func (e *IdentityPolicyStatement) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e IdentityPolicyStatement) MarshalJSON() ([]byte, error) {
 	alias := identityPolicyStatementAlias(e)
+	if alias.Effect == PolicyStatementEffectDeny {
+		alias.Effect = ""
+	}
 	return json.Marshal(alias)
 }
 
@@ -2198,9 +2215,9 @@ func NewIdentityPolicy() *IdentityPolicy {
 
 // IdentityPolicy struct
 type IdentityPolicy struct {
-	Builtin    bool                       `json:"builtin,omitempty"`
-	Name       string                     `json:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
+	Builtin    bool                       `json:"builtin,omitempty" yaml:"builtin,omitempty"`
+	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetBuiltin returns the value for the field builtin
@@ -2271,7 +2288,7 @@ func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 
 // IdentityPolicyAttachment struct
 type IdentityPolicyAttachment struct {
-	PolicyName string `json:"policyName,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -2322,7 +2339,7 @@ func NewUserNotFoundProblem() *UserNotFoundProblem {
 
 // UserNotFoundProblem struct
 type UserNotFoundProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -2389,7 +2406,7 @@ func NewRoleNotFoundProblem() *RoleNotFoundProblem {
 
 // RoleNotFoundProblem struct
 type RoleNotFoundProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -2456,8 +2473,8 @@ func NewUserCreateInput() *UserCreateInput {
 
 // UserCreateInput struct
 type UserCreateInput struct {
-	Description string `json:"description,omitempty"`
-	Username    string `json:"username,omitempty"`
+	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Username    string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -2518,7 +2535,7 @@ func NewUserCreateOutput() *UserCreateOutput {
 
 // UserCreateOutput struct
 type UserCreateOutput struct {
-	User *UserInformation `json:"user,omitempty"`
+	User *UserInformation `json:"user,omitempty" yaml:"user,omitempty"`
 }
 
 // GetUser returns the value for the field user
@@ -2569,7 +2586,7 @@ func NewUserGetInput() *UserGetInput {
 
 // UserGetInput struct
 type UserGetInput struct {
-	Username *string `json:"username,omitempty"`
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2620,7 +2637,7 @@ func NewUserGetOutput() *UserGetOutput {
 
 // UserGetOutput struct
 type UserGetOutput struct {
-	User *UserInformation `json:"user,omitempty"`
+	User *UserInformation `json:"user,omitempty" yaml:"user,omitempty"`
 }
 
 // GetUser returns the value for the field user
@@ -2671,7 +2688,7 @@ func NewUserGetUserNotAvailableProblem() *UserGetUserNotAvailableProblem {
 
 // UserGetUserNotAvailableProblem struct
 type UserGetUserNotAvailableProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -2738,7 +2755,7 @@ func NewUserDestroyInput() *UserDestroyInput {
 
 // UserDestroyInput struct
 type UserDestroyInput struct {
-	Username *string `json:"username,omitempty"`
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -2869,7 +2886,7 @@ func NewUserListOutput() *UserListOutput {
 
 // UserListOutput struct
 type UserListOutput struct {
-	Users []*UserInformation `json:"users,omitempty"`
+	Users []*UserInformation `json:"users,omitempty" yaml:"users,omitempty"`
 }
 
 // GetUsers returns the value for the field users
@@ -2960,7 +2977,7 @@ func NewUserMemberAccountsOutput() *UserMemberAccountsOutput {
 
 // UserMemberAccountsOutput struct
 type UserMemberAccountsOutput struct {
-	Accounts []*MemberAccount `json:"accounts,omitempty"`
+	Accounts []*MemberAccount `json:"accounts,omitempty" yaml:"accounts,omitempty"`
 }
 
 // GetAccounts returns the value for the field accounts
@@ -3011,7 +3028,7 @@ func NewUserAccessKeyCreateInput() *UserAccessKeyCreateInput {
 
 // UserAccessKeyCreateInput struct
 type UserAccessKeyCreateInput struct {
-	Username string `json:"username,omitempty"`
+	Username string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -3062,7 +3079,7 @@ func NewUserAccessKeyCreateOutput() *UserAccessKeyCreateOutput {
 
 // UserAccessKeyCreateOutput struct
 type UserAccessKeyCreateOutput struct {
-	Credentials *Credentials `json:"credentials,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -3113,7 +3130,7 @@ func NewUserAccessKeyListInput() *UserAccessKeyListInput {
 
 // UserAccessKeyListInput struct
 type UserAccessKeyListInput struct {
-	Username *string `json:"username,omitempty"`
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -3164,7 +3181,7 @@ func NewUserAccessKeyListOutput() *UserAccessKeyListOutput {
 
 // UserAccessKeyListOutput struct
 type UserAccessKeyListOutput struct {
-	Credentials []*CredentialInfo `json:"credentials,omitempty"`
+	Credentials []*CredentialInfo `json:"credentials,omitempty" yaml:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -3215,8 +3232,8 @@ func NewUserAccessKeyDestroyInput() *UserAccessKeyDestroyInput {
 
 // UserAccessKeyDestroyInput struct
 type UserAccessKeyDestroyInput struct {
-	AccessKeyID string `json:"accessKeyID,omitempty"`
-	Username    string `json:"username,omitempty"`
+	AccessKeyID string `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
+	Username    string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -3317,8 +3334,8 @@ func NewUserIdentityPolicyAttachInput() *UserIdentityPolicyAttachInput {
 
 // UserIdentityPolicyAttachInput struct
 type UserIdentityPolicyAttachInput struct {
-	PolicyName string `json:"policyName,omitempty"`
-	Username   string `json:"username,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	Username   string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -3419,7 +3436,7 @@ func NewUserIdentityPolicyListInput() *UserIdentityPolicyListInput {
 
 // UserIdentityPolicyListInput struct
 type UserIdentityPolicyListInput struct {
-	Username string `json:"username,omitempty"`
+	Username string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -3470,7 +3487,7 @@ func NewUserIdentityPolicyListOutput() *UserIdentityPolicyListOutput {
 
 // UserIdentityPolicyListOutput struct
 type UserIdentityPolicyListOutput struct {
-	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty"`
+	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty" yaml:"attachments,omitempty"`
 }
 
 // GetAttachments returns the value for the field attachments
@@ -3521,8 +3538,8 @@ func NewUserIdentityPolicyDetachInput() *UserIdentityPolicyDetachInput {
 
 // UserIdentityPolicyDetachInput struct
 type UserIdentityPolicyDetachInput struct {
-	PolicyName string `json:"policyName,omitempty"`
-	Username   string `json:"username,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	Username   string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -3623,7 +3640,7 @@ func NewInlinePolicy() *InlinePolicy {
 
 // InlinePolicy struct
 type InlinePolicy struct {
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetStatements returns the value for the field statements
@@ -3674,7 +3691,7 @@ func NewPolicyStructureProblem() *PolicyStructureProblem {
 
 // PolicyStructureProblem struct
 type PolicyStructureProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -3741,8 +3758,8 @@ func NewRoleCreateInput() *RoleCreateInput {
 
 // RoleCreateInput struct
 type RoleCreateInput struct {
-	Description string `json:"description,omitempty"`
-	Name        string `json:"name,omitempty"`
+	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetDescription returns the value for the field description
@@ -3803,7 +3820,7 @@ func NewRoleCreateOutput() *RoleCreateOutput {
 
 // RoleCreateOutput struct
 type RoleCreateOutput struct {
-	Role *RoleInformation `json:"role,omitempty"`
+	Role *RoleInformation `json:"role,omitempty" yaml:"role,omitempty"`
 }
 
 // GetRole returns the value for the field role
@@ -3854,7 +3871,7 @@ func NewRoleGetInput() *RoleGetInput {
 
 // RoleGetInput struct
 type RoleGetInput struct {
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -3905,7 +3922,7 @@ func NewRoleGetOutput() *RoleGetOutput {
 
 // RoleGetOutput struct
 type RoleGetOutput struct {
-	Role *RoleInformation `json:"role,omitempty"`
+	Role *RoleInformation `json:"role,omitempty" yaml:"role,omitempty"`
 }
 
 // GetRole returns the value for the field role
@@ -3956,7 +3973,7 @@ func NewRoleDestroyInput() *RoleDestroyInput {
 
 // RoleDestroyInput struct
 type RoleDestroyInput struct {
-	Name *string `json:"name,omitempty"`
+	Name *string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -4087,7 +4104,7 @@ func NewRoleListOutput() *RoleListOutput {
 
 // RoleListOutput struct
 type RoleListOutput struct {
-	Roles []*RoleInformation `json:"roles,omitempty"`
+	Roles []*RoleInformation `json:"roles,omitempty" yaml:"roles,omitempty"`
 }
 
 // GetRoles returns the value for the field roles
@@ -4139,11 +4156,11 @@ func NewRoleAssumeInput() *RoleAssumeInput {
 // RoleAssumeInput struct
 type RoleAssumeInput struct {
 	// duration in seconds for the assumed role
-	DurationSeconds int32 `json:"durationSeconds,omitempty"`
+	DurationSeconds int32 `json:"durationSeconds,omitempty" yaml:"durationSeconds,omitempty"`
 	// optional inline policy to attach to the assumed role
-	InlinePolicy *InlinePolicy `json:"inlinePolicy,omitempty"`
+	InlinePolicy *InlinePolicy `json:"inlinePolicy,omitempty" yaml:"inlinePolicy,omitempty"`
 	// name of the role to assume
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetDurationSeconds returns the value for the field durationSeconds
@@ -4215,7 +4232,7 @@ func NewRoleAssumeOutput() *RoleAssumeOutput {
 // RoleAssumeOutput struct
 type RoleAssumeOutput struct {
 	// credentials for the assumed role
-	Credentials *Credentials `json:"credentials,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
 }
 
 // GetCredentials returns the value for the field credentials
@@ -4266,8 +4283,8 @@ func NewRoleIdentityPolicyAttachInput() *RoleIdentityPolicyAttachInput {
 
 // RoleIdentityPolicyAttachInput struct
 type RoleIdentityPolicyAttachInput struct {
-	PolicyName string `json:"policyName,omitempty"`
-	RoleName   string `json:"roleName,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	RoleName   string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -4368,7 +4385,7 @@ func NewRoleIdentityPolicyListInput() *RoleIdentityPolicyListInput {
 
 // RoleIdentityPolicyListInput struct
 type RoleIdentityPolicyListInput struct {
-	RoleName string `json:"roleName,omitempty"`
+	RoleName string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
 }
 
 // GetRoleName returns the value for the field roleName
@@ -4419,7 +4436,7 @@ func NewRoleIdentityPolicyListOutput() *RoleIdentityPolicyListOutput {
 
 // RoleIdentityPolicyListOutput struct
 type RoleIdentityPolicyListOutput struct {
-	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty"`
+	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty" yaml:"attachments,omitempty"`
 }
 
 // GetAttachments returns the value for the field attachments
@@ -4470,8 +4487,8 @@ func NewRoleIdentityPolicyDetachInput() *RoleIdentityPolicyDetachInput {
 
 // RoleIdentityPolicyDetachInput struct
 type RoleIdentityPolicyDetachInput struct {
-	PolicyName string `json:"policyName,omitempty"`
-	RoleName   string `json:"roleName,omitempty"`
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	RoleName   string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -4572,8 +4589,8 @@ func NewIdentityPolicyCreateInput() *IdentityPolicyCreateInput {
 
 // IdentityPolicyCreateInput struct
 type IdentityPolicyCreateInput struct {
-	Name       string                     `json:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
+	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -4634,7 +4651,7 @@ func NewIdentityPolicyCreateOutput() *IdentityPolicyCreateOutput {
 
 // IdentityPolicyCreateOutput struct
 type IdentityPolicyCreateOutput struct {
-	Policy *IdentityPolicy `json:"policy,omitempty"`
+	Policy *IdentityPolicy `json:"policy,omitempty" yaml:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -4725,7 +4742,7 @@ func NewIdentityPolicyListOutput() *IdentityPolicyListOutput {
 
 // IdentityPolicyListOutput struct
 type IdentityPolicyListOutput struct {
-	Policies []*IdentityPolicy `json:"policies,omitempty"`
+	Policies []*IdentityPolicy `json:"policies,omitempty" yaml:"policies,omitempty"`
 }
 
 // GetPolicies returns the value for the field policies
@@ -4776,7 +4793,7 @@ func NewIdentityPolicyRetrieveInput() *IdentityPolicyRetrieveInput {
 
 // IdentityPolicyRetrieveInput struct
 type IdentityPolicyRetrieveInput struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -4827,7 +4844,7 @@ func NewIdentityPolicyRetrieveOutput() *IdentityPolicyRetrieveOutput {
 
 // IdentityPolicyRetrieveOutput struct
 type IdentityPolicyRetrieveOutput struct {
-	Policy *IdentityPolicy `json:"policy,omitempty"`
+	Policy *IdentityPolicy `json:"policy,omitempty" yaml:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -4878,7 +4895,7 @@ func NewIdentityPolicyDestroyInput() *IdentityPolicyDestroyInput {
 
 // IdentityPolicyDestroyInput struct
 type IdentityPolicyDestroyInput struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -4969,8 +4986,8 @@ func NewIdentityPolicyUpdateInput() *IdentityPolicyUpdateInput {
 
 // IdentityPolicyUpdateInput struct
 type IdentityPolicyUpdateInput struct {
-	Name       string                     `json:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty"`
+	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -5031,7 +5048,7 @@ func NewIdentityPolicyUpdateOutput() *IdentityPolicyUpdateOutput {
 
 // IdentityPolicyUpdateOutput struct
 type IdentityPolicyUpdateOutput struct {
-	Policy *IdentityPolicy `json:"policy,omitempty"`
+	Policy *IdentityPolicy `json:"policy,omitempty" yaml:"policy,omitempty"`
 }
 
 // GetPolicy returns the value for the field policy
@@ -5082,8 +5099,8 @@ func NewServiceBearerToken() *ServiceBearerToken {
 
 // ServiceBearerToken - Token you can use to perform operations on your behalf
 type ServiceBearerToken struct {
-	ExpiresAt time.Time `json:"expiresAt,omitempty"`
-	Token     string    `json:"token,omitempty"`
+	ExpiresAt time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	Token     string    `json:"token,omitempty" yaml:"token,omitempty"`
 }
 
 // GetExpiresAt returns the value for the field expiresAt
@@ -5144,7 +5161,7 @@ func NewInvalidServiceBearerTokenDurationProblem() *InvalidServiceBearerTokenDur
 
 // InvalidServiceBearerTokenDurationProblem struct
 type InvalidServiceBearerTokenDurationProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -5211,7 +5228,7 @@ func NewInvalidServiceNameProblem() *InvalidServiceNameProblem {
 
 // InvalidServiceNameProblem struct
 type InvalidServiceNameProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -5281,8 +5298,8 @@ type ServiceBearerTokenGetInput struct {
 	// duration in seconds for the token to be active
 	// the minimum value is 900 seconds (15 minutes)
 	// the maximum value is 43200 seconds (12 hours)
-	DurationSeconds int32  `json:"durationSeconds,omitempty"`
-	ServiceName     string `json:"serviceName,omitempty"`
+	DurationSeconds int32  `json:"durationSeconds,omitempty" yaml:"durationSeconds,omitempty"`
+	ServiceName     string `json:"serviceName,omitempty" yaml:"serviceName,omitempty"`
 }
 
 // GetDurationSeconds returns the value for the field durationSeconds
@@ -5343,7 +5360,7 @@ func NewServiceBearerTokenGetOutput() *ServiceBearerTokenGetOutput {
 
 // ServiceBearerTokenGetOutput struct
 type ServiceBearerTokenGetOutput struct {
-	Token *ServiceBearerToken `json:"token,omitempty"`
+	Token *ServiceBearerToken `json:"token,omitempty" yaml:"token,omitempty"`
 }
 
 // GetToken returns the value for the field token
@@ -5394,7 +5411,7 @@ func NewInternalAccessKeyUser() *InternalAccessKeyUser {
 
 // InternalAccessKeyUser struct
 type InternalAccessKeyUser struct {
-	Username string `json:"username,omitempty"`
+	Username string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
@@ -5445,7 +5462,7 @@ func NewInternalAccessKeyRole() *InternalAccessKeyRole {
 
 // InternalAccessKeyRole struct
 type InternalAccessKeyRole struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -5496,7 +5513,7 @@ func NewInternalAccessKeyAccount() *InternalAccessKeyAccount {
 
 // InternalAccessKeyAccount struct
 type InternalAccessKeyAccount struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
@@ -5547,11 +5564,11 @@ func NewInternalAccessKey() *InternalAccessKey {
 
 // InternalAccessKey struct
 type InternalAccessKey struct {
-	AccessKeyID     string                    `json:"accessKeyID,omitempty"`
-	Account         *InternalAccessKeyAccount `json:"account,omitempty"`
-	Role            *InternalAccessKeyRole    `json:"role,omitempty"`
-	SecretAccessKey string                    `json:"secretAccessKey,omitempty"`
-	User            *InternalAccessKeyUser    `json:"user,omitempty"`
+	AccessKeyID     string                    `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
+	Account         *InternalAccessKeyAccount `json:"account,omitempty" yaml:"account,omitempty"`
+	Role            *InternalAccessKeyRole    `json:"role,omitempty" yaml:"role,omitempty"`
+	SecretAccessKey string                    `json:"secretAccessKey,omitempty" yaml:"secretAccessKey,omitempty"`
+	User            *InternalAccessKeyUser    `json:"user,omitempty" yaml:"user,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -5642,8 +5659,8 @@ func NewInternalQueryAssertionEntryValue() *InternalQueryAssertionEntryValue {
 
 // InternalQueryAssertionEntryValue struct
 type InternalQueryAssertionEntryValue struct {
-	B *bool   `json:"b,omitempty"`
-	S *string `json:"s,omitempty"`
+	B *bool   `json:"b,omitempty" yaml:"b,omitempty"`
+	S *string `json:"s,omitempty" yaml:"s,omitempty"`
 }
 
 // GetB returns the value for the field b
@@ -5704,8 +5721,8 @@ func NewInternalQueryAssertionEntry() *InternalQueryAssertionEntry {
 
 // InternalQueryAssertionEntry struct
 type InternalQueryAssertionEntry struct {
-	Snippet *string                           `json:"snippet,omitempty"`
-	Value   *InternalQueryAssertionEntryValue `json:"value,omitempty"`
+	Snippet *string                           `json:"snippet,omitempty" yaml:"snippet,omitempty"`
+	Value   *InternalQueryAssertionEntryValue `json:"value,omitempty" yaml:"value,omitempty"`
 }
 
 // GetSnippet returns the value for the field snippet
@@ -5766,7 +5783,7 @@ func NewInternalServicesAssertActionCallerForbiddenProblem() *InternalServicesAs
 
 // InternalServicesAssertActionCallerForbiddenProblem struct
 type InternalServicesAssertActionCallerForbiddenProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -5834,11 +5851,11 @@ func NewInternalAssertActionQualifier() *InternalAssertActionQualifier {
 // InternalAssertActionQualifier struct
 type InternalAssertActionQualifier struct {
 	// optional child qualifier, example: if the resource to assert is "s3:Bucket(myimages).Object(myimage.jpg)", the child would be {"resourceName": "Object", "value": "myimage.jpg}
-	Child *InternalAssertActionQualifier `json:"child,omitempty"`
+	Child *InternalAssertActionQualifier `json:"child,omitempty" yaml:"child,omitempty"`
 	// name of the function to use, usually a resource, example: if the resource to assert is "s3:Bucket(myimages)", the name would be "Bucket"
-	Function string `json:"function,omitempty"`
+	Function string `json:"function,omitempty" yaml:"function,omitempty"`
 	// value to match the qualifier, example: if the resource to assert is "s3:Bucket(myimages)", the value would be "myimages"
-	Value string `json:"value,omitempty"`
+	Value string `json:"value,omitempty" yaml:"value,omitempty"`
 }
 
 // GetChild returns the value for the field child
@@ -5909,7 +5926,7 @@ func NewInternalServicesValidateAccessKeyInput() *InternalServicesValidateAccess
 
 // InternalServicesValidateAccessKeyInput struct
 type InternalServicesValidateAccessKeyInput struct {
-	RequestAccessKeyID string `json:"requestAccessKeyID,omitempty"`
+	RequestAccessKeyID string `json:"requestAccessKeyID,omitempty" yaml:"requestAccessKeyID,omitempty"`
 }
 
 // GetRequestAccessKeyID returns the value for the field requestAccessKeyID
@@ -5960,7 +5977,7 @@ func NewInternalServicesValidateAccessKeyOutput() *InternalServicesValidateAcces
 
 // InternalServicesValidateAccessKeyOutput struct
 type InternalServicesValidateAccessKeyOutput struct {
-	Key *InternalAccessKey `json:"key,omitempty"`
+	Key *InternalAccessKey `json:"key,omitempty" yaml:"key,omitempty"`
 }
 
 // GetKey returns the value for the field key
@@ -6011,7 +6028,7 @@ func NewInternalServicesValidateAccessKeyInvalidAccessKeyProblem() *InternalServ
 
 // InternalServicesValidateAccessKeyInvalidAccessKeyProblem struct
 type InternalServicesValidateAccessKeyInvalidAccessKeyProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -6078,7 +6095,7 @@ func NewInternalServicesValidateServiceBearerTokenInput() *InternalServicesValid
 
 // InternalServicesValidateServiceBearerTokenInput struct
 type InternalServicesValidateServiceBearerTokenInput struct {
-	RequestServiceBearerToken string `json:"requestServiceBearerToken,omitempty"`
+	RequestServiceBearerToken string `json:"requestServiceBearerToken,omitempty" yaml:"requestServiceBearerToken,omitempty"`
 }
 
 // GetRequestServiceBearerToken returns the value for the field requestServiceBearerToken
@@ -6129,7 +6146,7 @@ func NewInternalServicesValidateServiceBearerTokenOutput() *InternalServicesVali
 
 // InternalServicesValidateServiceBearerTokenOutput struct
 type InternalServicesValidateServiceBearerTokenOutput struct {
-	Key *InternalAccessKey `json:"key,omitempty"`
+	Key *InternalAccessKey `json:"key,omitempty" yaml:"key,omitempty"`
 }
 
 // GetKey returns the value for the field key
@@ -6180,7 +6197,7 @@ func NewInternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem() *Int
 
 // InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem struct
 type InternalServicesValidateServiceBearerTokenInvalidAccessKeyProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -6247,12 +6264,12 @@ func NewInternalServicesAssertActionInput() *InternalServicesAssertActionInput {
 
 // InternalServicesAssertActionInput struct
 type InternalServicesAssertActionInput struct {
-	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
-	CallerAction      string `json:"callerAction,omitempty"`
+	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty" yaml:"callerAccessKeyID,omitempty"`
+	CallerAction      string `json:"callerAction,omitempty" yaml:"callerAction,omitempty"`
 	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
-	CallerNamespace string                         `json:"callerNamespace,omitempty"`
-	CallerRegion    string                         `json:"callerRegion,omitempty"`
-	CallerResource  *InternalAssertActionQualifier `json:"callerResource,omitempty"`
+	CallerNamespace string                         `json:"callerNamespace,omitempty" yaml:"callerNamespace,omitempty"`
+	CallerRegion    string                         `json:"callerRegion,omitempty" yaml:"callerRegion,omitempty"`
+	CallerResource  *InternalAssertActionQualifier `json:"callerResource,omitempty" yaml:"callerResource,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -6383,13 +6400,13 @@ func NewInternalServicesAssertQueryInput() *InternalServicesAssertQueryInput {
 
 // InternalServicesAssertQueryInput struct
 type InternalServicesAssertQueryInput struct {
-	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty"`
-	CallerAction      string `json:"callerAction,omitempty"`
+	CallerAccessKeyID string `json:"callerAccessKeyID,omitempty" yaml:"callerAccessKeyID,omitempty"`
+	CallerAction      string `json:"callerAction,omitempty" yaml:"callerAction,omitempty"`
 	// namespace of the resource to assert, e.g: "iam", "s3", "specular", etc
-	CallerNamespace string `json:"callerNamespace,omitempty"`
-	CallerRegion    string `json:"callerRegion,omitempty"`
+	CallerNamespace string `json:"callerNamespace,omitempty" yaml:"callerNamespace,omitempty"`
+	CallerRegion    string `json:"callerRegion,omitempty" yaml:"callerRegion,omitempty"`
 	// resource replacements where each resource value is a replacement for a SQL expression in the query
-	CallerResourceReplacements *InternalAssertActionQualifier `json:"callerResourceReplacements,omitempty"`
+	CallerResourceReplacements *InternalAssertActionQualifier `json:"callerResourceReplacements,omitempty" yaml:"callerResourceReplacements,omitempty"`
 }
 
 // GetCallerAccessKeyID returns the value for the field callerAccessKeyID
@@ -6480,7 +6497,7 @@ func NewInternalServicesAssertQueryOutput() *InternalServicesAssertQueryOutput {
 
 // InternalServicesAssertQueryOutput struct
 type InternalServicesAssertQueryOutput struct {
-	Entries []*InternalQueryAssertionEntry `json:"entries,omitempty"`
+	Entries []*InternalQueryAssertionEntry `json:"entries,omitempty" yaml:"entries,omitempty"`
 }
 
 // GetEntries returns the value for the field entries
@@ -6531,7 +6548,7 @@ func NewInternalServicesAssertQueryReplacementProblem() *InternalServicesAssertQ
 
 // InternalServicesAssertQueryReplacementProblem struct
 type InternalServicesAssertQueryReplacementProblem struct {
-	Message string `json:"message,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
@@ -6587,6 +6604,34 @@ func (e *InternalServicesAssertQueryReplacementProblem) UnmarshalJSON(data []byt
 func (e InternalServicesAssertQueryReplacementProblem) MarshalJSON() ([]byte, error) {
 	alias := internalServicesAssertQueryReplacementProblemAlias(e)
 	return json.Marshal(alias)
+}
+
+// PolicyStatementEffect entity
+type PolicyStatementEffect string
+
+// PolicyStatementEffectDeny = "DENY"
+const PolicyStatementEffectDeny PolicyStatementEffect = "DENY"
+
+// PolicyStatementEffectAllow = "ALLOW"
+const PolicyStatementEffectAllow PolicyStatementEffect = "ALLOW"
+
+// String returns the string representation of the enum
+func (en PolicyStatementEffect) String() string {
+	return string(en)
+}
+
+// Optional returns the optional value
+func (en PolicyStatementEffect) Optional() *PolicyStatementEffect {
+	c := en
+	return &c
+}
+
+// PolicyStatementEffectAllConstants returns all constants in enum PolicyStatementEffect
+func PolicyStatementEffectAllConstants() []PolicyStatementEffect {
+	return []PolicyStatementEffect{
+		PolicyStatementEffectDeny,
+		PolicyStatementEffectAllow,
+	}
 }
 
 var packagePath = clientruntime.ModulePathFromTrustedValues(
