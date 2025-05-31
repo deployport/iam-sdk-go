@@ -2464,6 +2464,73 @@ func (e RoleNotFoundProblem) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewIdentityInUseProblem creates a new IdentityInUseProblem
+func NewIdentityInUseProblem() *IdentityInUseProblem {
+	s := &IdentityInUseProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// IdentityInUseProblem - Occurs when an identity is in use and cannot be deleted because it is attached to a resource
+type IdentityInUseProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *IdentityInUseProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [IdentityInUseProblem]
+func (e *IdentityInUseProblem) Is(err error) bool {
+	_, ok := err.(*IdentityInUseProblem)
+	return ok
+}
+
+// IsIdentityInUseProblem indicates whether the given error chain contains an error of type [IdentityInUseProblem]
+func IsIdentityInUseProblem(err error) bool {
+	return errors.Is(err, &IdentityInUseProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *IdentityInUseProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *IdentityInUseProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *IdentityInUseProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityInUseProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityInUseProblem) InitializeDefaults() {
+}
+
+// identityInUseProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityInUseProblemAlias IdentityInUseProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityInUseProblem) UnmarshalJSON(data []byte) error {
+	var alias identityInUseProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityInUseProblem)(&alias)).InitializeDefaults()
+	*e = IdentityInUseProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityInUseProblem) MarshalJSON() ([]byte, error) {
+	alias := identityInUseProblemAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewUserCreateInput creates a new UserCreateInput
 func NewUserCreateInput() *UserCreateInput {
 	s := &UserCreateInput{}
@@ -2755,16 +2822,16 @@ func NewUserDestroyInput() *UserDestroyInput {
 
 // UserDestroyInput struct
 type UserDestroyInput struct {
-	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
+	Username string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // GetUsername returns the value for the field username
-func (e *UserDestroyInput) GetUsername() *string {
+func (e *UserDestroyInput) GetUsername() string {
 	return e.Username
 }
 
 // SetUsername sets the value for the field username
-func (e *UserDestroyInput) SetUsername(username *string) {
+func (e *UserDestroyInput) SetUsername(username string) {
 	e.Username = username
 }
 
@@ -3973,16 +4040,16 @@ func NewRoleDestroyInput() *RoleDestroyInput {
 
 // RoleDestroyInput struct
 type RoleDestroyInput struct {
-	Name *string `json:"name,omitempty" yaml:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
-func (e *RoleDestroyInput) GetName() *string {
+func (e *RoleDestroyInput) GetName() string {
 	return e.Name
 }
 
 // SetName sets the value for the field name
-func (e *RoleDestroyInput) SetName(name *string) {
+func (e *RoleDestroyInput) SetName(name string) {
 	e.Name = name
 }
 
@@ -7004,6 +7071,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathIdentityInUseProblem, err = pk.NewType(
+		"IdentityInUseProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewIdentityInUseProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathUserCreateInput, err = pk.NewType(
 		"UserCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -7827,6 +7903,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().UserDestroyInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().IdentityInUseProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -7979,6 +8056,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().RoleDestroyInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().IdentityInUseProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -9184,6 +9262,7 @@ type SpecularMetaInfo struct {
 	structPathIdentityPolicyAttachment                                          *clientruntime.StructDefinition
 	structPathUserNotFoundProblem                                               *clientruntime.StructDefinition
 	structPathRoleNotFoundProblem                                               *clientruntime.StructDefinition
+	structPathIdentityInUseProblem                                              *clientruntime.StructDefinition
 	structPathUserCreateInput                                                   *clientruntime.StructDefinition
 	structPathUserCreateOutput                                                  *clientruntime.StructDefinition
 	structPathUserGetInput                                                      *clientruntime.StructDefinition
@@ -9464,6 +9543,11 @@ func (m *SpecularMetaInfo) UserNotFoundProblemStruct() *clientruntime.StructDefi
 // RoleNotFoundProblemStruct allows easy access to structure
 func (m *SpecularMetaInfo) RoleNotFoundProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathRoleNotFoundProblem
+}
+
+// IdentityInUseProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityInUseProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathIdentityInUseProblem
 }
 
 // UserCreateInputStruct allows easy access to structure
