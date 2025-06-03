@@ -2215,9 +2215,10 @@ func NewIdentityPolicy() *IdentityPolicy {
 
 // IdentityPolicy struct
 type IdentityPolicy struct {
-	Builtin    bool                       `json:"builtin,omitempty" yaml:"builtin,omitempty"`
-	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+	Builtin          bool                       `json:"builtin,omitempty" yaml:"builtin,omitempty"`
+	DefinitionHuJSON []byte                     `json:"definitionHuJSON,omitempty" yaml:"definitionHuJSON,omitempty"`
+	Name             string                     `json:"name,omitempty" yaml:"name,omitempty"`
+	Statements       []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetBuiltin returns the value for the field builtin
@@ -2228,6 +2229,16 @@ func (e *IdentityPolicy) GetBuiltin() bool {
 // SetBuiltin sets the value for the field builtin
 func (e *IdentityPolicy) SetBuiltin(builtin bool) {
 	e.Builtin = builtin
+}
+
+// GetDefinitionHuJSON returns the value for the field definitionHuJSON
+func (e *IdentityPolicy) GetDefinitionHuJSON() []byte {
+	return e.DefinitionHuJSON
+}
+
+// SetDefinitionHuJSON sets the value for the field definitionHuJSON
+func (e *IdentityPolicy) SetDefinitionHuJSON(definitionHuJSON []byte) {
+	e.DefinitionHuJSON = definitionHuJSON
 }
 
 // GetName returns the value for the field name
@@ -3938,16 +3949,16 @@ func NewRoleGetInput() *RoleGetInput {
 
 // RoleGetInput struct
 type RoleGetInput struct {
-	Name *string `json:"name,omitempty" yaml:"name,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
 
 // GetName returns the value for the field name
-func (e *RoleGetInput) GetName() *string {
+func (e *RoleGetInput) GetName() string {
 	return e.Name
 }
 
 // SetName sets the value for the field name
-func (e *RoleGetInput) SetName(name *string) {
+func (e *RoleGetInput) SetName(name string) {
 	e.Name = name
 }
 
@@ -4656,28 +4667,17 @@ func NewIdentityPolicyCreateInput() *IdentityPolicyCreateInput {
 
 // IdentityPolicyCreateInput struct
 type IdentityPolicyCreateInput struct {
-	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+	DefinitionHuJSON []byte `json:"definitionHuJSON,omitempty" yaml:"definitionHuJSON,omitempty"`
 }
 
-// GetName returns the value for the field name
-func (e *IdentityPolicyCreateInput) GetName() string {
-	return e.Name
+// GetDefinitionHuJSON returns the value for the field definitionHuJSON
+func (e *IdentityPolicyCreateInput) GetDefinitionHuJSON() []byte {
+	return e.DefinitionHuJSON
 }
 
-// SetName sets the value for the field name
-func (e *IdentityPolicyCreateInput) SetName(name string) {
-	e.Name = name
-}
-
-// GetStatements returns the value for the field statements
-func (e *IdentityPolicyCreateInput) GetStatements() []*IdentityPolicyStatement {
-	return e.Statements
-}
-
-// SetStatements sets the value for the field statements
-func (e *IdentityPolicyCreateInput) SetStatements(statements []*IdentityPolicyStatement) {
-	e.Statements = statements
+// SetDefinitionHuJSON sets the value for the field definitionHuJSON
+func (e *IdentityPolicyCreateInput) SetDefinitionHuJSON(definitionHuJSON []byte) {
+	e.DefinitionHuJSON = definitionHuJSON
 }
 
 // StructPath returns StructPath
@@ -5053,28 +5053,17 @@ func NewIdentityPolicyUpdateInput() *IdentityPolicyUpdateInput {
 
 // IdentityPolicyUpdateInput struct
 type IdentityPolicyUpdateInput struct {
-	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
-	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+	DefinitionHuJSON []byte `json:"definitionHuJSON,omitempty" yaml:"definitionHuJSON,omitempty"`
 }
 
-// GetName returns the value for the field name
-func (e *IdentityPolicyUpdateInput) GetName() string {
-	return e.Name
+// GetDefinitionHuJSON returns the value for the field definitionHuJSON
+func (e *IdentityPolicyUpdateInput) GetDefinitionHuJSON() []byte {
+	return e.DefinitionHuJSON
 }
 
-// SetName sets the value for the field name
-func (e *IdentityPolicyUpdateInput) SetName(name string) {
-	e.Name = name
-}
-
-// GetStatements returns the value for the field statements
-func (e *IdentityPolicyUpdateInput) GetStatements() []*IdentityPolicyStatement {
-	return e.Statements
-}
-
-// SetStatements sets the value for the field statements
-func (e *IdentityPolicyUpdateInput) SetStatements(statements []*IdentityPolicyStatement) {
-	e.Statements = statements
+// SetDefinitionHuJSON sets the value for the field definitionHuJSON
+func (e *IdentityPolicyUpdateInput) SetDefinitionHuJSON(definitionHuJSON []byte) {
+	e.DefinitionHuJSON = definitionHuJSON
 }
 
 // StructPath returns StructPath
@@ -6676,11 +6665,11 @@ func (e InternalServicesAssertQueryReplacementProblem) MarshalJSON() ([]byte, er
 // PolicyStatementEffect entity
 type PolicyStatementEffect string
 
-// PolicyStatementEffectDeny = "DENY"
-const PolicyStatementEffectDeny PolicyStatementEffect = "DENY"
+// PolicyStatementEffectDeny = "deny"
+const PolicyStatementEffectDeny PolicyStatementEffect = "deny"
 
-// PolicyStatementEffectAllow = "ALLOW"
-const PolicyStatementEffectAllow PolicyStatementEffect = "ALLOW"
+// PolicyStatementEffectAllow = "allow"
+const PolicyStatementEffectAllow PolicyStatementEffect = "allow"
 
 // String returns the string representation of the enum
 func (en PolicyStatementEffect) String() string {
@@ -8533,6 +8522,8 @@ func (res *UserResource) Create(ctx context.Context, input *UserCreateInput) (*U
 }
 
 // Get - Returns information about the current user or the user with the given username
+// if the username is not provided, the current user is returned
+// Requires permission action iam:GetRole over resource iam:Role(<name>)
 func (res *UserResource) Get(ctx context.Context, input *UserGetInput) (*UserGetOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.get,
