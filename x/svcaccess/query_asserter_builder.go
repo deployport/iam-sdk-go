@@ -19,7 +19,12 @@ func (ab *QueryAssertionBuilder) Action(action string) *QueryAssertionBuilder {
 
 // Resource adds the resource to the action asserter as root or child of a previous resource
 func (ab *QueryAssertionBuilder) Resource(function string, column AssertionColumn) *QueryAssertionBuilder {
-	ab.addResource(function, column.String())
+	return ab.ResourceExpression(function, column.String())
+}
+
+// ResourceExpression adds the resource to the action asserter as root or child of a previous resource
+func (ab *QueryAssertionBuilder) ResourceExpression(function string, expr string) *QueryAssertionBuilder {
+	ab.addResource(function, expr)
 	return ab
 }
 
