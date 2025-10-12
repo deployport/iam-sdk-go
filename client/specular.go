@@ -2300,6 +2300,7 @@ func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 // IdentityPolicyAttachment struct
 type IdentityPolicyAttachment struct {
 	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	TargetDRN  string `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -2310,6 +2311,16 @@ func (e *IdentityPolicyAttachment) GetPolicyName() string {
 // SetPolicyName sets the value for the field policyName
 func (e *IdentityPolicyAttachment) SetPolicyName(policyName string) {
 	e.PolicyName = policyName
+}
+
+// GetTargetDRN returns the value for the field targetDRN
+func (e *IdentityPolicyAttachment) GetTargetDRN() string {
+	return e.TargetDRN
+}
+
+// SetTargetDRN sets the value for the field targetDRN
+func (e *IdentityPolicyAttachment) SetTargetDRN(targetDRN string) {
+	e.TargetDRN = targetDRN
 }
 
 // StructPath returns StructPath
@@ -5146,6 +5157,108 @@ func (e IdentityPolicyUpdateOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewIdentityPolicyAttachmentListInput creates a new IdentityPolicyAttachmentListInput
+func NewIdentityPolicyAttachmentListInput() *IdentityPolicyAttachmentListInput {
+	s := &IdentityPolicyAttachmentListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// IdentityPolicyAttachmentListInput struct
+type IdentityPolicyAttachmentListInput struct {
+	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+}
+
+// GetPolicyName returns the value for the field policyName
+func (e *IdentityPolicyAttachmentListInput) GetPolicyName() string {
+	return e.PolicyName
+}
+
+// SetPolicyName sets the value for the field policyName
+func (e *IdentityPolicyAttachmentListInput) SetPolicyName(policyName string) {
+	e.PolicyName = policyName
+}
+
+// StructPath returns StructPath
+func (e *IdentityPolicyAttachmentListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyAttachmentListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyAttachmentListInput) InitializeDefaults() {
+}
+
+// identityPolicyAttachmentListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyAttachmentListInputAlias IdentityPolicyAttachmentListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyAttachmentListInput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyAttachmentListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyAttachmentListInput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyAttachmentListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyAttachmentListInput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyAttachmentListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewIdentityPolicyAttachmentListOutput creates a new IdentityPolicyAttachmentListOutput
+func NewIdentityPolicyAttachmentListOutput() *IdentityPolicyAttachmentListOutput {
+	s := &IdentityPolicyAttachmentListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// IdentityPolicyAttachmentListOutput struct
+type IdentityPolicyAttachmentListOutput struct {
+	Policies []*IdentityPolicyAttachment `json:"policies,omitempty" yaml:"policies,omitempty"`
+}
+
+// GetPolicies returns the value for the field policies
+func (e *IdentityPolicyAttachmentListOutput) GetPolicies() []*IdentityPolicyAttachment {
+	return e.Policies
+}
+
+// SetPolicies sets the value for the field policies
+func (e *IdentityPolicyAttachmentListOutput) SetPolicies(policies []*IdentityPolicyAttachment) {
+	e.Policies = policies
+}
+
+// StructPath returns StructPath
+func (e *IdentityPolicyAttachmentListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyAttachmentListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyAttachmentListOutput) InitializeDefaults() {
+}
+
+// identityPolicyAttachmentListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyAttachmentListOutputAlias IdentityPolicyAttachmentListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyAttachmentListOutput) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyAttachmentListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyAttachmentListOutput)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyAttachmentListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyAttachmentListOutput) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyAttachmentListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewServiceBearerToken creates a new ServiceBearerToken
 func NewServiceBearerToken() *ServiceBearerToken {
 	s := &ServiceBearerToken{}
@@ -7528,6 +7641,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathIdentityPolicyAttachmentListInput, err = pk.NewType(
+		"IdentityPolicyAttachmentListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewIdentityPolicyAttachmentListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathIdentityPolicyAttachmentListOutput, err = pk.NewType(
+		"IdentityPolicyAttachmentListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewIdentityPolicyAttachmentListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathServiceBearerToken, err = pk.NewType(
 		"ServiceBearerToken",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -8188,6 +8319,25 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+	// subresource IdentityPolicyAttachment
+	resIdentityPolicyAttachment, err := resIdentityPolicy.NewSubResource("Attachment")
+	if err != nil {
+		return nil, err
+	}
+	_ = resIdentityPolicyAttachment
+
+	op, err = resIdentityPolicyAttachment.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().IdentityPolicyAttachmentListInputStruct())
+	op.SetOutput(SpecularMeta().IdentityPolicyAttachmentListInputStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
 	resServiceBearerToken, err := pk.NewResource("ServiceBearerToken")
 	if err != nil {
@@ -8279,26 +8429,26 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	return pk, nil
 }
 
-// AccountResource is the AccountResource resource client
-type AccountResource struct {
+// AccountResourceClient is the AccountResourceClient resource client
+type AccountResourceClient struct {
 	transport      clientruntime.Transport
 	res            *clientruntime.Resource
-	SSO            *AccountSSOResource
+	SSO            *AccountSSOResourceClient
 	create         *clientruntime.Operation
 	assumeIdentity *clientruntime.Operation
 }
 
-func newAccountResource(
+func newAccountResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*AccountResource, error) {
+) (*AccountResourceClient, error) {
 	res := finder.FindResource("Account")
-	r := &AccountResource{
+	r := &AccountResourceClient{
 		transport: transport,
 		res:       res,
 	}
 	var err error
-	r.SSO, err = newAccountSSOResource(transport, res)
+	r.SSO, err = newAccountSSOResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
@@ -8309,7 +8459,7 @@ func newAccountResource(
 
 // Create - Creates a new Account with the given name
 // Create account only works for users of the "global" account
-func (res *AccountResource) Create(ctx context.Context, input *AccountCreateInput) (*AccountCreateOutput, error) {
+func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCreateInput) (*AccountCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8322,7 +8472,7 @@ func (res *AccountResource) Create(ctx context.Context, input *AccountCreateInpu
 }
 
 // AssumeIdentity - Assume identity in the given account
-func (res *AccountResource) AssumeIdentity(ctx context.Context, input *AccountAssumeIdentityInput) (*AccountAssumeIdentityOutput, error) {
+func (res *AccountResourceClient) AssumeIdentity(ctx context.Context, input *AccountAssumeIdentityInput) (*AccountAssumeIdentityOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assumeIdentity,
 		Input:     input,
@@ -8334,27 +8484,27 @@ func (res *AccountResource) AssumeIdentity(ctx context.Context, input *AccountAs
 	return output, nil
 }
 
-// AccountSSOResource is the AccountSSOResource resource client
-type AccountSSOResource struct {
+// AccountSSOResourceClient is the AccountSSOResourceClient resource client
+type AccountSSOResourceClient struct {
 	transport              clientruntime.Transport
 	res                    *clientruntime.Resource
-	AutoJoinPolicy         *AccountSSOAutoJoinPolicyResource
+	AutoJoinPolicy         *AccountSSOAutoJoinPolicyResourceClient
 	beginAuthentication    *clientruntime.Operation
 	completeAuthentication *clientruntime.Operation
 	getProviders           *clientruntime.Operation
 }
 
-func newAccountSSOResource(
+func newAccountSSOResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*AccountSSOResource, error) {
+) (*AccountSSOResourceClient, error) {
 	res := finder.FindResource("SSO")
-	r := &AccountSSOResource{
+	r := &AccountSSOResourceClient{
 		transport: transport,
 		res:       res,
 	}
 	var err error
-	r.AutoJoinPolicy, err = newAccountSSOAutoJoinPolicyResource(transport, res)
+	r.AutoJoinPolicy, err = newAccountSSOAutoJoinPolicyResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
@@ -8365,7 +8515,7 @@ func newAccountSSOResource(
 }
 
 // BeginAuthentication - Returns the public link to the login page for the given SSO provider
-func (res *AccountSSOResource) BeginAuthentication(ctx context.Context, input *AccountSSOBeginAuthenticationInput) (*AccountSSOBeginAuthenticationOutput, error) {
+func (res *AccountSSOResourceClient) BeginAuthentication(ctx context.Context, input *AccountSSOBeginAuthenticationInput) (*AccountSSOBeginAuthenticationOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.beginAuthentication,
 		Input:     input,
@@ -8378,7 +8528,7 @@ func (res *AccountSSOResource) BeginAuthentication(ctx context.Context, input *A
 }
 
 // CompleteAuthentication - Authorizes the user with the given code and returns a token
-func (res *AccountSSOResource) CompleteAuthentication(ctx context.Context, input *AccountSSOCompleteAuthenticationInput) (*AccountSSOCompleteAuthenticationOutput, error) {
+func (res *AccountSSOResourceClient) CompleteAuthentication(ctx context.Context, input *AccountSSOCompleteAuthenticationInput) (*AccountSSOCompleteAuthenticationOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.completeAuthentication,
 		Input:     input,
@@ -8392,7 +8542,7 @@ func (res *AccountSSOResource) CompleteAuthentication(ctx context.Context, input
 
 // GetProviders - Returns the providers available for the given account
 // This is a public operation that does not require any authentication
-func (res *AccountSSOResource) GetProviders(ctx context.Context, input *AccountSSOGetProvidersInput) (*AccountSSOGetProvidersOutput, error) {
+func (res *AccountSSOResourceClient) GetProviders(ctx context.Context, input *AccountSSOGetProvidersInput) (*AccountSSOGetProvidersOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.getProviders,
 		Input:     input,
@@ -8404,8 +8554,8 @@ func (res *AccountSSOResource) GetProviders(ctx context.Context, input *AccountS
 	return output, nil
 }
 
-// AccountSSOAutoJoinPolicyResource is the AccountSSOAutoJoinPolicyResource resource client
-type AccountSSOAutoJoinPolicyResource struct {
+// AccountSSOAutoJoinPolicyResourceClient is the AccountSSOAutoJoinPolicyResourceClient resource client
+type AccountSSOAutoJoinPolicyResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	create    *clientruntime.Operation
@@ -8413,12 +8563,12 @@ type AccountSSOAutoJoinPolicyResource struct {
 	enable    *clientruntime.Operation
 }
 
-func newAccountSSOAutoJoinPolicyResource(
+func newAccountSSOAutoJoinPolicyResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*AccountSSOAutoJoinPolicyResource, error) {
+) (*AccountSSOAutoJoinPolicyResourceClient, error) {
 	res := finder.FindResource("AutoJoinPolicy")
-	r := &AccountSSOAutoJoinPolicyResource{
+	r := &AccountSSOAutoJoinPolicyResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -8429,7 +8579,7 @@ func newAccountSSOAutoJoinPolicyResource(
 }
 
 // Create - Creates an auto-join policy in the account
-func (res *AccountSSOAutoJoinPolicyResource) Create(ctx context.Context, input *AccountSSOAutoJoinPolicyCreateInput) (*AccountSSOAutoJoinPolicyCreateOutput, error) {
+func (res *AccountSSOAutoJoinPolicyResourceClient) Create(ctx context.Context, input *AccountSSOAutoJoinPolicyCreateInput) (*AccountSSOAutoJoinPolicyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8443,7 +8593,7 @@ func (res *AccountSSOAutoJoinPolicyResource) Create(ctx context.Context, input *
 
 // List - Lists policies in the account that allow users in other accounts to join automatically
 // if they match certain criteria
-func (res *AccountSSOAutoJoinPolicyResource) List(ctx context.Context, input *AccountSSOAutoJoinPolicyListInput) (*AccountSSOAutoJoinPolicyListOutput, error) {
+func (res *AccountSSOAutoJoinPolicyResourceClient) List(ctx context.Context, input *AccountSSOAutoJoinPolicyListInput) (*AccountSSOAutoJoinPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8456,7 +8606,7 @@ func (res *AccountSSOAutoJoinPolicyResource) List(ctx context.Context, input *Ac
 }
 
 // Enable - Enables the auto-join policy
-func (res *AccountSSOAutoJoinPolicyResource) Enable(ctx context.Context, input *AccountSSOAutoJoinPolicyEnableInput) (*AccountSSOAutoJoinPolicyEnableOutput, error) {
+func (res *AccountSSOAutoJoinPolicyResourceClient) Enable(ctx context.Context, input *AccountSSOAutoJoinPolicyEnableInput) (*AccountSSOAutoJoinPolicyEnableOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.enable,
 		Input:     input,
@@ -8468,12 +8618,12 @@ func (res *AccountSSOAutoJoinPolicyResource) Enable(ctx context.Context, input *
 	return output, nil
 }
 
-// UserResource is the UserResource resource client
-type UserResource struct {
+// UserResourceClient is the UserResourceClient resource client
+type UserResourceClient struct {
 	transport      clientruntime.Transport
 	res            *clientruntime.Resource
-	AccessKey      *UserAccessKeyResource
-	IdentityPolicy *UserIdentityPolicyResource
+	AccessKey      *UserAccessKeyResourceClient
+	IdentityPolicy *UserIdentityPolicyResourceClient
 	create         *clientruntime.Operation
 	get            *clientruntime.Operation
 	destroy        *clientruntime.Operation
@@ -8481,21 +8631,21 @@ type UserResource struct {
 	memberAccounts *clientruntime.Operation
 }
 
-func newUserResource(
+func newUserResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*UserResource, error) {
+) (*UserResourceClient, error) {
 	res := finder.FindResource("User")
-	r := &UserResource{
+	r := &UserResourceClient{
 		transport: transport,
 		res:       res,
 	}
 	var err error
-	r.AccessKey, err = newUserAccessKeyResource(transport, res)
+	r.AccessKey, err = newUserAccessKeyResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
-	r.IdentityPolicy, err = newUserIdentityPolicyResource(transport, res)
+	r.IdentityPolicy, err = newUserIdentityPolicyResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
@@ -8509,7 +8659,7 @@ func newUserResource(
 
 // Create - Creates a new user with the given username in the current account
 // Requires permission action iam:CreateUser over resource iam:User(<username>)
-func (res *UserResource) Create(ctx context.Context, input *UserCreateInput) (*UserCreateOutput, error) {
+func (res *UserResourceClient) Create(ctx context.Context, input *UserCreateInput) (*UserCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8524,7 +8674,7 @@ func (res *UserResource) Create(ctx context.Context, input *UserCreateInput) (*U
 // Get - Returns information about the current user or the user with the given username
 // if the username is not provided, the current user is returned
 // Requires permission action iam:GetRole over resource iam:Role(<name>)
-func (res *UserResource) Get(ctx context.Context, input *UserGetInput) (*UserGetOutput, error) {
+func (res *UserResourceClient) Get(ctx context.Context, input *UserGetInput) (*UserGetOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.get,
 		Input:     input,
@@ -8537,7 +8687,7 @@ func (res *UserResource) Get(ctx context.Context, input *UserGetInput) (*UserGet
 }
 
 // Destroy - Destroys the user with the given username
-func (res *UserResource) Destroy(ctx context.Context, input *UserDestroyInput) (*UserDestroyOutput, error) {
+func (res *UserResourceClient) Destroy(ctx context.Context, input *UserDestroyInput) (*UserDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.destroy,
 		Input:     input,
@@ -8550,7 +8700,7 @@ func (res *UserResource) Destroy(ctx context.Context, input *UserDestroyInput) (
 }
 
 // List - Returns the list of users in the current account
-func (res *UserResource) List(ctx context.Context, input *UserListInput) (*UserListOutput, error) {
+func (res *UserResourceClient) List(ctx context.Context, input *UserListInput) (*UserListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8564,7 +8714,7 @@ func (res *UserResource) List(ctx context.Context, input *UserListInput) (*UserL
 
 // MemberAccounts - Returns the accounts the user is member of
 // this operation is available only to User identities
-func (res *UserResource) MemberAccounts(ctx context.Context, input *UserMemberAccountsInput) (*UserMemberAccountsOutput, error) {
+func (res *UserResourceClient) MemberAccounts(ctx context.Context, input *UserMemberAccountsInput) (*UserMemberAccountsOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.memberAccounts,
 		Input:     input,
@@ -8576,8 +8726,8 @@ func (res *UserResource) MemberAccounts(ctx context.Context, input *UserMemberAc
 	return output, nil
 }
 
-// UserAccessKeyResource is the UserAccessKeyResource resource client
-type UserAccessKeyResource struct {
+// UserAccessKeyResourceClient is the UserAccessKeyResourceClient resource client
+type UserAccessKeyResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	create    *clientruntime.Operation
@@ -8585,12 +8735,12 @@ type UserAccessKeyResource struct {
 	destroy   *clientruntime.Operation
 }
 
-func newUserAccessKeyResource(
+func newUserAccessKeyResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*UserAccessKeyResource, error) {
+) (*UserAccessKeyResourceClient, error) {
 	res := finder.FindResource("AccessKey")
-	r := &UserAccessKeyResource{
+	r := &UserAccessKeyResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -8602,7 +8752,7 @@ func newUserAccessKeyResource(
 
 // Create - Creates a new access key for the given user
 // Requires permission action iam:CreateUserAccessKey over resource iam:User(<username>).AccessKey
-func (res *UserAccessKeyResource) Create(ctx context.Context, input *UserAccessKeyCreateInput) (*UserAccessKeyCreateOutput, error) {
+func (res *UserAccessKeyResourceClient) Create(ctx context.Context, input *UserAccessKeyCreateInput) (*UserAccessKeyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8616,7 +8766,7 @@ func (res *UserAccessKeyResource) Create(ctx context.Context, input *UserAccessK
 
 // List - Returns the list of access keys for the given user or the current user
 // Requires permission action iam:ListUserAccessKeys over resource iam:User(<username>)
-func (res *UserAccessKeyResource) List(ctx context.Context, input *UserAccessKeyListInput) (*UserAccessKeyListOutput, error) {
+func (res *UserAccessKeyResourceClient) List(ctx context.Context, input *UserAccessKeyListInput) (*UserAccessKeyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8630,7 +8780,7 @@ func (res *UserAccessKeyResource) List(ctx context.Context, input *UserAccessKey
 
 // Destroy - Destroy an access key for the given user
 // Requires permission action iam:DeleteUserAccessKey over resource iam:User(<username>).AccessKey(<accessKeyID>)
-func (res *UserAccessKeyResource) Destroy(ctx context.Context, input *UserAccessKeyDestroyInput) (*UserAccessKeyDestroyOutput, error) {
+func (res *UserAccessKeyResourceClient) Destroy(ctx context.Context, input *UserAccessKeyDestroyInput) (*UserAccessKeyDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.destroy,
 		Input:     input,
@@ -8642,8 +8792,8 @@ func (res *UserAccessKeyResource) Destroy(ctx context.Context, input *UserAccess
 	return output, nil
 }
 
-// UserIdentityPolicyResource is the UserIdentityPolicyResource resource client
-type UserIdentityPolicyResource struct {
+// UserIdentityPolicyResourceClient is the UserIdentityPolicyResourceClient resource client
+type UserIdentityPolicyResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	attach    *clientruntime.Operation
@@ -8651,12 +8801,12 @@ type UserIdentityPolicyResource struct {
 	detach    *clientruntime.Operation
 }
 
-func newUserIdentityPolicyResource(
+func newUserIdentityPolicyResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*UserIdentityPolicyResource, error) {
+) (*UserIdentityPolicyResourceClient, error) {
 	res := finder.FindResource("IdentityPolicy")
-	r := &UserIdentityPolicyResource{
+	r := &UserIdentityPolicyResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -8668,7 +8818,7 @@ func newUserIdentityPolicyResource(
 
 // Attach - Attaches an identity policy to a user
 // Requires permission action iam:AttachUserIdentityPolicy over resource iam:User(<username>).IdentityPolicy(<name>)
-func (res *UserIdentityPolicyResource) Attach(ctx context.Context, input *UserIdentityPolicyAttachInput) (*UserIdentityPolicyAttachOutput, error) {
+func (res *UserIdentityPolicyResourceClient) Attach(ctx context.Context, input *UserIdentityPolicyAttachInput) (*UserIdentityPolicyAttachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.attach,
 		Input:     input,
@@ -8682,7 +8832,7 @@ func (res *UserIdentityPolicyResource) Attach(ctx context.Context, input *UserId
 
 // List - List returns the identity policies of a user
 // Requires permission action iam:ListUserPolicies over resource iam:User(<username>).IdentityPolicy
-func (res *UserIdentityPolicyResource) List(ctx context.Context, input *UserIdentityPolicyListInput) (*UserIdentityPolicyListOutput, error) {
+func (res *UserIdentityPolicyResourceClient) List(ctx context.Context, input *UserIdentityPolicyListInput) (*UserIdentityPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8696,7 +8846,7 @@ func (res *UserIdentityPolicyResource) List(ctx context.Context, input *UserIden
 
 // Detach - Deatach an identity policy from a user
 // Requires permission action iam:DeattachUserIdentityPolicy over resource iam:User(<username>).IdentityPolicy(<name>)
-func (res *UserIdentityPolicyResource) Detach(ctx context.Context, input *UserIdentityPolicyDetachInput) (*UserIdentityPolicyDetachOutput, error) {
+func (res *UserIdentityPolicyResourceClient) Detach(ctx context.Context, input *UserIdentityPolicyDetachInput) (*UserIdentityPolicyDetachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.detach,
 		Input:     input,
@@ -8708,11 +8858,11 @@ func (res *UserIdentityPolicyResource) Detach(ctx context.Context, input *UserId
 	return output, nil
 }
 
-// RoleResource is the RoleResource resource client
-type RoleResource struct {
+// RoleResourceClient is the RoleResourceClient resource client
+type RoleResourceClient struct {
 	transport      clientruntime.Transport
 	res            *clientruntime.Resource
-	IdentityPolicy *RoleIdentityPolicyResource
+	IdentityPolicy *RoleIdentityPolicyResourceClient
 	create         *clientruntime.Operation
 	get            *clientruntime.Operation
 	destroy        *clientruntime.Operation
@@ -8720,17 +8870,17 @@ type RoleResource struct {
 	assume         *clientruntime.Operation
 }
 
-func newRoleResource(
+func newRoleResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*RoleResource, error) {
+) (*RoleResourceClient, error) {
 	res := finder.FindResource("Role")
-	r := &RoleResource{
+	r := &RoleResourceClient{
 		transport: transport,
 		res:       res,
 	}
 	var err error
-	r.IdentityPolicy, err = newRoleIdentityPolicyResource(transport, res)
+	r.IdentityPolicy, err = newRoleIdentityPolicyResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
@@ -8744,7 +8894,7 @@ func newRoleResource(
 
 // Create - Creates a new role with the given name in the current account
 // Requires permission action iam:CreateRole over resource iam:Role(<name>)
-func (res *RoleResource) Create(ctx context.Context, input *RoleCreateInput) (*RoleCreateOutput, error) {
+func (res *RoleResourceClient) Create(ctx context.Context, input *RoleCreateInput) (*RoleCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8757,7 +8907,7 @@ func (res *RoleResource) Create(ctx context.Context, input *RoleCreateInput) (*R
 }
 
 // Get - Returns information about a role
-func (res *RoleResource) Get(ctx context.Context, input *RoleGetInput) (*RoleGetOutput, error) {
+func (res *RoleResourceClient) Get(ctx context.Context, input *RoleGetInput) (*RoleGetOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.get,
 		Input:     input,
@@ -8770,7 +8920,7 @@ func (res *RoleResource) Get(ctx context.Context, input *RoleGetInput) (*RoleGet
 }
 
 // Destroy - Destroys the role with the given name
-func (res *RoleResource) Destroy(ctx context.Context, input *RoleDestroyInput) (*RoleDestroyOutput, error) {
+func (res *RoleResourceClient) Destroy(ctx context.Context, input *RoleDestroyInput) (*RoleDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.destroy,
 		Input:     input,
@@ -8783,7 +8933,7 @@ func (res *RoleResource) Destroy(ctx context.Context, input *RoleDestroyInput) (
 }
 
 // List - Returns the list of roles in the current account
-func (res *RoleResource) List(ctx context.Context, input *RoleListInput) (*RoleListOutput, error) {
+func (res *RoleResourceClient) List(ctx context.Context, input *RoleListInput) (*RoleListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8797,7 +8947,7 @@ func (res *RoleResource) List(ctx context.Context, input *RoleListInput) (*RoleL
 
 // Assume - Returns credentials for the given assumed role
 // the caller needs to have permission of action iam:AssumeRole over resource iam:Role(<roleName>)
-func (res *RoleResource) Assume(ctx context.Context, input *RoleAssumeInput) (*RoleAssumeOutput, error) {
+func (res *RoleResourceClient) Assume(ctx context.Context, input *RoleAssumeInput) (*RoleAssumeOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assume,
 		Input:     input,
@@ -8809,8 +8959,8 @@ func (res *RoleResource) Assume(ctx context.Context, input *RoleAssumeInput) (*R
 	return output, nil
 }
 
-// RoleIdentityPolicyResource is the RoleIdentityPolicyResource resource client
-type RoleIdentityPolicyResource struct {
+// RoleIdentityPolicyResourceClient is the RoleIdentityPolicyResourceClient resource client
+type RoleIdentityPolicyResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	attach    *clientruntime.Operation
@@ -8818,12 +8968,12 @@ type RoleIdentityPolicyResource struct {
 	detach    *clientruntime.Operation
 }
 
-func newRoleIdentityPolicyResource(
+func newRoleIdentityPolicyResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*RoleIdentityPolicyResource, error) {
+) (*RoleIdentityPolicyResourceClient, error) {
 	res := finder.FindResource("IdentityPolicy")
-	r := &RoleIdentityPolicyResource{
+	r := &RoleIdentityPolicyResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -8835,7 +8985,7 @@ func newRoleIdentityPolicyResource(
 
 // Attach - Attaches an identity policy to a role
 // Requires permission action iam:AttachRoleIdentityPolicy over resource iam:Role(<name>).IdentityPolicy(<name>)
-func (res *RoleIdentityPolicyResource) Attach(ctx context.Context, input *RoleIdentityPolicyAttachInput) (*RoleIdentityPolicyAttachOutput, error) {
+func (res *RoleIdentityPolicyResourceClient) Attach(ctx context.Context, input *RoleIdentityPolicyAttachInput) (*RoleIdentityPolicyAttachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.attach,
 		Input:     input,
@@ -8849,7 +8999,7 @@ func (res *RoleIdentityPolicyResource) Attach(ctx context.Context, input *RoleId
 
 // List - List returns the identity policies of a role
 // Requires permission action iam:ListRolePolicies over resource iam:Role(<rolename>).IdentityPolicy
-func (res *RoleIdentityPolicyResource) List(ctx context.Context, input *RoleIdentityPolicyListInput) (*RoleIdentityPolicyListOutput, error) {
+func (res *RoleIdentityPolicyResourceClient) List(ctx context.Context, input *RoleIdentityPolicyListInput) (*RoleIdentityPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8863,7 +9013,7 @@ func (res *RoleIdentityPolicyResource) List(ctx context.Context, input *RoleIden
 
 // Detach - Deatach an identity policy from a role
 // Requires permission action iam:DeattachRoleIdentityPolicy over resource iam:Role(<rolename>).IdentityPolicy(<name>)
-func (res *RoleIdentityPolicyResource) Detach(ctx context.Context, input *RoleIdentityPolicyDetachInput) (*RoleIdentityPolicyDetachOutput, error) {
+func (res *RoleIdentityPolicyResourceClient) Detach(ctx context.Context, input *RoleIdentityPolicyDetachInput) (*RoleIdentityPolicyDetachOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.detach,
 		Input:     input,
@@ -8875,25 +9025,31 @@ func (res *RoleIdentityPolicyResource) Detach(ctx context.Context, input *RoleId
 	return output, nil
 }
 
-// IdentityPolicyResource is the IdentityPolicyResource resource client
-type IdentityPolicyResource struct {
-	transport clientruntime.Transport
-	res       *clientruntime.Resource
-	create    *clientruntime.Operation
-	list      *clientruntime.Operation
-	retrieve  *clientruntime.Operation
-	destroy   *clientruntime.Operation
-	update    *clientruntime.Operation
+// IdentityPolicyResourceClient is the IdentityPolicyResourceClient resource client
+type IdentityPolicyResourceClient struct {
+	transport  clientruntime.Transport
+	res        *clientruntime.Resource
+	Attachment *IdentityPolicyAttachmentResourceClient
+	create     *clientruntime.Operation
+	list       *clientruntime.Operation
+	retrieve   *clientruntime.Operation
+	destroy    *clientruntime.Operation
+	update     *clientruntime.Operation
 }
 
-func newIdentityPolicyResource(
+func newIdentityPolicyResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*IdentityPolicyResource, error) {
+) (*IdentityPolicyResourceClient, error) {
 	res := finder.FindResource("IdentityPolicy")
-	r := &IdentityPolicyResource{
+	r := &IdentityPolicyResourceClient{
 		transport: transport,
 		res:       res,
+	}
+	var err error
+	r.Attachment, err = newIdentityPolicyAttachmentResourceClient(transport, res)
+	if err != nil {
+		return nil, err
 	}
 	r.create = res.FindOperation("Create")
 	r.list = res.FindOperation("List")
@@ -8905,7 +9061,7 @@ func newIdentityPolicyResource(
 
 // Create - Creates a new identity policy
 // Requires permission action iam:CreateIdentityPolicy over resource iam:IdentityPolicy(<name>)
-func (res *IdentityPolicyResource) Create(ctx context.Context, input *IdentityPolicyCreateInput) (*IdentityPolicyCreateOutput, error) {
+func (res *IdentityPolicyResourceClient) Create(ctx context.Context, input *IdentityPolicyCreateInput) (*IdentityPolicyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
 		Input:     input,
@@ -8918,7 +9074,7 @@ func (res *IdentityPolicyResource) Create(ctx context.Context, input *IdentityPo
 }
 
 // List - Retrieves list of identity policies
-func (res *IdentityPolicyResource) List(ctx context.Context, input *IdentityPolicyListInput) (*IdentityPolicyListOutput, error) {
+func (res *IdentityPolicyResourceClient) List(ctx context.Context, input *IdentityPolicyListInput) (*IdentityPolicyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.list,
 		Input:     input,
@@ -8931,7 +9087,7 @@ func (res *IdentityPolicyResource) List(ctx context.Context, input *IdentityPoli
 }
 
 // Retrieve - Retrieves identity policy by name
-func (res *IdentityPolicyResource) Retrieve(ctx context.Context, input *IdentityPolicyRetrieveInput) (*IdentityPolicyRetrieveOutput, error) {
+func (res *IdentityPolicyResourceClient) Retrieve(ctx context.Context, input *IdentityPolicyRetrieveInput) (*IdentityPolicyRetrieveOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.retrieve,
 		Input:     input,
@@ -8945,7 +9101,7 @@ func (res *IdentityPolicyResource) Retrieve(ctx context.Context, input *Identity
 
 // Destroy - Destroys an identity policy
 // Requires permission action iam:DestroyIdentityPolicy over resource iam:IdentityPolicy(<name>)
-func (res *IdentityPolicyResource) Destroy(ctx context.Context, input *IdentityPolicyDestroyInput) (*IdentityPolicyDestroyOutput, error) {
+func (res *IdentityPolicyResourceClient) Destroy(ctx context.Context, input *IdentityPolicyDestroyInput) (*IdentityPolicyDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.destroy,
 		Input:     input,
@@ -8959,7 +9115,7 @@ func (res *IdentityPolicyResource) Destroy(ctx context.Context, input *IdentityP
 
 // Update - Updates an identity policy
 // Requires permission action iam:UpdateIdentityPolicy over resource iam:IdentityPolicy(<name>)
-func (res *IdentityPolicyResource) Update(ctx context.Context, input *IdentityPolicyUpdateInput) (*IdentityPolicyUpdateOutput, error) {
+func (res *IdentityPolicyResourceClient) Update(ctx context.Context, input *IdentityPolicyUpdateInput) (*IdentityPolicyUpdateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.update,
 		Input:     input,
@@ -8971,19 +9127,53 @@ func (res *IdentityPolicyResource) Update(ctx context.Context, input *IdentityPo
 	return output, nil
 }
 
-// ServiceBearerTokenResource is the ServiceBearerTokenResource resource client
-type ServiceBearerTokenResource struct {
+// IdentityPolicyAttachmentResourceClient is the IdentityPolicyAttachmentResourceClient resource client
+type IdentityPolicyAttachmentResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	list      *clientruntime.Operation
+}
+
+func newIdentityPolicyAttachmentResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*IdentityPolicyAttachmentResourceClient, error) {
+	res := finder.FindResource("Attachment")
+	r := &IdentityPolicyAttachmentResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.list = res.FindOperation("List")
+	return r, nil
+}
+
+// List - List attachments of an identity policy
+// Requires permission action iam:ListIdentityPolicyAttachments over resource iam:IdentityPolicy(<name>)
+func (res *IdentityPolicyAttachmentResourceClient) List(ctx context.Context, input *IdentityPolicyAttachmentListInput) (*IdentityPolicyAttachmentListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*IdentityPolicyAttachmentListOutput)
+	return output, nil
+}
+
+// ServiceBearerTokenResourceClient is the ServiceBearerTokenResourceClient resource client
+type ServiceBearerTokenResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	get       *clientruntime.Operation
 }
 
-func newServiceBearerTokenResource(
+func newServiceBearerTokenResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*ServiceBearerTokenResource, error) {
+) (*ServiceBearerTokenResourceClient, error) {
 	res := finder.FindResource("ServiceBearerToken")
-	r := &ServiceBearerTokenResource{
+	r := &ServiceBearerTokenResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -8994,7 +9184,7 @@ func newServiceBearerTokenResource(
 // Get - Generates a temporary authorization token for accessing a a service or feature in a service that only supports bearer tokens
 // The operations the token are limited to IAM permissions
 // Requires permission to execute "iam:GetServiceBearerToken" over "*"
-func (res *ServiceBearerTokenResource) Get(ctx context.Context, input *ServiceBearerTokenGetInput) (*ServiceBearerTokenGetOutput, error) {
+func (res *ServiceBearerTokenResourceClient) Get(ctx context.Context, input *ServiceBearerTokenGetInput) (*ServiceBearerTokenGetOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.get,
 		Input:     input,
@@ -9006,32 +9196,32 @@ func (res *ServiceBearerTokenResource) Get(ctx context.Context, input *ServiceBe
 	return output, nil
 }
 
-// InternalResource is the InternalResource resource client
-type InternalResource struct {
+// InternalResourceClient is the InternalResourceClient resource client
+type InternalResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
-	Services  *InternalServicesResource
+	Services  *InternalServicesResourceClient
 }
 
-func newInternalResource(
+func newInternalResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*InternalResource, error) {
+) (*InternalResourceClient, error) {
 	res := finder.FindResource("Internal")
-	r := &InternalResource{
+	r := &InternalResourceClient{
 		transport: transport,
 		res:       res,
 	}
 	var err error
-	r.Services, err = newInternalServicesResource(transport, res)
+	r.Services, err = newInternalServicesResourceClient(transport, res)
 	if err != nil {
 		return nil, err
 	}
 	return r, nil
 }
 
-// InternalServicesResource is the InternalServicesResource resource client
-type InternalServicesResource struct {
+// InternalServicesResourceClient is the InternalServicesResourceClient resource client
+type InternalServicesResourceClient struct {
 	transport                  clientruntime.Transport
 	res                        *clientruntime.Resource
 	validateAccessKey          *clientruntime.Operation
@@ -9040,12 +9230,12 @@ type InternalServicesResource struct {
 	assertQuery                *clientruntime.Operation
 }
 
-func newInternalServicesResource(
+func newInternalServicesResourceClient(
 	transport clientruntime.Transport,
 	finder clientruntime.ResourceFinder,
-) (*InternalServicesResource, error) {
+) (*InternalServicesResourceClient, error) {
 	res := finder.FindResource("Services")
-	r := &InternalServicesResource{
+	r := &InternalServicesResourceClient{
 		transport: transport,
 		res:       res,
 	}
@@ -9057,7 +9247,7 @@ func newInternalServicesResource(
 }
 
 // ValidateAccessKey operation
-func (res *InternalServicesResource) ValidateAccessKey(ctx context.Context, input *InternalServicesValidateAccessKeyInput) (*InternalServicesValidateAccessKeyOutput, error) {
+func (res *InternalServicesResourceClient) ValidateAccessKey(ctx context.Context, input *InternalServicesValidateAccessKeyInput) (*InternalServicesValidateAccessKeyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.validateAccessKey,
 		Input:     input,
@@ -9070,7 +9260,7 @@ func (res *InternalServicesResource) ValidateAccessKey(ctx context.Context, inpu
 }
 
 // ValidateServiceBearerToken operation
-func (res *InternalServicesResource) ValidateServiceBearerToken(ctx context.Context, input *InternalServicesValidateServiceBearerTokenInput) (*InternalServicesValidateServiceBearerTokenOutput, error) {
+func (res *InternalServicesResourceClient) ValidateServiceBearerToken(ctx context.Context, input *InternalServicesValidateServiceBearerTokenInput) (*InternalServicesValidateServiceBearerTokenOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.validateServiceBearerToken,
 		Input:     input,
@@ -9083,7 +9273,7 @@ func (res *InternalServicesResource) ValidateServiceBearerToken(ctx context.Cont
 }
 
 // AssertAction operation
-func (res *InternalServicesResource) AssertAction(ctx context.Context, input *InternalServicesAssertActionInput) (*InternalServicesAssertActionOutput, error) {
+func (res *InternalServicesResourceClient) AssertAction(ctx context.Context, input *InternalServicesAssertActionInput) (*InternalServicesAssertActionOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assertAction,
 		Input:     input,
@@ -9096,7 +9286,7 @@ func (res *InternalServicesResource) AssertAction(ctx context.Context, input *In
 }
 
 // AssertQuery operation
-func (res *InternalServicesResource) AssertQuery(ctx context.Context, input *InternalServicesAssertQueryInput) (*InternalServicesAssertQueryOutput, error) {
+func (res *InternalServicesResourceClient) AssertQuery(ctx context.Context, input *InternalServicesAssertQueryInput) (*InternalServicesAssertQueryOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assertQuery,
 		Input:     input,
@@ -9113,17 +9303,17 @@ type Client struct {
 	transport clientruntime.Transport
 	pk        *clientruntime.Package
 	// Account operations
-	Account *AccountResource
+	Account *AccountResourceClient
 	// User operations
-	User *UserResource
+	User *UserResourceClient
 	// Role operations
-	Role *RoleResource
+	Role *RoleResourceClient
 	// IdentityPolicy operations
-	IdentityPolicy *IdentityPolicyResource
+	IdentityPolicy *IdentityPolicyResourceClient
 	// ServiceBearerToken - Service Bearer Tokens
-	ServiceBearerToken *ServiceBearerTokenResource
+	ServiceBearerToken *ServiceBearerTokenResourceClient
 	// Internal - Internal operations exposed only to integrating services
-	Internal *InternalResource
+	Internal *InternalResourceClient
 }
 
 // WithTransport configures the transport in the client
@@ -9170,27 +9360,27 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	}
 	transport := c.transport
 	var err error
-	c.Account, err = newAccountResource(transport, pk)
+	c.Account, err = newAccountResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
-	c.User, err = newUserResource(transport, pk)
+	c.User, err = newUserResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
-	c.Role, err = newRoleResource(transport, pk)
+	c.Role, err = newRoleResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
-	c.IdentityPolicy, err = newIdentityPolicyResource(transport, pk)
+	c.IdentityPolicy, err = newIdentityPolicyResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
-	c.ServiceBearerToken, err = newServiceBearerTokenResource(transport, pk)
+	c.ServiceBearerToken, err = newServiceBearerTokenResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
-	c.Internal, err = newInternalResource(transport, pk)
+	c.Internal, err = newInternalResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
@@ -9305,6 +9495,8 @@ type SpecularMetaInfo struct {
 	structPathIdentityPolicyDestroyOutput                                       *clientruntime.StructDefinition
 	structPathIdentityPolicyUpdateInput                                         *clientruntime.StructDefinition
 	structPathIdentityPolicyUpdateOutput                                        *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentListInput                                 *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentListOutput                                *clientruntime.StructDefinition
 	structPathServiceBearerToken                                                *clientruntime.StructDefinition
 	structPathInvalidServiceBearerTokenDurationProblem                          *clientruntime.StructDefinition
 	structPathInvalidServiceNameProblem                                         *clientruntime.StructDefinition
@@ -9794,6 +9986,16 @@ func (m *SpecularMetaInfo) IdentityPolicyUpdateInputStruct() *clientruntime.Stru
 // IdentityPolicyUpdateOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) IdentityPolicyUpdateOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyUpdateOutput
+}
+
+// IdentityPolicyAttachmentListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyAttachmentListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyAttachmentListInput
+}
+
+// IdentityPolicyAttachmentListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyAttachmentListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyAttachmentListOutput
 }
 
 // ServiceBearerTokenStruct allows easy access to structure
