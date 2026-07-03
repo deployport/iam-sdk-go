@@ -13359,7 +13359,7 @@ func NewEndpointTransport(options ...clientruntime.Option) (clientruntime.Transp
 		o = append(options, mo...)
 	}
 	return clientruntime.NewHTTPJSONTransport(
-		"http://localhost:3000",
+		"https://iam.<region>.api.deployport.io/api",
 		o...,
 	)
 }
