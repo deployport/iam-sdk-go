@@ -209,10 +209,24 @@ func NewUserInformation() *UserInformation {
 
 // UserInformation struct
 type UserInformation struct {
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
+	// when the user was created
+	CreatedAt   time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Description string    `json:"description,omitempty" yaml:"description,omitempty"`
+	// DRN of this user, e.g. iam:User(johan)
+	Drn string `json:"drn,omitempty" yaml:"drn,omitempty"`
 	// when the user comes from SSO, this field is populated with the extra information
 	Sso      *UserInformationSSO `json:"sso,omitempty" yaml:"sso,omitempty"`
 	Username string              `json:"username,omitempty" yaml:"username,omitempty"`
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *UserInformation) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *UserInformation) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
 }
 
 // GetDescription returns the value for the field description
@@ -223,6 +237,16 @@ func (e *UserInformation) GetDescription() string {
 // SetDescription sets the value for the field description
 func (e *UserInformation) SetDescription(description string) {
 	e.Description = description
+}
+
+// GetDrn returns the value for the field drn
+func (e *UserInformation) GetDrn() string {
+	return e.Drn
+}
+
+// SetDrn sets the value for the field drn
+func (e *UserInformation) SetDrn(drn string) {
+	e.Drn = drn
 }
 
 // GetSso returns the value for the field sso
@@ -283,8 +307,22 @@ func NewRoleInformation() *RoleInformation {
 
 // RoleInformation struct
 type RoleInformation struct {
-	Description string `json:"description,omitempty" yaml:"description,omitempty"`
-	Name        string `json:"name,omitempty" yaml:"name,omitempty"`
+	// when the role was created
+	CreatedAt   time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Description string    `json:"description,omitempty" yaml:"description,omitempty"`
+	// DRN of this role, e.g. iam:Role(deployer)
+	Drn  string `json:"drn,omitempty" yaml:"drn,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *RoleInformation) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *RoleInformation) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
 }
 
 // GetDescription returns the value for the field description
@@ -295,6 +333,16 @@ func (e *RoleInformation) GetDescription() string {
 // SetDescription sets the value for the field description
 func (e *RoleInformation) SetDescription(description string) {
 	e.Description = description
+}
+
+// GetDrn returns the value for the field drn
+func (e *RoleInformation) GetDrn() string {
+	return e.Drn
+}
+
+// SetDrn sets the value for the field drn
+func (e *RoleInformation) SetDrn(drn string) {
+	e.Drn = drn
 }
 
 // GetName returns the value for the field name
@@ -589,6 +637,130 @@ func (e Account) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewRegionEndpoint creates a new RegionEndpoint
+func NewRegionEndpoint() *RegionEndpoint {
+	s := &RegionEndpoint{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RegionEndpoint - A single named service endpoint for a region, e.g. {name: "api", url: "https://iam.us-east-2.api.deployport.io"}.
+type RegionEndpoint struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+	Url  string `json:"url,omitempty" yaml:"url,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *RegionEndpoint) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *RegionEndpoint) SetName(name string) {
+	e.Name = name
+}
+
+// GetUrl returns the value for the field url
+func (e *RegionEndpoint) GetUrl() string {
+	return e.Url
+}
+
+// SetUrl sets the value for the field url
+func (e *RegionEndpoint) SetUrl(url string) {
+	e.Url = url
+}
+
+// StructPath returns StructPath
+func (e *RegionEndpoint) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRegionEndpoint.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RegionEndpoint) InitializeDefaults() {
+}
+
+// regionEndpointAlias is defined to help pre and post JSON marshaling without recursive loops
+type regionEndpointAlias RegionEndpoint
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RegionEndpoint) UnmarshalJSON(data []byte) error {
+	var alias regionEndpointAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RegionEndpoint)(&alias)).InitializeDefaults()
+	*e = RegionEndpoint(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RegionEndpoint) MarshalJSON() ([]byte, error) {
+	alias := regionEndpointAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRegionInfo creates a new RegionInfo
+func NewRegionInfo() *RegionInfo {
+	s := &RegionInfo{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RegionInfo - Metadata about an available region and its service endpoints.
+type RegionInfo struct {
+	Endpoints []*RegionEndpoint `json:"endpoints,omitempty" yaml:"endpoints,omitempty"`
+	Slug      string            `json:"slug,omitempty" yaml:"slug,omitempty"`
+}
+
+// GetEndpoints returns the value for the field endpoints
+func (e *RegionInfo) GetEndpoints() []*RegionEndpoint {
+	return e.Endpoints
+}
+
+// SetEndpoints sets the value for the field endpoints
+func (e *RegionInfo) SetEndpoints(endpoints []*RegionEndpoint) {
+	e.Endpoints = endpoints
+}
+
+// GetSlug returns the value for the field slug
+func (e *RegionInfo) GetSlug() string {
+	return e.Slug
+}
+
+// SetSlug sets the value for the field slug
+func (e *RegionInfo) SetSlug(slug string) {
+	e.Slug = slug
+}
+
+// StructPath returns StructPath
+func (e *RegionInfo) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRegionInfo.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RegionInfo) InitializeDefaults() {
+}
+
+// regionInfoAlias is defined to help pre and post JSON marshaling without recursive loops
+type regionInfoAlias RegionInfo
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RegionInfo) UnmarshalJSON(data []byte) error {
+	var alias regionInfoAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RegionInfo)(&alias)).InitializeDefaults()
+	*e = RegionInfo(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RegionInfo) MarshalJSON() ([]byte, error) {
+	alias := regionInfoAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountSSOProvider creates a new AccountSSOProvider
 func NewAccountSSOProvider() *AccountSSOProvider {
 	s := &AccountSSOProvider{}
@@ -814,6 +986,729 @@ func (e *AccountSSOAutoJoinPolicy) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e AccountSSOAutoJoinPolicy) MarshalJSON() ([]byte, error) {
 	alias := accountSSOAutoJoinPolicyAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewOIDCProvider creates a new OIDCProvider
+func NewOIDCProvider() *OIDCProvider {
+	s := &OIDCProvider{}
+	s.InitializeDefaults()
+	return s
+}
+
+// OIDCProvider - --- OIDC federation (AssumeRoleWithWebIdentity) ---
+// A registered external OIDC identity provider used for web-identity role federation.
+type OIDCProvider struct {
+	Audiences []string `json:"audiences,omitempty" yaml:"audiences,omitempty"`
+	// DRN of this provider, e.g. iam:OIDCProvider(github-actions)
+	Drn       string `json:"drn,omitempty" yaml:"drn,omitempty"`
+	IssuerURL string `json:"issuerURL,omitempty" yaml:"issuerURL,omitempty"`
+	Name      string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetAudiences returns the value for the field audiences
+func (e *OIDCProvider) GetAudiences() []string {
+	return e.Audiences
+}
+
+// SetAudiences sets the value for the field audiences
+func (e *OIDCProvider) SetAudiences(audiences []string) {
+	e.Audiences = audiences
+}
+
+// GetDrn returns the value for the field drn
+func (e *OIDCProvider) GetDrn() string {
+	return e.Drn
+}
+
+// SetDrn sets the value for the field drn
+func (e *OIDCProvider) SetDrn(drn string) {
+	e.Drn = drn
+}
+
+// GetIssuerURL returns the value for the field issuerURL
+func (e *OIDCProvider) GetIssuerURL() string {
+	return e.IssuerURL
+}
+
+// SetIssuerURL sets the value for the field issuerURL
+func (e *OIDCProvider) SetIssuerURL(issuerURL string) {
+	e.IssuerURL = issuerURL
+}
+
+// GetName returns the value for the field name
+func (e *OIDCProvider) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *OIDCProvider) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *OIDCProvider) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathOIDCProvider.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *OIDCProvider) InitializeDefaults() {
+}
+
+// oIDCProviderAlias is defined to help pre and post JSON marshaling without recursive loops
+type oIDCProviderAlias OIDCProvider
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *OIDCProvider) UnmarshalJSON(data []byte) error {
+	var alias oIDCProviderAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*OIDCProvider)(&alias)).InitializeDefaults()
+	*e = OIDCProvider(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e OIDCProvider) MarshalJSON() ([]byte, error) {
+	alias := oIDCProviderAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidOIDCProviderProblem creates a new InvalidOIDCProviderProblem
+func NewInvalidOIDCProviderProblem() *InvalidOIDCProviderProblem {
+	s := &InvalidOIDCProviderProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidOIDCProviderProblem struct
+type InvalidOIDCProviderProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidOIDCProviderProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidOIDCProviderProblem]
+func (e *InvalidOIDCProviderProblem) Is(err error) bool {
+	_, ok := err.(*InvalidOIDCProviderProblem)
+	return ok
+}
+
+// IsInvalidOIDCProviderProblem indicates whether the given error chain contains an error of type [InvalidOIDCProviderProblem]
+func IsInvalidOIDCProviderProblem(err error) bool {
+	return errors.Is(err, &InvalidOIDCProviderProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidOIDCProviderProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidOIDCProviderProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidOIDCProviderProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidOIDCProviderProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidOIDCProviderProblem) InitializeDefaults() {
+}
+
+// invalidOIDCProviderProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidOIDCProviderProblemAlias InvalidOIDCProviderProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidOIDCProviderProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidOIDCProviderProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidOIDCProviderProblem)(&alias)).InitializeDefaults()
+	*e = InvalidOIDCProviderProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidOIDCProviderProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidOIDCProviderProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidOIDCIssuerProblem creates a new InvalidOIDCIssuerProblem
+func NewInvalidOIDCIssuerProblem() *InvalidOIDCIssuerProblem {
+	s := &InvalidOIDCIssuerProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidOIDCIssuerProblem - The issuer URL is malformed or is not a reachable OIDC provider (discovery failed).
+type InvalidOIDCIssuerProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidOIDCIssuerProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidOIDCIssuerProblem]
+func (e *InvalidOIDCIssuerProblem) Is(err error) bool {
+	_, ok := err.(*InvalidOIDCIssuerProblem)
+	return ok
+}
+
+// IsInvalidOIDCIssuerProblem indicates whether the given error chain contains an error of type [InvalidOIDCIssuerProblem]
+func IsInvalidOIDCIssuerProblem(err error) bool {
+	return errors.Is(err, &InvalidOIDCIssuerProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidOIDCIssuerProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidOIDCIssuerProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidOIDCIssuerProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidOIDCIssuerProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidOIDCIssuerProblem) InitializeDefaults() {
+}
+
+// invalidOIDCIssuerProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidOIDCIssuerProblemAlias InvalidOIDCIssuerProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidOIDCIssuerProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidOIDCIssuerProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidOIDCIssuerProblem)(&alias)).InitializeDefaults()
+	*e = InvalidOIDCIssuerProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidOIDCIssuerProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidOIDCIssuerProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewOIDCProviderNotFoundProblem creates a new OIDCProviderNotFoundProblem
+func NewOIDCProviderNotFoundProblem() *OIDCProviderNotFoundProblem {
+	s := &OIDCProviderNotFoundProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// OIDCProviderNotFoundProblem struct
+type OIDCProviderNotFoundProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *OIDCProviderNotFoundProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [OIDCProviderNotFoundProblem]
+func (e *OIDCProviderNotFoundProblem) Is(err error) bool {
+	_, ok := err.(*OIDCProviderNotFoundProblem)
+	return ok
+}
+
+// IsOIDCProviderNotFoundProblem indicates whether the given error chain contains an error of type [OIDCProviderNotFoundProblem]
+func IsOIDCProviderNotFoundProblem(err error) bool {
+	return errors.Is(err, &OIDCProviderNotFoundProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *OIDCProviderNotFoundProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *OIDCProviderNotFoundProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *OIDCProviderNotFoundProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathOIDCProviderNotFoundProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *OIDCProviderNotFoundProblem) InitializeDefaults() {
+}
+
+// oIDCProviderNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type oIDCProviderNotFoundProblemAlias OIDCProviderNotFoundProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *OIDCProviderNotFoundProblem) UnmarshalJSON(data []byte) error {
+	var alias oIDCProviderNotFoundProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*OIDCProviderNotFoundProblem)(&alias)).InitializeDefaults()
+	*e = OIDCProviderNotFoundProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e OIDCProviderNotFoundProblem) MarshalJSON() ([]byte, error) {
+	alias := oIDCProviderNotFoundProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewOIDCProviderInUseProblem creates a new OIDCProviderInUseProblem
+func NewOIDCProviderInUseProblem() *OIDCProviderInUseProblem {
+	s := &OIDCProviderInUseProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// OIDCProviderInUseProblem struct
+type OIDCProviderInUseProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *OIDCProviderInUseProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [OIDCProviderInUseProblem]
+func (e *OIDCProviderInUseProblem) Is(err error) bool {
+	_, ok := err.(*OIDCProviderInUseProblem)
+	return ok
+}
+
+// IsOIDCProviderInUseProblem indicates whether the given error chain contains an error of type [OIDCProviderInUseProblem]
+func IsOIDCProviderInUseProblem(err error) bool {
+	return errors.Is(err, &OIDCProviderInUseProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *OIDCProviderInUseProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *OIDCProviderInUseProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *OIDCProviderInUseProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathOIDCProviderInUseProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *OIDCProviderInUseProblem) InitializeDefaults() {
+}
+
+// oIDCProviderInUseProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type oIDCProviderInUseProblemAlias OIDCProviderInUseProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *OIDCProviderInUseProblem) UnmarshalJSON(data []byte) error {
+	var alias oIDCProviderInUseProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*OIDCProviderInUseProblem)(&alias)).InitializeDefaults()
+	*e = OIDCProviderInUseProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e OIDCProviderInUseProblem) MarshalJSON() ([]byte, error) {
+	alias := oIDCProviderInUseProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyStatement creates a new TrustPolicyStatement
+func NewTrustPolicyStatement() *TrustPolicyStatement {
+	s := &TrustPolicyStatement{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyStatement - A trust-policy statement (Allow or Deny; Deny overrides). Each constraints entry is a clause of space-separated qualifier atoms such as github-actions:repository(deployport-myapp). Within a clause, different qualifiers are ANDed and a repeated qualifier ORs its values. Clauses are ORed. OIDC principals require at least one clause; IAM principals may omit constraints.
+type TrustPolicyStatement struct {
+	Constraints []string             `json:"constraints,omitempty" yaml:"constraints,omitempty"`
+	Effect      TrustStatementEffect `json:"effect,omitempty" yaml:"effect,omitempty"`
+}
+
+// GetConstraints returns the value for the field constraints
+func (e *TrustPolicyStatement) GetConstraints() []string {
+	return e.Constraints
+}
+
+// SetConstraints sets the value for the field constraints
+func (e *TrustPolicyStatement) SetConstraints(constraints []string) {
+	e.Constraints = constraints
+}
+
+// GetEffect returns the value for the field effect
+func (e *TrustPolicyStatement) GetEffect() TrustStatementEffect {
+	return e.Effect
+}
+
+// SetEffect sets the value for the field effect
+func (e *TrustPolicyStatement) SetEffect(effect TrustStatementEffect) {
+	e.Effect = effect
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyStatement) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyStatement.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyStatement) InitializeDefaults() {
+	if e.Effect == "" {
+		e.Effect = TrustStatementEffectAllow
+	}
+}
+
+// trustPolicyStatementAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyStatementAlias TrustPolicyStatement
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyStatement) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyStatementAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyStatement)(&alias)).InitializeDefaults()
+	*e = TrustPolicyStatement(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyStatement) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyStatementAlias(e)
+	if alias.Effect == TrustStatementEffectAllow {
+		alias.Effect = ""
+	}
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicy creates a new TrustPolicy
+func NewTrustPolicy() *TrustPolicy {
+	s := &TrustPolicy{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicy - A reusable, attachable trust policy authorizing a single principal to assume a role
+// under the given conditions. Attach it to roles via Role.TrustPolicy.Attach.
+type TrustPolicy struct {
+	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// DRN of this trust policy itself, e.g. iam:TrustPolicy(gha-main). Distinct from principal below.
+	Drn  string `json:"drn,omitempty" yaml:"drn,omitempty"`
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+	// DRN of the trusted principal, e.g. iam:OIDCProvider(github-actions)
+	Principal string `json:"principal,omitempty" yaml:"principal,omitempty"`
+	// OR of statements; a token is admitted if any statement holds
+	Statements []*TrustPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *TrustPolicy) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *TrustPolicy) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
+}
+
+// GetDrn returns the value for the field drn
+func (e *TrustPolicy) GetDrn() string {
+	return e.Drn
+}
+
+// SetDrn sets the value for the field drn
+func (e *TrustPolicy) SetDrn(drn string) {
+	e.Drn = drn
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicy) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicy) SetName(name string) {
+	e.Name = name
+}
+
+// GetPrincipal returns the value for the field principal
+func (e *TrustPolicy) GetPrincipal() string {
+	return e.Principal
+}
+
+// SetPrincipal sets the value for the field principal
+func (e *TrustPolicy) SetPrincipal(principal string) {
+	e.Principal = principal
+}
+
+// GetStatements returns the value for the field statements
+func (e *TrustPolicy) GetStatements() []*TrustPolicyStatement {
+	return e.Statements
+}
+
+// SetStatements sets the value for the field statements
+func (e *TrustPolicy) SetStatements(statements []*TrustPolicyStatement) {
+	e.Statements = statements
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicy) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicy.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicy) InitializeDefaults() {
+}
+
+// trustPolicyAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyAlias TrustPolicy
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicy) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicy)(&alias)).InitializeDefaults()
+	*e = TrustPolicy(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicy) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidTrustPolicyProblem creates a new InvalidTrustPolicyProblem
+func NewInvalidTrustPolicyProblem() *InvalidTrustPolicyProblem {
+	s := &InvalidTrustPolicyProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidTrustPolicyProblem struct
+type InvalidTrustPolicyProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidTrustPolicyProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidTrustPolicyProblem]
+func (e *InvalidTrustPolicyProblem) Is(err error) bool {
+	_, ok := err.(*InvalidTrustPolicyProblem)
+	return ok
+}
+
+// IsInvalidTrustPolicyProblem indicates whether the given error chain contains an error of type [InvalidTrustPolicyProblem]
+func IsInvalidTrustPolicyProblem(err error) bool {
+	return errors.Is(err, &InvalidTrustPolicyProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidTrustPolicyProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidTrustPolicyProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidTrustPolicyProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidTrustPolicyProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidTrustPolicyProblem) InitializeDefaults() {
+}
+
+// invalidTrustPolicyProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidTrustPolicyProblemAlias InvalidTrustPolicyProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidTrustPolicyProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidTrustPolicyProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidTrustPolicyProblem)(&alias)).InitializeDefaults()
+	*e = InvalidTrustPolicyProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidTrustPolicyProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidTrustPolicyProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyNotFoundProblem creates a new TrustPolicyNotFoundProblem
+func NewTrustPolicyNotFoundProblem() *TrustPolicyNotFoundProblem {
+	s := &TrustPolicyNotFoundProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyNotFoundProblem struct
+type TrustPolicyNotFoundProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *TrustPolicyNotFoundProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [TrustPolicyNotFoundProblem]
+func (e *TrustPolicyNotFoundProblem) Is(err error) bool {
+	_, ok := err.(*TrustPolicyNotFoundProblem)
+	return ok
+}
+
+// IsTrustPolicyNotFoundProblem indicates whether the given error chain contains an error of type [TrustPolicyNotFoundProblem]
+func IsTrustPolicyNotFoundProblem(err error) bool {
+	return errors.Is(err, &TrustPolicyNotFoundProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *TrustPolicyNotFoundProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *TrustPolicyNotFoundProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyNotFoundProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyNotFoundProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyNotFoundProblem) InitializeDefaults() {
+}
+
+// trustPolicyNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyNotFoundProblemAlias TrustPolicyNotFoundProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyNotFoundProblem) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyNotFoundProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyNotFoundProblem)(&alias)).InitializeDefaults()
+	*e = TrustPolicyNotFoundProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyNotFoundProblem) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyNotFoundProblemAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidWebIdentityTokenProblem creates a new InvalidWebIdentityTokenProblem
+func NewInvalidWebIdentityTokenProblem() *InvalidWebIdentityTokenProblem {
+	s := &InvalidWebIdentityTokenProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidWebIdentityTokenProblem - Raised by Role.AssumeWithWebIdentity for any invalid, expired, untrusted, or
+// unmatched web-identity token. Generic on purpose.
+type InvalidWebIdentityTokenProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidWebIdentityTokenProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenProblem]
+func (e *InvalidWebIdentityTokenProblem) Is(err error) bool {
+	_, ok := err.(*InvalidWebIdentityTokenProblem)
+	return ok
+}
+
+// IsInvalidWebIdentityTokenProblem indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenProblem]
+func IsInvalidWebIdentityTokenProblem(err error) bool {
+	return errors.Is(err, &InvalidWebIdentityTokenProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidWebIdentityTokenProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidWebIdentityTokenProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidWebIdentityTokenProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidWebIdentityTokenProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidWebIdentityTokenProblem) InitializeDefaults() {
+}
+
+// invalidWebIdentityTokenProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidWebIdentityTokenProblemAlias InvalidWebIdentityTokenProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidWebIdentityTokenProblem) UnmarshalJSON(data []byte) error {
+	var alias invalidWebIdentityTokenProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidWebIdentityTokenProblem)(&alias)).InitializeDefaults()
+	*e = InvalidWebIdentityTokenProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidWebIdentityTokenProblem) MarshalJSON() ([]byte, error) {
+	alias := invalidWebIdentityTokenProblemAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -1085,6 +1980,289 @@ func (e *AccountAssumeIdentityOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e AccountAssumeIdentityOutput) MarshalJSON() ([]byte, error) {
 	alias := accountAssumeIdentityOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountBeginAssumeIdentityInput creates a new AccountBeginAssumeIdentityInput
+func NewAccountBeginAssumeIdentityInput() *AccountBeginAssumeIdentityInput {
+	s := &AccountBeginAssumeIdentityInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountBeginAssumeIdentityInput struct
+type AccountBeginAssumeIdentityInput struct {
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+}
+
+// GetAccountName returns the value for the field accountName
+func (e *AccountBeginAssumeIdentityInput) GetAccountName() string {
+	return e.AccountName
+}
+
+// SetAccountName sets the value for the field accountName
+func (e *AccountBeginAssumeIdentityInput) SetAccountName(accountName string) {
+	e.AccountName = accountName
+}
+
+// StructPath returns StructPath
+func (e *AccountBeginAssumeIdentityInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountBeginAssumeIdentityInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountBeginAssumeIdentityInput) InitializeDefaults() {
+}
+
+// accountBeginAssumeIdentityInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountBeginAssumeIdentityInputAlias AccountBeginAssumeIdentityInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountBeginAssumeIdentityInput) UnmarshalJSON(data []byte) error {
+	var alias accountBeginAssumeIdentityInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountBeginAssumeIdentityInput)(&alias)).InitializeDefaults()
+	*e = AccountBeginAssumeIdentityInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountBeginAssumeIdentityInput) MarshalJSON() ([]byte, error) {
+	alias := accountBeginAssumeIdentityInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountBeginAssumeIdentityOutput creates a new AccountBeginAssumeIdentityOutput
+func NewAccountBeginAssumeIdentityOutput() *AccountBeginAssumeIdentityOutput {
+	s := &AccountBeginAssumeIdentityOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountBeginAssumeIdentityOutput struct
+type AccountBeginAssumeIdentityOutput struct {
+	// single-use opaque code; redeem within a short window via CompleteAssumeIdentity
+	Code string `json:"code,omitempty" yaml:"code,omitempty"`
+}
+
+// GetCode returns the value for the field code
+func (e *AccountBeginAssumeIdentityOutput) GetCode() string {
+	return e.Code
+}
+
+// SetCode sets the value for the field code
+func (e *AccountBeginAssumeIdentityOutput) SetCode(code string) {
+	e.Code = code
+}
+
+// StructPath returns StructPath
+func (e *AccountBeginAssumeIdentityOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountBeginAssumeIdentityOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountBeginAssumeIdentityOutput) InitializeDefaults() {
+}
+
+// accountBeginAssumeIdentityOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountBeginAssumeIdentityOutputAlias AccountBeginAssumeIdentityOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountBeginAssumeIdentityOutput) UnmarshalJSON(data []byte) error {
+	var alias accountBeginAssumeIdentityOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountBeginAssumeIdentityOutput)(&alias)).InitializeDefaults()
+	*e = AccountBeginAssumeIdentityOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountBeginAssumeIdentityOutput) MarshalJSON() ([]byte, error) {
+	alias := accountBeginAssumeIdentityOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountCompleteAssumeIdentityInput creates a new AccountCompleteAssumeIdentityInput
+func NewAccountCompleteAssumeIdentityInput() *AccountCompleteAssumeIdentityInput {
+	s := &AccountCompleteAssumeIdentityInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountCompleteAssumeIdentityInput struct
+type AccountCompleteAssumeIdentityInput struct {
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+	Code        string `json:"code,omitempty" yaml:"code,omitempty"`
+}
+
+// GetAccountName returns the value for the field accountName
+func (e *AccountCompleteAssumeIdentityInput) GetAccountName() string {
+	return e.AccountName
+}
+
+// SetAccountName sets the value for the field accountName
+func (e *AccountCompleteAssumeIdentityInput) SetAccountName(accountName string) {
+	e.AccountName = accountName
+}
+
+// GetCode returns the value for the field code
+func (e *AccountCompleteAssumeIdentityInput) GetCode() string {
+	return e.Code
+}
+
+// SetCode sets the value for the field code
+func (e *AccountCompleteAssumeIdentityInput) SetCode(code string) {
+	e.Code = code
+}
+
+// StructPath returns StructPath
+func (e *AccountCompleteAssumeIdentityInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCompleteAssumeIdentityInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCompleteAssumeIdentityInput) InitializeDefaults() {
+}
+
+// accountCompleteAssumeIdentityInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCompleteAssumeIdentityInputAlias AccountCompleteAssumeIdentityInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCompleteAssumeIdentityInput) UnmarshalJSON(data []byte) error {
+	var alias accountCompleteAssumeIdentityInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCompleteAssumeIdentityInput)(&alias)).InitializeDefaults()
+	*e = AccountCompleteAssumeIdentityInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCompleteAssumeIdentityInput) MarshalJSON() ([]byte, error) {
+	alias := accountCompleteAssumeIdentityInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountCompleteAssumeIdentityOutput creates a new AccountCompleteAssumeIdentityOutput
+func NewAccountCompleteAssumeIdentityOutput() *AccountCompleteAssumeIdentityOutput {
+	s := &AccountCompleteAssumeIdentityOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountCompleteAssumeIdentityOutput struct
+type AccountCompleteAssumeIdentityOutput struct {
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
+}
+
+// GetCredentials returns the value for the field credentials
+func (e *AccountCompleteAssumeIdentityOutput) GetCredentials() *Credentials {
+	return e.Credentials
+}
+
+// SetCredentials sets the value for the field credentials
+func (e *AccountCompleteAssumeIdentityOutput) SetCredentials(credentials *Credentials) {
+	e.Credentials = credentials
+}
+
+// StructPath returns StructPath
+func (e *AccountCompleteAssumeIdentityOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCompleteAssumeIdentityOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCompleteAssumeIdentityOutput) InitializeDefaults() {
+}
+
+// accountCompleteAssumeIdentityOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCompleteAssumeIdentityOutputAlias AccountCompleteAssumeIdentityOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCompleteAssumeIdentityOutput) UnmarshalJSON(data []byte) error {
+	var alias accountCompleteAssumeIdentityOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCompleteAssumeIdentityOutput)(&alias)).InitializeDefaults()
+	*e = AccountCompleteAssumeIdentityOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCompleteAssumeIdentityOutput) MarshalJSON() ([]byte, error) {
+	alias := accountCompleteAssumeIdentityOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem creates a new AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
+func NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem() *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem {
+	s := &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem struct
+type AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem]
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) Is(err error) bool {
+	_, ok := err.(*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem)
+	return ok
+}
+
+// IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem]
+func IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem(err error) bool {
+	return errors.Is(err, &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem{})
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) InitializeDefaults() {
+}
+
+// accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) UnmarshalJSON(data []byte) error {
+	var alias accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem)(&alias)).InitializeDefaults()
+	*e = AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) MarshalJSON() ([]byte, error) {
+	alias := accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -1891,6 +3069,620 @@ func (e AccountSSOAutoJoinPolicyEnableOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountOIDCProviderCreateInput creates a new AccountOIDCProviderCreateInput
+func NewAccountOIDCProviderCreateInput() *AccountOIDCProviderCreateInput {
+	s := &AccountOIDCProviderCreateInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderCreateInput struct
+type AccountOIDCProviderCreateInput struct {
+	// Allowlist of accepted token aud values. Opaque identifiers, not
+	// URLs; e.g. iam.deployport.io. See the operation docs.
+	Audiences []string `json:"audiences,omitempty" yaml:"audiences,omitempty"`
+	IssuerURL string   `json:"issuerURL,omitempty" yaml:"issuerURL,omitempty"`
+	Name      string   `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetAudiences returns the value for the field audiences
+func (e *AccountOIDCProviderCreateInput) GetAudiences() []string {
+	return e.Audiences
+}
+
+// SetAudiences sets the value for the field audiences
+func (e *AccountOIDCProviderCreateInput) SetAudiences(audiences []string) {
+	e.Audiences = audiences
+}
+
+// GetIssuerURL returns the value for the field issuerURL
+func (e *AccountOIDCProviderCreateInput) GetIssuerURL() string {
+	return e.IssuerURL
+}
+
+// SetIssuerURL sets the value for the field issuerURL
+func (e *AccountOIDCProviderCreateInput) SetIssuerURL(issuerURL string) {
+	e.IssuerURL = issuerURL
+}
+
+// GetName returns the value for the field name
+func (e *AccountOIDCProviderCreateInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountOIDCProviderCreateInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderCreateInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderCreateInput) InitializeDefaults() {
+}
+
+// accountOIDCProviderCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderCreateInputAlias AccountOIDCProviderCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderCreateInput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderCreateInput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderCreateInput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderCreateOutput creates a new AccountOIDCProviderCreateOutput
+func NewAccountOIDCProviderCreateOutput() *AccountOIDCProviderCreateOutput {
+	s := &AccountOIDCProviderCreateOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderCreateOutput struct
+type AccountOIDCProviderCreateOutput struct {
+	Provider *OIDCProvider `json:"provider,omitempty" yaml:"provider,omitempty"`
+}
+
+// GetProvider returns the value for the field provider
+func (e *AccountOIDCProviderCreateOutput) GetProvider() *OIDCProvider {
+	return e.Provider
+}
+
+// SetProvider sets the value for the field provider
+func (e *AccountOIDCProviderCreateOutput) SetProvider(provider *OIDCProvider) {
+	e.Provider = provider
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderCreateOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderCreateOutput) InitializeDefaults() {
+}
+
+// accountOIDCProviderCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderCreateOutputAlias AccountOIDCProviderCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderCreateOutput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderSetAudiencesInput creates a new AccountOIDCProviderSetAudiencesInput
+func NewAccountOIDCProviderSetAudiencesInput() *AccountOIDCProviderSetAudiencesInput {
+	s := &AccountOIDCProviderSetAudiencesInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderSetAudiencesInput struct
+type AccountOIDCProviderSetAudiencesInput struct {
+	Audiences []string `json:"audiences,omitempty" yaml:"audiences,omitempty"`
+	Name      string   `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetAudiences returns the value for the field audiences
+func (e *AccountOIDCProviderSetAudiencesInput) GetAudiences() []string {
+	return e.Audiences
+}
+
+// SetAudiences sets the value for the field audiences
+func (e *AccountOIDCProviderSetAudiencesInput) SetAudiences(audiences []string) {
+	e.Audiences = audiences
+}
+
+// GetName returns the value for the field name
+func (e *AccountOIDCProviderSetAudiencesInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountOIDCProviderSetAudiencesInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderSetAudiencesInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderSetAudiencesInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderSetAudiencesInput) InitializeDefaults() {
+}
+
+// accountOIDCProviderSetAudiencesInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderSetAudiencesInputAlias AccountOIDCProviderSetAudiencesInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderSetAudiencesInput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderSetAudiencesInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderSetAudiencesInput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderSetAudiencesInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderSetAudiencesInput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderSetAudiencesInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderSetAudiencesOutput creates a new AccountOIDCProviderSetAudiencesOutput
+func NewAccountOIDCProviderSetAudiencesOutput() *AccountOIDCProviderSetAudiencesOutput {
+	s := &AccountOIDCProviderSetAudiencesOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderSetAudiencesOutput struct
+type AccountOIDCProviderSetAudiencesOutput struct {
+	Provider *OIDCProvider `json:"provider,omitempty" yaml:"provider,omitempty"`
+}
+
+// GetProvider returns the value for the field provider
+func (e *AccountOIDCProviderSetAudiencesOutput) GetProvider() *OIDCProvider {
+	return e.Provider
+}
+
+// SetProvider sets the value for the field provider
+func (e *AccountOIDCProviderSetAudiencesOutput) SetProvider(provider *OIDCProvider) {
+	e.Provider = provider
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderSetAudiencesOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderSetAudiencesOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderSetAudiencesOutput) InitializeDefaults() {
+}
+
+// accountOIDCProviderSetAudiencesOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderSetAudiencesOutputAlias AccountOIDCProviderSetAudiencesOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderSetAudiencesOutput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderSetAudiencesOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderSetAudiencesOutput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderSetAudiencesOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderSetAudiencesOutput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderSetAudiencesOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderListInput creates a new AccountOIDCProviderListInput
+func NewAccountOIDCProviderListInput() *AccountOIDCProviderListInput {
+	s := &AccountOIDCProviderListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderListInput struct
+type AccountOIDCProviderListInput struct {
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderListInput) InitializeDefaults() {
+}
+
+// accountOIDCProviderListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderListInputAlias AccountOIDCProviderListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderListInput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderListInput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderListInput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderListOutput creates a new AccountOIDCProviderListOutput
+func NewAccountOIDCProviderListOutput() *AccountOIDCProviderListOutput {
+	s := &AccountOIDCProviderListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderListOutput struct
+type AccountOIDCProviderListOutput struct {
+	Providers []*OIDCProvider `json:"providers,omitempty" yaml:"providers,omitempty"`
+}
+
+// GetProviders returns the value for the field providers
+func (e *AccountOIDCProviderListOutput) GetProviders() []*OIDCProvider {
+	return e.Providers
+}
+
+// SetProviders sets the value for the field providers
+func (e *AccountOIDCProviderListOutput) SetProviders(providers []*OIDCProvider) {
+	e.Providers = providers
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderListOutput) InitializeDefaults() {
+}
+
+// accountOIDCProviderListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderListOutputAlias AccountOIDCProviderListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderListOutput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderListOutput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderListOutput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderDeleteInput creates a new AccountOIDCProviderDeleteInput
+func NewAccountOIDCProviderDeleteInput() *AccountOIDCProviderDeleteInput {
+	s := &AccountOIDCProviderDeleteInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderDeleteInput struct
+type AccountOIDCProviderDeleteInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *AccountOIDCProviderDeleteInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountOIDCProviderDeleteInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderDeleteInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderDeleteInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderDeleteInput) InitializeDefaults() {
+}
+
+// accountOIDCProviderDeleteInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderDeleteInputAlias AccountOIDCProviderDeleteInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderDeleteInput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderDeleteInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderDeleteInput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderDeleteInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderDeleteInput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderDeleteInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderDeleteOutput creates a new AccountOIDCProviderDeleteOutput
+func NewAccountOIDCProviderDeleteOutput() *AccountOIDCProviderDeleteOutput {
+	s := &AccountOIDCProviderDeleteOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderDeleteOutput struct
+type AccountOIDCProviderDeleteOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderDeleteOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderDeleteOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderDeleteOutput) InitializeDefaults() {
+}
+
+// accountOIDCProviderDeleteOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderDeleteOutputAlias AccountOIDCProviderDeleteOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderDeleteOutput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderDeleteOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderDeleteOutput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderDeleteOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderDeleteOutput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderDeleteOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderTrustPolicyListInput creates a new AccountOIDCProviderTrustPolicyListInput
+func NewAccountOIDCProviderTrustPolicyListInput() *AccountOIDCProviderTrustPolicyListInput {
+	s := &AccountOIDCProviderTrustPolicyListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderTrustPolicyListInput struct
+type AccountOIDCProviderTrustPolicyListInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *AccountOIDCProviderTrustPolicyListInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountOIDCProviderTrustPolicyListInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderTrustPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderTrustPolicyListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderTrustPolicyListInput) InitializeDefaults() {
+}
+
+// accountOIDCProviderTrustPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderTrustPolicyListInputAlias AccountOIDCProviderTrustPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderTrustPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderTrustPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderTrustPolicyListInput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderTrustPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderTrustPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderTrustPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountOIDCProviderTrustPolicyListOutput creates a new AccountOIDCProviderTrustPolicyListOutput
+func NewAccountOIDCProviderTrustPolicyListOutput() *AccountOIDCProviderTrustPolicyListOutput {
+	s := &AccountOIDCProviderTrustPolicyListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountOIDCProviderTrustPolicyListOutput struct
+type AccountOIDCProviderTrustPolicyListOutput struct {
+	TrustPolicies []*TrustPolicy `json:"trustPolicies,omitempty" yaml:"trustPolicies,omitempty"`
+}
+
+// GetTrustPolicies returns the value for the field trustPolicies
+func (e *AccountOIDCProviderTrustPolicyListOutput) GetTrustPolicies() []*TrustPolicy {
+	return e.TrustPolicies
+}
+
+// SetTrustPolicies sets the value for the field trustPolicies
+func (e *AccountOIDCProviderTrustPolicyListOutput) SetTrustPolicies(trustPolicies []*TrustPolicy) {
+	e.TrustPolicies = trustPolicies
+}
+
+// StructPath returns StructPath
+func (e *AccountOIDCProviderTrustPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountOIDCProviderTrustPolicyListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountOIDCProviderTrustPolicyListOutput) InitializeDefaults() {
+}
+
+// accountOIDCProviderTrustPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountOIDCProviderTrustPolicyListOutputAlias AccountOIDCProviderTrustPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountOIDCProviderTrustPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias accountOIDCProviderTrustPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountOIDCProviderTrustPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = AccountOIDCProviderTrustPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountOIDCProviderTrustPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := accountOIDCProviderTrustPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRegionListInput creates a new RegionListInput
+func NewRegionListInput() *RegionListInput {
+	s := &RegionListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RegionListInput struct
+type RegionListInput struct {
+}
+
+// StructPath returns StructPath
+func (e *RegionListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRegionListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RegionListInput) InitializeDefaults() {
+}
+
+// regionListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type regionListInputAlias RegionListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RegionListInput) UnmarshalJSON(data []byte) error {
+	var alias regionListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RegionListInput)(&alias)).InitializeDefaults()
+	*e = RegionListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RegionListInput) MarshalJSON() ([]byte, error) {
+	alias := regionListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRegionListOutput creates a new RegionListOutput
+func NewRegionListOutput() *RegionListOutput {
+	s := &RegionListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RegionListOutput struct
+type RegionListOutput struct {
+	Regions []*RegionInfo `json:"regions,omitempty" yaml:"regions,omitempty"`
+}
+
+// GetRegions returns the value for the field regions
+func (e *RegionListOutput) GetRegions() []*RegionInfo {
+	return e.Regions
+}
+
+// SetRegions sets the value for the field regions
+func (e *RegionListOutput) SetRegions(regions []*RegionInfo) {
+	e.Regions = regions
+}
+
+// StructPath returns StructPath
+func (e *RegionListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRegionListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RegionListOutput) InitializeDefaults() {
+}
+
+// regionListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type regionListOutputAlias RegionListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RegionListOutput) UnmarshalJSON(data []byte) error {
+	var alias regionListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RegionListOutput)(&alias)).InitializeDefaults()
+	*e = RegionListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RegionListOutput) MarshalJSON() ([]byte, error) {
+	alias := regionListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInvalidUsernameProblem creates a new InvalidUsernameProblem
 func NewInvalidUsernameProblem() *InvalidUsernameProblem {
 	s := &InvalidUsernameProblem{}
@@ -2086,6 +3878,10 @@ func NewCredentialInfo() *CredentialInfo {
 // CredentialInfo struct
 type CredentialInfo struct {
 	AccessKeyID string `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
+	// when the access key was created
+	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// when the access key was last used to authenticate, unset if has never been used
+	LastActivityAt *time.Time `json:"lastActivityAt,omitempty" yaml:"lastActivityAt,omitempty"`
 }
 
 // GetAccessKeyID returns the value for the field accessKeyID
@@ -2096,6 +3892,26 @@ func (e *CredentialInfo) GetAccessKeyID() string {
 // SetAccessKeyID sets the value for the field accessKeyID
 func (e *CredentialInfo) SetAccessKeyID(accessKeyID string) {
 	e.AccessKeyID = accessKeyID
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *CredentialInfo) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *CredentialInfo) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
+}
+
+// GetLastActivityAt returns the value for the field lastActivityAt
+func (e *CredentialInfo) GetLastActivityAt() *time.Time {
+	return e.LastActivityAt
+}
+
+// SetLastActivityAt sets the value for the field lastActivityAt
+func (e *CredentialInfo) SetLastActivityAt(lastActivityAt *time.Time) {
+	e.LastActivityAt = lastActivityAt
 }
 
 // StructPath returns StructPath
@@ -2215,10 +4031,14 @@ func NewIdentityPolicy() *IdentityPolicy {
 
 // IdentityPolicy struct
 type IdentityPolicy struct {
-	Builtin          bool                       `json:"builtin,omitempty" yaml:"builtin,omitempty"`
-	DefinitionHuJSON []byte                     `json:"definitionHuJSON,omitempty" yaml:"definitionHuJSON,omitempty"`
-	Name             string                     `json:"name,omitempty" yaml:"name,omitempty"`
-	Statements       []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+	Builtin bool `json:"builtin,omitempty" yaml:"builtin,omitempty"`
+	// when the user-defined policy was created
+	CreatedAt        *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	DefinitionHuJSON []byte     `json:"definitionHuJSON,omitempty" yaml:"definitionHuJSON,omitempty"`
+	// DRN of this policy, e.g. iam:IdentityPolicy(read-only)
+	Drn        string                     `json:"drn,omitempty" yaml:"drn,omitempty"`
+	Name       string                     `json:"name,omitempty" yaml:"name,omitempty"`
+	Statements []*IdentityPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
 }
 
 // GetBuiltin returns the value for the field builtin
@@ -2231,6 +4051,16 @@ func (e *IdentityPolicy) SetBuiltin(builtin bool) {
 	e.Builtin = builtin
 }
 
+// GetCreatedAt returns the value for the field createdAt
+func (e *IdentityPolicy) GetCreatedAt() *time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *IdentityPolicy) SetCreatedAt(createdAt *time.Time) {
+	e.CreatedAt = createdAt
+}
+
 // GetDefinitionHuJSON returns the value for the field definitionHuJSON
 func (e *IdentityPolicy) GetDefinitionHuJSON() []byte {
 	return e.DefinitionHuJSON
@@ -2239,6 +4069,16 @@ func (e *IdentityPolicy) GetDefinitionHuJSON() []byte {
 // SetDefinitionHuJSON sets the value for the field definitionHuJSON
 func (e *IdentityPolicy) SetDefinitionHuJSON(definitionHuJSON []byte) {
 	e.DefinitionHuJSON = definitionHuJSON
+}
+
+// GetDrn returns the value for the field drn
+func (e *IdentityPolicy) GetDrn() string {
+	return e.Drn
+}
+
+// SetDrn sets the value for the field drn
+func (e *IdentityPolicy) SetDrn(drn string) {
+	e.Drn = drn
 }
 
 // GetName returns the value for the field name
@@ -2299,8 +4139,20 @@ func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 
 // IdentityPolicyAttachment struct
 type IdentityPolicyAttachment struct {
-	PolicyName string `json:"policyName,omitempty" yaml:"policyName,omitempty"`
-	TargetDRN  string `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
+	// when the policy was attached to the target
+	CreatedAt  time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	PolicyName string    `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	TargetDRN  string    `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *IdentityPolicyAttachment) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *IdentityPolicyAttachment) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
 }
 
 // GetPolicyName returns the value for the field policyName
@@ -2349,6 +4201,81 @@ func (e *IdentityPolicyAttachment) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e IdentityPolicyAttachment) MarshalJSON() ([]byte, error) {
 	alias := identityPolicyAttachmentAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewIdentityPolicyAttachmentInfo creates a new IdentityPolicyAttachmentInfo
+func NewIdentityPolicyAttachmentInfo() *IdentityPolicyAttachmentInfo {
+	s := &IdentityPolicyAttachmentInfo{}
+	s.InitializeDefaults()
+	return s
+}
+
+// IdentityPolicyAttachmentInfo - Describes a policy attached to a user or role, including when it was attached.
+type IdentityPolicyAttachmentInfo struct {
+	// whether the attached policy is a builtin policy
+	Builtin bool `json:"builtin,omitempty" yaml:"builtin,omitempty"`
+	// when the policy was attached to the user or role
+	CreatedAt  time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	PolicyName string    `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+}
+
+// GetBuiltin returns the value for the field builtin
+func (e *IdentityPolicyAttachmentInfo) GetBuiltin() bool {
+	return e.Builtin
+}
+
+// SetBuiltin sets the value for the field builtin
+func (e *IdentityPolicyAttachmentInfo) SetBuiltin(builtin bool) {
+	e.Builtin = builtin
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *IdentityPolicyAttachmentInfo) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *IdentityPolicyAttachmentInfo) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
+}
+
+// GetPolicyName returns the value for the field policyName
+func (e *IdentityPolicyAttachmentInfo) GetPolicyName() string {
+	return e.PolicyName
+}
+
+// SetPolicyName sets the value for the field policyName
+func (e *IdentityPolicyAttachmentInfo) SetPolicyName(policyName string) {
+	e.PolicyName = policyName
+}
+
+// StructPath returns StructPath
+func (e *IdentityPolicyAttachmentInfo) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityPolicyAttachmentInfo.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *IdentityPolicyAttachmentInfo) InitializeDefaults() {
+}
+
+// identityPolicyAttachmentInfoAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityPolicyAttachmentInfoAlias IdentityPolicyAttachmentInfo
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *IdentityPolicyAttachmentInfo) UnmarshalJSON(data []byte) error {
+	var alias identityPolicyAttachmentInfoAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*IdentityPolicyAttachmentInfo)(&alias)).InitializeDefaults()
+	*e = IdentityPolicyAttachmentInfo(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e IdentityPolicyAttachmentInfo) MarshalJSON() ([]byte, error) {
+	alias := identityPolicyAttachmentInfoAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3576,16 +5503,16 @@ func NewUserIdentityPolicyListOutput() *UserIdentityPolicyListOutput {
 
 // UserIdentityPolicyListOutput struct
 type UserIdentityPolicyListOutput struct {
-	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty" yaml:"attachments,omitempty"`
+	Attachments []*IdentityPolicyAttachmentInfo `json:"attachments,omitempty" yaml:"attachments,omitempty"`
 }
 
 // GetAttachments returns the value for the field attachments
-func (e *UserIdentityPolicyListOutput) GetAttachments() []*IdentityPolicyAttachment {
+func (e *UserIdentityPolicyListOutput) GetAttachments() []*IdentityPolicyAttachmentInfo {
 	return e.Attachments
 }
 
 // SetAttachments sets the value for the field attachments
-func (e *UserIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPolicyAttachment) {
+func (e *UserIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPolicyAttachmentInfo) {
 	e.Attachments = attachments
 }
 
@@ -4363,6 +6290,155 @@ func (e RoleAssumeOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewRoleAssumeWithWebIdentityInput creates a new RoleAssumeWithWebIdentityInput
+func NewRoleAssumeWithWebIdentityInput() *RoleAssumeWithWebIdentityInput {
+	s := &RoleAssumeWithWebIdentityInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleAssumeWithWebIdentityInput struct
+type RoleAssumeWithWebIdentityInput struct {
+	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+	// duration in seconds for the assumed role
+	DurationSeconds *int32 `json:"durationSeconds,omitempty" yaml:"durationSeconds,omitempty"`
+	// optional inline policy to narrow the assumed session (must be a subset)
+	InlinePolicy *InlinePolicy `json:"inlinePolicy,omitempty" yaml:"inlinePolicy,omitempty"`
+	RoleName     string        `json:"roleName,omitempty" yaml:"roleName,omitempty"`
+	// the external OIDC JWT
+	WebIdentityToken string `json:"webIdentityToken,omitempty" yaml:"webIdentityToken,omitempty"`
+}
+
+// GetAccountName returns the value for the field accountName
+func (e *RoleAssumeWithWebIdentityInput) GetAccountName() string {
+	return e.AccountName
+}
+
+// SetAccountName sets the value for the field accountName
+func (e *RoleAssumeWithWebIdentityInput) SetAccountName(accountName string) {
+	e.AccountName = accountName
+}
+
+// GetDurationSeconds returns the value for the field durationSeconds
+func (e *RoleAssumeWithWebIdentityInput) GetDurationSeconds() *int32 {
+	return e.DurationSeconds
+}
+
+// SetDurationSeconds sets the value for the field durationSeconds
+func (e *RoleAssumeWithWebIdentityInput) SetDurationSeconds(durationSeconds *int32) {
+	e.DurationSeconds = durationSeconds
+}
+
+// GetInlinePolicy returns the value for the field inlinePolicy
+func (e *RoleAssumeWithWebIdentityInput) GetInlinePolicy() *InlinePolicy {
+	return e.InlinePolicy
+}
+
+// SetInlinePolicy sets the value for the field inlinePolicy
+func (e *RoleAssumeWithWebIdentityInput) SetInlinePolicy(inlinePolicy *InlinePolicy) {
+	e.InlinePolicy = inlinePolicy
+}
+
+// GetRoleName returns the value for the field roleName
+func (e *RoleAssumeWithWebIdentityInput) GetRoleName() string {
+	return e.RoleName
+}
+
+// SetRoleName sets the value for the field roleName
+func (e *RoleAssumeWithWebIdentityInput) SetRoleName(roleName string) {
+	e.RoleName = roleName
+}
+
+// GetWebIdentityToken returns the value for the field webIdentityToken
+func (e *RoleAssumeWithWebIdentityInput) GetWebIdentityToken() string {
+	return e.WebIdentityToken
+}
+
+// SetWebIdentityToken sets the value for the field webIdentityToken
+func (e *RoleAssumeWithWebIdentityInput) SetWebIdentityToken(webIdentityToken string) {
+	e.WebIdentityToken = webIdentityToken
+}
+
+// StructPath returns StructPath
+func (e *RoleAssumeWithWebIdentityInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleAssumeWithWebIdentityInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleAssumeWithWebIdentityInput) InitializeDefaults() {
+}
+
+// roleAssumeWithWebIdentityInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleAssumeWithWebIdentityInputAlias RoleAssumeWithWebIdentityInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleAssumeWithWebIdentityInput) UnmarshalJSON(data []byte) error {
+	var alias roleAssumeWithWebIdentityInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleAssumeWithWebIdentityInput)(&alias)).InitializeDefaults()
+	*e = RoleAssumeWithWebIdentityInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleAssumeWithWebIdentityInput) MarshalJSON() ([]byte, error) {
+	alias := roleAssumeWithWebIdentityInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleAssumeWithWebIdentityOutput creates a new RoleAssumeWithWebIdentityOutput
+func NewRoleAssumeWithWebIdentityOutput() *RoleAssumeWithWebIdentityOutput {
+	s := &RoleAssumeWithWebIdentityOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleAssumeWithWebIdentityOutput struct
+type RoleAssumeWithWebIdentityOutput struct {
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
+}
+
+// GetCredentials returns the value for the field credentials
+func (e *RoleAssumeWithWebIdentityOutput) GetCredentials() *Credentials {
+	return e.Credentials
+}
+
+// SetCredentials sets the value for the field credentials
+func (e *RoleAssumeWithWebIdentityOutput) SetCredentials(credentials *Credentials) {
+	e.Credentials = credentials
+}
+
+// StructPath returns StructPath
+func (e *RoleAssumeWithWebIdentityOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleAssumeWithWebIdentityOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleAssumeWithWebIdentityOutput) InitializeDefaults() {
+}
+
+// roleAssumeWithWebIdentityOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleAssumeWithWebIdentityOutputAlias RoleAssumeWithWebIdentityOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleAssumeWithWebIdentityOutput) UnmarshalJSON(data []byte) error {
+	var alias roleAssumeWithWebIdentityOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleAssumeWithWebIdentityOutput)(&alias)).InitializeDefaults()
+	*e = RoleAssumeWithWebIdentityOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleAssumeWithWebIdentityOutput) MarshalJSON() ([]byte, error) {
+	alias := roleAssumeWithWebIdentityOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewRoleIdentityPolicyAttachInput creates a new RoleIdentityPolicyAttachInput
 func NewRoleIdentityPolicyAttachInput() *RoleIdentityPolicyAttachInput {
 	s := &RoleIdentityPolicyAttachInput{}
@@ -4525,16 +6601,16 @@ func NewRoleIdentityPolicyListOutput() *RoleIdentityPolicyListOutput {
 
 // RoleIdentityPolicyListOutput struct
 type RoleIdentityPolicyListOutput struct {
-	Attachments []*IdentityPolicyAttachment `json:"attachments,omitempty" yaml:"attachments,omitempty"`
+	Attachments []*IdentityPolicyAttachmentInfo `json:"attachments,omitempty" yaml:"attachments,omitempty"`
 }
 
 // GetAttachments returns the value for the field attachments
-func (e *RoleIdentityPolicyListOutput) GetAttachments() []*IdentityPolicyAttachment {
+func (e *RoleIdentityPolicyListOutput) GetAttachments() []*IdentityPolicyAttachmentInfo {
 	return e.Attachments
 }
 
 // SetAttachments sets the value for the field attachments
-func (e *RoleIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPolicyAttachment) {
+func (e *RoleIdentityPolicyListOutput) SetAttachments(attachments []*IdentityPolicyAttachmentInfo) {
 	e.Attachments = attachments
 }
 
@@ -4666,6 +6742,312 @@ func (e *RoleIdentityPolicyDetachOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e RoleIdentityPolicyDetachOutput) MarshalJSON() ([]byte, error) {
 	alias := roleIdentityPolicyDetachOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyAttachInput creates a new RoleTrustPolicyAttachInput
+func NewRoleTrustPolicyAttachInput() *RoleTrustPolicyAttachInput {
+	s := &RoleTrustPolicyAttachInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyAttachInput struct
+type RoleTrustPolicyAttachInput struct {
+	RoleName        string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
+	TrustPolicyName string `json:"trustPolicyName,omitempty" yaml:"trustPolicyName,omitempty"`
+}
+
+// GetRoleName returns the value for the field roleName
+func (e *RoleTrustPolicyAttachInput) GetRoleName() string {
+	return e.RoleName
+}
+
+// SetRoleName sets the value for the field roleName
+func (e *RoleTrustPolicyAttachInput) SetRoleName(roleName string) {
+	e.RoleName = roleName
+}
+
+// GetTrustPolicyName returns the value for the field trustPolicyName
+func (e *RoleTrustPolicyAttachInput) GetTrustPolicyName() string {
+	return e.TrustPolicyName
+}
+
+// SetTrustPolicyName sets the value for the field trustPolicyName
+func (e *RoleTrustPolicyAttachInput) SetTrustPolicyName(trustPolicyName string) {
+	e.TrustPolicyName = trustPolicyName
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyAttachInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyAttachInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyAttachInput) InitializeDefaults() {
+}
+
+// roleTrustPolicyAttachInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyAttachInputAlias RoleTrustPolicyAttachInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyAttachInput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyAttachInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyAttachInput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyAttachInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyAttachInput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyAttachInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyAttachOutput creates a new RoleTrustPolicyAttachOutput
+func NewRoleTrustPolicyAttachOutput() *RoleTrustPolicyAttachOutput {
+	s := &RoleTrustPolicyAttachOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyAttachOutput struct
+type RoleTrustPolicyAttachOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyAttachOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyAttachOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyAttachOutput) InitializeDefaults() {
+}
+
+// roleTrustPolicyAttachOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyAttachOutputAlias RoleTrustPolicyAttachOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyAttachOutput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyAttachOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyAttachOutput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyAttachOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyAttachOutput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyAttachOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyListInput creates a new RoleTrustPolicyListInput
+func NewRoleTrustPolicyListInput() *RoleTrustPolicyListInput {
+	s := &RoleTrustPolicyListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyListInput struct
+type RoleTrustPolicyListInput struct {
+	RoleName string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
+}
+
+// GetRoleName returns the value for the field roleName
+func (e *RoleTrustPolicyListInput) GetRoleName() string {
+	return e.RoleName
+}
+
+// SetRoleName sets the value for the field roleName
+func (e *RoleTrustPolicyListInput) SetRoleName(roleName string) {
+	e.RoleName = roleName
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyListInput) InitializeDefaults() {
+}
+
+// roleTrustPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyListInputAlias RoleTrustPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyListInput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyListOutput creates a new RoleTrustPolicyListOutput
+func NewRoleTrustPolicyListOutput() *RoleTrustPolicyListOutput {
+	s := &RoleTrustPolicyListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyListOutput struct
+type RoleTrustPolicyListOutput struct {
+	TrustPolicies []*TrustPolicy `json:"trustPolicies,omitempty" yaml:"trustPolicies,omitempty"`
+}
+
+// GetTrustPolicies returns the value for the field trustPolicies
+func (e *RoleTrustPolicyListOutput) GetTrustPolicies() []*TrustPolicy {
+	return e.TrustPolicies
+}
+
+// SetTrustPolicies sets the value for the field trustPolicies
+func (e *RoleTrustPolicyListOutput) SetTrustPolicies(trustPolicies []*TrustPolicy) {
+	e.TrustPolicies = trustPolicies
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyListOutput) InitializeDefaults() {
+}
+
+// roleTrustPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyListOutputAlias RoleTrustPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyDetachInput creates a new RoleTrustPolicyDetachInput
+func NewRoleTrustPolicyDetachInput() *RoleTrustPolicyDetachInput {
+	s := &RoleTrustPolicyDetachInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyDetachInput struct
+type RoleTrustPolicyDetachInput struct {
+	RoleName        string `json:"roleName,omitempty" yaml:"roleName,omitempty"`
+	TrustPolicyName string `json:"trustPolicyName,omitempty" yaml:"trustPolicyName,omitempty"`
+}
+
+// GetRoleName returns the value for the field roleName
+func (e *RoleTrustPolicyDetachInput) GetRoleName() string {
+	return e.RoleName
+}
+
+// SetRoleName sets the value for the field roleName
+func (e *RoleTrustPolicyDetachInput) SetRoleName(roleName string) {
+	e.RoleName = roleName
+}
+
+// GetTrustPolicyName returns the value for the field trustPolicyName
+func (e *RoleTrustPolicyDetachInput) GetTrustPolicyName() string {
+	return e.TrustPolicyName
+}
+
+// SetTrustPolicyName sets the value for the field trustPolicyName
+func (e *RoleTrustPolicyDetachInput) SetTrustPolicyName(trustPolicyName string) {
+	e.TrustPolicyName = trustPolicyName
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyDetachInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyDetachInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyDetachInput) InitializeDefaults() {
+}
+
+// roleTrustPolicyDetachInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyDetachInputAlias RoleTrustPolicyDetachInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyDetachInput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyDetachInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyDetachInput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyDetachInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyDetachInput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyDetachInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewRoleTrustPolicyDetachOutput creates a new RoleTrustPolicyDetachOutput
+func NewRoleTrustPolicyDetachOutput() *RoleTrustPolicyDetachOutput {
+	s := &RoleTrustPolicyDetachOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// RoleTrustPolicyDetachOutput struct
+type RoleTrustPolicyDetachOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *RoleTrustPolicyDetachOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleTrustPolicyDetachOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *RoleTrustPolicyDetachOutput) InitializeDefaults() {
+}
+
+// roleTrustPolicyDetachOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleTrustPolicyDetachOutputAlias RoleTrustPolicyDetachOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *RoleTrustPolicyDetachOutput) UnmarshalJSON(data []byte) error {
+	var alias roleTrustPolicyDetachOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*RoleTrustPolicyDetachOutput)(&alias)).InitializeDefaults()
+	*e = RoleTrustPolicyDetachOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e RoleTrustPolicyDetachOutput) MarshalJSON() ([]byte, error) {
+	alias := roleTrustPolicyDetachOutputAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -5256,6 +7638,539 @@ func (e *IdentityPolicyAttachmentListOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e IdentityPolicyAttachmentListOutput) MarshalJSON() ([]byte, error) {
 	alias := identityPolicyAttachmentListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyCreateInput creates a new TrustPolicyCreateInput
+func NewTrustPolicyCreateInput() *TrustPolicyCreateInput {
+	s := &TrustPolicyCreateInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyCreateInput struct
+type TrustPolicyCreateInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+	// DRN of the trusted principal, e.g. "iam:OIDCProvider(github-actions)"
+	Principal  string                  `json:"principal,omitempty" yaml:"principal,omitempty"`
+	Statements []*TrustPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicyCreateInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicyCreateInput) SetName(name string) {
+	e.Name = name
+}
+
+// GetPrincipal returns the value for the field principal
+func (e *TrustPolicyCreateInput) GetPrincipal() string {
+	return e.Principal
+}
+
+// SetPrincipal sets the value for the field principal
+func (e *TrustPolicyCreateInput) SetPrincipal(principal string) {
+	e.Principal = principal
+}
+
+// GetStatements returns the value for the field statements
+func (e *TrustPolicyCreateInput) GetStatements() []*TrustPolicyStatement {
+	return e.Statements
+}
+
+// SetStatements sets the value for the field statements
+func (e *TrustPolicyCreateInput) SetStatements(statements []*TrustPolicyStatement) {
+	e.Statements = statements
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyCreateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyCreateInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyCreateInput) InitializeDefaults() {
+}
+
+// trustPolicyCreateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyCreateInputAlias TrustPolicyCreateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyCreateInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyCreateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyCreateInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyCreateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyCreateInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyCreateInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyCreateOutput creates a new TrustPolicyCreateOutput
+func NewTrustPolicyCreateOutput() *TrustPolicyCreateOutput {
+	s := &TrustPolicyCreateOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyCreateOutput struct
+type TrustPolicyCreateOutput struct {
+	TrustPolicy *TrustPolicy `json:"trustPolicy,omitempty" yaml:"trustPolicy,omitempty"`
+}
+
+// GetTrustPolicy returns the value for the field trustPolicy
+func (e *TrustPolicyCreateOutput) GetTrustPolicy() *TrustPolicy {
+	return e.TrustPolicy
+}
+
+// SetTrustPolicy sets the value for the field trustPolicy
+func (e *TrustPolicyCreateOutput) SetTrustPolicy(trustPolicy *TrustPolicy) {
+	e.TrustPolicy = trustPolicy
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyCreateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyCreateOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyCreateOutput) InitializeDefaults() {
+}
+
+// trustPolicyCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyCreateOutputAlias TrustPolicyCreateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyCreateOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyCreateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyCreateOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyCreateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyCreateOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyCreateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyRetrieveInput creates a new TrustPolicyRetrieveInput
+func NewTrustPolicyRetrieveInput() *TrustPolicyRetrieveInput {
+	s := &TrustPolicyRetrieveInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyRetrieveInput struct
+type TrustPolicyRetrieveInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicyRetrieveInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicyRetrieveInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyRetrieveInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyRetrieveInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyRetrieveInput) InitializeDefaults() {
+}
+
+// trustPolicyRetrieveInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyRetrieveInputAlias TrustPolicyRetrieveInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyRetrieveInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyRetrieveInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyRetrieveInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyRetrieveInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyRetrieveInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyRetrieveInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyRetrieveOutput creates a new TrustPolicyRetrieveOutput
+func NewTrustPolicyRetrieveOutput() *TrustPolicyRetrieveOutput {
+	s := &TrustPolicyRetrieveOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyRetrieveOutput struct
+type TrustPolicyRetrieveOutput struct {
+	TrustPolicy *TrustPolicy `json:"trustPolicy,omitempty" yaml:"trustPolicy,omitempty"`
+}
+
+// GetTrustPolicy returns the value for the field trustPolicy
+func (e *TrustPolicyRetrieveOutput) GetTrustPolicy() *TrustPolicy {
+	return e.TrustPolicy
+}
+
+// SetTrustPolicy sets the value for the field trustPolicy
+func (e *TrustPolicyRetrieveOutput) SetTrustPolicy(trustPolicy *TrustPolicy) {
+	e.TrustPolicy = trustPolicy
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyRetrieveOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyRetrieveOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyRetrieveOutput) InitializeDefaults() {
+}
+
+// trustPolicyRetrieveOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyRetrieveOutputAlias TrustPolicyRetrieveOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyRetrieveOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyRetrieveOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyRetrieveOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyRetrieveOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyRetrieveOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyRetrieveOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyListInput creates a new TrustPolicyListInput
+func NewTrustPolicyListInput() *TrustPolicyListInput {
+	s := &TrustPolicyListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyListInput struct
+type TrustPolicyListInput struct {
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyListInput) InitializeDefaults() {
+}
+
+// trustPolicyListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyListInputAlias TrustPolicyListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyListInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyListInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyListInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyListOutput creates a new TrustPolicyListOutput
+func NewTrustPolicyListOutput() *TrustPolicyListOutput {
+	s := &TrustPolicyListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyListOutput struct
+type TrustPolicyListOutput struct {
+	TrustPolicies []*TrustPolicy `json:"trustPolicies,omitempty" yaml:"trustPolicies,omitempty"`
+}
+
+// GetTrustPolicies returns the value for the field trustPolicies
+func (e *TrustPolicyListOutput) GetTrustPolicies() []*TrustPolicy {
+	return e.TrustPolicies
+}
+
+// SetTrustPolicies sets the value for the field trustPolicies
+func (e *TrustPolicyListOutput) SetTrustPolicies(trustPolicies []*TrustPolicy) {
+	e.TrustPolicies = trustPolicies
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyListOutput) InitializeDefaults() {
+}
+
+// trustPolicyListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyListOutputAlias TrustPolicyListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyListOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyListOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyListOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyUpdateInput creates a new TrustPolicyUpdateInput
+func NewTrustPolicyUpdateInput() *TrustPolicyUpdateInput {
+	s := &TrustPolicyUpdateInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyUpdateInput struct
+type TrustPolicyUpdateInput struct {
+	Name       string                  `json:"name,omitempty" yaml:"name,omitempty"`
+	Principal  string                  `json:"principal,omitempty" yaml:"principal,omitempty"`
+	Statements []*TrustPolicyStatement `json:"statements,omitempty" yaml:"statements,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicyUpdateInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicyUpdateInput) SetName(name string) {
+	e.Name = name
+}
+
+// GetPrincipal returns the value for the field principal
+func (e *TrustPolicyUpdateInput) GetPrincipal() string {
+	return e.Principal
+}
+
+// SetPrincipal sets the value for the field principal
+func (e *TrustPolicyUpdateInput) SetPrincipal(principal string) {
+	e.Principal = principal
+}
+
+// GetStatements returns the value for the field statements
+func (e *TrustPolicyUpdateInput) GetStatements() []*TrustPolicyStatement {
+	return e.Statements
+}
+
+// SetStatements sets the value for the field statements
+func (e *TrustPolicyUpdateInput) SetStatements(statements []*TrustPolicyStatement) {
+	e.Statements = statements
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyUpdateInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyUpdateInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyUpdateInput) InitializeDefaults() {
+}
+
+// trustPolicyUpdateInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyUpdateInputAlias TrustPolicyUpdateInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyUpdateInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyUpdateInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyUpdateInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyUpdateInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyUpdateInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyUpdateInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyUpdateOutput creates a new TrustPolicyUpdateOutput
+func NewTrustPolicyUpdateOutput() *TrustPolicyUpdateOutput {
+	s := &TrustPolicyUpdateOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyUpdateOutput struct
+type TrustPolicyUpdateOutput struct {
+	TrustPolicy *TrustPolicy `json:"trustPolicy,omitempty" yaml:"trustPolicy,omitempty"`
+}
+
+// GetTrustPolicy returns the value for the field trustPolicy
+func (e *TrustPolicyUpdateOutput) GetTrustPolicy() *TrustPolicy {
+	return e.TrustPolicy
+}
+
+// SetTrustPolicy sets the value for the field trustPolicy
+func (e *TrustPolicyUpdateOutput) SetTrustPolicy(trustPolicy *TrustPolicy) {
+	e.TrustPolicy = trustPolicy
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyUpdateOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyUpdateOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyUpdateOutput) InitializeDefaults() {
+}
+
+// trustPolicyUpdateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyUpdateOutputAlias TrustPolicyUpdateOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyUpdateOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyUpdateOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyUpdateOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyUpdateOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyUpdateOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyUpdateOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyDestroyInput creates a new TrustPolicyDestroyInput
+func NewTrustPolicyDestroyInput() *TrustPolicyDestroyInput {
+	s := &TrustPolicyDestroyInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyDestroyInput struct
+type TrustPolicyDestroyInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicyDestroyInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicyDestroyInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyDestroyInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyDestroyInput) InitializeDefaults() {
+}
+
+// trustPolicyDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyDestroyInputAlias TrustPolicyDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyDestroyInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyDestroyOutput creates a new TrustPolicyDestroyOutput
+func NewTrustPolicyDestroyOutput() *TrustPolicyDestroyOutput {
+	s := &TrustPolicyDestroyOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyDestroyOutput struct
+type TrustPolicyDestroyOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyDestroyOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyDestroyOutput) InitializeDefaults() {
+}
+
+// trustPolicyDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyDestroyOutputAlias TrustPolicyDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyDestroyOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyDestroyOutputAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -6775,6 +9690,35 @@ func (e InternalServicesAssertQueryReplacementProblem) MarshalJSON() ([]byte, er
 	return json.Marshal(alias)
 }
 
+// TrustStatementEffect entity
+// Effect of a trust-policy statement. Deny overrides Allow.
+type TrustStatementEffect string
+
+// TrustStatementEffectAllow = "allow"
+const TrustStatementEffectAllow TrustStatementEffect = "allow"
+
+// TrustStatementEffectDeny = "deny"
+const TrustStatementEffectDeny TrustStatementEffect = "deny"
+
+// String returns the string representation of the enum
+func (en TrustStatementEffect) String() string {
+	return string(en)
+}
+
+// Optional returns the optional value
+func (en TrustStatementEffect) Optional() *TrustStatementEffect {
+	c := en
+	return &c
+}
+
+// TrustStatementEffectAllConstants returns all constants in enum TrustStatementEffect
+func TrustStatementEffectAllConstants() []TrustStatementEffect {
+	return []TrustStatementEffect{
+		TrustStatementEffectAllow,
+		TrustStatementEffectDeny,
+	}
+}
+
 // PolicyStatementEffect entity
 type PolicyStatementEffect string
 
@@ -6894,6 +9838,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathRegionEndpoint, err = pk.NewType(
+		"RegionEndpoint",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRegionEndpoint()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRegionInfo, err = pk.NewType(
+		"RegionInfo",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRegionInfo()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathAccountSSOProvider, err = pk.NewType(
 		"AccountSSOProvider",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -6916,6 +9878,96 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"AccountSSOAutoJoinPolicy",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountSSOAutoJoinPolicy()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathOIDCProvider, err = pk.NewType(
+		"OIDCProvider",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewOIDCProvider()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidOIDCProviderProblem, err = pk.NewType(
+		"InvalidOIDCProviderProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidOIDCProviderProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidOIDCIssuerProblem, err = pk.NewType(
+		"InvalidOIDCIssuerProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidOIDCIssuerProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathOIDCProviderNotFoundProblem, err = pk.NewType(
+		"OIDCProviderNotFoundProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewOIDCProviderNotFoundProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathOIDCProviderInUseProblem, err = pk.NewType(
+		"OIDCProviderInUseProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewOIDCProviderInUseProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyStatement, err = pk.NewType(
+		"TrustPolicyStatement",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyStatement()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicy, err = pk.NewType(
+		"TrustPolicy",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicy()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidTrustPolicyProblem, err = pk.NewType(
+		"InvalidTrustPolicyProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidTrustPolicyProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyNotFoundProblem, err = pk.NewType(
+		"TrustPolicyNotFoundProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyNotFoundProblem()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidWebIdentityTokenProblem, err = pk.NewType(
+		"InvalidWebIdentityTokenProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidWebIdentityTokenProblem()
 		}),
 	)
 	if err != nil {
@@ -6961,6 +10013,51 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"AccountAssumeIdentityOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountAssumeIdentityOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountBeginAssumeIdentityInput, err = pk.NewType(
+		"AccountBeginAssumeIdentityInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountBeginAssumeIdentityInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountBeginAssumeIdentityOutput, err = pk.NewType(
+		"AccountBeginAssumeIdentityOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountBeginAssumeIdentityOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountCompleteAssumeIdentityInput, err = pk.NewType(
+		"AccountCompleteAssumeIdentityInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountCompleteAssumeIdentityInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountCompleteAssumeIdentityOutput, err = pk.NewType(
+		"AccountCompleteAssumeIdentityOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountCompleteAssumeIdentityOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem, err = pk.NewType(
+		"AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem()
 		}),
 	)
 	if err != nil {
@@ -7092,6 +10189,114 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathAccountOIDCProviderCreateInput, err = pk.NewType(
+		"AccountOIDCProviderCreateInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderCreateInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderCreateOutput, err = pk.NewType(
+		"AccountOIDCProviderCreateOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderCreateOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderSetAudiencesInput, err = pk.NewType(
+		"AccountOIDCProviderSetAudiencesInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderSetAudiencesInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderSetAudiencesOutput, err = pk.NewType(
+		"AccountOIDCProviderSetAudiencesOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderSetAudiencesOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderListInput, err = pk.NewType(
+		"AccountOIDCProviderListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderListOutput, err = pk.NewType(
+		"AccountOIDCProviderListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderDeleteInput, err = pk.NewType(
+		"AccountOIDCProviderDeleteInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderDeleteInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderDeleteOutput, err = pk.NewType(
+		"AccountOIDCProviderDeleteOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderDeleteOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderTrustPolicyListInput, err = pk.NewType(
+		"AccountOIDCProviderTrustPolicyListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderTrustPolicyListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountOIDCProviderTrustPolicyListOutput, err = pk.NewType(
+		"AccountOIDCProviderTrustPolicyListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountOIDCProviderTrustPolicyListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRegionListInput, err = pk.NewType(
+		"RegionListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRegionListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRegionListOutput, err = pk.NewType(
+		"RegionListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRegionListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathInvalidUsernameProblem, err = pk.NewType(
 		"InvalidUsernameProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -7150,6 +10355,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"IdentityPolicyAttachment",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyAttachment()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathIdentityPolicyAttachmentInfo, err = pk.NewType(
+		"IdentityPolicyAttachmentInfo",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewIdentityPolicyAttachmentInfo()
 		}),
 	)
 	if err != nil {
@@ -7497,6 +10711,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathRoleAssumeWithWebIdentityInput, err = pk.NewType(
+		"RoleAssumeWithWebIdentityInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleAssumeWithWebIdentityInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleAssumeWithWebIdentityOutput, err = pk.NewType(
+		"RoleAssumeWithWebIdentityOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleAssumeWithWebIdentityOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathRoleIdentityPolicyAttachInput, err = pk.NewType(
 		"RoleIdentityPolicyAttachInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -7546,6 +10778,60 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"RoleIdentityPolicyDetachOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewRoleIdentityPolicyDetachOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyAttachInput, err = pk.NewType(
+		"RoleTrustPolicyAttachInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyAttachInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyAttachOutput, err = pk.NewType(
+		"RoleTrustPolicyAttachOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyAttachOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyListInput, err = pk.NewType(
+		"RoleTrustPolicyListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyListOutput, err = pk.NewType(
+		"RoleTrustPolicyListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyDetachInput, err = pk.NewType(
+		"RoleTrustPolicyDetachInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyDetachInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathRoleTrustPolicyDetachOutput, err = pk.NewType(
+		"RoleTrustPolicyDetachOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewRoleTrustPolicyDetachOutput()
 		}),
 	)
 	if err != nil {
@@ -7654,6 +10940,96 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"IdentityPolicyAttachmentListOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewIdentityPolicyAttachmentListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyCreateInput, err = pk.NewType(
+		"TrustPolicyCreateInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyCreateInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyCreateOutput, err = pk.NewType(
+		"TrustPolicyCreateOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyCreateOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyRetrieveInput, err = pk.NewType(
+		"TrustPolicyRetrieveInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyRetrieveInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyRetrieveOutput, err = pk.NewType(
+		"TrustPolicyRetrieveOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyRetrieveOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyListInput, err = pk.NewType(
+		"TrustPolicyListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyListOutput, err = pk.NewType(
+		"TrustPolicyListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyUpdateInput, err = pk.NewType(
+		"TrustPolicyUpdateInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyUpdateInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyUpdateOutput, err = pk.NewType(
+		"TrustPolicyUpdateOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyUpdateOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyDestroyInput, err = pk.NewType(
+		"TrustPolicyDestroyInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyDestroyInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyDestroyOutput, err = pk.NewType(
+		"TrustPolicyDestroyOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyDestroyOutput()
 		}),
 	)
 	if err != nil {
@@ -7906,6 +11282,28 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccount.NewOperation("BeginAssumeIdentity")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountBeginAssumeIdentityInputStruct())
+	op.SetOutput(SpecularMeta().AccountBeginAssumeIdentityInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccount.NewOperation("CompleteAssumeIdentity")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountCompleteAssumeIdentityInputStruct())
+	op.SetOutput(SpecularMeta().AccountCompleteAssumeIdentityInputStruct())
+	op.RegisterProblemType(SpecularMeta().AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct())
+
 	// subresource AccountSSO
 	resAccountSSO, err := resAccount.NewSubResource("SSO")
 	if err != nil {
@@ -7980,8 +11378,103 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().AccountSSOAutoJoinPolicyEnableInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	// subresource AccountOIDCProvider
+	resAccountOIDCProvider, err := resAccount.NewSubResource("OIDCProvider")
+	if err != nil {
+		return nil, err
+	}
+	_ = resAccountOIDCProvider
+
+	op, err = resAccountOIDCProvider.NewOperation("Create")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountOIDCProviderCreateInputStruct())
+	op.SetOutput(SpecularMeta().AccountOIDCProviderCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCIssuerProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccountOIDCProvider.NewOperation("SetAudiences")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountOIDCProviderSetAudiencesInputStruct())
+	op.SetOutput(SpecularMeta().AccountOIDCProviderSetAudiencesInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccountOIDCProvider.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountOIDCProviderListInputStruct())
+	op.SetOutput(SpecularMeta().AccountOIDCProviderListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccountOIDCProvider.NewOperation("Delete")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountOIDCProviderDeleteInputStruct())
+	op.SetOutput(SpecularMeta().AccountOIDCProviderDeleteInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderInUseProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+	// subresource AccountOIDCProviderTrustPolicy
+	resAccountOIDCProviderTrustPolicy, err := resAccountOIDCProvider.NewSubResource("TrustPolicy")
+	if err != nil {
+		return nil, err
+	}
+	_ = resAccountOIDCProviderTrustPolicy
+
+	op, err = resAccountOIDCProviderTrustPolicy.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountOIDCProviderTrustPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().AccountOIDCProviderTrustPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	resRegion, err := pk.NewResource("Region")
+	if err != nil {
+		return nil, err
+	}
+	_ = resRegion
+
+	op, err = resRegion.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RegionListInputStruct())
+	op.SetOutput(SpecularMeta().RegionListInputStruct())
 
 	resUser, err := pk.NewResource("User")
 	if err != nil {
@@ -8024,6 +11517,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().IdentityInUseProblemStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -8065,6 +11559,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().UserAccessKeyCreateInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -8202,8 +11697,21 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRole.NewOperation("AssumeWithWebIdentity")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleAssumeWithWebIdentityInputStruct())
+	op.SetOutput(SpecularMeta().RoleAssumeWithWebIdentityInputStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidWebIdentityTokenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
 	// subresource RoleIdentityPolicy
 	resRoleIdentityPolicy, err := resRole.NewSubResource("IdentityPolicy")
 	if err != nil {
@@ -8247,6 +11755,54 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	// subresource RoleTrustPolicy
+	resRoleTrustPolicy, err := resRole.NewSubResource("TrustPolicy")
+	if err != nil {
+		return nil, err
+	}
+	_ = resRoleTrustPolicy
+
+	op, err = resRoleTrustPolicy.NewOperation("Attach")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleTrustPolicyAttachInputStruct())
+	op.SetOutput(SpecularMeta().RoleTrustPolicyAttachInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRoleTrustPolicy.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleTrustPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().RoleTrustPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resRoleTrustPolicy.NewOperation("Detach")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().RoleTrustPolicyDetachInputStruct())
+	op.SetOutput(SpecularMeta().RoleTrustPolicyDetachInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
 	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
@@ -8336,6 +11892,77 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	resTrustPolicy, err := pk.NewResource("TrustPolicy")
+	if err != nil {
+		return nil, err
+	}
+	_ = resTrustPolicy
+
+	op, err = resTrustPolicy.NewOperation("Create")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyCreateInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyCreateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resTrustPolicy.NewOperation("Retrieve")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyRetrieveInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyRetrieveInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resTrustPolicy.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyListInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyListInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resTrustPolicy.NewOperation("Update")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyUpdateInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyUpdateInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resTrustPolicy.NewOperation("Destroy")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyDestroyInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -8431,11 +12058,14 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 // AccountResourceClient is the AccountResourceClient resource client
 type AccountResourceClient struct {
-	transport      clientruntime.Transport
-	res            *clientruntime.Resource
-	SSO            *AccountSSOResourceClient
-	create         *clientruntime.Operation
-	assumeIdentity *clientruntime.Operation
+	transport              clientruntime.Transport
+	res                    *clientruntime.Resource
+	SSO                    *AccountSSOResourceClient
+	OIDCProvider           *AccountOIDCProviderResourceClient
+	create                 *clientruntime.Operation
+	assumeIdentity         *clientruntime.Operation
+	beginAssumeIdentity    *clientruntime.Operation
+	completeAssumeIdentity *clientruntime.Operation
 }
 
 func newAccountResourceClient(
@@ -8452,8 +12082,14 @@ func newAccountResourceClient(
 	if err != nil {
 		return nil, err
 	}
+	r.OIDCProvider, err = newAccountOIDCProviderResourceClient(transport, res)
+	if err != nil {
+		return nil, err
+	}
 	r.create = res.FindOperation("Create")
 	r.assumeIdentity = res.FindOperation("AssumeIdentity")
+	r.beginAssumeIdentity = res.FindOperation("BeginAssumeIdentity")
+	r.completeAssumeIdentity = res.FindOperation("CompleteAssumeIdentity")
 	return r, nil
 }
 
@@ -8481,6 +12117,37 @@ func (res *AccountResourceClient) AssumeIdentity(ctx context.Context, input *Acc
 		return nil, err
 	}
 	output := o.(*AccountAssumeIdentityOutput)
+	return output, nil
+}
+
+// BeginAssumeIdentity - Begins a cross-domain identity assumption. Authorizes the caller to assume
+// into the given account and returns a single-use, short-lived opaque code to
+// be redeemed via CompleteAssumeIdentity on the target domain. No credentials
+// are minted until the code is redeemed.
+func (res *AccountResourceClient) BeginAssumeIdentity(ctx context.Context, input *AccountBeginAssumeIdentityInput) (*AccountBeginAssumeIdentityOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.beginAssumeIdentity,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountBeginAssumeIdentityOutput)
+	return output, nil
+}
+
+// CompleteAssumeIdentity - Public: redeems a code minted by BeginAssumeIdentity for the assumed
+// identity's credentials. Requires the target account name the code was issued
+// for. No authentication (the redeeming domain has no credentials yet).
+func (res *AccountResourceClient) CompleteAssumeIdentity(ctx context.Context, input *AccountCompleteAssumeIdentityInput) (*AccountCompleteAssumeIdentityOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.completeAssumeIdentity,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountCompleteAssumeIdentityOutput)
 	return output, nil
 }
 
@@ -8605,7 +12272,9 @@ func (res *AccountSSOAutoJoinPolicyResourceClient) List(ctx context.Context, inp
 	return output, nil
 }
 
-// Enable - Enables the auto-join policy
+// Enable - Enables or disables the auto-join policy. Policies are never deleted
+// (users admitted by a policy stay tied to it for audit), so disabling
+// is how a policy is retired.
 func (res *AccountSSOAutoJoinPolicyResourceClient) Enable(ctx context.Context, input *AccountSSOAutoJoinPolicyEnableInput) (*AccountSSOAutoJoinPolicyEnableOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.enable,
@@ -8615,6 +12284,169 @@ func (res *AccountSSOAutoJoinPolicyResourceClient) Enable(ctx context.Context, i
 		return nil, err
 	}
 	output := o.(*AccountSSOAutoJoinPolicyEnableOutput)
+	return output, nil
+}
+
+// AccountOIDCProviderResourceClient is the AccountOIDCProviderResourceClient resource client
+type AccountOIDCProviderResourceClient struct {
+	transport    clientruntime.Transport
+	res          *clientruntime.Resource
+	TrustPolicy  *AccountOIDCProviderTrustPolicyResourceClient
+	create       *clientruntime.Operation
+	setAudiences *clientruntime.Operation
+	list         *clientruntime.Operation
+	delete       *clientruntime.Operation
+}
+
+func newAccountOIDCProviderResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*AccountOIDCProviderResourceClient, error) {
+	res := finder.FindResource("OIDCProvider")
+	r := &AccountOIDCProviderResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	var err error
+	r.TrustPolicy, err = newAccountOIDCProviderTrustPolicyResourceClient(transport, res)
+	if err != nil {
+		return nil, err
+	}
+	r.create = res.FindOperation("Create")
+	r.setAudiences = res.FindOperation("SetAudiences")
+	r.list = res.FindOperation("List")
+	r.delete = res.FindOperation("Delete")
+	return r, nil
+}
+
+// Create - Registers an external OIDC identity provider in the current account. The
+// issuer is probed via OIDC discovery to confirm it is reachable.
+// audiences is the allowlist matched (exact, case-sensitive) against the
+// token aud claim. It is an opaque identifier, not a URL: pick a stable
+// value that identifies this IAM and set the same value as the token
+// audience in your workload. We suggest iam.deployport.io.
+// Requires permission action iam:CreateOIDCProvider over resource iam:OIDCProvider(<name>)
+func (res *AccountOIDCProviderResourceClient) Create(ctx context.Context, input *AccountOIDCProviderCreateInput) (*AccountOIDCProviderCreateOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.create,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountOIDCProviderCreateOutput)
+	return output, nil
+}
+
+// SetAudiences - Replaces the audience allowlist of an existing OIDC provider. The issuer is
+// immutable; only the audiences change. Trust policies reference the provider
+// by name, so their attachments are unaffected.
+// Requires permission action iam:UpdateOIDCProvider over resource iam:OIDCProvider(<name>)
+func (res *AccountOIDCProviderResourceClient) SetAudiences(ctx context.Context, input *AccountOIDCProviderSetAudiencesInput) (*AccountOIDCProviderSetAudiencesOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.setAudiences,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountOIDCProviderSetAudiencesOutput)
+	return output, nil
+}
+
+// List - Lists the OIDC identity providers registered in the current account.
+// Requires permission action iam:ListOIDCProviders over resource iam:OIDCProvider
+func (res *AccountOIDCProviderResourceClient) List(ctx context.Context, input *AccountOIDCProviderListInput) (*AccountOIDCProviderListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountOIDCProviderListOutput)
+	return output, nil
+}
+
+// Delete - Deletes an OIDC identity provider. Fails if a trust policy still references it.
+// Requires permission action iam:DeleteOIDCProvider over resource iam:OIDCProvider(<name>)
+func (res *AccountOIDCProviderResourceClient) Delete(ctx context.Context, input *AccountOIDCProviderDeleteInput) (*AccountOIDCProviderDeleteOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.delete,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountOIDCProviderDeleteOutput)
+	return output, nil
+}
+
+// AccountOIDCProviderTrustPolicyResourceClient is the AccountOIDCProviderTrustPolicyResourceClient resource client
+type AccountOIDCProviderTrustPolicyResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	list      *clientruntime.Operation
+}
+
+func newAccountOIDCProviderTrustPolicyResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*AccountOIDCProviderTrustPolicyResourceClient, error) {
+	res := finder.FindResource("TrustPolicy")
+	r := &AccountOIDCProviderTrustPolicyResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.list = res.FindOperation("List")
+	return r, nil
+}
+
+// List - Lists the trust policies whose principal is iam:OIDCProvider(<name>).
+// Requires permission action iam:ListTrustPolicies over resource iam:OIDCProvider(<name>)
+func (res *AccountOIDCProviderTrustPolicyResourceClient) List(ctx context.Context, input *AccountOIDCProviderTrustPolicyListInput) (*AccountOIDCProviderTrustPolicyListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountOIDCProviderTrustPolicyListOutput)
+	return output, nil
+}
+
+// RegionResourceClient is the RegionResourceClient resource client
+type RegionResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	list      *clientruntime.Operation
+}
+
+func newRegionResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*RegionResourceClient, error) {
+	res := finder.FindResource("Region")
+	r := &RegionResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.list = res.FindOperation("List")
+	return r, nil
+}
+
+// List - Returns the list of available regions and their service endpoints.
+// This is a public operation that does not require any authentication.
+func (res *RegionResourceClient) List(ctx context.Context, input *RegionListInput) (*RegionListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RegionListOutput)
 	return output, nil
 }
 
@@ -8860,14 +12692,16 @@ func (res *UserIdentityPolicyResourceClient) Detach(ctx context.Context, input *
 
 // RoleResourceClient is the RoleResourceClient resource client
 type RoleResourceClient struct {
-	transport      clientruntime.Transport
-	res            *clientruntime.Resource
-	IdentityPolicy *RoleIdentityPolicyResourceClient
-	create         *clientruntime.Operation
-	get            *clientruntime.Operation
-	destroy        *clientruntime.Operation
-	list           *clientruntime.Operation
-	assume         *clientruntime.Operation
+	transport             clientruntime.Transport
+	res                   *clientruntime.Resource
+	IdentityPolicy        *RoleIdentityPolicyResourceClient
+	TrustPolicy           *RoleTrustPolicyResourceClient
+	create                *clientruntime.Operation
+	get                   *clientruntime.Operation
+	destroy               *clientruntime.Operation
+	list                  *clientruntime.Operation
+	assume                *clientruntime.Operation
+	assumeWithWebIdentity *clientruntime.Operation
 }
 
 func newRoleResourceClient(
@@ -8884,11 +12718,16 @@ func newRoleResourceClient(
 	if err != nil {
 		return nil, err
 	}
+	r.TrustPolicy, err = newRoleTrustPolicyResourceClient(transport, res)
+	if err != nil {
+		return nil, err
+	}
 	r.create = res.FindOperation("Create")
 	r.get = res.FindOperation("Get")
 	r.destroy = res.FindOperation("Destroy")
 	r.list = res.FindOperation("List")
 	r.assume = res.FindOperation("Assume")
+	r.assumeWithWebIdentity = res.FindOperation("AssumeWithWebIdentity")
 	return r, nil
 }
 
@@ -8946,7 +12785,7 @@ func (res *RoleResourceClient) List(ctx context.Context, input *RoleListInput) (
 }
 
 // Assume - Returns credentials for the given assumed role
-// the caller needs to have permission of action iam:AssumeRole over resource iam:Role(<roleName>)
+// the caller needs to have permission of action iam:Assume over resource iam:Role(<roleName>)
 func (res *RoleResourceClient) Assume(ctx context.Context, input *RoleAssumeInput) (*RoleAssumeOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.assume,
@@ -8956,6 +12795,22 @@ func (res *RoleResourceClient) Assume(ctx context.Context, input *RoleAssumeInpu
 		return nil, err
 	}
 	output := o.(*RoleAssumeOutput)
+	return output, nil
+}
+
+// AssumeWithWebIdentity - Exchanges an external OIDC token for temporary credentials of the given role
+// (AWS AssumeRoleWithWebIdentity). Public: the token itself is the proof of
+// identity, no signed request is required. The role must have a trust policy
+// attached whose principal and conditions admit the token's claims.
+func (res *RoleResourceClient) AssumeWithWebIdentity(ctx context.Context, input *RoleAssumeWithWebIdentityInput) (*RoleAssumeWithWebIdentityOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.assumeWithWebIdentity,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleAssumeWithWebIdentityOutput)
 	return output, nil
 }
 
@@ -9022,6 +12877,73 @@ func (res *RoleIdentityPolicyResourceClient) Detach(ctx context.Context, input *
 		return nil, err
 	}
 	output := o.(*RoleIdentityPolicyDetachOutput)
+	return output, nil
+}
+
+// RoleTrustPolicyResourceClient is the RoleTrustPolicyResourceClient resource client
+type RoleTrustPolicyResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	attach    *clientruntime.Operation
+	list      *clientruntime.Operation
+	detach    *clientruntime.Operation
+}
+
+func newRoleTrustPolicyResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*RoleTrustPolicyResourceClient, error) {
+	res := finder.FindResource("TrustPolicy")
+	r := &RoleTrustPolicyResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.attach = res.FindOperation("Attach")
+	r.list = res.FindOperation("List")
+	r.detach = res.FindOperation("Detach")
+	return r, nil
+}
+
+// Attach - Attaches a trust policy to a role. The role accepts web-identity assumption
+// for any token admitted by an attached trust policy.
+// Requires permission action iam:AttachRoleTrustPolicy over resource iam:Role(<name>).TrustPolicy(<trustPolicyName>)
+func (res *RoleTrustPolicyResourceClient) Attach(ctx context.Context, input *RoleTrustPolicyAttachInput) (*RoleTrustPolicyAttachOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.attach,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleTrustPolicyAttachOutput)
+	return output, nil
+}
+
+// List - List returns the trust policies attached to a role.
+// Requires permission action iam:ListRoleTrustPolicies over resource iam:Role(<rolename>).TrustPolicy
+func (res *RoleTrustPolicyResourceClient) List(ctx context.Context, input *RoleTrustPolicyListInput) (*RoleTrustPolicyListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleTrustPolicyListOutput)
+	return output, nil
+}
+
+// Detach - Detaches a trust policy from a role.
+// Requires permission action iam:DetachRoleTrustPolicy over resource iam:Role(<name>).TrustPolicy(<trustPolicyName>)
+func (res *RoleTrustPolicyResourceClient) Detach(ctx context.Context, input *RoleTrustPolicyDetachInput) (*RoleTrustPolicyDetachOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.detach,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*RoleTrustPolicyDetachOutput)
 	return output, nil
 }
 
@@ -9158,6 +13080,102 @@ func (res *IdentityPolicyAttachmentResourceClient) List(ctx context.Context, inp
 		return nil, err
 	}
 	output := o.(*IdentityPolicyAttachmentListOutput)
+	return output, nil
+}
+
+// TrustPolicyResourceClient is the TrustPolicyResourceClient resource client
+type TrustPolicyResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	create    *clientruntime.Operation
+	retrieve  *clientruntime.Operation
+	list      *clientruntime.Operation
+	update    *clientruntime.Operation
+	destroy   *clientruntime.Operation
+}
+
+func newTrustPolicyResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*TrustPolicyResourceClient, error) {
+	res := finder.FindResource("TrustPolicy")
+	r := &TrustPolicyResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.create = res.FindOperation("Create")
+	r.retrieve = res.FindOperation("Retrieve")
+	r.list = res.FindOperation("List")
+	r.update = res.FindOperation("Update")
+	r.destroy = res.FindOperation("Destroy")
+	return r, nil
+}
+
+// Create - Creates a reusable trust policy for a single principal.
+// Requires permission action iam:CreateTrustPolicy over resource iam:TrustPolicy(<name>)
+func (res *TrustPolicyResourceClient) Create(ctx context.Context, input *TrustPolicyCreateInput) (*TrustPolicyCreateOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.create,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyCreateOutput)
+	return output, nil
+}
+
+// Retrieve - Retrieves a trust policy by name.
+func (res *TrustPolicyResourceClient) Retrieve(ctx context.Context, input *TrustPolicyRetrieveInput) (*TrustPolicyRetrieveOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.retrieve,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyRetrieveOutput)
+	return output, nil
+}
+
+// List - Lists the trust policies in the current account.
+func (res *TrustPolicyResourceClient) List(ctx context.Context, input *TrustPolicyListInput) (*TrustPolicyListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyListOutput)
+	return output, nil
+}
+
+// Update - Updates a trust policy's principal and statements.
+// Requires permission action iam:UpdateTrustPolicy over resource iam:TrustPolicy(<name>)
+func (res *TrustPolicyResourceClient) Update(ctx context.Context, input *TrustPolicyUpdateInput) (*TrustPolicyUpdateOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.update,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyUpdateOutput)
+	return output, nil
+}
+
+// Destroy - Destroys a trust policy. Any role attachments are removed.
+// Requires permission action iam:DestroyTrustPolicy over resource iam:TrustPolicy(<name>)
+func (res *TrustPolicyResourceClient) Destroy(ctx context.Context, input *TrustPolicyDestroyInput) (*TrustPolicyDestroyOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.destroy,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyDestroyOutput)
 	return output, nil
 }
 
@@ -9304,12 +13322,16 @@ type Client struct {
 	pk        *clientruntime.Package
 	// Account operations
 	Account *AccountResourceClient
+	// Region operations
+	Region *RegionResourceClient
 	// User operations
 	User *UserResourceClient
 	// Role operations
 	Role *RoleResourceClient
 	// IdentityPolicy operations
 	IdentityPolicy *IdentityPolicyResourceClient
+	// TrustPolicy operations
+	TrustPolicy *TrustPolicyResourceClient
 	// ServiceBearerToken - Service Bearer Tokens
 	ServiceBearerToken *ServiceBearerTokenResourceClient
 	// Internal - Internal operations exposed only to integrating services
@@ -9364,6 +13386,10 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.Region, err = newRegionResourceClient(transport, pk)
+	if err != nil {
+		return nil, err
+	}
 	c.User, err = newUserResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
@@ -9373,6 +13399,10 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 		return nil, err
 	}
 	c.IdentityPolicy, err = newIdentityPolicyResourceClient(transport, pk)
+	if err != nil {
+		return nil, err
+	}
+	c.TrustPolicy, err = newTrustPolicyResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
 	}
@@ -9412,14 +13442,31 @@ type SpecularMetaInfo struct {
 	structPathSSOProviderUnavailableProblem                                     *clientruntime.StructDefinition
 	structPathSSOFlow                                                           *clientruntime.StructDefinition
 	structPathAccount                                                           *clientruntime.StructDefinition
+	structPathRegionEndpoint                                                    *clientruntime.StructDefinition
+	structPathRegionInfo                                                        *clientruntime.StructDefinition
 	structPathAccountSSOProvider                                                *clientruntime.StructDefinition
 	structPathPolicyNotFoundProblem                                             *clientruntime.StructDefinition
 	structPathAccountSSOAutoJoinPolicy                                          *clientruntime.StructDefinition
+	structPathOIDCProvider                                                      *clientruntime.StructDefinition
+	structPathInvalidOIDCProviderProblem                                        *clientruntime.StructDefinition
+	structPathInvalidOIDCIssuerProblem                                          *clientruntime.StructDefinition
+	structPathOIDCProviderNotFoundProblem                                       *clientruntime.StructDefinition
+	structPathOIDCProviderInUseProblem                                          *clientruntime.StructDefinition
+	structPathTrustPolicyStatement                                              *clientruntime.StructDefinition
+	structPathTrustPolicy                                                       *clientruntime.StructDefinition
+	structPathInvalidTrustPolicyProblem                                         *clientruntime.StructDefinition
+	structPathTrustPolicyNotFoundProblem                                        *clientruntime.StructDefinition
+	structPathInvalidWebIdentityTokenProblem                                    *clientruntime.StructDefinition
 	structPathAccountCreateInput                                                *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                               *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameProblem                                   *clientruntime.StructDefinition
 	structPathAccountAssumeIdentityInput                                        *clientruntime.StructDefinition
 	structPathAccountAssumeIdentityOutput                                       *clientruntime.StructDefinition
+	structPathAccountBeginAssumeIdentityInput                                   *clientruntime.StructDefinition
+	structPathAccountBeginAssumeIdentityOutput                                  *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityInput                                *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityOutput                               *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem     *clientruntime.StructDefinition
 	structPathAccountSSOBeginAuthenticationInput                                *clientruntime.StructDefinition
 	structPathAccountSSOBeginAuthenticationOutput                               *clientruntime.StructDefinition
 	structPathAccountSSOBeginAuthenticationParameterProblem                     *clientruntime.StructDefinition
@@ -9434,6 +13481,18 @@ type SpecularMetaInfo struct {
 	structPathAccountSSOAutoJoinPolicyListOutput                                *clientruntime.StructDefinition
 	structPathAccountSSOAutoJoinPolicyEnableInput                               *clientruntime.StructDefinition
 	structPathAccountSSOAutoJoinPolicyEnableOutput                              *clientruntime.StructDefinition
+	structPathAccountOIDCProviderCreateInput                                    *clientruntime.StructDefinition
+	structPathAccountOIDCProviderCreateOutput                                   *clientruntime.StructDefinition
+	structPathAccountOIDCProviderSetAudiencesInput                              *clientruntime.StructDefinition
+	structPathAccountOIDCProviderSetAudiencesOutput                             *clientruntime.StructDefinition
+	structPathAccountOIDCProviderListInput                                      *clientruntime.StructDefinition
+	structPathAccountOIDCProviderListOutput                                     *clientruntime.StructDefinition
+	structPathAccountOIDCProviderDeleteInput                                    *clientruntime.StructDefinition
+	structPathAccountOIDCProviderDeleteOutput                                   *clientruntime.StructDefinition
+	structPathAccountOIDCProviderTrustPolicyListInput                           *clientruntime.StructDefinition
+	structPathAccountOIDCProviderTrustPolicyListOutput                          *clientruntime.StructDefinition
+	structPathRegionListInput                                                   *clientruntime.StructDefinition
+	structPathRegionListOutput                                                  *clientruntime.StructDefinition
 	structPathInvalidUsernameProblem                                            *clientruntime.StructDefinition
 	structPathInvalidRoleNameProblem                                            *clientruntime.StructDefinition
 	structPathMemberAccount                                                     *clientruntime.StructDefinition
@@ -9441,6 +13500,7 @@ type SpecularMetaInfo struct {
 	structPathIdentityPolicyStatement                                           *clientruntime.StructDefinition
 	structPathIdentityPolicy                                                    *clientruntime.StructDefinition
 	structPathIdentityPolicyAttachment                                          *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentInfo                                      *clientruntime.StructDefinition
 	structPathUserNotFoundProblem                                               *clientruntime.StructDefinition
 	structPathRoleNotFoundProblem                                               *clientruntime.StructDefinition
 	structPathIdentityInUseProblem                                              *clientruntime.StructDefinition
@@ -9479,12 +13539,20 @@ type SpecularMetaInfo struct {
 	structPathRoleListOutput                                                    *clientruntime.StructDefinition
 	structPathRoleAssumeInput                                                   *clientruntime.StructDefinition
 	structPathRoleAssumeOutput                                                  *clientruntime.StructDefinition
+	structPathRoleAssumeWithWebIdentityInput                                    *clientruntime.StructDefinition
+	structPathRoleAssumeWithWebIdentityOutput                                   *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyAttachInput                                     *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyAttachOutput                                    *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyListInput                                       *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyListOutput                                      *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyDetachInput                                     *clientruntime.StructDefinition
 	structPathRoleIdentityPolicyDetachOutput                                    *clientruntime.StructDefinition
+	structPathRoleTrustPolicyAttachInput                                        *clientruntime.StructDefinition
+	structPathRoleTrustPolicyAttachOutput                                       *clientruntime.StructDefinition
+	structPathRoleTrustPolicyListInput                                          *clientruntime.StructDefinition
+	structPathRoleTrustPolicyListOutput                                         *clientruntime.StructDefinition
+	structPathRoleTrustPolicyDetachInput                                        *clientruntime.StructDefinition
+	structPathRoleTrustPolicyDetachOutput                                       *clientruntime.StructDefinition
 	structPathIdentityPolicyCreateInput                                         *clientruntime.StructDefinition
 	structPathIdentityPolicyCreateOutput                                        *clientruntime.StructDefinition
 	structPathIdentityPolicyListInput                                           *clientruntime.StructDefinition
@@ -9497,6 +13565,16 @@ type SpecularMetaInfo struct {
 	structPathIdentityPolicyUpdateOutput                                        *clientruntime.StructDefinition
 	structPathIdentityPolicyAttachmentListInput                                 *clientruntime.StructDefinition
 	structPathIdentityPolicyAttachmentListOutput                                *clientruntime.StructDefinition
+	structPathTrustPolicyCreateInput                                            *clientruntime.StructDefinition
+	structPathTrustPolicyCreateOutput                                           *clientruntime.StructDefinition
+	structPathTrustPolicyRetrieveInput                                          *clientruntime.StructDefinition
+	structPathTrustPolicyRetrieveOutput                                         *clientruntime.StructDefinition
+	structPathTrustPolicyListInput                                              *clientruntime.StructDefinition
+	structPathTrustPolicyListOutput                                             *clientruntime.StructDefinition
+	structPathTrustPolicyUpdateInput                                            *clientruntime.StructDefinition
+	structPathTrustPolicyUpdateOutput                                           *clientruntime.StructDefinition
+	structPathTrustPolicyDestroyInput                                           *clientruntime.StructDefinition
+	structPathTrustPolicyDestroyOutput                                          *clientruntime.StructDefinition
 	structPathServiceBearerToken                                                *clientruntime.StructDefinition
 	structPathInvalidServiceBearerTokenDurationProblem                          *clientruntime.StructDefinition
 	structPathInvalidServiceNameProblem                                         *clientruntime.StructDefinition
@@ -9573,6 +13651,16 @@ func (m *SpecularMetaInfo) AccountStruct() *clientruntime.StructDefinition {
 	return m.structPathAccount
 }
 
+// RegionEndpointStruct allows easy access to structure
+func (m *SpecularMetaInfo) RegionEndpointStruct() *clientruntime.StructDefinition {
+	return m.structPathRegionEndpoint
+}
+
+// RegionInfoStruct allows easy access to structure
+func (m *SpecularMetaInfo) RegionInfoStruct() *clientruntime.StructDefinition {
+	return m.structPathRegionInfo
+}
+
 // AccountSSOProviderStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountSSOProviderStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOProvider
@@ -9586,6 +13674,56 @@ func (m *SpecularMetaInfo) PolicyNotFoundProblemStruct() *clientruntime.StructDe
 // AccountSSOAutoJoinPolicyStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountSSOAutoJoinPolicy
+}
+
+// OIDCProviderStruct allows easy access to structure
+func (m *SpecularMetaInfo) OIDCProviderStruct() *clientruntime.StructDefinition {
+	return m.structPathOIDCProvider
+}
+
+// InvalidOIDCProviderProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidOIDCProviderProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidOIDCProviderProblem
+}
+
+// InvalidOIDCIssuerProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidOIDCIssuerProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidOIDCIssuerProblem
+}
+
+// OIDCProviderNotFoundProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) OIDCProviderNotFoundProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathOIDCProviderNotFoundProblem
+}
+
+// OIDCProviderInUseProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) OIDCProviderInUseProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathOIDCProviderInUseProblem
+}
+
+// TrustPolicyStatementStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyStatementStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyStatement
+}
+
+// TrustPolicyStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicy
+}
+
+// InvalidTrustPolicyProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidTrustPolicyProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidTrustPolicyProblem
+}
+
+// TrustPolicyNotFoundProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyNotFoundProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyNotFoundProblem
+}
+
+// InvalidWebIdentityTokenProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidWebIdentityTokenProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidWebIdentityTokenProblem
 }
 
 // AccountCreateInputStruct allows easy access to structure
@@ -9611,6 +13749,31 @@ func (m *SpecularMetaInfo) AccountAssumeIdentityInputStruct() *clientruntime.Str
 // AccountAssumeIdentityOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountAssumeIdentityOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountAssumeIdentityOutput
+}
+
+// AccountBeginAssumeIdentityInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountBeginAssumeIdentityInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountBeginAssumeIdentityInput
+}
+
+// AccountBeginAssumeIdentityOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountBeginAssumeIdentityOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountBeginAssumeIdentityOutput
+}
+
+// AccountCompleteAssumeIdentityInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountCompleteAssumeIdentityInput
+}
+
+// AccountCompleteAssumeIdentityOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountCompleteAssumeIdentityOutput
+}
+
+// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
 }
 
 // AccountSSOBeginAuthenticationInputStruct allows easy access to structure
@@ -9683,6 +13846,66 @@ func (m *SpecularMetaInfo) AccountSSOAutoJoinPolicyEnableOutputStruct() *clientr
 	return m.structPathAccountSSOAutoJoinPolicyEnableOutput
 }
 
+// AccountOIDCProviderCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderCreateInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderCreateInput
+}
+
+// AccountOIDCProviderCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderCreateOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderCreateOutput
+}
+
+// AccountOIDCProviderSetAudiencesInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderSetAudiencesInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderSetAudiencesInput
+}
+
+// AccountOIDCProviderSetAudiencesOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderSetAudiencesOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderSetAudiencesOutput
+}
+
+// AccountOIDCProviderListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderListInput
+}
+
+// AccountOIDCProviderListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderListOutput
+}
+
+// AccountOIDCProviderDeleteInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderDeleteInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderDeleteInput
+}
+
+// AccountOIDCProviderDeleteOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderDeleteOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderDeleteOutput
+}
+
+// AccountOIDCProviderTrustPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderTrustPolicyListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderTrustPolicyListInput
+}
+
+// AccountOIDCProviderTrustPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountOIDCProviderTrustPolicyListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountOIDCProviderTrustPolicyListOutput
+}
+
+// RegionListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RegionListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRegionListInput
+}
+
+// RegionListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RegionListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRegionListOutput
+}
+
 // InvalidUsernameProblemStruct allows easy access to structure
 func (m *SpecularMetaInfo) InvalidUsernameProblemStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidUsernameProblem
@@ -9716,6 +13939,11 @@ func (m *SpecularMetaInfo) IdentityPolicyStruct() *clientruntime.StructDefinitio
 // IdentityPolicyAttachmentStruct allows easy access to structure
 func (m *SpecularMetaInfo) IdentityPolicyAttachmentStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyAttachment
+}
+
+// IdentityPolicyAttachmentInfoStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityPolicyAttachmentInfoStruct() *clientruntime.StructDefinition {
+	return m.structPathIdentityPolicyAttachmentInfo
 }
 
 // UserNotFoundProblemStruct allows easy access to structure
@@ -9908,6 +14136,16 @@ func (m *SpecularMetaInfo) RoleAssumeOutputStruct() *clientruntime.StructDefinit
 	return m.structPathRoleAssumeOutput
 }
 
+// RoleAssumeWithWebIdentityInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleAssumeWithWebIdentityInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleAssumeWithWebIdentityInput
+}
+
+// RoleAssumeWithWebIdentityOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleAssumeWithWebIdentityOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleAssumeWithWebIdentityOutput
+}
+
 // RoleIdentityPolicyAttachInputStruct allows easy access to structure
 func (m *SpecularMetaInfo) RoleIdentityPolicyAttachInputStruct() *clientruntime.StructDefinition {
 	return m.structPathRoleIdentityPolicyAttachInput
@@ -9936,6 +14174,36 @@ func (m *SpecularMetaInfo) RoleIdentityPolicyDetachInputStruct() *clientruntime.
 // RoleIdentityPolicyDetachOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) RoleIdentityPolicyDetachOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathRoleIdentityPolicyDetachOutput
+}
+
+// RoleTrustPolicyAttachInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyAttachInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyAttachInput
+}
+
+// RoleTrustPolicyAttachOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyAttachOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyAttachOutput
+}
+
+// RoleTrustPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyListInput
+}
+
+// RoleTrustPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyListOutput
+}
+
+// RoleTrustPolicyDetachInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyDetachInputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyDetachInput
+}
+
+// RoleTrustPolicyDetachOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleTrustPolicyDetachOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleTrustPolicyDetachOutput
 }
 
 // IdentityPolicyCreateInputStruct allows easy access to structure
@@ -9996,6 +14264,56 @@ func (m *SpecularMetaInfo) IdentityPolicyAttachmentListInputStruct() *clientrunt
 // IdentityPolicyAttachmentListOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) IdentityPolicyAttachmentListOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathIdentityPolicyAttachmentListOutput
+}
+
+// TrustPolicyCreateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyCreateInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyCreateInput
+}
+
+// TrustPolicyCreateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyCreateOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyCreateOutput
+}
+
+// TrustPolicyRetrieveInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyRetrieveInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyRetrieveInput
+}
+
+// TrustPolicyRetrieveOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyRetrieveOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyRetrieveOutput
+}
+
+// TrustPolicyListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyListInput
+}
+
+// TrustPolicyListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyListOutput
+}
+
+// TrustPolicyUpdateInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyUpdateInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyUpdateInput
+}
+
+// TrustPolicyUpdateOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyUpdateOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyUpdateOutput
+}
+
+// TrustPolicyDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyDestroyInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyDestroyInput
+}
+
+// TrustPolicyDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyDestroyOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyDestroyOutput
 }
 
 // ServiceBearerTokenStruct allows easy access to structure
