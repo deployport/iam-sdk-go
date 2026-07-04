@@ -1510,6 +1510,80 @@ func (e TrustPolicy) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewTrustPolicyAttachment creates a new TrustPolicyAttachment
+func NewTrustPolicyAttachment() *TrustPolicyAttachment {
+	s := &TrustPolicyAttachment{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyAttachment - A trust policy attached to a target (a role), including when it was attached.
+type TrustPolicyAttachment struct {
+	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// DRN of the target the policy is attached to, e.g. iam:Role(deployer)
+	TargetDRN       string `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
+	TrustPolicyName string `json:"trustPolicyName,omitempty" yaml:"trustPolicyName,omitempty"`
+}
+
+// GetCreatedAt returns the value for the field createdAt
+func (e *TrustPolicyAttachment) GetCreatedAt() time.Time {
+	return e.CreatedAt
+}
+
+// SetCreatedAt sets the value for the field createdAt
+func (e *TrustPolicyAttachment) SetCreatedAt(createdAt time.Time) {
+	e.CreatedAt = createdAt
+}
+
+// GetTargetDRN returns the value for the field targetDRN
+func (e *TrustPolicyAttachment) GetTargetDRN() string {
+	return e.TargetDRN
+}
+
+// SetTargetDRN sets the value for the field targetDRN
+func (e *TrustPolicyAttachment) SetTargetDRN(targetDRN string) {
+	e.TargetDRN = targetDRN
+}
+
+// GetTrustPolicyName returns the value for the field trustPolicyName
+func (e *TrustPolicyAttachment) GetTrustPolicyName() string {
+	return e.TrustPolicyName
+}
+
+// SetTrustPolicyName sets the value for the field trustPolicyName
+func (e *TrustPolicyAttachment) SetTrustPolicyName(trustPolicyName string) {
+	e.TrustPolicyName = trustPolicyName
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyAttachment) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyAttachment.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyAttachment) InitializeDefaults() {
+}
+
+// trustPolicyAttachmentAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyAttachmentAlias TrustPolicyAttachment
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyAttachment) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyAttachmentAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyAttachment)(&alias)).InitializeDefaults()
+	*e = TrustPolicyAttachment(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyAttachment) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyAttachmentAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInvalidTrustPolicyProblem creates a new InvalidTrustPolicyProblem
 func NewInvalidTrustPolicyProblem() *InvalidTrustPolicyProblem {
 	s := &InvalidTrustPolicyProblem{}
@@ -8174,6 +8248,108 @@ func (e TrustPolicyDestroyOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewTrustPolicyAttachmentListInput creates a new TrustPolicyAttachmentListInput
+func NewTrustPolicyAttachmentListInput() *TrustPolicyAttachmentListInput {
+	s := &TrustPolicyAttachmentListInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyAttachmentListInput struct
+type TrustPolicyAttachmentListInput struct {
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *TrustPolicyAttachmentListInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *TrustPolicyAttachmentListInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyAttachmentListInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyAttachmentListInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyAttachmentListInput) InitializeDefaults() {
+}
+
+// trustPolicyAttachmentListInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyAttachmentListInputAlias TrustPolicyAttachmentListInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyAttachmentListInput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyAttachmentListInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyAttachmentListInput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyAttachmentListInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyAttachmentListInput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyAttachmentListInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewTrustPolicyAttachmentListOutput creates a new TrustPolicyAttachmentListOutput
+func NewTrustPolicyAttachmentListOutput() *TrustPolicyAttachmentListOutput {
+	s := &TrustPolicyAttachmentListOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// TrustPolicyAttachmentListOutput struct
+type TrustPolicyAttachmentListOutput struct {
+	Attachments []*TrustPolicyAttachment `json:"attachments,omitempty" yaml:"attachments,omitempty"`
+}
+
+// GetAttachments returns the value for the field attachments
+func (e *TrustPolicyAttachmentListOutput) GetAttachments() []*TrustPolicyAttachment {
+	return e.Attachments
+}
+
+// SetAttachments sets the value for the field attachments
+func (e *TrustPolicyAttachmentListOutput) SetAttachments(attachments []*TrustPolicyAttachment) {
+	e.Attachments = attachments
+}
+
+// StructPath returns StructPath
+func (e *TrustPolicyAttachmentListOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyAttachmentListOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *TrustPolicyAttachmentListOutput) InitializeDefaults() {
+}
+
+// trustPolicyAttachmentListOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyAttachmentListOutputAlias TrustPolicyAttachmentListOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *TrustPolicyAttachmentListOutput) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyAttachmentListOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*TrustPolicyAttachmentListOutput)(&alias)).InitializeDefaults()
+	*e = TrustPolicyAttachmentListOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e TrustPolicyAttachmentListOutput) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyAttachmentListOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewServiceBearerToken creates a new ServiceBearerToken
 func NewServiceBearerToken() *ServiceBearerToken {
 	s := &ServiceBearerToken{}
@@ -9946,6 +10122,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathTrustPolicyAttachment, err = pk.NewType(
+		"TrustPolicyAttachment",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyAttachment()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathInvalidTrustPolicyProblem, err = pk.NewType(
 		"InvalidTrustPolicyProblem",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -11035,6 +11220,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathTrustPolicyAttachmentListInput, err = pk.NewType(
+		"TrustPolicyAttachmentListInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyAttachmentListInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathTrustPolicyAttachmentListOutput, err = pk.NewType(
+		"TrustPolicyAttachmentListOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewTrustPolicyAttachmentListOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathServiceBearerToken, err = pk.NewType(
 		"ServiceBearerToken",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -11960,6 +12163,25 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyDestroyInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+	// subresource TrustPolicyAttachment
+	resTrustPolicyAttachment, err := resTrustPolicy.NewSubResource("Attachment")
+	if err != nil {
+		return nil, err
+	}
+	_ = resTrustPolicyAttachment
+
+	op, err = resTrustPolicyAttachment.NewOperation("List")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().TrustPolicyAttachmentListInputStruct())
+	op.SetOutput(SpecularMeta().TrustPolicyAttachmentListInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
 	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
@@ -13085,13 +13307,14 @@ func (res *IdentityPolicyAttachmentResourceClient) List(ctx context.Context, inp
 
 // TrustPolicyResourceClient is the TrustPolicyResourceClient resource client
 type TrustPolicyResourceClient struct {
-	transport clientruntime.Transport
-	res       *clientruntime.Resource
-	create    *clientruntime.Operation
-	retrieve  *clientruntime.Operation
-	list      *clientruntime.Operation
-	update    *clientruntime.Operation
-	destroy   *clientruntime.Operation
+	transport  clientruntime.Transport
+	res        *clientruntime.Resource
+	Attachment *TrustPolicyAttachmentResourceClient
+	create     *clientruntime.Operation
+	retrieve   *clientruntime.Operation
+	list       *clientruntime.Operation
+	update     *clientruntime.Operation
+	destroy    *clientruntime.Operation
 }
 
 func newTrustPolicyResourceClient(
@@ -13102,6 +13325,11 @@ func newTrustPolicyResourceClient(
 	r := &TrustPolicyResourceClient{
 		transport: transport,
 		res:       res,
+	}
+	var err error
+	r.Attachment, err = newTrustPolicyAttachmentResourceClient(transport, res)
+	if err != nil {
+		return nil, err
 	}
 	r.create = res.FindOperation("Create")
 	r.retrieve = res.FindOperation("Retrieve")
@@ -13176,6 +13404,40 @@ func (res *TrustPolicyResourceClient) Destroy(ctx context.Context, input *TrustP
 		return nil, err
 	}
 	output := o.(*TrustPolicyDestroyOutput)
+	return output, nil
+}
+
+// TrustPolicyAttachmentResourceClient is the TrustPolicyAttachmentResourceClient resource client
+type TrustPolicyAttachmentResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	list      *clientruntime.Operation
+}
+
+func newTrustPolicyAttachmentResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*TrustPolicyAttachmentResourceClient, error) {
+	res := finder.FindResource("Attachment")
+	r := &TrustPolicyAttachmentResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.list = res.FindOperation("List")
+	return r, nil
+}
+
+// List - Lists the roles a trust policy is attached to.
+// Requires permission action iam:ListTrustPolicies over resource iam:TrustPolicy(<name>)
+func (res *TrustPolicyAttachmentResourceClient) List(ctx context.Context, input *TrustPolicyAttachmentListInput) (*TrustPolicyAttachmentListOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.list,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*TrustPolicyAttachmentListOutput)
 	return output, nil
 }
 
@@ -13454,6 +13716,7 @@ type SpecularMetaInfo struct {
 	structPathOIDCProviderInUseProblem                                          *clientruntime.StructDefinition
 	structPathTrustPolicyStatement                                              *clientruntime.StructDefinition
 	structPathTrustPolicy                                                       *clientruntime.StructDefinition
+	structPathTrustPolicyAttachment                                             *clientruntime.StructDefinition
 	structPathInvalidTrustPolicyProblem                                         *clientruntime.StructDefinition
 	structPathTrustPolicyNotFoundProblem                                        *clientruntime.StructDefinition
 	structPathInvalidWebIdentityTokenProblem                                    *clientruntime.StructDefinition
@@ -13575,6 +13838,8 @@ type SpecularMetaInfo struct {
 	structPathTrustPolicyUpdateOutput                                           *clientruntime.StructDefinition
 	structPathTrustPolicyDestroyInput                                           *clientruntime.StructDefinition
 	structPathTrustPolicyDestroyOutput                                          *clientruntime.StructDefinition
+	structPathTrustPolicyAttachmentListInput                                    *clientruntime.StructDefinition
+	structPathTrustPolicyAttachmentListOutput                                   *clientruntime.StructDefinition
 	structPathServiceBearerToken                                                *clientruntime.StructDefinition
 	structPathInvalidServiceBearerTokenDurationProblem                          *clientruntime.StructDefinition
 	structPathInvalidServiceNameProblem                                         *clientruntime.StructDefinition
@@ -13709,6 +13974,11 @@ func (m *SpecularMetaInfo) TrustPolicyStatementStruct() *clientruntime.StructDef
 // TrustPolicyStruct allows easy access to structure
 func (m *SpecularMetaInfo) TrustPolicyStruct() *clientruntime.StructDefinition {
 	return m.structPathTrustPolicy
+}
+
+// TrustPolicyAttachmentStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyAttachmentStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyAttachment
 }
 
 // InvalidTrustPolicyProblemStruct allows easy access to structure
@@ -14314,6 +14584,16 @@ func (m *SpecularMetaInfo) TrustPolicyDestroyInputStruct() *clientruntime.Struct
 // TrustPolicyDestroyOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) TrustPolicyDestroyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathTrustPolicyDestroyOutput
+}
+
+// TrustPolicyAttachmentListInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyAttachmentListInputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyAttachmentListInput
+}
+
+// TrustPolicyAttachmentListOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyAttachmentListOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyAttachmentListOutput
 }
 
 // ServiceBearerTokenStruct allows easy access to structure
