@@ -1165,70 +1165,70 @@ func (e Credentials) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewSSOProviderUnavailableProblem creates a new SSOProviderUnavailableProblem
-func NewSSOProviderUnavailableProblem() *SSOProviderUnavailableProblem {
-	s := &SSOProviderUnavailableProblem{}
+// NewSSOProviderUnavailableError creates a new SSOProviderUnavailableError
+func NewSSOProviderUnavailableError() *SSOProviderUnavailableError {
+	s := &SSOProviderUnavailableError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// SSOProviderUnavailableProblem struct
-type SSOProviderUnavailableProblem struct {
+// SSOProviderUnavailableError struct
+type SSOProviderUnavailableError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *SSOProviderUnavailableProblem) Error() string {
+func (e *SSOProviderUnavailableError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [SSOProviderUnavailableProblem]
-func (e *SSOProviderUnavailableProblem) Is(err error) bool {
-	_, ok := err.(*SSOProviderUnavailableProblem)
+// Is indicates whether the given error chain contains an error of type [SSOProviderUnavailableError]
+func (e *SSOProviderUnavailableError) Is(err error) bool {
+	_, ok := err.(*SSOProviderUnavailableError)
 	return ok
 }
 
-// IsSSOProviderUnavailableProblem indicates whether the given error chain contains an error of type [SSOProviderUnavailableProblem]
-func IsSSOProviderUnavailableProblem(err error) bool {
-	return errors.Is(err, &SSOProviderUnavailableProblem{})
+// IsSSOProviderUnavailableError indicates whether the given error chain contains an error of type [SSOProviderUnavailableError]
+func IsSSOProviderUnavailableError(err error) bool {
+	return errors.Is(err, &SSOProviderUnavailableError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *SSOProviderUnavailableProblem) GetMessage() string {
+func (e *SSOProviderUnavailableError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *SSOProviderUnavailableProblem) SetMessage(message string) {
+func (e *SSOProviderUnavailableError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *SSOProviderUnavailableProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathSSOProviderUnavailableProblem.Path()
+func (e *SSOProviderUnavailableError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSSOProviderUnavailableError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *SSOProviderUnavailableProblem) InitializeDefaults() {
+func (e *SSOProviderUnavailableError) InitializeDefaults() {
 }
 
-// sSOProviderUnavailableProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type sSOProviderUnavailableProblemAlias SSOProviderUnavailableProblem
+// sSOProviderUnavailableErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type sSOProviderUnavailableErrorAlias SSOProviderUnavailableError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *SSOProviderUnavailableProblem) UnmarshalJSON(data []byte) error {
-	var alias sSOProviderUnavailableProblemAlias
+func (e *SSOProviderUnavailableError) UnmarshalJSON(data []byte) error {
+	var alias sSOProviderUnavailableErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*SSOProviderUnavailableProblem)(&alias)).InitializeDefaults()
-	*e = SSOProviderUnavailableProblem(alias)
+	((*SSOProviderUnavailableError)(&alias)).InitializeDefaults()
+	*e = SSOProviderUnavailableError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e SSOProviderUnavailableProblem) MarshalJSON() ([]byte, error) {
-	alias := sSOProviderUnavailableProblemAlias(e)
+func (e SSOProviderUnavailableError) MarshalJSON() ([]byte, error) {
+	alias := sSOProviderUnavailableErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -1554,70 +1554,70 @@ func (e AccountSSOProvider) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewPolicyNotFoundProblem creates a new PolicyNotFoundProblem
-func NewPolicyNotFoundProblem() *PolicyNotFoundProblem {
-	s := &PolicyNotFoundProblem{}
+// NewPolicyNotFoundError creates a new PolicyNotFoundError
+func NewPolicyNotFoundError() *PolicyNotFoundError {
+	s := &PolicyNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// PolicyNotFoundProblem struct
-type PolicyNotFoundProblem struct {
+// PolicyNotFoundError struct
+type PolicyNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *PolicyNotFoundProblem) Error() string {
+func (e *PolicyNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [PolicyNotFoundProblem]
-func (e *PolicyNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*PolicyNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [PolicyNotFoundError]
+func (e *PolicyNotFoundError) Is(err error) bool {
+	_, ok := err.(*PolicyNotFoundError)
 	return ok
 }
 
-// IsPolicyNotFoundProblem indicates whether the given error chain contains an error of type [PolicyNotFoundProblem]
-func IsPolicyNotFoundProblem(err error) bool {
-	return errors.Is(err, &PolicyNotFoundProblem{})
+// IsPolicyNotFoundError indicates whether the given error chain contains an error of type [PolicyNotFoundError]
+func IsPolicyNotFoundError(err error) bool {
+	return errors.Is(err, &PolicyNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *PolicyNotFoundProblem) GetMessage() string {
+func (e *PolicyNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *PolicyNotFoundProblem) SetMessage(message string) {
+func (e *PolicyNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *PolicyNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathPolicyNotFoundProblem.Path()
+func (e *PolicyNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathPolicyNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *PolicyNotFoundProblem) InitializeDefaults() {
+func (e *PolicyNotFoundError) InitializeDefaults() {
 }
 
-// policyNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type policyNotFoundProblemAlias PolicyNotFoundProblem
+// policyNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type policyNotFoundErrorAlias PolicyNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *PolicyNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias policyNotFoundProblemAlias
+func (e *PolicyNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias policyNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*PolicyNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = PolicyNotFoundProblem(alias)
+	((*PolicyNotFoundError)(&alias)).InitializeDefaults()
+	*e = PolicyNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e PolicyNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := policyNotFoundProblemAlias(e)
+func (e PolicyNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := policyNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -1744,137 +1744,137 @@ func (e Invitation) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewInvalidInvitationProblem creates a new InvalidInvitationProblem
-func NewInvalidInvitationProblem() *InvalidInvitationProblem {
-	s := &InvalidInvitationProblem{}
+// NewInvalidInvitationError creates a new InvalidInvitationError
+func NewInvalidInvitationError() *InvalidInvitationError {
+	s := &InvalidInvitationError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidInvitationProblem - The invitation token/id is unknown, already used, revoked, or expired.
-type InvalidInvitationProblem struct {
+// InvalidInvitationError - The invitation token/id is unknown, already used, revoked, or expired.
+type InvalidInvitationError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidInvitationProblem) Error() string {
+func (e *InvalidInvitationError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidInvitationProblem]
-func (e *InvalidInvitationProblem) Is(err error) bool {
-	_, ok := err.(*InvalidInvitationProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidInvitationError]
+func (e *InvalidInvitationError) Is(err error) bool {
+	_, ok := err.(*InvalidInvitationError)
 	return ok
 }
 
-// IsInvalidInvitationProblem indicates whether the given error chain contains an error of type [InvalidInvitationProblem]
-func IsInvalidInvitationProblem(err error) bool {
-	return errors.Is(err, &InvalidInvitationProblem{})
+// IsInvalidInvitationError indicates whether the given error chain contains an error of type [InvalidInvitationError]
+func IsInvalidInvitationError(err error) bool {
+	return errors.Is(err, &InvalidInvitationError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidInvitationProblem) GetMessage() string {
+func (e *InvalidInvitationError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidInvitationProblem) SetMessage(message string) {
+func (e *InvalidInvitationError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidInvitationProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidInvitationProblem.Path()
+func (e *InvalidInvitationError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidInvitationError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidInvitationProblem) InitializeDefaults() {
+func (e *InvalidInvitationError) InitializeDefaults() {
 }
 
-// invalidInvitationProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidInvitationProblemAlias InvalidInvitationProblem
+// invalidInvitationErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidInvitationErrorAlias InvalidInvitationError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidInvitationProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidInvitationProblemAlias
+func (e *InvalidInvitationError) UnmarshalJSON(data []byte) error {
+	var alias invalidInvitationErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidInvitationProblem)(&alias)).InitializeDefaults()
-	*e = InvalidInvitationProblem(alias)
+	((*InvalidInvitationError)(&alias)).InitializeDefaults()
+	*e = InvalidInvitationError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidInvitationProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidInvitationProblemAlias(e)
+func (e InvalidInvitationError) MarshalJSON() ([]byte, error) {
+	alias := invalidInvitationErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvitationNotFoundProblem creates a new InvitationNotFoundProblem
-func NewInvitationNotFoundProblem() *InvitationNotFoundProblem {
-	s := &InvitationNotFoundProblem{}
+// NewInvitationNotFoundError creates a new InvitationNotFoundError
+func NewInvitationNotFoundError() *InvitationNotFoundError {
+	s := &InvitationNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvitationNotFoundProblem - No pending invitation with the given id exists in the caller's account.
-type InvitationNotFoundProblem struct {
+// InvitationNotFoundError - No pending invitation with the given id exists in the caller's account.
+type InvitationNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvitationNotFoundProblem) Error() string {
+func (e *InvitationNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvitationNotFoundProblem]
-func (e *InvitationNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*InvitationNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [InvitationNotFoundError]
+func (e *InvitationNotFoundError) Is(err error) bool {
+	_, ok := err.(*InvitationNotFoundError)
 	return ok
 }
 
-// IsInvitationNotFoundProblem indicates whether the given error chain contains an error of type [InvitationNotFoundProblem]
-func IsInvitationNotFoundProblem(err error) bool {
-	return errors.Is(err, &InvitationNotFoundProblem{})
+// IsInvitationNotFoundError indicates whether the given error chain contains an error of type [InvitationNotFoundError]
+func IsInvitationNotFoundError(err error) bool {
+	return errors.Is(err, &InvitationNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvitationNotFoundProblem) GetMessage() string {
+func (e *InvitationNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvitationNotFoundProblem) SetMessage(message string) {
+func (e *InvitationNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvitationNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvitationNotFoundProblem.Path()
+func (e *InvitationNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvitationNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvitationNotFoundProblem) InitializeDefaults() {
+func (e *InvitationNotFoundError) InitializeDefaults() {
 }
 
-// invitationNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invitationNotFoundProblemAlias InvitationNotFoundProblem
+// invitationNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invitationNotFoundErrorAlias InvitationNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvitationNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias invitationNotFoundProblemAlias
+func (e *InvitationNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias invitationNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvitationNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = InvitationNotFoundProblem(alias)
+	((*InvitationNotFoundError)(&alias)).InitializeDefaults()
+	*e = InvitationNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvitationNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := invitationNotFoundProblemAlias(e)
+func (e InvitationNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := invitationNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -2065,271 +2065,271 @@ func (e OIDCProvider) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewInvalidOIDCProviderProblem creates a new InvalidOIDCProviderProblem
-func NewInvalidOIDCProviderProblem() *InvalidOIDCProviderProblem {
-	s := &InvalidOIDCProviderProblem{}
+// NewInvalidOIDCProviderError creates a new InvalidOIDCProviderError
+func NewInvalidOIDCProviderError() *InvalidOIDCProviderError {
+	s := &InvalidOIDCProviderError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidOIDCProviderProblem struct
-type InvalidOIDCProviderProblem struct {
+// InvalidOIDCProviderError struct
+type InvalidOIDCProviderError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidOIDCProviderProblem) Error() string {
+func (e *InvalidOIDCProviderError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidOIDCProviderProblem]
-func (e *InvalidOIDCProviderProblem) Is(err error) bool {
-	_, ok := err.(*InvalidOIDCProviderProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidOIDCProviderError]
+func (e *InvalidOIDCProviderError) Is(err error) bool {
+	_, ok := err.(*InvalidOIDCProviderError)
 	return ok
 }
 
-// IsInvalidOIDCProviderProblem indicates whether the given error chain contains an error of type [InvalidOIDCProviderProblem]
-func IsInvalidOIDCProviderProblem(err error) bool {
-	return errors.Is(err, &InvalidOIDCProviderProblem{})
+// IsInvalidOIDCProviderError indicates whether the given error chain contains an error of type [InvalidOIDCProviderError]
+func IsInvalidOIDCProviderError(err error) bool {
+	return errors.Is(err, &InvalidOIDCProviderError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidOIDCProviderProblem) GetMessage() string {
+func (e *InvalidOIDCProviderError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidOIDCProviderProblem) SetMessage(message string) {
+func (e *InvalidOIDCProviderError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidOIDCProviderProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidOIDCProviderProblem.Path()
+func (e *InvalidOIDCProviderError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidOIDCProviderError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidOIDCProviderProblem) InitializeDefaults() {
+func (e *InvalidOIDCProviderError) InitializeDefaults() {
 }
 
-// invalidOIDCProviderProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidOIDCProviderProblemAlias InvalidOIDCProviderProblem
+// invalidOIDCProviderErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidOIDCProviderErrorAlias InvalidOIDCProviderError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidOIDCProviderProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidOIDCProviderProblemAlias
+func (e *InvalidOIDCProviderError) UnmarshalJSON(data []byte) error {
+	var alias invalidOIDCProviderErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidOIDCProviderProblem)(&alias)).InitializeDefaults()
-	*e = InvalidOIDCProviderProblem(alias)
+	((*InvalidOIDCProviderError)(&alias)).InitializeDefaults()
+	*e = InvalidOIDCProviderError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidOIDCProviderProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidOIDCProviderProblemAlias(e)
+func (e InvalidOIDCProviderError) MarshalJSON() ([]byte, error) {
+	alias := invalidOIDCProviderErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidOIDCIssuerProblem creates a new InvalidOIDCIssuerProblem
-func NewInvalidOIDCIssuerProblem() *InvalidOIDCIssuerProblem {
-	s := &InvalidOIDCIssuerProblem{}
+// NewInvalidOIDCIssuerError creates a new InvalidOIDCIssuerError
+func NewInvalidOIDCIssuerError() *InvalidOIDCIssuerError {
+	s := &InvalidOIDCIssuerError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidOIDCIssuerProblem - The issuer URL is malformed or is not a reachable OIDC provider (discovery failed).
-type InvalidOIDCIssuerProblem struct {
+// InvalidOIDCIssuerError - The issuer URL is malformed or is not a reachable OIDC provider (discovery failed).
+type InvalidOIDCIssuerError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidOIDCIssuerProblem) Error() string {
+func (e *InvalidOIDCIssuerError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidOIDCIssuerProblem]
-func (e *InvalidOIDCIssuerProblem) Is(err error) bool {
-	_, ok := err.(*InvalidOIDCIssuerProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidOIDCIssuerError]
+func (e *InvalidOIDCIssuerError) Is(err error) bool {
+	_, ok := err.(*InvalidOIDCIssuerError)
 	return ok
 }
 
-// IsInvalidOIDCIssuerProblem indicates whether the given error chain contains an error of type [InvalidOIDCIssuerProblem]
-func IsInvalidOIDCIssuerProblem(err error) bool {
-	return errors.Is(err, &InvalidOIDCIssuerProblem{})
+// IsInvalidOIDCIssuerError indicates whether the given error chain contains an error of type [InvalidOIDCIssuerError]
+func IsInvalidOIDCIssuerError(err error) bool {
+	return errors.Is(err, &InvalidOIDCIssuerError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidOIDCIssuerProblem) GetMessage() string {
+func (e *InvalidOIDCIssuerError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidOIDCIssuerProblem) SetMessage(message string) {
+func (e *InvalidOIDCIssuerError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidOIDCIssuerProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidOIDCIssuerProblem.Path()
+func (e *InvalidOIDCIssuerError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidOIDCIssuerError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidOIDCIssuerProblem) InitializeDefaults() {
+func (e *InvalidOIDCIssuerError) InitializeDefaults() {
 }
 
-// invalidOIDCIssuerProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidOIDCIssuerProblemAlias InvalidOIDCIssuerProblem
+// invalidOIDCIssuerErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidOIDCIssuerErrorAlias InvalidOIDCIssuerError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidOIDCIssuerProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidOIDCIssuerProblemAlias
+func (e *InvalidOIDCIssuerError) UnmarshalJSON(data []byte) error {
+	var alias invalidOIDCIssuerErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidOIDCIssuerProblem)(&alias)).InitializeDefaults()
-	*e = InvalidOIDCIssuerProblem(alias)
+	((*InvalidOIDCIssuerError)(&alias)).InitializeDefaults()
+	*e = InvalidOIDCIssuerError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidOIDCIssuerProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidOIDCIssuerProblemAlias(e)
+func (e InvalidOIDCIssuerError) MarshalJSON() ([]byte, error) {
+	alias := invalidOIDCIssuerErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewOIDCProviderNotFoundProblem creates a new OIDCProviderNotFoundProblem
-func NewOIDCProviderNotFoundProblem() *OIDCProviderNotFoundProblem {
-	s := &OIDCProviderNotFoundProblem{}
+// NewOIDCProviderNotFoundError creates a new OIDCProviderNotFoundError
+func NewOIDCProviderNotFoundError() *OIDCProviderNotFoundError {
+	s := &OIDCProviderNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// OIDCProviderNotFoundProblem struct
-type OIDCProviderNotFoundProblem struct {
+// OIDCProviderNotFoundError struct
+type OIDCProviderNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *OIDCProviderNotFoundProblem) Error() string {
+func (e *OIDCProviderNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [OIDCProviderNotFoundProblem]
-func (e *OIDCProviderNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*OIDCProviderNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [OIDCProviderNotFoundError]
+func (e *OIDCProviderNotFoundError) Is(err error) bool {
+	_, ok := err.(*OIDCProviderNotFoundError)
 	return ok
 }
 
-// IsOIDCProviderNotFoundProblem indicates whether the given error chain contains an error of type [OIDCProviderNotFoundProblem]
-func IsOIDCProviderNotFoundProblem(err error) bool {
-	return errors.Is(err, &OIDCProviderNotFoundProblem{})
+// IsOIDCProviderNotFoundError indicates whether the given error chain contains an error of type [OIDCProviderNotFoundError]
+func IsOIDCProviderNotFoundError(err error) bool {
+	return errors.Is(err, &OIDCProviderNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *OIDCProviderNotFoundProblem) GetMessage() string {
+func (e *OIDCProviderNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *OIDCProviderNotFoundProblem) SetMessage(message string) {
+func (e *OIDCProviderNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *OIDCProviderNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathOIDCProviderNotFoundProblem.Path()
+func (e *OIDCProviderNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathOIDCProviderNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *OIDCProviderNotFoundProblem) InitializeDefaults() {
+func (e *OIDCProviderNotFoundError) InitializeDefaults() {
 }
 
-// oIDCProviderNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type oIDCProviderNotFoundProblemAlias OIDCProviderNotFoundProblem
+// oIDCProviderNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type oIDCProviderNotFoundErrorAlias OIDCProviderNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *OIDCProviderNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias oIDCProviderNotFoundProblemAlias
+func (e *OIDCProviderNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias oIDCProviderNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*OIDCProviderNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = OIDCProviderNotFoundProblem(alias)
+	((*OIDCProviderNotFoundError)(&alias)).InitializeDefaults()
+	*e = OIDCProviderNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e OIDCProviderNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := oIDCProviderNotFoundProblemAlias(e)
+func (e OIDCProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := oIDCProviderNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewOIDCProviderInUseProblem creates a new OIDCProviderInUseProblem
-func NewOIDCProviderInUseProblem() *OIDCProviderInUseProblem {
-	s := &OIDCProviderInUseProblem{}
+// NewOIDCProviderInUseError creates a new OIDCProviderInUseError
+func NewOIDCProviderInUseError() *OIDCProviderInUseError {
+	s := &OIDCProviderInUseError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// OIDCProviderInUseProblem struct
-type OIDCProviderInUseProblem struct {
+// OIDCProviderInUseError struct
+type OIDCProviderInUseError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *OIDCProviderInUseProblem) Error() string {
+func (e *OIDCProviderInUseError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [OIDCProviderInUseProblem]
-func (e *OIDCProviderInUseProblem) Is(err error) bool {
-	_, ok := err.(*OIDCProviderInUseProblem)
+// Is indicates whether the given error chain contains an error of type [OIDCProviderInUseError]
+func (e *OIDCProviderInUseError) Is(err error) bool {
+	_, ok := err.(*OIDCProviderInUseError)
 	return ok
 }
 
-// IsOIDCProviderInUseProblem indicates whether the given error chain contains an error of type [OIDCProviderInUseProblem]
-func IsOIDCProviderInUseProblem(err error) bool {
-	return errors.Is(err, &OIDCProviderInUseProblem{})
+// IsOIDCProviderInUseError indicates whether the given error chain contains an error of type [OIDCProviderInUseError]
+func IsOIDCProviderInUseError(err error) bool {
+	return errors.Is(err, &OIDCProviderInUseError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *OIDCProviderInUseProblem) GetMessage() string {
+func (e *OIDCProviderInUseError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *OIDCProviderInUseProblem) SetMessage(message string) {
+func (e *OIDCProviderInUseError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *OIDCProviderInUseProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathOIDCProviderInUseProblem.Path()
+func (e *OIDCProviderInUseError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathOIDCProviderInUseError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *OIDCProviderInUseProblem) InitializeDefaults() {
+func (e *OIDCProviderInUseError) InitializeDefaults() {
 }
 
-// oIDCProviderInUseProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type oIDCProviderInUseProblemAlias OIDCProviderInUseProblem
+// oIDCProviderInUseErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type oIDCProviderInUseErrorAlias OIDCProviderInUseError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *OIDCProviderInUseProblem) UnmarshalJSON(data []byte) error {
-	var alias oIDCProviderInUseProblemAlias
+func (e *OIDCProviderInUseError) UnmarshalJSON(data []byte) error {
+	var alias oIDCProviderInUseErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*OIDCProviderInUseProblem)(&alias)).InitializeDefaults()
-	*e = OIDCProviderInUseProblem(alias)
+	((*OIDCProviderInUseError)(&alias)).InitializeDefaults()
+	*e = OIDCProviderInUseError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e OIDCProviderInUseProblem) MarshalJSON() ([]byte, error) {
-	alias := oIDCProviderInUseProblemAlias(e)
+func (e OIDCProviderInUseError) MarshalJSON() ([]byte, error) {
+	alias := oIDCProviderInUseErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -2586,273 +2586,273 @@ func (e TrustPolicyAttachment) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewInvalidTrustPolicyProblem creates a new InvalidTrustPolicyProblem
-func NewInvalidTrustPolicyProblem() *InvalidTrustPolicyProblem {
-	s := &InvalidTrustPolicyProblem{}
+// NewInvalidTrustPolicyError creates a new InvalidTrustPolicyError
+func NewInvalidTrustPolicyError() *InvalidTrustPolicyError {
+	s := &InvalidTrustPolicyError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidTrustPolicyProblem struct
-type InvalidTrustPolicyProblem struct {
+// InvalidTrustPolicyError struct
+type InvalidTrustPolicyError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidTrustPolicyProblem) Error() string {
+func (e *InvalidTrustPolicyError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidTrustPolicyProblem]
-func (e *InvalidTrustPolicyProblem) Is(err error) bool {
-	_, ok := err.(*InvalidTrustPolicyProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidTrustPolicyError]
+func (e *InvalidTrustPolicyError) Is(err error) bool {
+	_, ok := err.(*InvalidTrustPolicyError)
 	return ok
 }
 
-// IsInvalidTrustPolicyProblem indicates whether the given error chain contains an error of type [InvalidTrustPolicyProblem]
-func IsInvalidTrustPolicyProblem(err error) bool {
-	return errors.Is(err, &InvalidTrustPolicyProblem{})
+// IsInvalidTrustPolicyError indicates whether the given error chain contains an error of type [InvalidTrustPolicyError]
+func IsInvalidTrustPolicyError(err error) bool {
+	return errors.Is(err, &InvalidTrustPolicyError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidTrustPolicyProblem) GetMessage() string {
+func (e *InvalidTrustPolicyError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidTrustPolicyProblem) SetMessage(message string) {
+func (e *InvalidTrustPolicyError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidTrustPolicyProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidTrustPolicyProblem.Path()
+func (e *InvalidTrustPolicyError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidTrustPolicyError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidTrustPolicyProblem) InitializeDefaults() {
+func (e *InvalidTrustPolicyError) InitializeDefaults() {
 }
 
-// invalidTrustPolicyProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidTrustPolicyProblemAlias InvalidTrustPolicyProblem
+// invalidTrustPolicyErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidTrustPolicyErrorAlias InvalidTrustPolicyError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidTrustPolicyProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidTrustPolicyProblemAlias
+func (e *InvalidTrustPolicyError) UnmarshalJSON(data []byte) error {
+	var alias invalidTrustPolicyErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidTrustPolicyProblem)(&alias)).InitializeDefaults()
-	*e = InvalidTrustPolicyProblem(alias)
+	((*InvalidTrustPolicyError)(&alias)).InitializeDefaults()
+	*e = InvalidTrustPolicyError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidTrustPolicyProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidTrustPolicyProblemAlias(e)
+func (e InvalidTrustPolicyError) MarshalJSON() ([]byte, error) {
+	alias := invalidTrustPolicyErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewTrustPolicyNotFoundProblem creates a new TrustPolicyNotFoundProblem
-func NewTrustPolicyNotFoundProblem() *TrustPolicyNotFoundProblem {
-	s := &TrustPolicyNotFoundProblem{}
+// NewTrustPolicyNotFoundError creates a new TrustPolicyNotFoundError
+func NewTrustPolicyNotFoundError() *TrustPolicyNotFoundError {
+	s := &TrustPolicyNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// TrustPolicyNotFoundProblem struct
-type TrustPolicyNotFoundProblem struct {
+// TrustPolicyNotFoundError struct
+type TrustPolicyNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *TrustPolicyNotFoundProblem) Error() string {
+func (e *TrustPolicyNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [TrustPolicyNotFoundProblem]
-func (e *TrustPolicyNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*TrustPolicyNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [TrustPolicyNotFoundError]
+func (e *TrustPolicyNotFoundError) Is(err error) bool {
+	_, ok := err.(*TrustPolicyNotFoundError)
 	return ok
 }
 
-// IsTrustPolicyNotFoundProblem indicates whether the given error chain contains an error of type [TrustPolicyNotFoundProblem]
-func IsTrustPolicyNotFoundProblem(err error) bool {
-	return errors.Is(err, &TrustPolicyNotFoundProblem{})
+// IsTrustPolicyNotFoundError indicates whether the given error chain contains an error of type [TrustPolicyNotFoundError]
+func IsTrustPolicyNotFoundError(err error) bool {
+	return errors.Is(err, &TrustPolicyNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *TrustPolicyNotFoundProblem) GetMessage() string {
+func (e *TrustPolicyNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *TrustPolicyNotFoundProblem) SetMessage(message string) {
+func (e *TrustPolicyNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *TrustPolicyNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathTrustPolicyNotFoundProblem.Path()
+func (e *TrustPolicyNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathTrustPolicyNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *TrustPolicyNotFoundProblem) InitializeDefaults() {
+func (e *TrustPolicyNotFoundError) InitializeDefaults() {
 }
 
-// trustPolicyNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type trustPolicyNotFoundProblemAlias TrustPolicyNotFoundProblem
+// trustPolicyNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type trustPolicyNotFoundErrorAlias TrustPolicyNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *TrustPolicyNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias trustPolicyNotFoundProblemAlias
+func (e *TrustPolicyNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias trustPolicyNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*TrustPolicyNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = TrustPolicyNotFoundProblem(alias)
+	((*TrustPolicyNotFoundError)(&alias)).InitializeDefaults()
+	*e = TrustPolicyNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e TrustPolicyNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := trustPolicyNotFoundProblemAlias(e)
+func (e TrustPolicyNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := trustPolicyNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidWebIdentityTokenProblem creates a new InvalidWebIdentityTokenProblem
-func NewInvalidWebIdentityTokenProblem() *InvalidWebIdentityTokenProblem {
-	s := &InvalidWebIdentityTokenProblem{}
+// NewInvalidWebIdentityTokenError creates a new InvalidWebIdentityTokenError
+func NewInvalidWebIdentityTokenError() *InvalidWebIdentityTokenError {
+	s := &InvalidWebIdentityTokenError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidWebIdentityTokenProblem - Raised by Role.AssumeWithWebIdentity for any invalid, expired, untrusted, or
+// InvalidWebIdentityTokenError - Raised by Role.AssumeWithWebIdentity for any invalid, expired, untrusted, or
 // unmatched web-identity token. Generic on purpose.
-type InvalidWebIdentityTokenProblem struct {
+type InvalidWebIdentityTokenError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidWebIdentityTokenProblem) Error() string {
+func (e *InvalidWebIdentityTokenError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenProblem]
-func (e *InvalidWebIdentityTokenProblem) Is(err error) bool {
-	_, ok := err.(*InvalidWebIdentityTokenProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenError]
+func (e *InvalidWebIdentityTokenError) Is(err error) bool {
+	_, ok := err.(*InvalidWebIdentityTokenError)
 	return ok
 }
 
-// IsInvalidWebIdentityTokenProblem indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenProblem]
-func IsInvalidWebIdentityTokenProblem(err error) bool {
-	return errors.Is(err, &InvalidWebIdentityTokenProblem{})
+// IsInvalidWebIdentityTokenError indicates whether the given error chain contains an error of type [InvalidWebIdentityTokenError]
+func IsInvalidWebIdentityTokenError(err error) bool {
+	return errors.Is(err, &InvalidWebIdentityTokenError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidWebIdentityTokenProblem) GetMessage() string {
+func (e *InvalidWebIdentityTokenError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidWebIdentityTokenProblem) SetMessage(message string) {
+func (e *InvalidWebIdentityTokenError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidWebIdentityTokenProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidWebIdentityTokenProblem.Path()
+func (e *InvalidWebIdentityTokenError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidWebIdentityTokenError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidWebIdentityTokenProblem) InitializeDefaults() {
+func (e *InvalidWebIdentityTokenError) InitializeDefaults() {
 }
 
-// invalidWebIdentityTokenProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidWebIdentityTokenProblemAlias InvalidWebIdentityTokenProblem
+// invalidWebIdentityTokenErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidWebIdentityTokenErrorAlias InvalidWebIdentityTokenError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidWebIdentityTokenProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidWebIdentityTokenProblemAlias
+func (e *InvalidWebIdentityTokenError) UnmarshalJSON(data []byte) error {
+	var alias invalidWebIdentityTokenErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidWebIdentityTokenProblem)(&alias)).InitializeDefaults()
-	*e = InvalidWebIdentityTokenProblem(alias)
+	((*InvalidWebIdentityTokenError)(&alias)).InitializeDefaults()
+	*e = InvalidWebIdentityTokenError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidWebIdentityTokenProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidWebIdentityTokenProblemAlias(e)
+func (e InvalidWebIdentityTokenError) MarshalJSON() ([]byte, error) {
+	alias := invalidWebIdentityTokenErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidPrincipalDRNProblem creates a new InvalidPrincipalDRNProblem
-func NewInvalidPrincipalDRNProblem() *InvalidPrincipalDRNProblem {
-	s := &InvalidPrincipalDRNProblem{}
+// NewInvalidPrincipalDRNError creates a new InvalidPrincipalDRNError
+func NewInvalidPrincipalDRNError() *InvalidPrincipalDRNError {
+	s := &InvalidPrincipalDRNError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidPrincipalDRNProblem - Raised when a principal DRN is malformed or incomplete — e.g. missing the
+// InvalidPrincipalDRNError - Raised when a principal DRN is malformed or incomplete — e.g. missing the
 // required account(<name>) qualifier, or not targeting an iam:Role(<name>).
-type InvalidPrincipalDRNProblem struct {
+type InvalidPrincipalDRNError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidPrincipalDRNProblem) Error() string {
+func (e *InvalidPrincipalDRNError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidPrincipalDRNProblem]
-func (e *InvalidPrincipalDRNProblem) Is(err error) bool {
-	_, ok := err.(*InvalidPrincipalDRNProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidPrincipalDRNError]
+func (e *InvalidPrincipalDRNError) Is(err error) bool {
+	_, ok := err.(*InvalidPrincipalDRNError)
 	return ok
 }
 
-// IsInvalidPrincipalDRNProblem indicates whether the given error chain contains an error of type [InvalidPrincipalDRNProblem]
-func IsInvalidPrincipalDRNProblem(err error) bool {
-	return errors.Is(err, &InvalidPrincipalDRNProblem{})
+// IsInvalidPrincipalDRNError indicates whether the given error chain contains an error of type [InvalidPrincipalDRNError]
+func IsInvalidPrincipalDRNError(err error) bool {
+	return errors.Is(err, &InvalidPrincipalDRNError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidPrincipalDRNProblem) GetMessage() string {
+func (e *InvalidPrincipalDRNError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidPrincipalDRNProblem) SetMessage(message string) {
+func (e *InvalidPrincipalDRNError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidPrincipalDRNProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidPrincipalDRNProblem.Path()
+func (e *InvalidPrincipalDRNError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidPrincipalDRNError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidPrincipalDRNProblem) InitializeDefaults() {
+func (e *InvalidPrincipalDRNError) InitializeDefaults() {
 }
 
-// invalidPrincipalDRNProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidPrincipalDRNProblemAlias InvalidPrincipalDRNProblem
+// invalidPrincipalDRNErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidPrincipalDRNErrorAlias InvalidPrincipalDRNError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidPrincipalDRNProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidPrincipalDRNProblemAlias
+func (e *InvalidPrincipalDRNError) UnmarshalJSON(data []byte) error {
+	var alias invalidPrincipalDRNErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidPrincipalDRNProblem)(&alias)).InitializeDefaults()
-	*e = InvalidPrincipalDRNProblem(alias)
+	((*InvalidPrincipalDRNError)(&alias)).InitializeDefaults()
+	*e = InvalidPrincipalDRNError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidPrincipalDRNProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidPrincipalDRNProblemAlias(e)
+func (e InvalidPrincipalDRNError) MarshalJSON() ([]byte, error) {
+	alias := invalidPrincipalDRNErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -2958,70 +2958,70 @@ func (e AccountCreateOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewAccountCreateInvalidNameProblem creates a new AccountCreateInvalidNameProblem
-func NewAccountCreateInvalidNameProblem() *AccountCreateInvalidNameProblem {
-	s := &AccountCreateInvalidNameProblem{}
+// NewAccountCreateInvalidNameError creates a new AccountCreateInvalidNameError
+func NewAccountCreateInvalidNameError() *AccountCreateInvalidNameError {
+	s := &AccountCreateInvalidNameError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// AccountCreateInvalidNameProblem struct
-type AccountCreateInvalidNameProblem struct {
+// AccountCreateInvalidNameError struct
+type AccountCreateInvalidNameError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *AccountCreateInvalidNameProblem) Error() string {
+func (e *AccountCreateInvalidNameError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [AccountCreateInvalidNameProblem]
-func (e *AccountCreateInvalidNameProblem) Is(err error) bool {
-	_, ok := err.(*AccountCreateInvalidNameProblem)
+// Is indicates whether the given error chain contains an error of type [AccountCreateInvalidNameError]
+func (e *AccountCreateInvalidNameError) Is(err error) bool {
+	_, ok := err.(*AccountCreateInvalidNameError)
 	return ok
 }
 
-// IsAccountCreateInvalidNameProblem indicates whether the given error chain contains an error of type [AccountCreateInvalidNameProblem]
-func IsAccountCreateInvalidNameProblem(err error) bool {
-	return errors.Is(err, &AccountCreateInvalidNameProblem{})
+// IsAccountCreateInvalidNameError indicates whether the given error chain contains an error of type [AccountCreateInvalidNameError]
+func IsAccountCreateInvalidNameError(err error) bool {
+	return errors.Is(err, &AccountCreateInvalidNameError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *AccountCreateInvalidNameProblem) GetMessage() string {
+func (e *AccountCreateInvalidNameError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *AccountCreateInvalidNameProblem) SetMessage(message string) {
+func (e *AccountCreateInvalidNameError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *AccountCreateInvalidNameProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathAccountCreateInvalidNameProblem.Path()
+func (e *AccountCreateInvalidNameError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCreateInvalidNameError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *AccountCreateInvalidNameProblem) InitializeDefaults() {
+func (e *AccountCreateInvalidNameError) InitializeDefaults() {
 }
 
-// accountCreateInvalidNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type accountCreateInvalidNameProblemAlias AccountCreateInvalidNameProblem
+// accountCreateInvalidNameErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCreateInvalidNameErrorAlias AccountCreateInvalidNameError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *AccountCreateInvalidNameProblem) UnmarshalJSON(data []byte) error {
-	var alias accountCreateInvalidNameProblemAlias
+func (e *AccountCreateInvalidNameError) UnmarshalJSON(data []byte) error {
+	var alias accountCreateInvalidNameErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*AccountCreateInvalidNameProblem)(&alias)).InitializeDefaults()
-	*e = AccountCreateInvalidNameProblem(alias)
+	((*AccountCreateInvalidNameError)(&alias)).InitializeDefaults()
+	*e = AccountCreateInvalidNameError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e AccountCreateInvalidNameProblem) MarshalJSON() ([]byte, error) {
-	alias := accountCreateInvalidNameProblemAlias(e)
+func (e AccountCreateInvalidNameError) MarshalJSON() ([]byte, error) {
+	alias := accountCreateInvalidNameErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3368,70 +3368,70 @@ func (e AccountCompleteAssumeIdentityOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem creates a new AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
-func NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem() *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem {
-	s := &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem{}
+// NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError creates a new AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError
+func NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError() *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError {
+	s := &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem struct
-type AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem struct {
+// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError struct
+type AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) Error() string {
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem]
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) Is(err error) bool {
-	_, ok := err.(*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem)
+// Is indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError]
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) Is(err error) bool {
+	_, ok := err.(*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError)
 	return ok
 }
 
-// IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem]
-func IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem(err error) bool {
-	return errors.Is(err, &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem{})
+// IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError indicates whether the given error chain contains an error of type [AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError]
+func IsAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError(err error) bool {
+	return errors.Is(err, &AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) GetMessage() string {
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) SetMessage(message string) {
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem.Path()
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) InitializeDefaults() {
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) InitializeDefaults() {
 }
 
-// accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
+// accountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorAlias AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) UnmarshalJSON(data []byte) error {
-	var alias accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias
+func (e *AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) UnmarshalJSON(data []byte) error {
+	var alias accountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem)(&alias)).InitializeDefaults()
-	*e = AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem(alias)
+	((*AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError)(&alias)).InitializeDefaults()
+	*e = AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem) MarshalJSON() ([]byte, error) {
-	alias := accountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemAlias(e)
+func (e AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError) MarshalJSON() ([]byte, error) {
+	alias := accountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3447,7 +3447,17 @@ type AccountSSOBeginAuthenticationInput struct {
 	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 	// client generated code challenge that will be used to verify the completion code, SHA-256 of the codeVerifier
 	CodeChallenge string `json:"codeChallenge,omitempty" yaml:"codeChallenge,omitempty"`
-	ProviderName  string `json:"providerName,omitempty" yaml:"providerName,omitempty"`
+	// optional sliding idle window, in seconds, for the credential this
+	// login mints. Applied ONE-WAY: a value larger than the default is
+	// clamped down to it, so a client can only tighten its own session.
+	// Omit to get the default (43200, 12h).
+	IdleWindowSeconds *int32 `json:"idleWindowSeconds,omitempty" yaml:"idleWindowSeconds,omitempty"`
+	// optional hard cap, in seconds, on the total lifetime of the
+	// credential this login mints, regardless of activity or keep-alive.
+	// One-way like idleWindowSeconds: it can only shorten, never extend.
+	// Omit to get the default (604800, 7d).
+	MaxSessionLifetimeSeconds *int32 `json:"maxSessionLifetimeSeconds,omitempty" yaml:"maxSessionLifetimeSeconds,omitempty"`
+	ProviderName              string `json:"providerName,omitempty" yaml:"providerName,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -3468,6 +3478,26 @@ func (e *AccountSSOBeginAuthenticationInput) GetCodeChallenge() string {
 // SetCodeChallenge sets the value for the field codeChallenge
 func (e *AccountSSOBeginAuthenticationInput) SetCodeChallenge(codeChallenge string) {
 	e.CodeChallenge = codeChallenge
+}
+
+// GetIdleWindowSeconds returns the value for the field idleWindowSeconds
+func (e *AccountSSOBeginAuthenticationInput) GetIdleWindowSeconds() *int32 {
+	return e.IdleWindowSeconds
+}
+
+// SetIdleWindowSeconds sets the value for the field idleWindowSeconds
+func (e *AccountSSOBeginAuthenticationInput) SetIdleWindowSeconds(idleWindowSeconds *int32) {
+	e.IdleWindowSeconds = idleWindowSeconds
+}
+
+// GetMaxSessionLifetimeSeconds returns the value for the field maxSessionLifetimeSeconds
+func (e *AccountSSOBeginAuthenticationInput) GetMaxSessionLifetimeSeconds() *int32 {
+	return e.MaxSessionLifetimeSeconds
+}
+
+// SetMaxSessionLifetimeSeconds sets the value for the field maxSessionLifetimeSeconds
+func (e *AccountSSOBeginAuthenticationInput) SetMaxSessionLifetimeSeconds(maxSessionLifetimeSeconds *int32) {
+	e.MaxSessionLifetimeSeconds = maxSessionLifetimeSeconds
 }
 
 // GetProviderName returns the value for the field providerName
@@ -3560,70 +3590,70 @@ func (e AccountSSOBeginAuthenticationOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewAccountSSOBeginAuthenticationParameterProblem creates a new AccountSSOBeginAuthenticationParameterProblem
-func NewAccountSSOBeginAuthenticationParameterProblem() *AccountSSOBeginAuthenticationParameterProblem {
-	s := &AccountSSOBeginAuthenticationParameterProblem{}
+// NewAccountSSOBeginAuthenticationParameterError creates a new AccountSSOBeginAuthenticationParameterError
+func NewAccountSSOBeginAuthenticationParameterError() *AccountSSOBeginAuthenticationParameterError {
+	s := &AccountSSOBeginAuthenticationParameterError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// AccountSSOBeginAuthenticationParameterProblem struct
-type AccountSSOBeginAuthenticationParameterProblem struct {
+// AccountSSOBeginAuthenticationParameterError struct
+type AccountSSOBeginAuthenticationParameterError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *AccountSSOBeginAuthenticationParameterProblem) Error() string {
+func (e *AccountSSOBeginAuthenticationParameterError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [AccountSSOBeginAuthenticationParameterProblem]
-func (e *AccountSSOBeginAuthenticationParameterProblem) Is(err error) bool {
-	_, ok := err.(*AccountSSOBeginAuthenticationParameterProblem)
+// Is indicates whether the given error chain contains an error of type [AccountSSOBeginAuthenticationParameterError]
+func (e *AccountSSOBeginAuthenticationParameterError) Is(err error) bool {
+	_, ok := err.(*AccountSSOBeginAuthenticationParameterError)
 	return ok
 }
 
-// IsAccountSSOBeginAuthenticationParameterProblem indicates whether the given error chain contains an error of type [AccountSSOBeginAuthenticationParameterProblem]
-func IsAccountSSOBeginAuthenticationParameterProblem(err error) bool {
-	return errors.Is(err, &AccountSSOBeginAuthenticationParameterProblem{})
+// IsAccountSSOBeginAuthenticationParameterError indicates whether the given error chain contains an error of type [AccountSSOBeginAuthenticationParameterError]
+func IsAccountSSOBeginAuthenticationParameterError(err error) bool {
+	return errors.Is(err, &AccountSSOBeginAuthenticationParameterError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *AccountSSOBeginAuthenticationParameterProblem) GetMessage() string {
+func (e *AccountSSOBeginAuthenticationParameterError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *AccountSSOBeginAuthenticationParameterProblem) SetMessage(message string) {
+func (e *AccountSSOBeginAuthenticationParameterError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *AccountSSOBeginAuthenticationParameterProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterProblem.Path()
+func (e *AccountSSOBeginAuthenticationParameterError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *AccountSSOBeginAuthenticationParameterProblem) InitializeDefaults() {
+func (e *AccountSSOBeginAuthenticationParameterError) InitializeDefaults() {
 }
 
-// accountSSOBeginAuthenticationParameterProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type accountSSOBeginAuthenticationParameterProblemAlias AccountSSOBeginAuthenticationParameterProblem
+// accountSSOBeginAuthenticationParameterErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOBeginAuthenticationParameterErrorAlias AccountSSOBeginAuthenticationParameterError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *AccountSSOBeginAuthenticationParameterProblem) UnmarshalJSON(data []byte) error {
-	var alias accountSSOBeginAuthenticationParameterProblemAlias
+func (e *AccountSSOBeginAuthenticationParameterError) UnmarshalJSON(data []byte) error {
+	var alias accountSSOBeginAuthenticationParameterErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*AccountSSOBeginAuthenticationParameterProblem)(&alias)).InitializeDefaults()
-	*e = AccountSSOBeginAuthenticationParameterProblem(alias)
+	((*AccountSSOBeginAuthenticationParameterError)(&alias)).InitializeDefaults()
+	*e = AccountSSOBeginAuthenticationParameterError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e AccountSSOBeginAuthenticationParameterProblem) MarshalJSON() ([]byte, error) {
-	alias := accountSSOBeginAuthenticationParameterProblemAlias(e)
+func (e AccountSSOBeginAuthenticationParameterError) MarshalJSON() ([]byte, error) {
+	alias := accountSSOBeginAuthenticationParameterErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3752,70 +3782,70 @@ func (e AccountSSOCompleteAuthenticationOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewAccountSSOCompleteAuthenticationInvalidFlowProblem creates a new AccountSSOCompleteAuthenticationInvalidFlowProblem
-func NewAccountSSOCompleteAuthenticationInvalidFlowProblem() *AccountSSOCompleteAuthenticationInvalidFlowProblem {
-	s := &AccountSSOCompleteAuthenticationInvalidFlowProblem{}
+// NewAccountSSOCompleteAuthenticationInvalidFlowError creates a new AccountSSOCompleteAuthenticationInvalidFlowError
+func NewAccountSSOCompleteAuthenticationInvalidFlowError() *AccountSSOCompleteAuthenticationInvalidFlowError {
+	s := &AccountSSOCompleteAuthenticationInvalidFlowError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// AccountSSOCompleteAuthenticationInvalidFlowProblem struct
-type AccountSSOCompleteAuthenticationInvalidFlowProblem struct {
+// AccountSSOCompleteAuthenticationInvalidFlowError struct
+type AccountSSOCompleteAuthenticationInvalidFlowError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Error() string {
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [AccountSSOCompleteAuthenticationInvalidFlowProblem]
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) Is(err error) bool {
-	_, ok := err.(*AccountSSOCompleteAuthenticationInvalidFlowProblem)
+// Is indicates whether the given error chain contains an error of type [AccountSSOCompleteAuthenticationInvalidFlowError]
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) Is(err error) bool {
+	_, ok := err.(*AccountSSOCompleteAuthenticationInvalidFlowError)
 	return ok
 }
 
-// IsAccountSSOCompleteAuthenticationInvalidFlowProblem indicates whether the given error chain contains an error of type [AccountSSOCompleteAuthenticationInvalidFlowProblem]
-func IsAccountSSOCompleteAuthenticationInvalidFlowProblem(err error) bool {
-	return errors.Is(err, &AccountSSOCompleteAuthenticationInvalidFlowProblem{})
+// IsAccountSSOCompleteAuthenticationInvalidFlowError indicates whether the given error chain contains an error of type [AccountSSOCompleteAuthenticationInvalidFlowError]
+func IsAccountSSOCompleteAuthenticationInvalidFlowError(err error) bool {
+	return errors.Is(err, &AccountSSOCompleteAuthenticationInvalidFlowError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) GetMessage() string {
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) SetMessage(message string) {
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem.Path()
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) InitializeDefaults() {
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) InitializeDefaults() {
 }
 
-// accountSSOCompleteAuthenticationInvalidFlowProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type accountSSOCompleteAuthenticationInvalidFlowProblemAlias AccountSSOCompleteAuthenticationInvalidFlowProblem
+// accountSSOCompleteAuthenticationInvalidFlowErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSSOCompleteAuthenticationInvalidFlowErrorAlias AccountSSOCompleteAuthenticationInvalidFlowError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *AccountSSOCompleteAuthenticationInvalidFlowProblem) UnmarshalJSON(data []byte) error {
-	var alias accountSSOCompleteAuthenticationInvalidFlowProblemAlias
+func (e *AccountSSOCompleteAuthenticationInvalidFlowError) UnmarshalJSON(data []byte) error {
+	var alias accountSSOCompleteAuthenticationInvalidFlowErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*AccountSSOCompleteAuthenticationInvalidFlowProblem)(&alias)).InitializeDefaults()
-	*e = AccountSSOCompleteAuthenticationInvalidFlowProblem(alias)
+	((*AccountSSOCompleteAuthenticationInvalidFlowError)(&alias)).InitializeDefaults()
+	*e = AccountSSOCompleteAuthenticationInvalidFlowError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e AccountSSOCompleteAuthenticationInvalidFlowProblem) MarshalJSON() ([]byte, error) {
-	alias := accountSSOCompleteAuthenticationInvalidFlowProblemAlias(e)
+func (e AccountSSOCompleteAuthenticationInvalidFlowError) MarshalJSON() ([]byte, error) {
+	alias := accountSSOCompleteAuthenticationInvalidFlowErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -4535,137 +4565,137 @@ func (e RegionListOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewInvalidUsernameProblem creates a new InvalidUsernameProblem
-func NewInvalidUsernameProblem() *InvalidUsernameProblem {
-	s := &InvalidUsernameProblem{}
+// NewInvalidUsernameError creates a new InvalidUsernameError
+func NewInvalidUsernameError() *InvalidUsernameError {
+	s := &InvalidUsernameError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidUsernameProblem struct
-type InvalidUsernameProblem struct {
+// InvalidUsernameError struct
+type InvalidUsernameError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidUsernameProblem) Error() string {
+func (e *InvalidUsernameError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidUsernameProblem]
-func (e *InvalidUsernameProblem) Is(err error) bool {
-	_, ok := err.(*InvalidUsernameProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidUsernameError]
+func (e *InvalidUsernameError) Is(err error) bool {
+	_, ok := err.(*InvalidUsernameError)
 	return ok
 }
 
-// IsInvalidUsernameProblem indicates whether the given error chain contains an error of type [InvalidUsernameProblem]
-func IsInvalidUsernameProblem(err error) bool {
-	return errors.Is(err, &InvalidUsernameProblem{})
+// IsInvalidUsernameError indicates whether the given error chain contains an error of type [InvalidUsernameError]
+func IsInvalidUsernameError(err error) bool {
+	return errors.Is(err, &InvalidUsernameError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidUsernameProblem) GetMessage() string {
+func (e *InvalidUsernameError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidUsernameProblem) SetMessage(message string) {
+func (e *InvalidUsernameError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidUsernameProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidUsernameProblem.Path()
+func (e *InvalidUsernameError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidUsernameError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidUsernameProblem) InitializeDefaults() {
+func (e *InvalidUsernameError) InitializeDefaults() {
 }
 
-// invalidUsernameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidUsernameProblemAlias InvalidUsernameProblem
+// invalidUsernameErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidUsernameErrorAlias InvalidUsernameError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidUsernameProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidUsernameProblemAlias
+func (e *InvalidUsernameError) UnmarshalJSON(data []byte) error {
+	var alias invalidUsernameErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidUsernameProblem)(&alias)).InitializeDefaults()
-	*e = InvalidUsernameProblem(alias)
+	((*InvalidUsernameError)(&alias)).InitializeDefaults()
+	*e = InvalidUsernameError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidUsernameProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidUsernameProblemAlias(e)
+func (e InvalidUsernameError) MarshalJSON() ([]byte, error) {
+	alias := invalidUsernameErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidRoleNameProblem creates a new InvalidRoleNameProblem
-func NewInvalidRoleNameProblem() *InvalidRoleNameProblem {
-	s := &InvalidRoleNameProblem{}
+// NewInvalidRoleNameError creates a new InvalidRoleNameError
+func NewInvalidRoleNameError() *InvalidRoleNameError {
+	s := &InvalidRoleNameError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidRoleNameProblem struct
-type InvalidRoleNameProblem struct {
+// InvalidRoleNameError struct
+type InvalidRoleNameError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidRoleNameProblem) Error() string {
+func (e *InvalidRoleNameError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidRoleNameProblem]
-func (e *InvalidRoleNameProblem) Is(err error) bool {
-	_, ok := err.(*InvalidRoleNameProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidRoleNameError]
+func (e *InvalidRoleNameError) Is(err error) bool {
+	_, ok := err.(*InvalidRoleNameError)
 	return ok
 }
 
-// IsInvalidRoleNameProblem indicates whether the given error chain contains an error of type [InvalidRoleNameProblem]
-func IsInvalidRoleNameProblem(err error) bool {
-	return errors.Is(err, &InvalidRoleNameProblem{})
+// IsInvalidRoleNameError indicates whether the given error chain contains an error of type [InvalidRoleNameError]
+func IsInvalidRoleNameError(err error) bool {
+	return errors.Is(err, &InvalidRoleNameError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidRoleNameProblem) GetMessage() string {
+func (e *InvalidRoleNameError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidRoleNameProblem) SetMessage(message string) {
+func (e *InvalidRoleNameError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidRoleNameProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidRoleNameProblem.Path()
+func (e *InvalidRoleNameError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidRoleNameError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidRoleNameProblem) InitializeDefaults() {
+func (e *InvalidRoleNameError) InitializeDefaults() {
 }
 
-// invalidRoleNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidRoleNameProblemAlias InvalidRoleNameProblem
+// invalidRoleNameErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidRoleNameErrorAlias InvalidRoleNameError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidRoleNameProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidRoleNameProblemAlias
+func (e *InvalidRoleNameError) UnmarshalJSON(data []byte) error {
+	var alias invalidRoleNameErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidRoleNameProblem)(&alias)).InitializeDefaults()
-	*e = InvalidRoleNameProblem(alias)
+	((*InvalidRoleNameError)(&alias)).InitializeDefaults()
+	*e = InvalidRoleNameError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidRoleNameProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidRoleNameProblemAlias(e)
+func (e InvalidRoleNameError) MarshalJSON() ([]byte, error) {
+	alias := invalidRoleNameErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -5143,406 +5173,406 @@ func (e IdentityPolicyAttachmentInfo) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewUserNotFoundProblem creates a new UserNotFoundProblem
-func NewUserNotFoundProblem() *UserNotFoundProblem {
-	s := &UserNotFoundProblem{}
+// NewUserNotFoundError creates a new UserNotFoundError
+func NewUserNotFoundError() *UserNotFoundError {
+	s := &UserNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// UserNotFoundProblem struct
-type UserNotFoundProblem struct {
+// UserNotFoundError struct
+type UserNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *UserNotFoundProblem) Error() string {
+func (e *UserNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [UserNotFoundProblem]
-func (e *UserNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*UserNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [UserNotFoundError]
+func (e *UserNotFoundError) Is(err error) bool {
+	_, ok := err.(*UserNotFoundError)
 	return ok
 }
 
-// IsUserNotFoundProblem indicates whether the given error chain contains an error of type [UserNotFoundProblem]
-func IsUserNotFoundProblem(err error) bool {
-	return errors.Is(err, &UserNotFoundProblem{})
+// IsUserNotFoundError indicates whether the given error chain contains an error of type [UserNotFoundError]
+func IsUserNotFoundError(err error) bool {
+	return errors.Is(err, &UserNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *UserNotFoundProblem) GetMessage() string {
+func (e *UserNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *UserNotFoundProblem) SetMessage(message string) {
+func (e *UserNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *UserNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathUserNotFoundProblem.Path()
+func (e *UserNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *UserNotFoundProblem) InitializeDefaults() {
+func (e *UserNotFoundError) InitializeDefaults() {
 }
 
-// userNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type userNotFoundProblemAlias UserNotFoundProblem
+// userNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type userNotFoundErrorAlias UserNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *UserNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias userNotFoundProblemAlias
+func (e *UserNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias userNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*UserNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = UserNotFoundProblem(alias)
+	((*UserNotFoundError)(&alias)).InitializeDefaults()
+	*e = UserNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e UserNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := userNotFoundProblemAlias(e)
+func (e UserNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := userNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewCannotDisableSelfProblem creates a new CannotDisableSelfProblem
-func NewCannotDisableSelfProblem() *CannotDisableSelfProblem {
-	s := &CannotDisableSelfProblem{}
+// NewCannotDisableSelfError creates a new CannotDisableSelfError
+func NewCannotDisableSelfError() *CannotDisableSelfError {
+	s := &CannotDisableSelfError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// CannotDisableSelfProblem - Occurs when a caller tries to suspend (deactivate) their own user, which would
+// CannotDisableSelfError - Occurs when a caller tries to suspend (deactivate) their own user, which would
 // lock them out of the account with no way to restore access.
-type CannotDisableSelfProblem struct {
+type CannotDisableSelfError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *CannotDisableSelfProblem) Error() string {
+func (e *CannotDisableSelfError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [CannotDisableSelfProblem]
-func (e *CannotDisableSelfProblem) Is(err error) bool {
-	_, ok := err.(*CannotDisableSelfProblem)
+// Is indicates whether the given error chain contains an error of type [CannotDisableSelfError]
+func (e *CannotDisableSelfError) Is(err error) bool {
+	_, ok := err.(*CannotDisableSelfError)
 	return ok
 }
 
-// IsCannotDisableSelfProblem indicates whether the given error chain contains an error of type [CannotDisableSelfProblem]
-func IsCannotDisableSelfProblem(err error) bool {
-	return errors.Is(err, &CannotDisableSelfProblem{})
+// IsCannotDisableSelfError indicates whether the given error chain contains an error of type [CannotDisableSelfError]
+func IsCannotDisableSelfError(err error) bool {
+	return errors.Is(err, &CannotDisableSelfError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *CannotDisableSelfProblem) GetMessage() string {
+func (e *CannotDisableSelfError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *CannotDisableSelfProblem) SetMessage(message string) {
+func (e *CannotDisableSelfError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *CannotDisableSelfProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathCannotDisableSelfProblem.Path()
+func (e *CannotDisableSelfError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathCannotDisableSelfError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *CannotDisableSelfProblem) InitializeDefaults() {
+func (e *CannotDisableSelfError) InitializeDefaults() {
 }
 
-// cannotDisableSelfProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type cannotDisableSelfProblemAlias CannotDisableSelfProblem
+// cannotDisableSelfErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type cannotDisableSelfErrorAlias CannotDisableSelfError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *CannotDisableSelfProblem) UnmarshalJSON(data []byte) error {
-	var alias cannotDisableSelfProblemAlias
+func (e *CannotDisableSelfError) UnmarshalJSON(data []byte) error {
+	var alias cannotDisableSelfErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*CannotDisableSelfProblem)(&alias)).InitializeDefaults()
-	*e = CannotDisableSelfProblem(alias)
+	((*CannotDisableSelfError)(&alias)).InitializeDefaults()
+	*e = CannotDisableSelfError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e CannotDisableSelfProblem) MarshalJSON() ([]byte, error) {
-	alias := cannotDisableSelfProblemAlias(e)
+func (e CannotDisableSelfError) MarshalJSON() ([]byte, error) {
+	alias := cannotDisableSelfErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewRoleNotFoundProblem creates a new RoleNotFoundProblem
-func NewRoleNotFoundProblem() *RoleNotFoundProblem {
-	s := &RoleNotFoundProblem{}
+// NewRoleNotFoundError creates a new RoleNotFoundError
+func NewRoleNotFoundError() *RoleNotFoundError {
+	s := &RoleNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// RoleNotFoundProblem struct
-type RoleNotFoundProblem struct {
+// RoleNotFoundError struct
+type RoleNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *RoleNotFoundProblem) Error() string {
+func (e *RoleNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [RoleNotFoundProblem]
-func (e *RoleNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*RoleNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [RoleNotFoundError]
+func (e *RoleNotFoundError) Is(err error) bool {
+	_, ok := err.(*RoleNotFoundError)
 	return ok
 }
 
-// IsRoleNotFoundProblem indicates whether the given error chain contains an error of type [RoleNotFoundProblem]
-func IsRoleNotFoundProblem(err error) bool {
-	return errors.Is(err, &RoleNotFoundProblem{})
+// IsRoleNotFoundError indicates whether the given error chain contains an error of type [RoleNotFoundError]
+func IsRoleNotFoundError(err error) bool {
+	return errors.Is(err, &RoleNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *RoleNotFoundProblem) GetMessage() string {
+func (e *RoleNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *RoleNotFoundProblem) SetMessage(message string) {
+func (e *RoleNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *RoleNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathRoleNotFoundProblem.Path()
+func (e *RoleNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathRoleNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *RoleNotFoundProblem) InitializeDefaults() {
+func (e *RoleNotFoundError) InitializeDefaults() {
 }
 
-// roleNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type roleNotFoundProblemAlias RoleNotFoundProblem
+// roleNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type roleNotFoundErrorAlias RoleNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *RoleNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias roleNotFoundProblemAlias
+func (e *RoleNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias roleNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*RoleNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = RoleNotFoundProblem(alias)
+	((*RoleNotFoundError)(&alias)).InitializeDefaults()
+	*e = RoleNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e RoleNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := roleNotFoundProblemAlias(e)
+func (e RoleNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := roleNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewGroupNotFoundProblem creates a new GroupNotFoundProblem
-func NewGroupNotFoundProblem() *GroupNotFoundProblem {
-	s := &GroupNotFoundProblem{}
+// NewGroupNotFoundError creates a new GroupNotFoundError
+func NewGroupNotFoundError() *GroupNotFoundError {
+	s := &GroupNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// GroupNotFoundProblem struct
-type GroupNotFoundProblem struct {
+// GroupNotFoundError struct
+type GroupNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *GroupNotFoundProblem) Error() string {
+func (e *GroupNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [GroupNotFoundProblem]
-func (e *GroupNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*GroupNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [GroupNotFoundError]
+func (e *GroupNotFoundError) Is(err error) bool {
+	_, ok := err.(*GroupNotFoundError)
 	return ok
 }
 
-// IsGroupNotFoundProblem indicates whether the given error chain contains an error of type [GroupNotFoundProblem]
-func IsGroupNotFoundProblem(err error) bool {
-	return errors.Is(err, &GroupNotFoundProblem{})
+// IsGroupNotFoundError indicates whether the given error chain contains an error of type [GroupNotFoundError]
+func IsGroupNotFoundError(err error) bool {
+	return errors.Is(err, &GroupNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *GroupNotFoundProblem) GetMessage() string {
+func (e *GroupNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *GroupNotFoundProblem) SetMessage(message string) {
+func (e *GroupNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *GroupNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathGroupNotFoundProblem.Path()
+func (e *GroupNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathGroupNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *GroupNotFoundProblem) InitializeDefaults() {
+func (e *GroupNotFoundError) InitializeDefaults() {
 }
 
-// groupNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type groupNotFoundProblemAlias GroupNotFoundProblem
+// groupNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type groupNotFoundErrorAlias GroupNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *GroupNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias groupNotFoundProblemAlias
+func (e *GroupNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias groupNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*GroupNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = GroupNotFoundProblem(alias)
+	((*GroupNotFoundError)(&alias)).InitializeDefaults()
+	*e = GroupNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e GroupNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := groupNotFoundProblemAlias(e)
+func (e GroupNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := groupNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidGroupNameProblem creates a new InvalidGroupNameProblem
-func NewInvalidGroupNameProblem() *InvalidGroupNameProblem {
-	s := &InvalidGroupNameProblem{}
+// NewInvalidGroupNameError creates a new InvalidGroupNameError
+func NewInvalidGroupNameError() *InvalidGroupNameError {
+	s := &InvalidGroupNameError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidGroupNameProblem struct
-type InvalidGroupNameProblem struct {
+// InvalidGroupNameError struct
+type InvalidGroupNameError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidGroupNameProblem) Error() string {
+func (e *InvalidGroupNameError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidGroupNameProblem]
-func (e *InvalidGroupNameProblem) Is(err error) bool {
-	_, ok := err.(*InvalidGroupNameProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidGroupNameError]
+func (e *InvalidGroupNameError) Is(err error) bool {
+	_, ok := err.(*InvalidGroupNameError)
 	return ok
 }
 
-// IsInvalidGroupNameProblem indicates whether the given error chain contains an error of type [InvalidGroupNameProblem]
-func IsInvalidGroupNameProblem(err error) bool {
-	return errors.Is(err, &InvalidGroupNameProblem{})
+// IsInvalidGroupNameError indicates whether the given error chain contains an error of type [InvalidGroupNameError]
+func IsInvalidGroupNameError(err error) bool {
+	return errors.Is(err, &InvalidGroupNameError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidGroupNameProblem) GetMessage() string {
+func (e *InvalidGroupNameError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidGroupNameProblem) SetMessage(message string) {
+func (e *InvalidGroupNameError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidGroupNameProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidGroupNameProblem.Path()
+func (e *InvalidGroupNameError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidGroupNameError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidGroupNameProblem) InitializeDefaults() {
+func (e *InvalidGroupNameError) InitializeDefaults() {
 }
 
-// invalidGroupNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidGroupNameProblemAlias InvalidGroupNameProblem
+// invalidGroupNameErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidGroupNameErrorAlias InvalidGroupNameError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidGroupNameProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidGroupNameProblemAlias
+func (e *InvalidGroupNameError) UnmarshalJSON(data []byte) error {
+	var alias invalidGroupNameErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidGroupNameProblem)(&alias)).InitializeDefaults()
-	*e = InvalidGroupNameProblem(alias)
+	((*InvalidGroupNameError)(&alias)).InitializeDefaults()
+	*e = InvalidGroupNameError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidGroupNameProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidGroupNameProblemAlias(e)
+func (e InvalidGroupNameError) MarshalJSON() ([]byte, error) {
+	alias := invalidGroupNameErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewIdentityInUseProblem creates a new IdentityInUseProblem
-func NewIdentityInUseProblem() *IdentityInUseProblem {
-	s := &IdentityInUseProblem{}
+// NewIdentityInUseError creates a new IdentityInUseError
+func NewIdentityInUseError() *IdentityInUseError {
+	s := &IdentityInUseError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// IdentityInUseProblem - Occurs when an identity is in use and cannot be deleted because it is attached to a resource
-type IdentityInUseProblem struct {
+// IdentityInUseError - Occurs when an identity is in use and cannot be deleted because it is attached to a resource
+type IdentityInUseError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *IdentityInUseProblem) Error() string {
+func (e *IdentityInUseError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [IdentityInUseProblem]
-func (e *IdentityInUseProblem) Is(err error) bool {
-	_, ok := err.(*IdentityInUseProblem)
+// Is indicates whether the given error chain contains an error of type [IdentityInUseError]
+func (e *IdentityInUseError) Is(err error) bool {
+	_, ok := err.(*IdentityInUseError)
 	return ok
 }
 
-// IsIdentityInUseProblem indicates whether the given error chain contains an error of type [IdentityInUseProblem]
-func IsIdentityInUseProblem(err error) bool {
-	return errors.Is(err, &IdentityInUseProblem{})
+// IsIdentityInUseError indicates whether the given error chain contains an error of type [IdentityInUseError]
+func IsIdentityInUseError(err error) bool {
+	return errors.Is(err, &IdentityInUseError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *IdentityInUseProblem) GetMessage() string {
+func (e *IdentityInUseError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *IdentityInUseProblem) SetMessage(message string) {
+func (e *IdentityInUseError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *IdentityInUseProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathIdentityInUseProblem.Path()
+func (e *IdentityInUseError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathIdentityInUseError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *IdentityInUseProblem) InitializeDefaults() {
+func (e *IdentityInUseError) InitializeDefaults() {
 }
 
-// identityInUseProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type identityInUseProblemAlias IdentityInUseProblem
+// identityInUseErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type identityInUseErrorAlias IdentityInUseError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *IdentityInUseProblem) UnmarshalJSON(data []byte) error {
-	var alias identityInUseProblemAlias
+func (e *IdentityInUseError) UnmarshalJSON(data []byte) error {
+	var alias identityInUseErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*IdentityInUseProblem)(&alias)).InitializeDefaults()
-	*e = IdentityInUseProblem(alias)
+	((*IdentityInUseError)(&alias)).InitializeDefaults()
+	*e = IdentityInUseError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e IdentityInUseProblem) MarshalJSON() ([]byte, error) {
-	alias := identityInUseProblemAlias(e)
+func (e IdentityInUseError) MarshalJSON() ([]byte, error) {
+	alias := identityInUseErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -5775,70 +5805,70 @@ func (e UserGetOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewUserGetUserNotAvailableProblem creates a new UserGetUserNotAvailableProblem
-func NewUserGetUserNotAvailableProblem() *UserGetUserNotAvailableProblem {
-	s := &UserGetUserNotAvailableProblem{}
+// NewUserGetUserNotAvailableError creates a new UserGetUserNotAvailableError
+func NewUserGetUserNotAvailableError() *UserGetUserNotAvailableError {
+	s := &UserGetUserNotAvailableError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// UserGetUserNotAvailableProblem struct
-type UserGetUserNotAvailableProblem struct {
+// UserGetUserNotAvailableError struct
+type UserGetUserNotAvailableError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *UserGetUserNotAvailableProblem) Error() string {
+func (e *UserGetUserNotAvailableError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [UserGetUserNotAvailableProblem]
-func (e *UserGetUserNotAvailableProblem) Is(err error) bool {
-	_, ok := err.(*UserGetUserNotAvailableProblem)
+// Is indicates whether the given error chain contains an error of type [UserGetUserNotAvailableError]
+func (e *UserGetUserNotAvailableError) Is(err error) bool {
+	_, ok := err.(*UserGetUserNotAvailableError)
 	return ok
 }
 
-// IsUserGetUserNotAvailableProblem indicates whether the given error chain contains an error of type [UserGetUserNotAvailableProblem]
-func IsUserGetUserNotAvailableProblem(err error) bool {
-	return errors.Is(err, &UserGetUserNotAvailableProblem{})
+// IsUserGetUserNotAvailableError indicates whether the given error chain contains an error of type [UserGetUserNotAvailableError]
+func IsUserGetUserNotAvailableError(err error) bool {
+	return errors.Is(err, &UserGetUserNotAvailableError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *UserGetUserNotAvailableProblem) GetMessage() string {
+func (e *UserGetUserNotAvailableError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *UserGetUserNotAvailableProblem) SetMessage(message string) {
+func (e *UserGetUserNotAvailableError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *UserGetUserNotAvailableProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathUserGetUserNotAvailableProblem.Path()
+func (e *UserGetUserNotAvailableError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGetUserNotAvailableError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *UserGetUserNotAvailableProblem) InitializeDefaults() {
+func (e *UserGetUserNotAvailableError) InitializeDefaults() {
 }
 
-// userGetUserNotAvailableProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type userGetUserNotAvailableProblemAlias UserGetUserNotAvailableProblem
+// userGetUserNotAvailableErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGetUserNotAvailableErrorAlias UserGetUserNotAvailableError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *UserGetUserNotAvailableProblem) UnmarshalJSON(data []byte) error {
-	var alias userGetUserNotAvailableProblemAlias
+func (e *UserGetUserNotAvailableError) UnmarshalJSON(data []byte) error {
+	var alias userGetUserNotAvailableErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*UserGetUserNotAvailableProblem)(&alias)).InitializeDefaults()
-	*e = UserGetUserNotAvailableProblem(alias)
+	((*UserGetUserNotAvailableError)(&alias)).InitializeDefaults()
+	*e = UserGetUserNotAvailableError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e UserGetUserNotAvailableProblem) MarshalJSON() ([]byte, error) {
-	alias := userGetUserNotAvailableProblemAlias(e)
+func (e UserGetUserNotAvailableError) MarshalJSON() ([]byte, error) {
+	alias := userGetUserNotAvailableErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -6891,70 +6921,70 @@ func (e InlinePolicy) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewPolicyStructureProblem creates a new PolicyStructureProblem
-func NewPolicyStructureProblem() *PolicyStructureProblem {
-	s := &PolicyStructureProblem{}
+// NewPolicyStructureError creates a new PolicyStructureError
+func NewPolicyStructureError() *PolicyStructureError {
+	s := &PolicyStructureError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// PolicyStructureProblem struct
-type PolicyStructureProblem struct {
+// PolicyStructureError struct
+type PolicyStructureError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *PolicyStructureProblem) Error() string {
+func (e *PolicyStructureError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [PolicyStructureProblem]
-func (e *PolicyStructureProblem) Is(err error) bool {
-	_, ok := err.(*PolicyStructureProblem)
+// Is indicates whether the given error chain contains an error of type [PolicyStructureError]
+func (e *PolicyStructureError) Is(err error) bool {
+	_, ok := err.(*PolicyStructureError)
 	return ok
 }
 
-// IsPolicyStructureProblem indicates whether the given error chain contains an error of type [PolicyStructureProblem]
-func IsPolicyStructureProblem(err error) bool {
-	return errors.Is(err, &PolicyStructureProblem{})
+// IsPolicyStructureError indicates whether the given error chain contains an error of type [PolicyStructureError]
+func IsPolicyStructureError(err error) bool {
+	return errors.Is(err, &PolicyStructureError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *PolicyStructureProblem) GetMessage() string {
+func (e *PolicyStructureError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *PolicyStructureProblem) SetMessage(message string) {
+func (e *PolicyStructureError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *PolicyStructureProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathPolicyStructureProblem.Path()
+func (e *PolicyStructureError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathPolicyStructureError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *PolicyStructureProblem) InitializeDefaults() {
+func (e *PolicyStructureError) InitializeDefaults() {
 }
 
-// policyStructureProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type policyStructureProblemAlias PolicyStructureProblem
+// policyStructureErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type policyStructureErrorAlias PolicyStructureError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *PolicyStructureProblem) UnmarshalJSON(data []byte) error {
-	var alias policyStructureProblemAlias
+func (e *PolicyStructureError) UnmarshalJSON(data []byte) error {
+	var alias policyStructureErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*PolicyStructureProblem)(&alias)).InitializeDefaults()
-	*e = PolicyStructureProblem(alias)
+	((*PolicyStructureError)(&alias)).InitializeDefaults()
+	*e = PolicyStructureError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e PolicyStructureProblem) MarshalJSON() ([]byte, error) {
-	alias := policyStructureProblemAlias(e)
+func (e PolicyStructureError) MarshalJSON() ([]byte, error) {
+	alias := policyStructureErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -10799,137 +10829,137 @@ func (e ServiceBearerToken) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewInvalidServiceBearerTokenDurationProblem creates a new InvalidServiceBearerTokenDurationProblem
-func NewInvalidServiceBearerTokenDurationProblem() *InvalidServiceBearerTokenDurationProblem {
-	s := &InvalidServiceBearerTokenDurationProblem{}
+// NewInvalidServiceBearerTokenDurationError creates a new InvalidServiceBearerTokenDurationError
+func NewInvalidServiceBearerTokenDurationError() *InvalidServiceBearerTokenDurationError {
+	s := &InvalidServiceBearerTokenDurationError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidServiceBearerTokenDurationProblem struct
-type InvalidServiceBearerTokenDurationProblem struct {
+// InvalidServiceBearerTokenDurationError struct
+type InvalidServiceBearerTokenDurationError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidServiceBearerTokenDurationProblem) Error() string {
+func (e *InvalidServiceBearerTokenDurationError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationProblem]
-func (e *InvalidServiceBearerTokenDurationProblem) Is(err error) bool {
-	_, ok := err.(*InvalidServiceBearerTokenDurationProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationError]
+func (e *InvalidServiceBearerTokenDurationError) Is(err error) bool {
+	_, ok := err.(*InvalidServiceBearerTokenDurationError)
 	return ok
 }
 
-// IsInvalidServiceBearerTokenDurationProblem indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationProblem]
-func IsInvalidServiceBearerTokenDurationProblem(err error) bool {
-	return errors.Is(err, &InvalidServiceBearerTokenDurationProblem{})
+// IsInvalidServiceBearerTokenDurationError indicates whether the given error chain contains an error of type [InvalidServiceBearerTokenDurationError]
+func IsInvalidServiceBearerTokenDurationError(err error) bool {
+	return errors.Is(err, &InvalidServiceBearerTokenDurationError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidServiceBearerTokenDurationProblem) GetMessage() string {
+func (e *InvalidServiceBearerTokenDurationError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidServiceBearerTokenDurationProblem) SetMessage(message string) {
+func (e *InvalidServiceBearerTokenDurationError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidServiceBearerTokenDurationProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidServiceBearerTokenDurationProblem.Path()
+func (e *InvalidServiceBearerTokenDurationError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidServiceBearerTokenDurationError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidServiceBearerTokenDurationProblem) InitializeDefaults() {
+func (e *InvalidServiceBearerTokenDurationError) InitializeDefaults() {
 }
 
-// invalidServiceBearerTokenDurationProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidServiceBearerTokenDurationProblemAlias InvalidServiceBearerTokenDurationProblem
+// invalidServiceBearerTokenDurationErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidServiceBearerTokenDurationErrorAlias InvalidServiceBearerTokenDurationError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidServiceBearerTokenDurationProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidServiceBearerTokenDurationProblemAlias
+func (e *InvalidServiceBearerTokenDurationError) UnmarshalJSON(data []byte) error {
+	var alias invalidServiceBearerTokenDurationErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidServiceBearerTokenDurationProblem)(&alias)).InitializeDefaults()
-	*e = InvalidServiceBearerTokenDurationProblem(alias)
+	((*InvalidServiceBearerTokenDurationError)(&alias)).InitializeDefaults()
+	*e = InvalidServiceBearerTokenDurationError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidServiceBearerTokenDurationProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidServiceBearerTokenDurationProblemAlias(e)
+func (e InvalidServiceBearerTokenDurationError) MarshalJSON() ([]byte, error) {
+	alias := invalidServiceBearerTokenDurationErrorAlias(e)
 	return json.Marshal(alias)
 }
 
-// NewInvalidServiceNameProblem creates a new InvalidServiceNameProblem
-func NewInvalidServiceNameProblem() *InvalidServiceNameProblem {
-	s := &InvalidServiceNameProblem{}
+// NewInvalidServiceNameError creates a new InvalidServiceNameError
+func NewInvalidServiceNameError() *InvalidServiceNameError {
+	s := &InvalidServiceNameError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// InvalidServiceNameProblem struct
-type InvalidServiceNameProblem struct {
+// InvalidServiceNameError struct
+type InvalidServiceNameError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *InvalidServiceNameProblem) Error() string {
+func (e *InvalidServiceNameError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [InvalidServiceNameProblem]
-func (e *InvalidServiceNameProblem) Is(err error) bool {
-	_, ok := err.(*InvalidServiceNameProblem)
+// Is indicates whether the given error chain contains an error of type [InvalidServiceNameError]
+func (e *InvalidServiceNameError) Is(err error) bool {
+	_, ok := err.(*InvalidServiceNameError)
 	return ok
 }
 
-// IsInvalidServiceNameProblem indicates whether the given error chain contains an error of type [InvalidServiceNameProblem]
-func IsInvalidServiceNameProblem(err error) bool {
-	return errors.Is(err, &InvalidServiceNameProblem{})
+// IsInvalidServiceNameError indicates whether the given error chain contains an error of type [InvalidServiceNameError]
+func IsInvalidServiceNameError(err error) bool {
+	return errors.Is(err, &InvalidServiceNameError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *InvalidServiceNameProblem) GetMessage() string {
+func (e *InvalidServiceNameError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *InvalidServiceNameProblem) SetMessage(message string) {
+func (e *InvalidServiceNameError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *InvalidServiceNameProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathInvalidServiceNameProblem.Path()
+func (e *InvalidServiceNameError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidServiceNameError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *InvalidServiceNameProblem) InitializeDefaults() {
+func (e *InvalidServiceNameError) InitializeDefaults() {
 }
 
-// invalidServiceNameProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type invalidServiceNameProblemAlias InvalidServiceNameProblem
+// invalidServiceNameErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidServiceNameErrorAlias InvalidServiceNameError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *InvalidServiceNameProblem) UnmarshalJSON(data []byte) error {
-	var alias invalidServiceNameProblemAlias
+func (e *InvalidServiceNameError) UnmarshalJSON(data []byte) error {
+	var alias invalidServiceNameErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*InvalidServiceNameProblem)(&alias)).InitializeDefaults()
-	*e = InvalidServiceNameProblem(alias)
+	((*InvalidServiceNameError)(&alias)).InitializeDefaults()
+	*e = InvalidServiceNameError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e InvalidServiceNameProblem) MarshalJSON() ([]byte, error) {
-	alias := invalidServiceNameProblemAlias(e)
+func (e InvalidServiceNameError) MarshalJSON() ([]byte, error) {
+	alias := invalidServiceNameErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -12146,70 +12176,70 @@ func (e ServiceCatalogGetOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
-// NewServiceCatalogGetServiceCatalogNotFoundProblem creates a new ServiceCatalogGetServiceCatalogNotFoundProblem
-func NewServiceCatalogGetServiceCatalogNotFoundProblem() *ServiceCatalogGetServiceCatalogNotFoundProblem {
-	s := &ServiceCatalogGetServiceCatalogNotFoundProblem{}
+// NewServiceCatalogGetServiceCatalogNotFoundError creates a new ServiceCatalogGetServiceCatalogNotFoundError
+func NewServiceCatalogGetServiceCatalogNotFoundError() *ServiceCatalogGetServiceCatalogNotFoundError {
+	s := &ServiceCatalogGetServiceCatalogNotFoundError{}
 	s.InitializeDefaults()
 	return s
 }
 
-// ServiceCatalogGetServiceCatalogNotFoundProblem struct
-type ServiceCatalogGetServiceCatalogNotFoundProblem struct {
+// ServiceCatalogGetServiceCatalogNotFoundError struct
+type ServiceCatalogGetServiceCatalogNotFoundError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
 }
 
 // Error implements the error interface
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) Error() string {
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) Error() string {
 	return e.GetMessage()
 }
 
-// Is indicates whether the given error chain contains an error of type [ServiceCatalogGetServiceCatalogNotFoundProblem]
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) Is(err error) bool {
-	_, ok := err.(*ServiceCatalogGetServiceCatalogNotFoundProblem)
+// Is indicates whether the given error chain contains an error of type [ServiceCatalogGetServiceCatalogNotFoundError]
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) Is(err error) bool {
+	_, ok := err.(*ServiceCatalogGetServiceCatalogNotFoundError)
 	return ok
 }
 
-// IsServiceCatalogGetServiceCatalogNotFoundProblem indicates whether the given error chain contains an error of type [ServiceCatalogGetServiceCatalogNotFoundProblem]
-func IsServiceCatalogGetServiceCatalogNotFoundProblem(err error) bool {
-	return errors.Is(err, &ServiceCatalogGetServiceCatalogNotFoundProblem{})
+// IsServiceCatalogGetServiceCatalogNotFoundError indicates whether the given error chain contains an error of type [ServiceCatalogGetServiceCatalogNotFoundError]
+func IsServiceCatalogGetServiceCatalogNotFoundError(err error) bool {
+	return errors.Is(err, &ServiceCatalogGetServiceCatalogNotFoundError{})
 }
 
 // GetMessage returns the value for the field message
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) GetMessage() string {
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) GetMessage() string {
 	return e.Message
 }
 
 // SetMessage sets the value for the field message
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) SetMessage(message string) {
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) SetMessage(message string) {
 	e.Message = message
 }
 
 // StructPath returns StructPath
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) StructPath() clientruntime.StructPath {
-	return *localSpecularMeta.structPathServiceCatalogGetServiceCatalogNotFoundProblem.Path()
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathServiceCatalogGetServiceCatalogNotFoundError.Path()
 }
 
 // InitializeDefaults initializes the default values in the struct
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) InitializeDefaults() {
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) InitializeDefaults() {
 }
 
-// serviceCatalogGetServiceCatalogNotFoundProblemAlias is defined to help pre and post JSON marshaling without recursive loops
-type serviceCatalogGetServiceCatalogNotFoundProblemAlias ServiceCatalogGetServiceCatalogNotFoundProblem
+// serviceCatalogGetServiceCatalogNotFoundErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type serviceCatalogGetServiceCatalogNotFoundErrorAlias ServiceCatalogGetServiceCatalogNotFoundError
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *ServiceCatalogGetServiceCatalogNotFoundProblem) UnmarshalJSON(data []byte) error {
-	var alias serviceCatalogGetServiceCatalogNotFoundProblemAlias
+func (e *ServiceCatalogGetServiceCatalogNotFoundError) UnmarshalJSON(data []byte) error {
+	var alias serviceCatalogGetServiceCatalogNotFoundErrorAlias
 	if err := json.Unmarshal(data, &alias); err != nil {
 		return err
 	}
-	((*ServiceCatalogGetServiceCatalogNotFoundProblem)(&alias)).InitializeDefaults()
-	*e = ServiceCatalogGetServiceCatalogNotFoundProblem(alias)
+	((*ServiceCatalogGetServiceCatalogNotFoundError)(&alias)).InitializeDefaults()
+	*e = ServiceCatalogGetServiceCatalogNotFoundError(alias)
 	return nil
 }
 
 // MarshalJSON implements json.Marshaler
-func (e ServiceCatalogGetServiceCatalogNotFoundProblem) MarshalJSON() ([]byte, error) {
-	alias := serviceCatalogGetServiceCatalogNotFoundProblemAlias(e)
+func (e ServiceCatalogGetServiceCatalogNotFoundError) MarshalJSON() ([]byte, error) {
+	alias := serviceCatalogGetServiceCatalogNotFoundErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -12397,10 +12427,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathSSOProviderUnavailableProblem, err = pk.NewType(
-		"SSOProviderUnavailableProblem",
+	localSpecularMeta.structPathSSOProviderUnavailableError, err = pk.NewType(
+		"SSOProviderUnavailableError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewSSOProviderUnavailableProblem()
+			return NewSSOProviderUnavailableError()
 		}),
 	)
 	if err != nil {
@@ -12451,10 +12481,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathPolicyNotFoundProblem, err = pk.NewType(
-		"PolicyNotFoundProblem",
+	localSpecularMeta.structPathPolicyNotFoundError, err = pk.NewType(
+		"PolicyNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewPolicyNotFoundProblem()
+			return NewPolicyNotFoundError()
 		}),
 	)
 	if err != nil {
@@ -12469,19 +12499,19 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidInvitationProblem, err = pk.NewType(
-		"InvalidInvitationProblem",
+	localSpecularMeta.structPathInvalidInvitationError, err = pk.NewType(
+		"InvalidInvitationError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidInvitationProblem()
+			return NewInvalidInvitationError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvitationNotFoundProblem, err = pk.NewType(
-		"InvitationNotFoundProblem",
+	localSpecularMeta.structPathInvitationNotFoundError, err = pk.NewType(
+		"InvitationNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvitationNotFoundProblem()
+			return NewInvitationNotFoundError()
 		}),
 	)
 	if err != nil {
@@ -12505,37 +12535,37 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidOIDCProviderProblem, err = pk.NewType(
-		"InvalidOIDCProviderProblem",
+	localSpecularMeta.structPathInvalidOIDCProviderError, err = pk.NewType(
+		"InvalidOIDCProviderError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidOIDCProviderProblem()
+			return NewInvalidOIDCProviderError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidOIDCIssuerProblem, err = pk.NewType(
-		"InvalidOIDCIssuerProblem",
+	localSpecularMeta.structPathInvalidOIDCIssuerError, err = pk.NewType(
+		"InvalidOIDCIssuerError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidOIDCIssuerProblem()
+			return NewInvalidOIDCIssuerError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathOIDCProviderNotFoundProblem, err = pk.NewType(
-		"OIDCProviderNotFoundProblem",
+	localSpecularMeta.structPathOIDCProviderNotFoundError, err = pk.NewType(
+		"OIDCProviderNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewOIDCProviderNotFoundProblem()
+			return NewOIDCProviderNotFoundError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathOIDCProviderInUseProblem, err = pk.NewType(
-		"OIDCProviderInUseProblem",
+	localSpecularMeta.structPathOIDCProviderInUseError, err = pk.NewType(
+		"OIDCProviderInUseError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewOIDCProviderInUseProblem()
+			return NewOIDCProviderInUseError()
 		}),
 	)
 	if err != nil {
@@ -12568,37 +12598,37 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidTrustPolicyProblem, err = pk.NewType(
-		"InvalidTrustPolicyProblem",
+	localSpecularMeta.structPathInvalidTrustPolicyError, err = pk.NewType(
+		"InvalidTrustPolicyError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidTrustPolicyProblem()
+			return NewInvalidTrustPolicyError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathTrustPolicyNotFoundProblem, err = pk.NewType(
-		"TrustPolicyNotFoundProblem",
+	localSpecularMeta.structPathTrustPolicyNotFoundError, err = pk.NewType(
+		"TrustPolicyNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewTrustPolicyNotFoundProblem()
+			return NewTrustPolicyNotFoundError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidWebIdentityTokenProblem, err = pk.NewType(
-		"InvalidWebIdentityTokenProblem",
+	localSpecularMeta.structPathInvalidWebIdentityTokenError, err = pk.NewType(
+		"InvalidWebIdentityTokenError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidWebIdentityTokenProblem()
+			return NewInvalidWebIdentityTokenError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidPrincipalDRNProblem, err = pk.NewType(
-		"InvalidPrincipalDRNProblem",
+	localSpecularMeta.structPathInvalidPrincipalDRNError, err = pk.NewType(
+		"InvalidPrincipalDRNError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidPrincipalDRNProblem()
+			return NewInvalidPrincipalDRNError()
 		}),
 	)
 	if err != nil {
@@ -12622,10 +12652,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathAccountCreateInvalidNameProblem, err = pk.NewType(
-		"AccountCreateInvalidNameProblem",
+	localSpecularMeta.structPathAccountCreateInvalidNameError, err = pk.NewType(
+		"AccountCreateInvalidNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewAccountCreateInvalidNameProblem()
+			return NewAccountCreateInvalidNameError()
 		}),
 	)
 	if err != nil {
@@ -12685,10 +12715,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem, err = pk.NewType(
-		"AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem",
+	localSpecularMeta.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError, err = pk.NewType(
+		"AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem()
+			return NewAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError()
 		}),
 	)
 	if err != nil {
@@ -12712,10 +12742,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterProblem, err = pk.NewType(
-		"AccountSSOBeginAuthenticationParameterProblem",
+	localSpecularMeta.structPathAccountSSOBeginAuthenticationParameterError, err = pk.NewType(
+		"AccountSSOBeginAuthenticationParameterError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewAccountSSOBeginAuthenticationParameterProblem()
+			return NewAccountSSOBeginAuthenticationParameterError()
 		}),
 	)
 	if err != nil {
@@ -12739,10 +12769,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem, err = pk.NewType(
-		"AccountSSOCompleteAuthenticationInvalidFlowProblem",
+	localSpecularMeta.structPathAccountSSOCompleteAuthenticationInvalidFlowError, err = pk.NewType(
+		"AccountSSOCompleteAuthenticationInvalidFlowError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewAccountSSOCompleteAuthenticationInvalidFlowProblem()
+			return NewAccountSSOCompleteAuthenticationInvalidFlowError()
 		}),
 	)
 	if err != nil {
@@ -12874,19 +12904,19 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidUsernameProblem, err = pk.NewType(
-		"InvalidUsernameProblem",
+	localSpecularMeta.structPathInvalidUsernameError, err = pk.NewType(
+		"InvalidUsernameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidUsernameProblem()
+			return NewInvalidUsernameError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidRoleNameProblem, err = pk.NewType(
-		"InvalidRoleNameProblem",
+	localSpecularMeta.structPathInvalidRoleNameError, err = pk.NewType(
+		"InvalidRoleNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidRoleNameProblem()
+			return NewInvalidRoleNameError()
 		}),
 	)
 	if err != nil {
@@ -12946,55 +12976,55 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathUserNotFoundProblem, err = pk.NewType(
-		"UserNotFoundProblem",
+	localSpecularMeta.structPathUserNotFoundError, err = pk.NewType(
+		"UserNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewUserNotFoundProblem()
+			return NewUserNotFoundError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathCannotDisableSelfProblem, err = pk.NewType(
-		"CannotDisableSelfProblem",
+	localSpecularMeta.structPathCannotDisableSelfError, err = pk.NewType(
+		"CannotDisableSelfError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewCannotDisableSelfProblem()
+			return NewCannotDisableSelfError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathRoleNotFoundProblem, err = pk.NewType(
-		"RoleNotFoundProblem",
+	localSpecularMeta.structPathRoleNotFoundError, err = pk.NewType(
+		"RoleNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewRoleNotFoundProblem()
+			return NewRoleNotFoundError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathGroupNotFoundProblem, err = pk.NewType(
-		"GroupNotFoundProblem",
+	localSpecularMeta.structPathGroupNotFoundError, err = pk.NewType(
+		"GroupNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewGroupNotFoundProblem()
+			return NewGroupNotFoundError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidGroupNameProblem, err = pk.NewType(
-		"InvalidGroupNameProblem",
+	localSpecularMeta.structPathInvalidGroupNameError, err = pk.NewType(
+		"InvalidGroupNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidGroupNameProblem()
+			return NewInvalidGroupNameError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathIdentityInUseProblem, err = pk.NewType(
-		"IdentityInUseProblem",
+	localSpecularMeta.structPathIdentityInUseError, err = pk.NewType(
+		"IdentityInUseError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewIdentityInUseProblem()
+			return NewIdentityInUseError()
 		}),
 	)
 	if err != nil {
@@ -13036,10 +13066,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathUserGetUserNotAvailableProblem, err = pk.NewType(
-		"UserGetUserNotAvailableProblem",
+	localSpecularMeta.structPathUserGetUserNotAvailableError, err = pk.NewType(
+		"UserGetUserNotAvailableError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewUserGetUserNotAvailableProblem()
+			return NewUserGetUserNotAvailableError()
 		}),
 	)
 	if err != nil {
@@ -13234,10 +13264,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathPolicyStructureProblem, err = pk.NewType(
-		"PolicyStructureProblem",
+	localSpecularMeta.structPathPolicyStructureError, err = pk.NewType(
+		"PolicyStructureError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewPolicyStructureProblem()
+			return NewPolicyStructureError()
 		}),
 	)
 	if err != nil {
@@ -13900,19 +13930,19 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidServiceBearerTokenDurationProblem, err = pk.NewType(
-		"InvalidServiceBearerTokenDurationProblem",
+	localSpecularMeta.structPathInvalidServiceBearerTokenDurationError, err = pk.NewType(
+		"InvalidServiceBearerTokenDurationError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidServiceBearerTokenDurationProblem()
+			return NewInvalidServiceBearerTokenDurationError()
 		}),
 	)
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathInvalidServiceNameProblem, err = pk.NewType(
-		"InvalidServiceNameProblem",
+	localSpecularMeta.structPathInvalidServiceNameError, err = pk.NewType(
+		"InvalidServiceNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewInvalidServiceNameProblem()
+			return NewInvalidServiceNameError()
 		}),
 	)
 	if err != nil {
@@ -14134,10 +14164,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
-	localSpecularMeta.structPathServiceCatalogGetServiceCatalogNotFoundProblem, err = pk.NewType(
-		"ServiceCatalogGetServiceCatalogNotFoundProblem",
+	localSpecularMeta.structPathServiceCatalogGetServiceCatalogNotFoundError, err = pk.NewType(
+		"ServiceCatalogGetServiceCatalogNotFoundError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
-			return NewServiceCatalogGetServiceCatalogNotFoundProblem()
+			return NewServiceCatalogGetServiceCatalogNotFoundError()
 		}),
 	)
 	if err != nil {
@@ -14157,9 +14187,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountCreateInputStruct())
 	op.SetOutput(SpecularMeta().AccountCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().AccountCreateInvalidNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountCreateInvalidNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14170,8 +14200,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountAssumeIdentityInputStruct())
 	op.SetOutput(SpecularMeta().AccountAssumeIdentityInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14182,8 +14212,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountBeginAssumeIdentityInputStruct())
 	op.SetOutput(SpecularMeta().AccountBeginAssumeIdentityInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14194,7 +14224,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountCompleteAssumeIdentityInputStruct())
 	op.SetOutput(SpecularMeta().AccountCompleteAssumeIdentityInputStruct())
-	op.RegisterProblemType(SpecularMeta().AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct())
+	op.RegisterProblemType(SpecularMeta().AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorStruct())
 
 	// subresource AccountSSO
 	resAccountSSO, err := resAccount.NewSubResource("SSO")
@@ -14210,8 +14240,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountSSOBeginAuthenticationInputStruct())
 	op.SetOutput(SpecularMeta().AccountSSOBeginAuthenticationInputStruct())
-	op.RegisterProblemType(SpecularMeta().SSOProviderUnavailableProblemStruct())
-	op.RegisterProblemType(SpecularMeta().AccountSSOBeginAuthenticationParameterProblemStruct())
+	op.RegisterProblemType(SpecularMeta().SSOProviderUnavailableErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountSSOBeginAuthenticationParameterErrorStruct())
 
 	op, err = resAccountSSO.NewOperation("CompleteAuthentication")
 	if err != nil {
@@ -14220,7 +14250,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountSSOCompleteAuthenticationInputStruct())
 	op.SetOutput(SpecularMeta().AccountSSOCompleteAuthenticationInputStruct())
-	op.RegisterProblemType(SpecularMeta().AccountSSOCompleteAuthenticationInvalidFlowProblemStruct())
+	op.RegisterProblemType(SpecularMeta().AccountSSOCompleteAuthenticationInvalidFlowErrorStruct())
 
 	op, err = resAccountSSO.NewOperation("GetProviders")
 	if err != nil {
@@ -14244,10 +14274,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountOIDCProviderCreateInputStruct())
 	op.SetOutput(SpecularMeta().AccountOIDCProviderCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidOIDCIssuerProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCIssuerErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14258,10 +14288,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountOIDCProviderSetAudiencesInputStruct())
 	op.SetOutput(SpecularMeta().AccountOIDCProviderSetAudiencesInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidOIDCProviderErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14272,8 +14302,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountOIDCProviderListInputStruct())
 	op.SetOutput(SpecularMeta().AccountOIDCProviderListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14284,10 +14314,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountOIDCProviderDeleteInputStruct())
 	op.SetOutput(SpecularMeta().AccountOIDCProviderDeleteInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().OIDCProviderInUseProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderInUseErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource AccountOIDCProviderTrustPolicy
@@ -14304,9 +14334,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().AccountOIDCProviderTrustPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().AccountOIDCProviderTrustPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().OIDCProviderNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14337,9 +14367,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserCreateInputStruct())
 	op.SetOutput(SpecularMeta().UserCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidUsernameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14350,8 +14380,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserGetInputStruct())
 	op.SetOutput(SpecularMeta().UserGetInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserGetUserNotAvailableProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserGetUserNotAvailableErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14362,10 +14392,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserDestroyInputStruct())
 	op.SetOutput(SpecularMeta().UserDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().IdentityInUseProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().IdentityInUseErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14376,10 +14406,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserSetActiveInputStruct())
 	op.SetOutput(SpecularMeta().UserSetActiveInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().CannotDisableSelfProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().CannotDisableSelfErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14390,8 +14420,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserListInputStruct())
 	op.SetOutput(SpecularMeta().UserListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14402,7 +14432,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserMemberAccountsInputStruct())
 	op.SetOutput(SpecularMeta().UserMemberAccountsInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource UserAccessKey
@@ -14419,9 +14449,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserAccessKeyCreateInputStruct())
 	op.SetOutput(SpecularMeta().UserAccessKeyCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14432,8 +14462,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserAccessKeyListInputStruct())
 	op.SetOutput(SpecularMeta().UserAccessKeyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14444,8 +14474,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserAccessKeyDestroyInputStruct())
 	op.SetOutput(SpecularMeta().UserAccessKeyDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14463,9 +14493,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserIdentityPolicyAttachInputStruct())
 	op.SetOutput(SpecularMeta().UserIdentityPolicyAttachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14476,8 +14506,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserIdentityPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().UserIdentityPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14488,9 +14518,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().UserIdentityPolicyDetachInputStruct())
 	op.SetOutput(SpecularMeta().UserIdentityPolicyDetachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14507,9 +14537,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleCreateInputStruct())
 	op.SetOutput(SpecularMeta().RoleCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidRoleNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidRoleNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14520,7 +14550,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleGetInputStruct())
 	op.SetOutput(SpecularMeta().RoleGetInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14531,9 +14561,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleDestroyInputStruct())
 	op.SetOutput(SpecularMeta().RoleDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().IdentityInUseProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().IdentityInUseErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14544,8 +14574,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleListInputStruct())
 	op.SetOutput(SpecularMeta().RoleListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14556,11 +14586,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleAssumeInputStruct())
 	op.SetOutput(SpecularMeta().RoleAssumeInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidPrincipalDRNProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidPrincipalDRNErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14571,10 +14601,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleAssumeWithWebIdentityInputStruct())
 	op.SetOutput(SpecularMeta().RoleAssumeWithWebIdentityInputStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidWebIdentityTokenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidPrincipalDRNProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidWebIdentityTokenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidPrincipalDRNErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	// subresource RoleAccessKey
 	resRoleAccessKey, err := resRole.NewSubResource("AccessKey")
@@ -14590,9 +14620,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleAccessKeyListInputStruct())
 	op.SetOutput(SpecularMeta().RoleAccessKeyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14603,9 +14633,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleAccessKeyDestroyInputStruct())
 	op.SetOutput(SpecularMeta().RoleAccessKeyDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14623,10 +14653,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleIdentityPolicyAttachInputStruct())
 	op.SetOutput(SpecularMeta().RoleIdentityPolicyAttachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14637,8 +14667,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleIdentityPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().RoleIdentityPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14649,10 +14679,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleIdentityPolicyDetachInputStruct())
 	op.SetOutput(SpecularMeta().RoleIdentityPolicyDetachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14670,10 +14700,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleTrustPolicyAttachInputStruct())
 	op.SetOutput(SpecularMeta().RoleTrustPolicyAttachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14684,9 +14714,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleTrustPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().RoleTrustPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14697,10 +14727,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().RoleTrustPolicyDetachInputStruct())
 	op.SetOutput(SpecularMeta().RoleTrustPolicyDetachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().RoleNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().RoleNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14717,9 +14747,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupCreateInputStruct())
 	op.SetOutput(SpecularMeta().GroupCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14730,10 +14760,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupDestroyInputStruct())
 	op.SetOutput(SpecularMeta().GroupDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14744,10 +14774,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupGetInputStruct())
 	op.SetOutput(SpecularMeta().GroupGetInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14758,8 +14788,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupListInputStruct())
 	op.SetOutput(SpecularMeta().GroupListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource GroupMember
@@ -14776,12 +14806,12 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupMemberAddInputStruct())
 	op.SetOutput(SpecularMeta().GroupMemberAddInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidUsernameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14792,12 +14822,12 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupMemberRemoveInputStruct())
 	op.SetOutput(SpecularMeta().GroupMemberRemoveInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().UserNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidUsernameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidUsernameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14808,10 +14838,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupMemberListInputStruct())
 	op.SetOutput(SpecularMeta().GroupMemberListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14829,11 +14859,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupIdentityPolicyAttachInputStruct())
 	op.SetOutput(SpecularMeta().GroupIdentityPolicyAttachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14844,11 +14874,11 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupIdentityPolicyDetachInputStruct())
 	op.SetOutput(SpecularMeta().GroupIdentityPolicyDetachInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14859,10 +14889,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().GroupIdentityPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().GroupIdentityPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().GroupNotFoundProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidGroupNameProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GroupNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14879,9 +14909,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyCreateInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14892,8 +14922,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14904,9 +14934,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyRetrieveInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyRetrieveInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14917,8 +14947,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyDestroyInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14929,9 +14959,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyUpdateInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyUpdateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyStructureProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyStructureErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource IdentityPolicyAttachment
@@ -14948,9 +14978,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().IdentityPolicyAttachmentListInputStruct())
 	op.SetOutput(SpecularMeta().IdentityPolicyAttachmentListInputStruct())
-	op.RegisterProblemType(SpecularMeta().PolicyNotFoundProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(SpecularMeta().PolicyNotFoundErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14967,9 +14997,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyCreateInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14980,9 +15010,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyRetrieveInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyRetrieveInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -14993,8 +15023,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyListInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15005,10 +15035,10 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyUpdateInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyUpdateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidTrustPolicyErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15019,9 +15049,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyDestroyInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyDestroyInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource TrustPolicyAttachment
@@ -15038,9 +15068,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().TrustPolicyAttachmentListInputStruct())
 	op.SetOutput(SpecularMeta().TrustPolicyAttachmentListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().TrustPolicyNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15057,9 +15087,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationCreateInputStruct())
 	op.SetOutput(SpecularMeta().InvitationCreateInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidInvitationProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidInvitationErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15070,8 +15100,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationListInputStruct())
 	op.SetOutput(SpecularMeta().InvitationListInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15082,9 +15112,9 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationRevokeInputStruct())
 	op.SetOutput(SpecularMeta().InvitationRevokeInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvitationNotFoundProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvitationNotFoundErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15095,8 +15125,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationAcceptInputStruct())
 	op.SetOutput(SpecularMeta().InvitationAcceptInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidInvitationProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidInvitationErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15107,7 +15137,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationInspectInputStruct())
 	op.SetOutput(SpecularMeta().InvitationInspectInputStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidInvitationProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidInvitationErrorStruct())
 
 	op, err = resInvitation.NewOperation("Decline")
 	if err != nil {
@@ -15116,7 +15146,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().InvitationDeclineInputStruct())
 	op.SetOutput(SpecularMeta().InvitationDeclineInputStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidInvitationProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidInvitationErrorStruct())
 
 	resServiceBearerToken, err := pk.NewResource("ServiceBearerToken")
 	if err != nil {
@@ -15131,8 +15161,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().ServiceBearerTokenGetInputStruct())
 	op.SetOutput(SpecularMeta().ServiceBearerTokenGetInputStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidServiceBearerTokenDurationProblemStruct())
-	op.RegisterProblemType(SpecularMeta().InvalidServiceNameProblemStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidServiceBearerTokenDurationErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidServiceNameErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15149,8 +15179,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().SessionKeepAliveInputStruct())
 	op.SetOutput(SpecularMeta().SessionKeepAliveInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15161,8 +15191,8 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().SessionRevokeInputStruct())
 	op.SetOutput(SpecularMeta().SessionRevokeInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15173,7 +15203,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().SessionIdentityInputStruct())
 	op.SetOutput(SpecularMeta().SessionIdentityInputStruct())
-	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedProblemStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15198,7 +15228,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.SetInput(SpecularMeta().ServiceCatalogGetInputStruct())
 	op.SetOutput(SpecularMeta().ServiceCatalogGetInputStruct())
-	op.RegisterProblemType(SpecularMeta().ServiceCatalogGetServiceCatalogNotFoundProblemStruct())
+	op.RegisterProblemType(SpecularMeta().ServiceCatalogGetServiceCatalogNotFoundErrorStruct())
 
 	pk.AddAnnotation(&godeployportcomapiservicescorelib.ServiceSignatureV1{
 		ServiceName: "iam",
@@ -17017,214 +17047,214 @@ func initSpecularMeta() {
 
 // SpecularMetaInfo defines metadata of the specular module
 type SpecularMetaInfo struct {
-	mod                                                                     *clientruntime.Package
-	structPathServiceCatalogAction                                          *clientruntime.StructDefinition
-	structPathServiceCatalogResourceType                                    *clientruntime.StructDefinition
-	structPathServiceCatalogData                                            *clientruntime.StructDefinition
-	structPathServiceCatalogInfo                                            *clientruntime.StructDefinition
-	structPathServiceCatalogSummary                                         *clientruntime.StructDefinition
-	structPathUserInformationSSOProvider                                    *clientruntime.StructDefinition
-	structPathUserInformationSSOProfile                                     *clientruntime.StructDefinition
-	structPathUserInformationSSO                                            *clientruntime.StructDefinition
-	structPathManagedByService                                              *clientruntime.StructDefinition
-	structPathUserInformation                                               *clientruntime.StructDefinition
-	structPathRoleInformation                                               *clientruntime.StructDefinition
-	structPathGroupInformation                                              *clientruntime.StructDefinition
-	structPathCredentials                                                   *clientruntime.StructDefinition
-	structPathSSOProviderUnavailableProblem                                 *clientruntime.StructDefinition
-	structPathSSOFlow                                                       *clientruntime.StructDefinition
-	structPathAccount                                                       *clientruntime.StructDefinition
-	structPathRegionEndpoint                                                *clientruntime.StructDefinition
-	structPathRegionInfo                                                    *clientruntime.StructDefinition
-	structPathAccountSSOProvider                                            *clientruntime.StructDefinition
-	structPathPolicyNotFoundProblem                                         *clientruntime.StructDefinition
-	structPathInvitation                                                    *clientruntime.StructDefinition
-	structPathInvalidInvitationProblem                                      *clientruntime.StructDefinition
-	structPathInvitationNotFoundProblem                                     *clientruntime.StructDefinition
-	structPathInvitationPreview                                             *clientruntime.StructDefinition
-	structPathOIDCProvider                                                  *clientruntime.StructDefinition
-	structPathInvalidOIDCProviderProblem                                    *clientruntime.StructDefinition
-	structPathInvalidOIDCIssuerProblem                                      *clientruntime.StructDefinition
-	structPathOIDCProviderNotFoundProblem                                   *clientruntime.StructDefinition
-	structPathOIDCProviderInUseProblem                                      *clientruntime.StructDefinition
-	structPathTrustPolicyStatement                                          *clientruntime.StructDefinition
-	structPathTrustPolicy                                                   *clientruntime.StructDefinition
-	structPathTrustPolicyAttachment                                         *clientruntime.StructDefinition
-	structPathInvalidTrustPolicyProblem                                     *clientruntime.StructDefinition
-	structPathTrustPolicyNotFoundProblem                                    *clientruntime.StructDefinition
-	structPathInvalidWebIdentityTokenProblem                                *clientruntime.StructDefinition
-	structPathInvalidPrincipalDRNProblem                                    *clientruntime.StructDefinition
-	structPathAccountCreateInput                                            *clientruntime.StructDefinition
-	structPathAccountCreateOutput                                           *clientruntime.StructDefinition
-	structPathAccountCreateInvalidNameProblem                               *clientruntime.StructDefinition
-	structPathAccountAssumeIdentityInput                                    *clientruntime.StructDefinition
-	structPathAccountAssumeIdentityOutput                                   *clientruntime.StructDefinition
-	structPathAccountBeginAssumeIdentityInput                               *clientruntime.StructDefinition
-	structPathAccountBeginAssumeIdentityOutput                              *clientruntime.StructDefinition
-	structPathAccountCompleteAssumeIdentityInput                            *clientruntime.StructDefinition
-	structPathAccountCompleteAssumeIdentityOutput                           *clientruntime.StructDefinition
-	structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationInput                            *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationOutput                           *clientruntime.StructDefinition
-	structPathAccountSSOBeginAuthenticationParameterProblem                 *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationInput                         *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationOutput                        *clientruntime.StructDefinition
-	structPathAccountSSOCompleteAuthenticationInvalidFlowProblem            *clientruntime.StructDefinition
-	structPathAccountSSOGetProvidersInput                                   *clientruntime.StructDefinition
-	structPathAccountSSOGetProvidersOutput                                  *clientruntime.StructDefinition
-	structPathAccountOIDCProviderCreateInput                                *clientruntime.StructDefinition
-	structPathAccountOIDCProviderCreateOutput                               *clientruntime.StructDefinition
-	structPathAccountOIDCProviderSetAudiencesInput                          *clientruntime.StructDefinition
-	structPathAccountOIDCProviderSetAudiencesOutput                         *clientruntime.StructDefinition
-	structPathAccountOIDCProviderListInput                                  *clientruntime.StructDefinition
-	structPathAccountOIDCProviderListOutput                                 *clientruntime.StructDefinition
-	structPathAccountOIDCProviderDeleteInput                                *clientruntime.StructDefinition
-	structPathAccountOIDCProviderDeleteOutput                               *clientruntime.StructDefinition
-	structPathAccountOIDCProviderTrustPolicyListInput                       *clientruntime.StructDefinition
-	structPathAccountOIDCProviderTrustPolicyListOutput                      *clientruntime.StructDefinition
-	structPathRegionListInput                                               *clientruntime.StructDefinition
-	structPathRegionListOutput                                              *clientruntime.StructDefinition
-	structPathInvalidUsernameProblem                                        *clientruntime.StructDefinition
-	structPathInvalidRoleNameProblem                                        *clientruntime.StructDefinition
-	structPathMemberAccount                                                 *clientruntime.StructDefinition
-	structPathCredentialInfo                                                *clientruntime.StructDefinition
-	structPathIdentityPolicyStatement                                       *clientruntime.StructDefinition
-	structPathIdentityPolicy                                                *clientruntime.StructDefinition
-	structPathIdentityPolicyAttachment                                      *clientruntime.StructDefinition
-	structPathIdentityPolicyAttachmentInfo                                  *clientruntime.StructDefinition
-	structPathUserNotFoundProblem                                           *clientruntime.StructDefinition
-	structPathCannotDisableSelfProblem                                      *clientruntime.StructDefinition
-	structPathRoleNotFoundProblem                                           *clientruntime.StructDefinition
-	structPathGroupNotFoundProblem                                          *clientruntime.StructDefinition
-	structPathInvalidGroupNameProblem                                       *clientruntime.StructDefinition
-	structPathIdentityInUseProblem                                          *clientruntime.StructDefinition
-	structPathUserCreateInput                                               *clientruntime.StructDefinition
-	structPathUserCreateOutput                                              *clientruntime.StructDefinition
-	structPathUserGetInput                                                  *clientruntime.StructDefinition
-	structPathUserGetOutput                                                 *clientruntime.StructDefinition
-	structPathUserGetUserNotAvailableProblem                                *clientruntime.StructDefinition
-	structPathUserDestroyInput                                              *clientruntime.StructDefinition
-	structPathUserDestroyOutput                                             *clientruntime.StructDefinition
-	structPathUserSetActiveInput                                            *clientruntime.StructDefinition
-	structPathUserSetActiveOutput                                           *clientruntime.StructDefinition
-	structPathUserListInput                                                 *clientruntime.StructDefinition
-	structPathUserListOutput                                                *clientruntime.StructDefinition
-	structPathUserMemberAccountsInput                                       *clientruntime.StructDefinition
-	structPathUserMemberAccountsOutput                                      *clientruntime.StructDefinition
-	structPathUserAccessKeyCreateInput                                      *clientruntime.StructDefinition
-	structPathUserAccessKeyCreateOutput                                     *clientruntime.StructDefinition
-	structPathUserAccessKeyListInput                                        *clientruntime.StructDefinition
-	structPathUserAccessKeyListOutput                                       *clientruntime.StructDefinition
-	structPathUserAccessKeyDestroyInput                                     *clientruntime.StructDefinition
-	structPathUserAccessKeyDestroyOutput                                    *clientruntime.StructDefinition
-	structPathUserIdentityPolicyAttachInput                                 *clientruntime.StructDefinition
-	structPathUserIdentityPolicyAttachOutput                                *clientruntime.StructDefinition
-	structPathUserIdentityPolicyListInput                                   *clientruntime.StructDefinition
-	structPathUserIdentityPolicyListOutput                                  *clientruntime.StructDefinition
-	structPathUserIdentityPolicyDetachInput                                 *clientruntime.StructDefinition
-	structPathUserIdentityPolicyDetachOutput                                *clientruntime.StructDefinition
-	structPathInlinePolicy                                                  *clientruntime.StructDefinition
-	structPathPolicyStructureProblem                                        *clientruntime.StructDefinition
-	structPathRoleCreateInput                                               *clientruntime.StructDefinition
-	structPathRoleCreateOutput                                              *clientruntime.StructDefinition
-	structPathRoleGetInput                                                  *clientruntime.StructDefinition
-	structPathRoleGetOutput                                                 *clientruntime.StructDefinition
-	structPathRoleDestroyInput                                              *clientruntime.StructDefinition
-	structPathRoleDestroyOutput                                             *clientruntime.StructDefinition
-	structPathRoleListInput                                                 *clientruntime.StructDefinition
-	structPathRoleListOutput                                                *clientruntime.StructDefinition
-	structPathRoleAssumeInput                                               *clientruntime.StructDefinition
-	structPathRoleAssumeOutput                                              *clientruntime.StructDefinition
-	structPathRoleAssumeWithWebIdentityInput                                *clientruntime.StructDefinition
-	structPathRoleAssumeWithWebIdentityOutput                               *clientruntime.StructDefinition
-	structPathRoleAccessKeyListInput                                        *clientruntime.StructDefinition
-	structPathRoleAccessKeyListOutput                                       *clientruntime.StructDefinition
-	structPathRoleAccessKeyDestroyInput                                     *clientruntime.StructDefinition
-	structPathRoleAccessKeyDestroyOutput                                    *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyAttachInput                                 *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyAttachOutput                                *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyListInput                                   *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyListOutput                                  *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyDetachInput                                 *clientruntime.StructDefinition
-	structPathRoleIdentityPolicyDetachOutput                                *clientruntime.StructDefinition
-	structPathRoleTrustPolicyAttachInput                                    *clientruntime.StructDefinition
-	structPathRoleTrustPolicyAttachOutput                                   *clientruntime.StructDefinition
-	structPathRoleTrustPolicyListInput                                      *clientruntime.StructDefinition
-	structPathRoleTrustPolicyListOutput                                     *clientruntime.StructDefinition
-	structPathRoleTrustPolicyDetachInput                                    *clientruntime.StructDefinition
-	structPathRoleTrustPolicyDetachOutput                                   *clientruntime.StructDefinition
-	structPathGroupCreateInput                                              *clientruntime.StructDefinition
-	structPathGroupCreateOutput                                             *clientruntime.StructDefinition
-	structPathGroupDestroyInput                                             *clientruntime.StructDefinition
-	structPathGroupDestroyOutput                                            *clientruntime.StructDefinition
-	structPathGroupGetInput                                                 *clientruntime.StructDefinition
-	structPathGroupGetOutput                                                *clientruntime.StructDefinition
-	structPathGroupListInput                                                *clientruntime.StructDefinition
-	structPathGroupListOutput                                               *clientruntime.StructDefinition
-	structPathGroupMemberAddInput                                           *clientruntime.StructDefinition
-	structPathGroupMemberAddOutput                                          *clientruntime.StructDefinition
-	structPathGroupMemberRemoveInput                                        *clientruntime.StructDefinition
-	structPathGroupMemberRemoveOutput                                       *clientruntime.StructDefinition
-	structPathGroupMemberListInput                                          *clientruntime.StructDefinition
-	structPathGroupMemberListOutput                                         *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyAttachInput                                *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyAttachOutput                               *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyDetachInput                                *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyDetachOutput                               *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyListInput                                  *clientruntime.StructDefinition
-	structPathGroupIdentityPolicyListOutput                                 *clientruntime.StructDefinition
-	structPathIdentityPolicyCreateInput                                     *clientruntime.StructDefinition
-	structPathIdentityPolicyCreateOutput                                    *clientruntime.StructDefinition
-	structPathIdentityPolicyListInput                                       *clientruntime.StructDefinition
-	structPathIdentityPolicyListOutput                                      *clientruntime.StructDefinition
-	structPathIdentityPolicyRetrieveInput                                   *clientruntime.StructDefinition
-	structPathIdentityPolicyRetrieveOutput                                  *clientruntime.StructDefinition
-	structPathIdentityPolicyDestroyInput                                    *clientruntime.StructDefinition
-	structPathIdentityPolicyDestroyOutput                                   *clientruntime.StructDefinition
-	structPathIdentityPolicyUpdateInput                                     *clientruntime.StructDefinition
-	structPathIdentityPolicyUpdateOutput                                    *clientruntime.StructDefinition
-	structPathIdentityPolicyAttachmentListInput                             *clientruntime.StructDefinition
-	structPathIdentityPolicyAttachmentListOutput                            *clientruntime.StructDefinition
-	structPathTrustPolicyCreateInput                                        *clientruntime.StructDefinition
-	structPathTrustPolicyCreateOutput                                       *clientruntime.StructDefinition
-	structPathTrustPolicyRetrieveInput                                      *clientruntime.StructDefinition
-	structPathTrustPolicyRetrieveOutput                                     *clientruntime.StructDefinition
-	structPathTrustPolicyListInput                                          *clientruntime.StructDefinition
-	structPathTrustPolicyListOutput                                         *clientruntime.StructDefinition
-	structPathTrustPolicyUpdateInput                                        *clientruntime.StructDefinition
-	structPathTrustPolicyUpdateOutput                                       *clientruntime.StructDefinition
-	structPathTrustPolicyDestroyInput                                       *clientruntime.StructDefinition
-	structPathTrustPolicyDestroyOutput                                      *clientruntime.StructDefinition
-	structPathTrustPolicyAttachmentListInput                                *clientruntime.StructDefinition
-	structPathTrustPolicyAttachmentListOutput                               *clientruntime.StructDefinition
-	structPathServiceBearerToken                                            *clientruntime.StructDefinition
-	structPathInvalidServiceBearerTokenDurationProblem                      *clientruntime.StructDefinition
-	structPathInvalidServiceNameProblem                                     *clientruntime.StructDefinition
-	structPathInvitationCreateInput                                         *clientruntime.StructDefinition
-	structPathInvitationCreateOutput                                        *clientruntime.StructDefinition
-	structPathInvitationListInput                                           *clientruntime.StructDefinition
-	structPathInvitationListOutput                                          *clientruntime.StructDefinition
-	structPathInvitationRevokeInput                                         *clientruntime.StructDefinition
-	structPathInvitationRevokeOutput                                        *clientruntime.StructDefinition
-	structPathInvitationAcceptInput                                         *clientruntime.StructDefinition
-	structPathInvitationAcceptOutput                                        *clientruntime.StructDefinition
-	structPathInvitationInspectInput                                        *clientruntime.StructDefinition
-	structPathInvitationInspectOutput                                       *clientruntime.StructDefinition
-	structPathInvitationDeclineInput                                        *clientruntime.StructDefinition
-	structPathInvitationDeclineOutput                                       *clientruntime.StructDefinition
-	structPathServiceBearerTokenGetInput                                    *clientruntime.StructDefinition
-	structPathServiceBearerTokenGetOutput                                   *clientruntime.StructDefinition
-	structPathSessionKeepAliveInput                                         *clientruntime.StructDefinition
-	structPathSessionKeepAliveOutput                                        *clientruntime.StructDefinition
-	structPathSessionRevokeInput                                            *clientruntime.StructDefinition
-	structPathSessionRevokeOutput                                           *clientruntime.StructDefinition
-	structPathSessionIdentityInput                                          *clientruntime.StructDefinition
-	structPathSessionIdentityOutput                                         *clientruntime.StructDefinition
-	structPathServiceCatalogListInput                                       *clientruntime.StructDefinition
-	structPathServiceCatalogListOutput                                      *clientruntime.StructDefinition
-	structPathServiceCatalogGetInput                                        *clientruntime.StructDefinition
-	structPathServiceCatalogGetOutput                                       *clientruntime.StructDefinition
-	structPathServiceCatalogGetServiceCatalogNotFoundProblem                *clientruntime.StructDefinition
+	mod                                                                   *clientruntime.Package
+	structPathServiceCatalogAction                                        *clientruntime.StructDefinition
+	structPathServiceCatalogResourceType                                  *clientruntime.StructDefinition
+	structPathServiceCatalogData                                          *clientruntime.StructDefinition
+	structPathServiceCatalogInfo                                          *clientruntime.StructDefinition
+	structPathServiceCatalogSummary                                       *clientruntime.StructDefinition
+	structPathUserInformationSSOProvider                                  *clientruntime.StructDefinition
+	structPathUserInformationSSOProfile                                   *clientruntime.StructDefinition
+	structPathUserInformationSSO                                          *clientruntime.StructDefinition
+	structPathManagedByService                                            *clientruntime.StructDefinition
+	structPathUserInformation                                             *clientruntime.StructDefinition
+	structPathRoleInformation                                             *clientruntime.StructDefinition
+	structPathGroupInformation                                            *clientruntime.StructDefinition
+	structPathCredentials                                                 *clientruntime.StructDefinition
+	structPathSSOProviderUnavailableError                                 *clientruntime.StructDefinition
+	structPathSSOFlow                                                     *clientruntime.StructDefinition
+	structPathAccount                                                     *clientruntime.StructDefinition
+	structPathRegionEndpoint                                              *clientruntime.StructDefinition
+	structPathRegionInfo                                                  *clientruntime.StructDefinition
+	structPathAccountSSOProvider                                          *clientruntime.StructDefinition
+	structPathPolicyNotFoundError                                         *clientruntime.StructDefinition
+	structPathInvitation                                                  *clientruntime.StructDefinition
+	structPathInvalidInvitationError                                      *clientruntime.StructDefinition
+	structPathInvitationNotFoundError                                     *clientruntime.StructDefinition
+	structPathInvitationPreview                                           *clientruntime.StructDefinition
+	structPathOIDCProvider                                                *clientruntime.StructDefinition
+	structPathInvalidOIDCProviderError                                    *clientruntime.StructDefinition
+	structPathInvalidOIDCIssuerError                                      *clientruntime.StructDefinition
+	structPathOIDCProviderNotFoundError                                   *clientruntime.StructDefinition
+	structPathOIDCProviderInUseError                                      *clientruntime.StructDefinition
+	structPathTrustPolicyStatement                                        *clientruntime.StructDefinition
+	structPathTrustPolicy                                                 *clientruntime.StructDefinition
+	structPathTrustPolicyAttachment                                       *clientruntime.StructDefinition
+	structPathInvalidTrustPolicyError                                     *clientruntime.StructDefinition
+	structPathTrustPolicyNotFoundError                                    *clientruntime.StructDefinition
+	structPathInvalidWebIdentityTokenError                                *clientruntime.StructDefinition
+	structPathInvalidPrincipalDRNError                                    *clientruntime.StructDefinition
+	structPathAccountCreateInput                                          *clientruntime.StructDefinition
+	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
+	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityInput                                  *clientruntime.StructDefinition
+	structPathAccountAssumeIdentityOutput                                 *clientruntime.StructDefinition
+	structPathAccountBeginAssumeIdentityInput                             *clientruntime.StructDefinition
+	structPathAccountBeginAssumeIdentityOutput                            *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityInput                          *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityOutput                         *clientruntime.StructDefinition
+	structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationInput                          *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationOutput                         *clientruntime.StructDefinition
+	structPathAccountSSOBeginAuthenticationParameterError                 *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInput                       *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationOutput                      *clientruntime.StructDefinition
+	structPathAccountSSOCompleteAuthenticationInvalidFlowError            *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersInput                                 *clientruntime.StructDefinition
+	structPathAccountSSOGetProvidersOutput                                *clientruntime.StructDefinition
+	structPathAccountOIDCProviderCreateInput                              *clientruntime.StructDefinition
+	structPathAccountOIDCProviderCreateOutput                             *clientruntime.StructDefinition
+	structPathAccountOIDCProviderSetAudiencesInput                        *clientruntime.StructDefinition
+	structPathAccountOIDCProviderSetAudiencesOutput                       *clientruntime.StructDefinition
+	structPathAccountOIDCProviderListInput                                *clientruntime.StructDefinition
+	structPathAccountOIDCProviderListOutput                               *clientruntime.StructDefinition
+	structPathAccountOIDCProviderDeleteInput                              *clientruntime.StructDefinition
+	structPathAccountOIDCProviderDeleteOutput                             *clientruntime.StructDefinition
+	structPathAccountOIDCProviderTrustPolicyListInput                     *clientruntime.StructDefinition
+	structPathAccountOIDCProviderTrustPolicyListOutput                    *clientruntime.StructDefinition
+	structPathRegionListInput                                             *clientruntime.StructDefinition
+	structPathRegionListOutput                                            *clientruntime.StructDefinition
+	structPathInvalidUsernameError                                        *clientruntime.StructDefinition
+	structPathInvalidRoleNameError                                        *clientruntime.StructDefinition
+	structPathMemberAccount                                               *clientruntime.StructDefinition
+	structPathCredentialInfo                                              *clientruntime.StructDefinition
+	structPathIdentityPolicyStatement                                     *clientruntime.StructDefinition
+	structPathIdentityPolicy                                              *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachment                                    *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentInfo                                *clientruntime.StructDefinition
+	structPathUserNotFoundError                                           *clientruntime.StructDefinition
+	structPathCannotDisableSelfError                                      *clientruntime.StructDefinition
+	structPathRoleNotFoundError                                           *clientruntime.StructDefinition
+	structPathGroupNotFoundError                                          *clientruntime.StructDefinition
+	structPathInvalidGroupNameError                                       *clientruntime.StructDefinition
+	structPathIdentityInUseError                                          *clientruntime.StructDefinition
+	structPathUserCreateInput                                             *clientruntime.StructDefinition
+	structPathUserCreateOutput                                            *clientruntime.StructDefinition
+	structPathUserGetInput                                                *clientruntime.StructDefinition
+	structPathUserGetOutput                                               *clientruntime.StructDefinition
+	structPathUserGetUserNotAvailableError                                *clientruntime.StructDefinition
+	structPathUserDestroyInput                                            *clientruntime.StructDefinition
+	structPathUserDestroyOutput                                           *clientruntime.StructDefinition
+	structPathUserSetActiveInput                                          *clientruntime.StructDefinition
+	structPathUserSetActiveOutput                                         *clientruntime.StructDefinition
+	structPathUserListInput                                               *clientruntime.StructDefinition
+	structPathUserListOutput                                              *clientruntime.StructDefinition
+	structPathUserMemberAccountsInput                                     *clientruntime.StructDefinition
+	structPathUserMemberAccountsOutput                                    *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateInput                                    *clientruntime.StructDefinition
+	structPathUserAccessKeyCreateOutput                                   *clientruntime.StructDefinition
+	structPathUserAccessKeyListInput                                      *clientruntime.StructDefinition
+	structPathUserAccessKeyListOutput                                     *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyInput                                   *clientruntime.StructDefinition
+	structPathUserAccessKeyDestroyOutput                                  *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachInput                               *clientruntime.StructDefinition
+	structPathUserIdentityPolicyAttachOutput                              *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListInput                                 *clientruntime.StructDefinition
+	structPathUserIdentityPolicyListOutput                                *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachInput                               *clientruntime.StructDefinition
+	structPathUserIdentityPolicyDetachOutput                              *clientruntime.StructDefinition
+	structPathInlinePolicy                                                *clientruntime.StructDefinition
+	structPathPolicyStructureError                                        *clientruntime.StructDefinition
+	structPathRoleCreateInput                                             *clientruntime.StructDefinition
+	structPathRoleCreateOutput                                            *clientruntime.StructDefinition
+	structPathRoleGetInput                                                *clientruntime.StructDefinition
+	structPathRoleGetOutput                                               *clientruntime.StructDefinition
+	structPathRoleDestroyInput                                            *clientruntime.StructDefinition
+	structPathRoleDestroyOutput                                           *clientruntime.StructDefinition
+	structPathRoleListInput                                               *clientruntime.StructDefinition
+	structPathRoleListOutput                                              *clientruntime.StructDefinition
+	structPathRoleAssumeInput                                             *clientruntime.StructDefinition
+	structPathRoleAssumeOutput                                            *clientruntime.StructDefinition
+	structPathRoleAssumeWithWebIdentityInput                              *clientruntime.StructDefinition
+	structPathRoleAssumeWithWebIdentityOutput                             *clientruntime.StructDefinition
+	structPathRoleAccessKeyListInput                                      *clientruntime.StructDefinition
+	structPathRoleAccessKeyListOutput                                     *clientruntime.StructDefinition
+	structPathRoleAccessKeyDestroyInput                                   *clientruntime.StructDefinition
+	structPathRoleAccessKeyDestroyOutput                                  *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyAttachInput                               *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyAttachOutput                              *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyListInput                                 *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyListOutput                                *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyDetachInput                               *clientruntime.StructDefinition
+	structPathRoleIdentityPolicyDetachOutput                              *clientruntime.StructDefinition
+	structPathRoleTrustPolicyAttachInput                                  *clientruntime.StructDefinition
+	structPathRoleTrustPolicyAttachOutput                                 *clientruntime.StructDefinition
+	structPathRoleTrustPolicyListInput                                    *clientruntime.StructDefinition
+	structPathRoleTrustPolicyListOutput                                   *clientruntime.StructDefinition
+	structPathRoleTrustPolicyDetachInput                                  *clientruntime.StructDefinition
+	structPathRoleTrustPolicyDetachOutput                                 *clientruntime.StructDefinition
+	structPathGroupCreateInput                                            *clientruntime.StructDefinition
+	structPathGroupCreateOutput                                           *clientruntime.StructDefinition
+	structPathGroupDestroyInput                                           *clientruntime.StructDefinition
+	structPathGroupDestroyOutput                                          *clientruntime.StructDefinition
+	structPathGroupGetInput                                               *clientruntime.StructDefinition
+	structPathGroupGetOutput                                              *clientruntime.StructDefinition
+	structPathGroupListInput                                              *clientruntime.StructDefinition
+	structPathGroupListOutput                                             *clientruntime.StructDefinition
+	structPathGroupMemberAddInput                                         *clientruntime.StructDefinition
+	structPathGroupMemberAddOutput                                        *clientruntime.StructDefinition
+	structPathGroupMemberRemoveInput                                      *clientruntime.StructDefinition
+	structPathGroupMemberRemoveOutput                                     *clientruntime.StructDefinition
+	structPathGroupMemberListInput                                        *clientruntime.StructDefinition
+	structPathGroupMemberListOutput                                       *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyAttachInput                              *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyAttachOutput                             *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyDetachInput                              *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyDetachOutput                             *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyListInput                                *clientruntime.StructDefinition
+	structPathGroupIdentityPolicyListOutput                               *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateInput                                   *clientruntime.StructDefinition
+	structPathIdentityPolicyCreateOutput                                  *clientruntime.StructDefinition
+	structPathIdentityPolicyListInput                                     *clientruntime.StructDefinition
+	structPathIdentityPolicyListOutput                                    *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveInput                                 *clientruntime.StructDefinition
+	structPathIdentityPolicyRetrieveOutput                                *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyInput                                  *clientruntime.StructDefinition
+	structPathIdentityPolicyDestroyOutput                                 *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateInput                                   *clientruntime.StructDefinition
+	structPathIdentityPolicyUpdateOutput                                  *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentListInput                           *clientruntime.StructDefinition
+	structPathIdentityPolicyAttachmentListOutput                          *clientruntime.StructDefinition
+	structPathTrustPolicyCreateInput                                      *clientruntime.StructDefinition
+	structPathTrustPolicyCreateOutput                                     *clientruntime.StructDefinition
+	structPathTrustPolicyRetrieveInput                                    *clientruntime.StructDefinition
+	structPathTrustPolicyRetrieveOutput                                   *clientruntime.StructDefinition
+	structPathTrustPolicyListInput                                        *clientruntime.StructDefinition
+	structPathTrustPolicyListOutput                                       *clientruntime.StructDefinition
+	structPathTrustPolicyUpdateInput                                      *clientruntime.StructDefinition
+	structPathTrustPolicyUpdateOutput                                     *clientruntime.StructDefinition
+	structPathTrustPolicyDestroyInput                                     *clientruntime.StructDefinition
+	structPathTrustPolicyDestroyOutput                                    *clientruntime.StructDefinition
+	structPathTrustPolicyAttachmentListInput                              *clientruntime.StructDefinition
+	structPathTrustPolicyAttachmentListOutput                             *clientruntime.StructDefinition
+	structPathServiceBearerToken                                          *clientruntime.StructDefinition
+	structPathInvalidServiceBearerTokenDurationError                      *clientruntime.StructDefinition
+	structPathInvalidServiceNameError                                     *clientruntime.StructDefinition
+	structPathInvitationCreateInput                                       *clientruntime.StructDefinition
+	structPathInvitationCreateOutput                                      *clientruntime.StructDefinition
+	structPathInvitationListInput                                         *clientruntime.StructDefinition
+	structPathInvitationListOutput                                        *clientruntime.StructDefinition
+	structPathInvitationRevokeInput                                       *clientruntime.StructDefinition
+	structPathInvitationRevokeOutput                                      *clientruntime.StructDefinition
+	structPathInvitationAcceptInput                                       *clientruntime.StructDefinition
+	structPathInvitationAcceptOutput                                      *clientruntime.StructDefinition
+	structPathInvitationInspectInput                                      *clientruntime.StructDefinition
+	structPathInvitationInspectOutput                                     *clientruntime.StructDefinition
+	structPathInvitationDeclineInput                                      *clientruntime.StructDefinition
+	structPathInvitationDeclineOutput                                     *clientruntime.StructDefinition
+	structPathServiceBearerTokenGetInput                                  *clientruntime.StructDefinition
+	structPathServiceBearerTokenGetOutput                                 *clientruntime.StructDefinition
+	structPathSessionKeepAliveInput                                       *clientruntime.StructDefinition
+	structPathSessionKeepAliveOutput                                      *clientruntime.StructDefinition
+	structPathSessionRevokeInput                                          *clientruntime.StructDefinition
+	structPathSessionRevokeOutput                                         *clientruntime.StructDefinition
+	structPathSessionIdentityInput                                        *clientruntime.StructDefinition
+	structPathSessionIdentityOutput                                       *clientruntime.StructDefinition
+	structPathServiceCatalogListInput                                     *clientruntime.StructDefinition
+	structPathServiceCatalogListOutput                                    *clientruntime.StructDefinition
+	structPathServiceCatalogGetInput                                      *clientruntime.StructDefinition
+	structPathServiceCatalogGetOutput                                     *clientruntime.StructDefinition
+	structPathServiceCatalogGetServiceCatalogNotFoundError                *clientruntime.StructDefinition
 }
 
 // Module returns the module definition
@@ -17297,9 +17327,9 @@ func (m *SpecularMetaInfo) CredentialsStruct() *clientruntime.StructDefinition {
 	return m.structPathCredentials
 }
 
-// SSOProviderUnavailableProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) SSOProviderUnavailableProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathSSOProviderUnavailableProblem
+// SSOProviderUnavailableErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) SSOProviderUnavailableErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathSSOProviderUnavailableError
 }
 
 // SSOFlowStruct allows easy access to structure
@@ -17327,9 +17357,9 @@ func (m *SpecularMetaInfo) AccountSSOProviderStruct() *clientruntime.StructDefin
 	return m.structPathAccountSSOProvider
 }
 
-// PolicyNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) PolicyNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathPolicyNotFoundProblem
+// PolicyNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) PolicyNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathPolicyNotFoundError
 }
 
 // InvitationStruct allows easy access to structure
@@ -17337,14 +17367,14 @@ func (m *SpecularMetaInfo) InvitationStruct() *clientruntime.StructDefinition {
 	return m.structPathInvitation
 }
 
-// InvalidInvitationProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidInvitationProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidInvitationProblem
+// InvalidInvitationErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidInvitationErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidInvitationError
 }
 
-// InvitationNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvitationNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvitationNotFoundProblem
+// InvitationNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvitationNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvitationNotFoundError
 }
 
 // InvitationPreviewStruct allows easy access to structure
@@ -17357,24 +17387,24 @@ func (m *SpecularMetaInfo) OIDCProviderStruct() *clientruntime.StructDefinition 
 	return m.structPathOIDCProvider
 }
 
-// InvalidOIDCProviderProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidOIDCProviderProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidOIDCProviderProblem
+// InvalidOIDCProviderErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidOIDCProviderErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidOIDCProviderError
 }
 
-// InvalidOIDCIssuerProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidOIDCIssuerProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidOIDCIssuerProblem
+// InvalidOIDCIssuerErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidOIDCIssuerErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidOIDCIssuerError
 }
 
-// OIDCProviderNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) OIDCProviderNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathOIDCProviderNotFoundProblem
+// OIDCProviderNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) OIDCProviderNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathOIDCProviderNotFoundError
 }
 
-// OIDCProviderInUseProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) OIDCProviderInUseProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathOIDCProviderInUseProblem
+// OIDCProviderInUseErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) OIDCProviderInUseErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathOIDCProviderInUseError
 }
 
 // TrustPolicyStatementStruct allows easy access to structure
@@ -17392,24 +17422,24 @@ func (m *SpecularMetaInfo) TrustPolicyAttachmentStruct() *clientruntime.StructDe
 	return m.structPathTrustPolicyAttachment
 }
 
-// InvalidTrustPolicyProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidTrustPolicyProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidTrustPolicyProblem
+// InvalidTrustPolicyErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidTrustPolicyErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidTrustPolicyError
 }
 
-// TrustPolicyNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) TrustPolicyNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathTrustPolicyNotFoundProblem
+// TrustPolicyNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) TrustPolicyNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathTrustPolicyNotFoundError
 }
 
-// InvalidWebIdentityTokenProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidWebIdentityTokenProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidWebIdentityTokenProblem
+// InvalidWebIdentityTokenErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidWebIdentityTokenErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidWebIdentityTokenError
 }
 
-// InvalidPrincipalDRNProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidPrincipalDRNProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidPrincipalDRNProblem
+// InvalidPrincipalDRNErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidPrincipalDRNErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidPrincipalDRNError
 }
 
 // AccountCreateInputStruct allows easy access to structure
@@ -17422,9 +17452,9 @@ func (m *SpecularMetaInfo) AccountCreateOutputStruct() *clientruntime.StructDefi
 	return m.structPathAccountCreateOutput
 }
 
-// AccountCreateInvalidNameProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) AccountCreateInvalidNameProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathAccountCreateInvalidNameProblem
+// AccountCreateInvalidNameErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCreateInvalidNameErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountCreateInvalidNameError
 }
 
 // AccountAssumeIdentityInputStruct allows easy access to structure
@@ -17457,9 +17487,9 @@ func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityOutputStruct() *clientru
 	return m.structPathAccountCompleteAssumeIdentityOutput
 }
 
-// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeProblem
+// AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountCompleteAssumeIdentityInvalidAssumeIdentityCodeErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountCompleteAssumeIdentityInvalidAssumeIdentityCodeError
 }
 
 // AccountSSOBeginAuthenticationInputStruct allows easy access to structure
@@ -17472,9 +17502,9 @@ func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationOutputStruct() *clientru
 	return m.structPathAccountSSOBeginAuthenticationOutput
 }
 
-// AccountSSOBeginAuthenticationParameterProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationParameterProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathAccountSSOBeginAuthenticationParameterProblem
+// AccountSSOBeginAuthenticationParameterErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOBeginAuthenticationParameterErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOBeginAuthenticationParameterError
 }
 
 // AccountSSOCompleteAuthenticationInputStruct allows easy access to structure
@@ -17487,9 +17517,9 @@ func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationOutputStruct() *clien
 	return m.structPathAccountSSOCompleteAuthenticationOutput
 }
 
-// AccountSSOCompleteAuthenticationInvalidFlowProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInvalidFlowProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathAccountSSOCompleteAuthenticationInvalidFlowProblem
+// AccountSSOCompleteAuthenticationInvalidFlowErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSSOCompleteAuthenticationInvalidFlowErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSSOCompleteAuthenticationInvalidFlowError
 }
 
 // AccountSSOGetProvidersInputStruct allows easy access to structure
@@ -17562,14 +17592,14 @@ func (m *SpecularMetaInfo) RegionListOutputStruct() *clientruntime.StructDefinit
 	return m.structPathRegionListOutput
 }
 
-// InvalidUsernameProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidUsernameProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidUsernameProblem
+// InvalidUsernameErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidUsernameErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidUsernameError
 }
 
-// InvalidRoleNameProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidRoleNameProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidRoleNameProblem
+// InvalidRoleNameErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidRoleNameErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidRoleNameError
 }
 
 // MemberAccountStruct allows easy access to structure
@@ -17602,34 +17632,34 @@ func (m *SpecularMetaInfo) IdentityPolicyAttachmentInfoStruct() *clientruntime.S
 	return m.structPathIdentityPolicyAttachmentInfo
 }
 
-// UserNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) UserNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathUserNotFoundProblem
+// UserNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathUserNotFoundError
 }
 
-// CannotDisableSelfProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) CannotDisableSelfProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathCannotDisableSelfProblem
+// CannotDisableSelfErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) CannotDisableSelfErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathCannotDisableSelfError
 }
 
-// RoleNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) RoleNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathRoleNotFoundProblem
+// RoleNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) RoleNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathRoleNotFoundError
 }
 
-// GroupNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) GroupNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathGroupNotFoundProblem
+// GroupNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) GroupNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathGroupNotFoundError
 }
 
-// InvalidGroupNameProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidGroupNameProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidGroupNameProblem
+// InvalidGroupNameErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidGroupNameErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidGroupNameError
 }
 
-// IdentityInUseProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) IdentityInUseProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathIdentityInUseProblem
+// IdentityInUseErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) IdentityInUseErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathIdentityInUseError
 }
 
 // UserCreateInputStruct allows easy access to structure
@@ -17652,9 +17682,9 @@ func (m *SpecularMetaInfo) UserGetOutputStruct() *clientruntime.StructDefinition
 	return m.structPathUserGetOutput
 }
 
-// UserGetUserNotAvailableProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) UserGetUserNotAvailableProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathUserGetUserNotAvailableProblem
+// UserGetUserNotAvailableErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGetUserNotAvailableErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathUserGetUserNotAvailableError
 }
 
 // UserDestroyInputStruct allows easy access to structure
@@ -17762,9 +17792,9 @@ func (m *SpecularMetaInfo) InlinePolicyStruct() *clientruntime.StructDefinition 
 	return m.structPathInlinePolicy
 }
 
-// PolicyStructureProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) PolicyStructureProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathPolicyStructureProblem
+// PolicyStructureErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) PolicyStructureErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathPolicyStructureError
 }
 
 // RoleCreateInputStruct allows easy access to structure
@@ -18132,14 +18162,14 @@ func (m *SpecularMetaInfo) ServiceBearerTokenStruct() *clientruntime.StructDefin
 	return m.structPathServiceBearerToken
 }
 
-// InvalidServiceBearerTokenDurationProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidServiceBearerTokenDurationProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidServiceBearerTokenDurationProblem
+// InvalidServiceBearerTokenDurationErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidServiceBearerTokenDurationErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidServiceBearerTokenDurationError
 }
 
-// InvalidServiceNameProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) InvalidServiceNameProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathInvalidServiceNameProblem
+// InvalidServiceNameErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidServiceNameErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidServiceNameError
 }
 
 // InvitationCreateInputStruct allows easy access to structure
@@ -18262,9 +18292,9 @@ func (m *SpecularMetaInfo) ServiceCatalogGetOutputStruct() *clientruntime.Struct
 	return m.structPathServiceCatalogGetOutput
 }
 
-// ServiceCatalogGetServiceCatalogNotFoundProblemStruct allows easy access to structure
-func (m *SpecularMetaInfo) ServiceCatalogGetServiceCatalogNotFoundProblemStruct() *clientruntime.StructDefinition {
-	return m.structPathServiceCatalogGetServiceCatalogNotFoundProblem
+// ServiceCatalogGetServiceCatalogNotFoundErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) ServiceCatalogGetServiceCatalogNotFoundErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathServiceCatalogGetServiceCatalogNotFoundError
 }
 
 var localSpecularMeta *SpecularMetaInfo = &SpecularMetaInfo{}
