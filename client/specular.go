@@ -4709,6 +4709,11 @@ func NewMemberAccount() *MemberAccount {
 // MemberAccount struct
 type MemberAccount struct {
 	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+	// when the user was last inside this account, either by assuming an identity in
+	// it or by signing straight into it. unset if they were never in it.
+	// accounts are returned never-entered first (newest membership first), then the
+	// rest, most recent first.
+	LastEnteredAt *time.Time `json:"lastEnteredAt,omitempty" yaml:"lastEnteredAt,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -4719,6 +4724,16 @@ func (e *MemberAccount) GetAccountName() string {
 // SetAccountName sets the value for the field accountName
 func (e *MemberAccount) SetAccountName(accountName string) {
 	e.AccountName = accountName
+}
+
+// GetLastEnteredAt returns the value for the field lastEnteredAt
+func (e *MemberAccount) GetLastEnteredAt() *time.Time {
+	return e.LastEnteredAt
+}
+
+// SetLastEnteredAt sets the value for the field lastEnteredAt
+func (e *MemberAccount) SetLastEnteredAt(lastEnteredAt *time.Time) {
+	e.LastEnteredAt = lastEnteredAt
 }
 
 // StructPath returns StructPath
