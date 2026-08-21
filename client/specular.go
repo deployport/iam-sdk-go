@@ -2795,7 +2795,7 @@ func NewInvalidPrincipalDRNError() *InvalidPrincipalDRNError {
 	return s
 }
 
-// InvalidPrincipalDRNError - Raised when a principal DRN is malformed or incomplete — e.g. missing the
+// InvalidPrincipalDRNError - Raised when a principal DRN is malformed or incomplete, e.g. missing the
 // required account(<name>) qualifier, or not targeting an iam:Role(<name>).
 type InvalidPrincipalDRNError struct {
 	Message string `json:"message,omitempty" yaml:"message,omitempty"`
@@ -2853,6 +2853,74 @@ func (e *InvalidPrincipalDRNError) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e InvalidPrincipalDRNError) MarshalJSON() ([]byte, error) {
 	alias := invalidPrincipalDRNErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidHandoffCodeError creates a new InvalidHandoffCodeError
+func NewInvalidHandoffCodeError() *InvalidHandoffCodeError {
+	s := &InvalidHandoffCodeError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidHandoffCodeError - Raised by Session.CompleteHandoff for any code that cannot be redeemed: malformed, unknown, expired, already consumed, issued by a session that has since been revoked, or no longer permitted.
+// Generic on purpose, so a caller learns nothing beyond "invalid", and a redemption that fails this way has still consumed the code.
+type InvalidHandoffCodeError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidHandoffCodeError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidHandoffCodeError]
+func (e *InvalidHandoffCodeError) Is(err error) bool {
+	_, ok := err.(*InvalidHandoffCodeError)
+	return ok
+}
+
+// IsInvalidHandoffCodeError indicates whether the given error chain contains an error of type [InvalidHandoffCodeError]
+func IsInvalidHandoffCodeError(err error) bool {
+	return errors.Is(err, &InvalidHandoffCodeError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidHandoffCodeError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidHandoffCodeError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidHandoffCodeError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidHandoffCodeError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidHandoffCodeError) InitializeDefaults() {
+}
+
+// invalidHandoffCodeErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidHandoffCodeErrorAlias InvalidHandoffCodeError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidHandoffCodeError) UnmarshalJSON(data []byte) error {
+	var alias invalidHandoffCodeErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidHandoffCodeError)(&alias)).InitializeDefaults()
+	*e = InvalidHandoffCodeError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidHandoffCodeError) MarshalJSON() ([]byte, error) {
+	alias := invalidHandoffCodeErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -3036,7 +3104,7 @@ func NewAccountAssumeIdentityInput() *AccountAssumeIdentityInput {
 type AccountAssumeIdentityInput struct {
 	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
 	// idle/sliding window in seconds (see Role.Assume). Optional; defaults
-	// to 3600 (1h).
+	// to 57600 (16h) for an interactive SSO session, 3600 (1h) otherwise.
 	DurationSeconds *int32 `json:"durationSeconds,omitempty" yaml:"durationSeconds,omitempty"`
 	// optional hard max-lifetime in seconds, clamped to the user's max.
 	MaxLifetimeSeconds *int32 `json:"maxLifetimeSeconds,omitempty" yaml:"maxLifetimeSeconds,omitempty"`
@@ -3450,7 +3518,7 @@ type AccountSSOBeginAuthenticationInput struct {
 	// optional sliding idle window, in seconds, for the credential this
 	// login mints. Applied ONE-WAY: a value larger than the default is
 	// clamped down to it, so a client can only tighten its own session.
-	// Omit to get the default (43200, 12h).
+	// Omit to get the default (57600, 16h).
 	IdleWindowSeconds *int32 `json:"idleWindowSeconds,omitempty" yaml:"idleWindowSeconds,omitempty"`
 	// optional hard cap, in seconds, on the total lifetime of the
 	// credential this login mints, regardless of activity or keep-alive.
@@ -5603,7 +5671,7 @@ type UserCreateInput struct {
 	Description string `json:"description,omitempty" yaml:"description,omitempty"`
 	// optional hard cap on the lifetime of any credential assumed for this
 	// user, in seconds. Bounds total life regardless of activity/keep-alive.
-	// Omit to use the system default (43200, 12h).
+	// Omit to leave it unconfigured, in which case the cap is the one applied by the path that mints the credential (see Account.AssumeIdentity and Account.SSO.BeginAuthentication).
 	MaxSessionLifetimeSeconds *int32 `json:"maxSessionLifetimeSeconds,omitempty" yaml:"maxSessionLifetimeSeconds,omitempty"`
 	Username                  string `json:"username,omitempty" yaml:"username,omitempty"`
 }
@@ -7425,7 +7493,7 @@ func NewRoleAssumeInput() *RoleAssumeInput {
 type RoleAssumeInput struct {
 	// DRN of a target role in an explicitly named (possibly different)
 	// account, e.g. "account(acme) iam:Role(deployer)". Used for
-	// cross-account assume — e.g. a service assuming a customer-account role
+	// cross-account assume, e.g. a service assuming a customer-account role
 	// whose trust policy admits iam:Service(<fqdn>). The account(<name>)
 	// qualifier is required and the resource must be an iam:Role(<name>); an
 	// optional region qualifier must match this IAM region. Provide exactly
@@ -11998,6 +12066,224 @@ func (e SessionIdentityOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewSessionBeginHandoffInput creates a new SessionBeginHandoffInput
+func NewSessionBeginHandoffInput() *SessionBeginHandoffInput {
+	s := &SessionBeginHandoffInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// SessionBeginHandoffInput struct
+type SessionBeginHandoffInput struct {
+}
+
+// StructPath returns StructPath
+func (e *SessionBeginHandoffInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSessionBeginHandoffInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *SessionBeginHandoffInput) InitializeDefaults() {
+}
+
+// sessionBeginHandoffInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type sessionBeginHandoffInputAlias SessionBeginHandoffInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SessionBeginHandoffInput) UnmarshalJSON(data []byte) error {
+	var alias sessionBeginHandoffInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SessionBeginHandoffInput)(&alias)).InitializeDefaults()
+	*e = SessionBeginHandoffInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SessionBeginHandoffInput) MarshalJSON() ([]byte, error) {
+	alias := sessionBeginHandoffInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewSessionBeginHandoffOutput creates a new SessionBeginHandoffOutput
+func NewSessionBeginHandoffOutput() *SessionBeginHandoffOutput {
+	s := &SessionBeginHandoffOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// SessionBeginHandoffOutput struct
+type SessionBeginHandoffOutput struct {
+	// single-use opaque code; redeem within a short window via CompleteHandoff
+	Code string `json:"code,omitempty" yaml:"code,omitempty"`
+}
+
+// GetCode returns the value for the field code
+func (e *SessionBeginHandoffOutput) GetCode() string {
+	return e.Code
+}
+
+// SetCode sets the value for the field code
+func (e *SessionBeginHandoffOutput) SetCode(code string) {
+	e.Code = code
+}
+
+// StructPath returns StructPath
+func (e *SessionBeginHandoffOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSessionBeginHandoffOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *SessionBeginHandoffOutput) InitializeDefaults() {
+}
+
+// sessionBeginHandoffOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type sessionBeginHandoffOutputAlias SessionBeginHandoffOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SessionBeginHandoffOutput) UnmarshalJSON(data []byte) error {
+	var alias sessionBeginHandoffOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SessionBeginHandoffOutput)(&alias)).InitializeDefaults()
+	*e = SessionBeginHandoffOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SessionBeginHandoffOutput) MarshalJSON() ([]byte, error) {
+	alias := sessionBeginHandoffOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewSessionCompleteHandoffInput creates a new SessionCompleteHandoffInput
+func NewSessionCompleteHandoffInput() *SessionCompleteHandoffInput {
+	s := &SessionCompleteHandoffInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// SessionCompleteHandoffInput struct
+type SessionCompleteHandoffInput struct {
+	Code string `json:"code,omitempty" yaml:"code,omitempty"`
+}
+
+// GetCode returns the value for the field code
+func (e *SessionCompleteHandoffInput) GetCode() string {
+	return e.Code
+}
+
+// SetCode sets the value for the field code
+func (e *SessionCompleteHandoffInput) SetCode(code string) {
+	e.Code = code
+}
+
+// StructPath returns StructPath
+func (e *SessionCompleteHandoffInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSessionCompleteHandoffInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *SessionCompleteHandoffInput) InitializeDefaults() {
+}
+
+// sessionCompleteHandoffInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type sessionCompleteHandoffInputAlias SessionCompleteHandoffInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SessionCompleteHandoffInput) UnmarshalJSON(data []byte) error {
+	var alias sessionCompleteHandoffInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SessionCompleteHandoffInput)(&alias)).InitializeDefaults()
+	*e = SessionCompleteHandoffInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SessionCompleteHandoffInput) MarshalJSON() ([]byte, error) {
+	alias := sessionCompleteHandoffInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewSessionCompleteHandoffOutput creates a new SessionCompleteHandoffOutput
+func NewSessionCompleteHandoffOutput() *SessionCompleteHandoffOutput {
+	s := &SessionCompleteHandoffOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// SessionCompleteHandoffOutput struct
+type SessionCompleteHandoffOutput struct {
+	// the account the new session is scoped to
+	AccountName string       `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+	Credentials *Credentials `json:"credentials,omitempty" yaml:"credentials,omitempty"`
+	// DRN of the principal the new session acts as, e.g. iam:User(alice)
+	PrincipalDrn string `json:"principalDrn,omitempty" yaml:"principalDrn,omitempty"`
+}
+
+// GetAccountName returns the value for the field accountName
+func (e *SessionCompleteHandoffOutput) GetAccountName() string {
+	return e.AccountName
+}
+
+// SetAccountName sets the value for the field accountName
+func (e *SessionCompleteHandoffOutput) SetAccountName(accountName string) {
+	e.AccountName = accountName
+}
+
+// GetCredentials returns the value for the field credentials
+func (e *SessionCompleteHandoffOutput) GetCredentials() *Credentials {
+	return e.Credentials
+}
+
+// SetCredentials sets the value for the field credentials
+func (e *SessionCompleteHandoffOutput) SetCredentials(credentials *Credentials) {
+	e.Credentials = credentials
+}
+
+// GetPrincipalDrn returns the value for the field principalDrn
+func (e *SessionCompleteHandoffOutput) GetPrincipalDrn() string {
+	return e.PrincipalDrn
+}
+
+// SetPrincipalDrn sets the value for the field principalDrn
+func (e *SessionCompleteHandoffOutput) SetPrincipalDrn(principalDrn string) {
+	e.PrincipalDrn = principalDrn
+}
+
+// StructPath returns StructPath
+func (e *SessionCompleteHandoffOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathSessionCompleteHandoffOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *SessionCompleteHandoffOutput) InitializeDefaults() {
+}
+
+// sessionCompleteHandoffOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type sessionCompleteHandoffOutputAlias SessionCompleteHandoffOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *SessionCompleteHandoffOutput) UnmarshalJSON(data []byte) error {
+	var alias sessionCompleteHandoffOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*SessionCompleteHandoffOutput)(&alias)).InitializeDefaults()
+	*e = SessionCompleteHandoffOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e SessionCompleteHandoffOutput) MarshalJSON() ([]byte, error) {
+	alias := sessionCompleteHandoffOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewServiceCatalogListInput creates a new ServiceCatalogListInput
 func NewServiceCatalogListInput() *ServiceCatalogListInput {
 	s := &ServiceCatalogListInput{}
@@ -12644,6 +12930,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"InvalidPrincipalDRNError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewInvalidPrincipalDRNError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidHandoffCodeError, err = pk.NewType(
+		"InvalidHandoffCodeError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidHandoffCodeError()
 		}),
 	)
 	if err != nil {
@@ -14143,6 +14438,42 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathSessionBeginHandoffInput, err = pk.NewType(
+		"SessionBeginHandoffInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewSessionBeginHandoffInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathSessionBeginHandoffOutput, err = pk.NewType(
+		"SessionBeginHandoffOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewSessionBeginHandoffOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathSessionCompleteHandoffInput, err = pk.NewType(
+		"SessionCompleteHandoffInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewSessionCompleteHandoffInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathSessionCompleteHandoffOutput, err = pk.NewType(
+		"SessionCompleteHandoffOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewSessionCompleteHandoffOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathServiceCatalogListInput, err = pk.NewType(
 		"ServiceCatalogListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -15222,6 +15553,27 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	op, err = resSession.NewOperation("BeginHandoff")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().SessionBeginHandoffInputStruct())
+	op.SetOutput(SpecularMeta().SessionBeginHandoffInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resSession.NewOperation("CompleteHandoff")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().SessionCompleteHandoffInputStruct())
+	op.SetOutput(SpecularMeta().SessionCompleteHandoffInputStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidHandoffCodeErrorStruct())
+
 	resServiceCatalog, err := pk.NewResource("ServiceCatalog")
 	if err != nil {
 		return nil, err
@@ -15659,7 +16011,7 @@ func (res *UserResourceClient) Destroy(ctx context.Context, input *UserDestroyIn
 // SetActive - Suspends or restores a user. A suspended (active:false) user cannot
 // authenticate, its existing credentials go inert immediately, and any role
 // session that originated from it stops working. Reversible: restoring it
-// (active:true) brings its credentials back — unlike Destroy.
+// (active:true) brings its credentials back, unlike Destroy.
 // Requires permission action iam:DisableUser (active:false) or iam:EnableUser
 // (active:true) over resource iam:User(<username>)
 func (res *UserResourceClient) SetActive(ctx context.Context, input *UserSetActiveInput) (*UserSetActiveOutput, error) {
@@ -16751,7 +17103,7 @@ func (res *InvitationResourceClient) Inspect(ctx context.Context, input *Invitat
 }
 
 // Decline - Declines an invitation by its token, closing it so it can no longer be
-// accepted. Public (the token is the proof) and requires no sign-in — you
+// accepted. Public (the token is the proof) and requires no sign-in. You
 // shouldn't have to log into an account to reject it; rate-limited by client IP.
 func (res *InvitationResourceClient) Decline(ctx context.Context, input *InvitationDeclineInput) (*InvitationDeclineOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -16802,11 +17154,13 @@ func (res *ServiceBearerTokenResourceClient) Get(ctx context.Context, input *Ser
 
 // SessionResourceClient is the SessionResourceClient resource client
 type SessionResourceClient struct {
-	transport clientruntime.Transport
-	res       *clientruntime.Resource
-	keepAlive *clientruntime.Operation
-	revoke    *clientruntime.Operation
-	identity  *clientruntime.Operation
+	transport       clientruntime.Transport
+	res             *clientruntime.Resource
+	keepAlive       *clientruntime.Operation
+	revoke          *clientruntime.Operation
+	identity        *clientruntime.Operation
+	beginHandoff    *clientruntime.Operation
+	completeHandoff *clientruntime.Operation
 }
 
 func newSessionResourceClient(
@@ -16821,12 +17175,14 @@ func newSessionResourceClient(
 	r.keepAlive = res.FindOperation("KeepAlive")
 	r.revoke = res.FindOperation("Revoke")
 	r.identity = res.FindOperation("Identity")
+	r.beginHandoff = res.FindOperation("BeginHandoff")
+	r.completeHandoff = res.FindOperation("CompleteHandoff")
 	return r, nil
 }
 
 // KeepAlive - Slides the calling credential's idle window forward (keep-alive heartbeat
 // for idle periods; ordinary activity already slides it). Does not mint new
-// credentials — the same access key stays valid, with a later expiry.
+// credentials. The same access key stays valid, with a later expiry.
 // Requires permission action iam:KeepAliveSession over resource iam:Session(<accessKeyID>)
 func (res *SessionResourceClient) KeepAlive(ctx context.Context, input *SessionKeepAliveInput) (*SessionKeepAliveOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -16840,7 +17196,7 @@ func (res *SessionResourceClient) KeepAlive(ctx context.Context, input *SessionK
 	return output, nil
 }
 
-// Revoke - Revokes (deletes) the calling credential — self logout. The next request
+// Revoke - Revokes (deletes) the calling credential: self logout. The next request
 // signed with this credential is rejected. Works for role and user credentials.
 // Requires permission action iam:RevokeSession over resource iam:Session(<accessKeyID>)
 func (res *SessionResourceClient) Revoke(ctx context.Context, input *SessionRevokeInput) (*SessionRevokeOutput, error) {
@@ -16858,7 +17214,7 @@ func (res *SessionResourceClient) Revoke(ctx context.Context, input *SessionRevo
 // Identity - Returns who the calling credential is: the account it is scoped to, its access
 // key id, and the DRN of the calling principal. Works for user, role, and
 // service (service-linked role) credentials; requires only that the request is
-// signed — no extra permission.
+// signed. No extra permission is required.
 func (res *SessionResourceClient) Identity(ctx context.Context, input *SessionIdentityInput) (*SessionIdentityOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.identity,
@@ -16868,6 +17224,55 @@ func (res *SessionResourceClient) Identity(ctx context.Context, input *SessionId
 		return nil, err
 	}
 	output := o.(*SessionIdentityOutput)
+	return output, nil
+}
+
+// BeginHandoff - Begins a handoff of this session to another device, for the SAME identity, and
+// returns a single-use short-lived code. No credentials are minted until the code
+// is redeemed.
+//
+// The name says handoff. The model is TWO SESSIONS, and nothing moves. This session
+// keeps its own credential, its own address and its own audit trail, and the
+// redeeming device gets its own of each. A session seen from two addresses cannot
+// be told apart from a stolen one, so we never create one.
+//
+// Revoking this session revokes the session the code creates. This session merely
+// expiring does not: expiry means this device went unused, which says nothing about
+// the other one. The new session gets its own deadline at redemption time and keeps
+// itself alive from then on.
+//
+// There is no accountName input. The redeeming device continues this session, in
+// this account, as this principal, so there is no target to name.
+// Requires permission action iam:BeginHandoffSession over resource iam:Session(<accessKeyID>)
+func (res *SessionResourceClient) BeginHandoff(ctx context.Context, input *SessionBeginHandoffInput) (*SessionBeginHandoffOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.beginHandoff,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*SessionBeginHandoffOutput)
+	return output, nil
+}
+
+// CompleteHandoff - Public: redeems a code minted by BeginHandoff and returns the credentials of a new
+// session for the same identity. No signed request, because the redeeming device
+// holds no credentials yet. The code is the only proof and it is consumed exactly
+// once, so a failed redemption cannot be retried.
+//
+// accountName and principalDrn in the output are the authoritative identity of the
+// new session. A client that carried an identity value alongside the code in a URL
+// must treat that value as a display hint only, never as authentication.
+func (res *SessionResourceClient) CompleteHandoff(ctx context.Context, input *SessionCompleteHandoffInput) (*SessionCompleteHandoffOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.completeHandoff,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*SessionCompleteHandoffOutput)
 	return output, nil
 }
 
@@ -16944,11 +17349,12 @@ type Client struct {
 	Invitation *InvitationResourceClient
 	// ServiceBearerToken - Service Bearer Tokens
 	ServiceBearerToken *ServiceBearerTokenResourceClient
-	// Session - Self-management of the calling credential (the signing access key). Both
-	// operations act on the caller's own credential, identified from the signed
-	// request context — never from input — so a credential can only manage itself.
-	// The capabilities are granted as ordinary permissions (see the builtin policies
-	// session-keepalive and session-revoke) and opted into inline at assume time.
+	// Session - Self-management of the calling credential (the signing access key). The signed
+	// operations here act on the caller's own credential, identified from the signed
+	// request context (never from input), so a credential can only manage itself.
+	// These are ordinary permissions, granted by the builtin policies
+	// session-keepalive, session-revoke and session-handoff, and attached when an
+	// identity is assumed.
 	Session *SessionResourceClient
 	// ServiceCatalog - ServiceCatalog is public/anonymous reference data: the full set of actions and
 	// resource types each service supports, used to power identity-policy builders.
@@ -17099,6 +17505,7 @@ type SpecularMetaInfo struct {
 	structPathTrustPolicyNotFoundError                                    *clientruntime.StructDefinition
 	structPathInvalidWebIdentityTokenError                                *clientruntime.StructDefinition
 	structPathInvalidPrincipalDRNError                                    *clientruntime.StructDefinition
+	structPathInvalidHandoffCodeError                                     *clientruntime.StructDefinition
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
@@ -17265,6 +17672,10 @@ type SpecularMetaInfo struct {
 	structPathSessionRevokeOutput                                         *clientruntime.StructDefinition
 	structPathSessionIdentityInput                                        *clientruntime.StructDefinition
 	structPathSessionIdentityOutput                                       *clientruntime.StructDefinition
+	structPathSessionBeginHandoffInput                                    *clientruntime.StructDefinition
+	structPathSessionBeginHandoffOutput                                   *clientruntime.StructDefinition
+	structPathSessionCompleteHandoffInput                                 *clientruntime.StructDefinition
+	structPathSessionCompleteHandoffOutput                                *clientruntime.StructDefinition
 	structPathServiceCatalogListInput                                     *clientruntime.StructDefinition
 	structPathServiceCatalogListOutput                                    *clientruntime.StructDefinition
 	structPathServiceCatalogGetInput                                      *clientruntime.StructDefinition
@@ -17455,6 +17866,11 @@ func (m *SpecularMetaInfo) InvalidWebIdentityTokenErrorStruct() *clientruntime.S
 // InvalidPrincipalDRNErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) InvalidPrincipalDRNErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidPrincipalDRNError
+}
+
+// InvalidHandoffCodeErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidHandoffCodeErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidHandoffCodeError
 }
 
 // AccountCreateInputStruct allows easy access to structure
@@ -18285,6 +18701,26 @@ func (m *SpecularMetaInfo) SessionIdentityInputStruct() *clientruntime.StructDef
 // SessionIdentityOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) SessionIdentityOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathSessionIdentityOutput
+}
+
+// SessionBeginHandoffInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) SessionBeginHandoffInputStruct() *clientruntime.StructDefinition {
+	return m.structPathSessionBeginHandoffInput
+}
+
+// SessionBeginHandoffOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) SessionBeginHandoffOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathSessionBeginHandoffOutput
+}
+
+// SessionCompleteHandoffInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) SessionCompleteHandoffInputStruct() *clientruntime.StructDefinition {
+	return m.structPathSessionCompleteHandoffInput
+}
+
+// SessionCompleteHandoffOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) SessionCompleteHandoffOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathSessionCompleteHandoffOutput
 }
 
 // ServiceCatalogListInputStruct allows easy access to structure
