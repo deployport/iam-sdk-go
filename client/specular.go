@@ -25,7 +25,10 @@ func NewServiceCatalogAction() *ServiceCatalogAction {
 type ServiceCatalogAction struct {
 	// resource-type keys this action can target (scopes the resource picker)
 	AppliesToResourceTypes []string `json:"appliesToResourceTypes,omitempty" yaml:"appliesToResourceTypes,omitempty"`
-	Description            *string  `json:"description,omitempty" yaml:"description,omitempty"`
+	// true when this action belongs in the account's baseline group, granted over
+	// every resource. False, the default, means it does not
+	Baseline    bool    `json:"baseline,omitempty" yaml:"baseline,omitempty"`
+	Description *string `json:"description,omitempty" yaml:"description,omitempty"`
 	// short action name, e.g. "CreateUser"; the wire action is "<namespace>:<name>"
 	Name string `json:"name,omitempty" yaml:"name,omitempty"`
 }
@@ -38,6 +41,16 @@ func (e *ServiceCatalogAction) GetAppliesToResourceTypes() []string {
 // SetAppliesToResourceTypes sets the value for the field appliesToResourceTypes
 func (e *ServiceCatalogAction) SetAppliesToResourceTypes(appliesToResourceTypes []string) {
 	e.AppliesToResourceTypes = appliesToResourceTypes
+}
+
+// GetBaseline returns the value for the field baseline
+func (e *ServiceCatalogAction) GetBaseline() bool {
+	return e.Baseline
+}
+
+// SetBaseline sets the value for the field baseline
+func (e *ServiceCatalogAction) SetBaseline(baseline bool) {
+	e.Baseline = baseline
 }
 
 // GetDescription returns the value for the field description
@@ -299,7 +312,9 @@ type ServiceCatalogInfo struct {
 	ResourceTypes                 []*ServiceCatalogResourceType `json:"resourceTypes,omitempty" yaml:"resourceTypes,omitempty"`
 	Revision                      string                        `json:"revision,omitempty" yaml:"revision,omitempty"`
 	ServiceLinkedRolePolicyHuJSON []byte                        `json:"serviceLinkedRolePolicyHuJSON,omitempty" yaml:"serviceLinkedRolePolicyHuJSON,omitempty"`
-	UpdatedAt                     time.Time                     `json:"updatedAt,omitempty" yaml:"updatedAt,omitempty"`
+	// when the catalog revision was published.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	UpdatedAt *time.Time `json:"updatedAt,omitempty" yaml:"updatedAt,omitempty"`
 }
 
 // GetActions returns the value for the field actions
@@ -373,12 +388,12 @@ func (e *ServiceCatalogInfo) SetServiceLinkedRolePolicyHuJSON(serviceLinkedRoleP
 }
 
 // GetUpdatedAt returns the value for the field updatedAt
-func (e *ServiceCatalogInfo) GetUpdatedAt() time.Time {
+func (e *ServiceCatalogInfo) GetUpdatedAt() *time.Time {
 	return e.UpdatedAt
 }
 
 // SetUpdatedAt sets the value for the field updatedAt
-func (e *ServiceCatalogInfo) SetUpdatedAt(updatedAt time.Time) {
+func (e *ServiceCatalogInfo) SetUpdatedAt(updatedAt *time.Time) {
 	e.UpdatedAt = updatedAt
 }
 
@@ -420,13 +435,15 @@ func NewServiceCatalogSummary() *ServiceCatalogSummary {
 
 // ServiceCatalogSummary - ServiceCatalogSummary is a compact listing entry for the namespace picker.
 type ServiceCatalogSummary struct {
-	ActionCount       int32     `json:"actionCount,omitempty" yaml:"actionCount,omitempty"`
-	Description       *string   `json:"description,omitempty" yaml:"description,omitempty"`
-	DisplayName       *string   `json:"displayName,omitempty" yaml:"displayName,omitempty"`
-	Namespace         string    `json:"namespace,omitempty" yaml:"namespace,omitempty"`
-	ResourceTypeCount int32     `json:"resourceTypeCount,omitempty" yaml:"resourceTypeCount,omitempty"`
-	Revision          string    `json:"revision,omitempty" yaml:"revision,omitempty"`
-	UpdatedAt         time.Time `json:"updatedAt,omitempty" yaml:"updatedAt,omitempty"`
+	ActionCount       int32   `json:"actionCount,omitempty" yaml:"actionCount,omitempty"`
+	Description       *string `json:"description,omitempty" yaml:"description,omitempty"`
+	DisplayName       *string `json:"displayName,omitempty" yaml:"displayName,omitempty"`
+	Namespace         string  `json:"namespace,omitempty" yaml:"namespace,omitempty"`
+	ResourceTypeCount int32   `json:"resourceTypeCount,omitempty" yaml:"resourceTypeCount,omitempty"`
+	Revision          string  `json:"revision,omitempty" yaml:"revision,omitempty"`
+	// when the catalog revision was published.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	UpdatedAt *time.Time `json:"updatedAt,omitempty" yaml:"updatedAt,omitempty"`
 }
 
 // GetActionCount returns the value for the field actionCount
@@ -490,12 +507,12 @@ func (e *ServiceCatalogSummary) SetRevision(revision string) {
 }
 
 // GetUpdatedAt returns the value for the field updatedAt
-func (e *ServiceCatalogSummary) GetUpdatedAt() time.Time {
+func (e *ServiceCatalogSummary) GetUpdatedAt() *time.Time {
 	return e.UpdatedAt
 }
 
 // SetUpdatedAt sets the value for the field updatedAt
-func (e *ServiceCatalogSummary) SetUpdatedAt(updatedAt time.Time) {
+func (e *ServiceCatalogSummary) SetUpdatedAt(updatedAt *time.Time) {
 	e.UpdatedAt = updatedAt
 }
 
@@ -781,8 +798,9 @@ type UserInformation struct {
 	// credentials are inert until it is re-enabled. Reversible, unlike Destroy.
 	Active bool `json:"active,omitempty" yaml:"active,omitempty"`
 	// when the user was created
-	CreatedAt   time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
-	Description string    `json:"description,omitempty" yaml:"description,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt   *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Description string     `json:"description,omitempty" yaml:"description,omitempty"`
 	// DRN of this user, e.g. iam:User(johan)
 	Drn string `json:"drn,omitempty" yaml:"drn,omitempty"`
 	// present only for a service-managed user: the account may view it but not
@@ -804,12 +822,12 @@ func (e *UserInformation) SetActive(active bool) {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *UserInformation) GetCreatedAt() time.Time {
+func (e *UserInformation) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *UserInformation) SetCreatedAt(createdAt time.Time) {
+func (e *UserInformation) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -902,8 +920,9 @@ func NewRoleInformation() *RoleInformation {
 // RoleInformation struct
 type RoleInformation struct {
 	// when the role was created
-	CreatedAt   time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
-	Description string    `json:"description,omitempty" yaml:"description,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt   *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Description string     `json:"description,omitempty" yaml:"description,omitempty"`
 	// DRN of this role, e.g. iam:Role(deployer)
 	Drn string `json:"drn,omitempty" yaml:"drn,omitempty"`
 	// present only for a service-linked role: the account may view it but not
@@ -913,12 +932,12 @@ type RoleInformation struct {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *RoleInformation) GetCreatedAt() time.Time {
+func (e *RoleInformation) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *RoleInformation) SetCreatedAt(createdAt time.Time) {
+func (e *RoleInformation) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -1002,8 +1021,9 @@ func NewGroupInformation() *GroupInformation {
 // to a group are granted to every member (unioned into the member's permissions).
 type GroupInformation struct {
 	// when the group was created
-	CreatedAt   time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
-	Description string    `json:"description,omitempty" yaml:"description,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt   *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	Description string     `json:"description,omitempty" yaml:"description,omitempty"`
 	// DRN of this group, e.g. iam:Group(engineering)
 	Drn string `json:"drn,omitempty" yaml:"drn,omitempty"`
 	// present only for a service-managed group: the account may view it but not
@@ -1013,12 +1033,12 @@ type GroupInformation struct {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *GroupInformation) GetCreatedAt() time.Time {
+func (e *GroupInformation) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *GroupInformation) SetCreatedAt(createdAt time.Time) {
+func (e *GroupInformation) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -1241,9 +1261,11 @@ func NewSSOFlow() *SSOFlow {
 
 // SSOFlow struct
 type SSOFlow struct {
-	BrowseURL                 string    `json:"browseURL,omitempty" yaml:"browseURL,omitempty"`
-	CompletionIntervalSeconds int32     `json:"completionIntervalSeconds,omitempty" yaml:"completionIntervalSeconds,omitempty"`
-	ExpiresAt                 time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	BrowseURL                 string `json:"browseURL,omitempty" yaml:"browseURL,omitempty"`
+	CompletionIntervalSeconds int32  `json:"completionIntervalSeconds,omitempty" yaml:"completionIntervalSeconds,omitempty"`
+	// when the sign-in flow expires.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	ExpiresAt *time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
 }
 
 // GetBrowseURL returns the value for the field browseURL
@@ -1267,12 +1289,12 @@ func (e *SSOFlow) SetCompletionIntervalSeconds(completionIntervalSeconds int32) 
 }
 
 // GetExpiresAt returns the value for the field expiresAt
-func (e *SSOFlow) GetExpiresAt() time.Time {
+func (e *SSOFlow) GetExpiresAt() *time.Time {
 	return e.ExpiresAt
 }
 
 // SetExpiresAt sets the value for the field expiresAt
-func (e *SSOFlow) SetExpiresAt(expiresAt time.Time) {
+func (e *SSOFlow) SetExpiresAt(expiresAt *time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
@@ -1630,11 +1652,16 @@ func NewInvitation() *Invitation {
 
 // Invitation - An invitation for a person (by email) to become a member of an account.
 type Invitation struct {
-	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// when the invitation was created.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
 	// invited email address
 	Email string `json:"email,omitempty" yaml:"email,omitempty"`
 	// when the invitation expires
-	ExpiresAt time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	ExpiresAt *time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	// groups (by name) the member joins when they accept
+	GroupNames []string `json:"groupNames,omitempty" yaml:"groupNames,omitempty"`
 	// unique identifier of the invitation (opaque)
 	Id string `json:"id,omitempty" yaml:"id,omitempty"`
 	// identity policies (by name) attached to the member when they accept
@@ -1646,12 +1673,12 @@ type Invitation struct {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *Invitation) GetCreatedAt() time.Time {
+func (e *Invitation) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *Invitation) SetCreatedAt(createdAt time.Time) {
+func (e *Invitation) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -1666,13 +1693,23 @@ func (e *Invitation) SetEmail(email string) {
 }
 
 // GetExpiresAt returns the value for the field expiresAt
-func (e *Invitation) GetExpiresAt() time.Time {
+func (e *Invitation) GetExpiresAt() *time.Time {
 	return e.ExpiresAt
 }
 
 // SetExpiresAt sets the value for the field expiresAt
-func (e *Invitation) SetExpiresAt(expiresAt time.Time) {
+func (e *Invitation) SetExpiresAt(expiresAt *time.Time) {
 	e.ExpiresAt = expiresAt
+}
+
+// GetGroupNames returns the value for the field groupNames
+func (e *Invitation) GetGroupNames() []string {
+	return e.GroupNames
+}
+
+// SetGroupNames sets the value for the field groupNames
+func (e *Invitation) SetGroupNames(groupNames []string) {
+	e.GroupNames = groupNames
 }
 
 // GetId returns the value for the field id
@@ -1893,7 +1930,8 @@ type InvitationPreview struct {
 	// the invited email address
 	Email string `json:"email,omitempty" yaml:"email,omitempty"`
 	// when the invitation expires
-	ExpiresAt time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	ExpiresAt *time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
 	// the inviter's username (best-effort; may be empty)
 	InvitedBy string `json:"invitedBy,omitempty" yaml:"invitedBy,omitempty"`
 	// lifecycle status: pending | accepted | revoked | declined | expired
@@ -1921,12 +1959,12 @@ func (e *InvitationPreview) SetEmail(email string) {
 }
 
 // GetExpiresAt returns the value for the field expiresAt
-func (e *InvitationPreview) GetExpiresAt() time.Time {
+func (e *InvitationPreview) GetExpiresAt() *time.Time {
 	return e.ExpiresAt
 }
 
 // SetExpiresAt sets the value for the field expiresAt
-func (e *InvitationPreview) SetExpiresAt(expiresAt time.Time) {
+func (e *InvitationPreview) SetExpiresAt(expiresAt *time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
@@ -2411,7 +2449,9 @@ func NewTrustPolicy() *TrustPolicy {
 // TrustPolicy - A reusable, attachable trust policy authorizing a single principal to assume a role
 // under the given conditions. Attach it to roles via Role.TrustPolicy.Attach.
 type TrustPolicy struct {
-	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// when the trust policy was created.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
 	// DRN of this trust policy itself, e.g. iam:TrustPolicy(gha-main). Distinct from principal below.
 	Drn string `json:"drn,omitempty" yaml:"drn,omitempty"`
 	// present only for a service-linked role's trust policy: read-only to the account
@@ -2424,12 +2464,12 @@ type TrustPolicy struct {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *TrustPolicy) GetCreatedAt() time.Time {
+func (e *TrustPolicy) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *TrustPolicy) SetCreatedAt(createdAt time.Time) {
+func (e *TrustPolicy) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -2521,19 +2561,21 @@ func NewTrustPolicyAttachment() *TrustPolicyAttachment {
 
 // TrustPolicyAttachment - A trust policy attached to a target (a role), including when it was attached.
 type TrustPolicyAttachment struct {
-	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// when the policy was attached to the target.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
 	// DRN of the target the policy is attached to, e.g. iam:Role(deployer)
 	TargetDRN       string `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
 	TrustPolicyName string `json:"trustPolicyName,omitempty" yaml:"trustPolicyName,omitempty"`
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *TrustPolicyAttachment) GetCreatedAt() time.Time {
+func (e *TrustPolicyAttachment) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *TrustPolicyAttachment) SetCreatedAt(createdAt time.Time) {
+func (e *TrustPolicyAttachment) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -4844,7 +4886,8 @@ func NewCredentialInfo() *CredentialInfo {
 type CredentialInfo struct {
 	AccessKeyID string `json:"accessKeyID,omitempty" yaml:"accessKeyID,omitempty"`
 	// when the access key was created
-	CreatedAt time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
 	// when the access key was last used to authenticate, unset if has never been used
 	LastActivityAt *time.Time `json:"lastActivityAt,omitempty" yaml:"lastActivityAt,omitempty"`
 }
@@ -4860,12 +4903,12 @@ func (e *CredentialInfo) SetAccessKeyID(accessKeyID string) {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *CredentialInfo) GetCreatedAt() time.Time {
+func (e *CredentialInfo) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *CredentialInfo) SetCreatedAt(createdAt time.Time) {
+func (e *CredentialInfo) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -5117,18 +5160,19 @@ func NewIdentityPolicyAttachment() *IdentityPolicyAttachment {
 // IdentityPolicyAttachment struct
 type IdentityPolicyAttachment struct {
 	// when the policy was attached to the target
-	CreatedAt  time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
-	PolicyName string    `json:"policyName,omitempty" yaml:"policyName,omitempty"`
-	TargetDRN  string    `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt  *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	PolicyName string     `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	TargetDRN  string     `json:"targetDRN,omitempty" yaml:"targetDRN,omitempty"`
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *IdentityPolicyAttachment) GetCreatedAt() time.Time {
+func (e *IdentityPolicyAttachment) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *IdentityPolicyAttachment) SetCreatedAt(createdAt time.Time) {
+func (e *IdentityPolicyAttachment) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -5193,8 +5237,9 @@ type IdentityPolicyAttachmentInfo struct {
 	// whether the attached policy is a builtin policy
 	Builtin bool `json:"builtin,omitempty" yaml:"builtin,omitempty"`
 	// when the policy was attached to the user or role
-	CreatedAt  time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
-	PolicyName string    `json:"policyName,omitempty" yaml:"policyName,omitempty"`
+	// This value is always set. An absent value indicates a server fault, not a state.
+	CreatedAt  *time.Time `json:"createdAt,omitempty" yaml:"createdAt,omitempty"`
+	PolicyName string     `json:"policyName,omitempty" yaml:"policyName,omitempty"`
 }
 
 // GetBuiltin returns the value for the field builtin
@@ -5208,12 +5253,12 @@ func (e *IdentityPolicyAttachmentInfo) SetBuiltin(builtin bool) {
 }
 
 // GetCreatedAt returns the value for the field createdAt
-func (e *IdentityPolicyAttachmentInfo) GetCreatedAt() time.Time {
+func (e *IdentityPolicyAttachmentInfo) GetCreatedAt() *time.Time {
 	return e.CreatedAt
 }
 
 // SetCreatedAt sets the value for the field createdAt
-func (e *IdentityPolicyAttachmentInfo) SetCreatedAt(createdAt time.Time) {
+func (e *IdentityPolicyAttachmentInfo) SetCreatedAt(createdAt *time.Time) {
 	e.CreatedAt = createdAt
 }
 
@@ -5589,6 +5634,142 @@ func (e *InvalidGroupNameError) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e InvalidGroupNameError) MarshalJSON() ([]byte, error) {
 	alias := invalidGroupNameErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidGroupFilterError creates a new InvalidGroupFilterError
+func NewInvalidGroupFilterError() *InvalidGroupFilterError {
+	s := &InvalidGroupFilterError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidGroupFilterError - Occurs when Group.List is asked for a filter combination no group can satisfy,
+// such as managed false together with a managedByService.
+type InvalidGroupFilterError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidGroupFilterError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidGroupFilterError]
+func (e *InvalidGroupFilterError) Is(err error) bool {
+	_, ok := err.(*InvalidGroupFilterError)
+	return ok
+}
+
+// IsInvalidGroupFilterError indicates whether the given error chain contains an error of type [InvalidGroupFilterError]
+func IsInvalidGroupFilterError(err error) bool {
+	return errors.Is(err, &InvalidGroupFilterError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidGroupFilterError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidGroupFilterError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidGroupFilterError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidGroupFilterError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidGroupFilterError) InitializeDefaults() {
+}
+
+// invalidGroupFilterErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidGroupFilterErrorAlias InvalidGroupFilterError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidGroupFilterError) UnmarshalJSON(data []byte) error {
+	var alias invalidGroupFilterErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidGroupFilterError)(&alias)).InitializeDefaults()
+	*e = InvalidGroupFilterError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidGroupFilterError) MarshalJSON() ([]byte, error) {
+	alias := invalidGroupFilterErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidUserFilterError creates a new InvalidUserFilterError
+func NewInvalidUserFilterError() *InvalidUserFilterError {
+	s := &InvalidUserFilterError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidUserFilterError - Occurs when User.List is asked for a filter combination no user can satisfy,
+// such as managed false together with a managedByService.
+type InvalidUserFilterError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidUserFilterError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidUserFilterError]
+func (e *InvalidUserFilterError) Is(err error) bool {
+	_, ok := err.(*InvalidUserFilterError)
+	return ok
+}
+
+// IsInvalidUserFilterError indicates whether the given error chain contains an error of type [InvalidUserFilterError]
+func IsInvalidUserFilterError(err error) bool {
+	return errors.Is(err, &InvalidUserFilterError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidUserFilterError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidUserFilterError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidUserFilterError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidUserFilterError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidUserFilterError) InitializeDefaults() {
+}
+
+// invalidUserFilterErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidUserFilterErrorAlias InvalidUserFilterError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidUserFilterError) UnmarshalJSON(data []byte) error {
+	var alias invalidUserFilterErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidUserFilterError)(&alias)).InitializeDefaults()
+	*e = InvalidUserFilterError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidUserFilterError) MarshalJSON() ([]byte, error) {
+	alias := invalidUserFilterErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -6168,6 +6349,57 @@ func NewUserListInput() *UserListInput {
 
 // UserListInput struct
 type UserListInput struct {
+	// opaque page cursor: a previous response's nextCursor, verbatim
+	Cursor *string `json:"cursor,omitempty" yaml:"cursor,omitempty"`
+	// page size, 1 to 200; 50 when absent
+	Limit *int32 `json:"limit,omitempty" yaml:"limit,omitempty"`
+	// when true, only service-managed users; when false, only users the account
+	// authored. Absent returns both, which is today's behaviour and keeps every
+	// existing caller correct
+	Managed *bool `json:"managed,omitempty" yaml:"managed,omitempty"`
+	// the managing service principal FQDN, e.g. "uplink.deployport.io", to
+	// return only that service's users. Absent applies no service filter
+	ManagedByService *string `json:"managedByService,omitempty" yaml:"managedByService,omitempty"`
+}
+
+// GetCursor returns the value for the field cursor
+func (e *UserListInput) GetCursor() *string {
+	return e.Cursor
+}
+
+// SetCursor sets the value for the field cursor
+func (e *UserListInput) SetCursor(cursor *string) {
+	e.Cursor = cursor
+}
+
+// GetLimit returns the value for the field limit
+func (e *UserListInput) GetLimit() *int32 {
+	return e.Limit
+}
+
+// SetLimit sets the value for the field limit
+func (e *UserListInput) SetLimit(limit *int32) {
+	e.Limit = limit
+}
+
+// GetManaged returns the value for the field managed
+func (e *UserListInput) GetManaged() *bool {
+	return e.Managed
+}
+
+// SetManaged sets the value for the field managed
+func (e *UserListInput) SetManaged(managed *bool) {
+	e.Managed = managed
+}
+
+// GetManagedByService returns the value for the field managedByService
+func (e *UserListInput) GetManagedByService() *string {
+	return e.ManagedByService
+}
+
+// SetManagedByService sets the value for the field managedByService
+func (e *UserListInput) SetManagedByService(managedByService *string) {
+	e.ManagedByService = managedByService
 }
 
 // StructPath returns StructPath
@@ -6208,7 +6440,19 @@ func NewUserListOutput() *UserListOutput {
 
 // UserListOutput struct
 type UserListOutput struct {
-	Users []*UserInformation `json:"users,omitempty" yaml:"users,omitempty"`
+	// pass to the next call's cursor; absent on the last page
+	NextCursor *string            `json:"nextCursor,omitempty" yaml:"nextCursor,omitempty"`
+	Users      []*UserInformation `json:"users,omitempty" yaml:"users,omitempty"`
+}
+
+// GetNextCursor returns the value for the field nextCursor
+func (e *UserListOutput) GetNextCursor() *string {
+	return e.NextCursor
+}
+
+// SetNextCursor sets the value for the field nextCursor
+func (e *UserListOutput) SetNextCursor(nextCursor *string) {
+	e.NextCursor = nextCursor
 }
 
 // GetUsers returns the value for the field users
@@ -8931,6 +9175,57 @@ func NewGroupListInput() *GroupListInput {
 
 // GroupListInput struct
 type GroupListInput struct {
+	// opaque page cursor: a previous response's nextCursor, verbatim
+	Cursor *string `json:"cursor,omitempty" yaml:"cursor,omitempty"`
+	// page size, 1 to 200; 50 when absent
+	Limit *int32 `json:"limit,omitempty" yaml:"limit,omitempty"`
+	// when true, only service-managed groups; when false, only groups the account
+	// authored. Absent returns both, which is today's behaviour and keeps every
+	// existing caller correct
+	Managed *bool `json:"managed,omitempty" yaml:"managed,omitempty"`
+	// the managing service principal FQDN, e.g. "uplink.deployport.io", to
+	// return only that service's groups. Absent applies no service filter
+	ManagedByService *string `json:"managedByService,omitempty" yaml:"managedByService,omitempty"`
+}
+
+// GetCursor returns the value for the field cursor
+func (e *GroupListInput) GetCursor() *string {
+	return e.Cursor
+}
+
+// SetCursor sets the value for the field cursor
+func (e *GroupListInput) SetCursor(cursor *string) {
+	e.Cursor = cursor
+}
+
+// GetLimit returns the value for the field limit
+func (e *GroupListInput) GetLimit() *int32 {
+	return e.Limit
+}
+
+// SetLimit sets the value for the field limit
+func (e *GroupListInput) SetLimit(limit *int32) {
+	e.Limit = limit
+}
+
+// GetManaged returns the value for the field managed
+func (e *GroupListInput) GetManaged() *bool {
+	return e.Managed
+}
+
+// SetManaged sets the value for the field managed
+func (e *GroupListInput) SetManaged(managed *bool) {
+	e.Managed = managed
+}
+
+// GetManagedByService returns the value for the field managedByService
+func (e *GroupListInput) GetManagedByService() *string {
+	return e.ManagedByService
+}
+
+// SetManagedByService sets the value for the field managedByService
+func (e *GroupListInput) SetManagedByService(managedByService *string) {
+	e.ManagedByService = managedByService
 }
 
 // StructPath returns StructPath
@@ -8972,6 +9267,8 @@ func NewGroupListOutput() *GroupListOutput {
 // GroupListOutput struct
 type GroupListOutput struct {
 	Groups []*GroupInformation `json:"groups,omitempty" yaml:"groups,omitempty"`
+	// pass to the next call's cursor; absent on the last page
+	NextCursor *string `json:"nextCursor,omitempty" yaml:"nextCursor,omitempty"`
 }
 
 // GetGroups returns the value for the field groups
@@ -8982,6 +9279,16 @@ func (e *GroupListOutput) GetGroups() []*GroupInformation {
 // SetGroups sets the value for the field groups
 func (e *GroupListOutput) SetGroups(groups []*GroupInformation) {
 	e.Groups = groups
+}
+
+// GetNextCursor returns the value for the field nextCursor
+func (e *GroupListOutput) GetNextCursor() *string {
+	return e.NextCursor
+}
+
+// SetNextCursor sets the value for the field nextCursor
+func (e *GroupListOutput) SetNextCursor(nextCursor *string) {
+	e.NextCursor = nextCursor
 }
 
 // StructPath returns StructPath
@@ -10859,17 +11166,19 @@ func NewServiceBearerToken() *ServiceBearerToken {
 
 // ServiceBearerToken - Token you can use to perform operations on your behalf
 type ServiceBearerToken struct {
-	ExpiresAt time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
-	Token     string    `json:"token,omitempty" yaml:"token,omitempty"`
+	// when the token expires.
+	// This value is always set. An absent value indicates a server fault, not a state.
+	ExpiresAt *time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	Token     string     `json:"token,omitempty" yaml:"token,omitempty"`
 }
 
 // GetExpiresAt returns the value for the field expiresAt
-func (e *ServiceBearerToken) GetExpiresAt() time.Time {
+func (e *ServiceBearerToken) GetExpiresAt() *time.Time {
 	return e.ExpiresAt
 }
 
 // SetExpiresAt sets the value for the field expiresAt
-func (e *ServiceBearerToken) SetExpiresAt(expiresAt time.Time) {
+func (e *ServiceBearerToken) SetExpiresAt(expiresAt *time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
@@ -11056,6 +11365,9 @@ func NewInvitationCreateInput() *InvitationCreateInput {
 // InvitationCreateInput struct
 type InvitationCreateInput struct {
 	Email string `json:"email,omitempty" yaml:"email,omitempty"`
+	// groups the invitee joins on accept. Absent or empty is legal and means the
+	// invitee joins with policies alone, which is the pre-2026-08 behaviour
+	GroupNames []string `json:"groupNames,omitempty" yaml:"groupNames,omitempty"`
 	// identity policies (by name) to attach to the member when they accept
 	PolicyNames []string `json:"policyNames,omitempty" yaml:"policyNames,omitempty"`
 	// optional SSO provider hint (e.g. google/github)
@@ -11070,6 +11382,16 @@ func (e *InvitationCreateInput) GetEmail() string {
 // SetEmail sets the value for the field email
 func (e *InvitationCreateInput) SetEmail(email string) {
 	e.Email = email
+}
+
+// GetGroupNames returns the value for the field groupNames
+func (e *InvitationCreateInput) GetGroupNames() []string {
+	return e.GroupNames
+}
+
+// SetGroupNames sets the value for the field groupNames
+func (e *InvitationCreateInput) SetGroupNames(groupNames []string) {
+	e.GroupNames = groupNames
 }
 
 // GetPolicyNames returns the value for the field policyNames
@@ -11814,17 +12136,20 @@ func NewSessionKeepAliveOutput() *SessionKeepAliveOutput {
 
 // SessionKeepAliveOutput struct
 type SessionKeepAliveOutput struct {
-	// the new sliding deadline after this heartbeat (bounded by the cap)
-	ExpiresAt time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
+	// the new sliding deadline after this heartbeat (bounded by the cap).
+	// Absent means this credential does not expire, which a permanent key does
+	// not. It is a real answer, not a fault: do not read it as a deadline in
+	// the past.
+	ExpiresAt *time.Time `json:"expiresAt,omitempty" yaml:"expiresAt,omitempty"`
 }
 
 // GetExpiresAt returns the value for the field expiresAt
-func (e *SessionKeepAliveOutput) GetExpiresAt() time.Time {
+func (e *SessionKeepAliveOutput) GetExpiresAt() *time.Time {
 	return e.ExpiresAt
 }
 
 // SetExpiresAt sets the value for the field expiresAt
-func (e *SessionKeepAliveOutput) SetExpiresAt(expiresAt time.Time) {
+func (e *SessionKeepAliveOutput) SetExpiresAt(expiresAt *time.Time) {
 	e.ExpiresAt = expiresAt
 }
 
@@ -13331,6 +13656,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathInvalidGroupFilterError, err = pk.NewType(
+		"InvalidGroupFilterError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidGroupFilterError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidUserFilterError, err = pk.NewType(
+		"InvalidUserFilterError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidUserFilterError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathIdentityInUseError, err = pk.NewType(
 		"IdentityInUseError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -14768,6 +15111,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().UserListInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidUserFilterErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -15136,6 +15480,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().GroupListInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGroupFilterErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 	// subresource GroupMember
@@ -17549,6 +17894,8 @@ type SpecularMetaInfo struct {
 	structPathRoleNotFoundError                                           *clientruntime.StructDefinition
 	structPathGroupNotFoundError                                          *clientruntime.StructDefinition
 	structPathInvalidGroupNameError                                       *clientruntime.StructDefinition
+	structPathInvalidGroupFilterError                                     *clientruntime.StructDefinition
+	structPathInvalidUserFilterError                                      *clientruntime.StructDefinition
 	structPathIdentityInUseError                                          *clientruntime.StructDefinition
 	structPathUserCreateInput                                             *clientruntime.StructDefinition
 	structPathUserCreateOutput                                            *clientruntime.StructDefinition
@@ -18086,6 +18433,16 @@ func (m *SpecularMetaInfo) GroupNotFoundErrorStruct() *clientruntime.StructDefin
 // InvalidGroupNameErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) InvalidGroupNameErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidGroupNameError
+}
+
+// InvalidGroupFilterErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidGroupFilterErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidGroupFilterError
+}
+
+// InvalidUserFilterErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidUserFilterErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidUserFilterError
 }
 
 // IdentityInUseErrorStruct allows easy access to structure
