@@ -5857,6 +5857,9 @@ type UserSSHKey struct {
 	Fingerprint string `json:"fingerprint,omitempty" yaml:"fingerprint,omitempty"`
 	// the public key in OpenSSH authorized_keys form
 	PublicKey string `json:"publicKey,omitempty" yaml:"publicKey,omitempty"`
+	// what this key is called, at most 160 characters. Never empty: with nothing stored it is
+	// the OpenSSH comment, and with no comment either it is the fingerprint
+	Title string `json:"title,omitempty" yaml:"title,omitempty"`
 }
 
 // GetComment returns the value for the field comment
@@ -5897,6 +5900,16 @@ func (e *UserSSHKey) GetPublicKey() string {
 // SetPublicKey sets the value for the field publicKey
 func (e *UserSSHKey) SetPublicKey(publicKey string) {
 	e.PublicKey = publicKey
+}
+
+// GetTitle returns the value for the field title
+func (e *UserSSHKey) GetTitle() string {
+	return e.Title
+}
+
+// SetTitle sets the value for the field title
+func (e *UserSSHKey) SetTitle(title string) {
+	e.Title = title
 }
 
 // StructPath returns StructPath
@@ -6083,6 +6096,73 @@ func (e *SSHKeyAlreadyExistsError) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e SSHKeyAlreadyExistsError) MarshalJSON() ([]byte, error) {
 	alias := sSHKeyAlreadyExistsErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidSSHKeyTitleError creates a new InvalidSSHKeyTitleError
+func NewInvalidSSHKeyTitleError() *InvalidSSHKeyTitleError {
+	s := &InvalidSSHKeyTitleError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidSSHKeyTitleError - Occurs when the submitted title is not one this service will store. The message names what is wrong with it.
+type InvalidSSHKeyTitleError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidSSHKeyTitleError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidSSHKeyTitleError]
+func (e *InvalidSSHKeyTitleError) Is(err error) bool {
+	_, ok := err.(*InvalidSSHKeyTitleError)
+	return ok
+}
+
+// IsInvalidSSHKeyTitleError indicates whether the given error chain contains an error of type [InvalidSSHKeyTitleError]
+func IsInvalidSSHKeyTitleError(err error) bool {
+	return errors.Is(err, &InvalidSSHKeyTitleError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidSSHKeyTitleError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidSSHKeyTitleError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidSSHKeyTitleError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidSSHKeyTitleError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidSSHKeyTitleError) InitializeDefaults() {
+}
+
+// invalidSSHKeyTitleErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidSSHKeyTitleErrorAlias InvalidSSHKeyTitleError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidSSHKeyTitleError) UnmarshalJSON(data []byte) error {
+	var alias invalidSSHKeyTitleErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidSSHKeyTitleError)(&alias)).InitializeDefaults()
+	*e = InvalidSSHKeyTitleError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidSSHKeyTitleError) MarshalJSON() ([]byte, error) {
+	alias := invalidSSHKeyTitleErrorAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -7454,6 +7534,9 @@ func NewUserSSHKeyCreateInput() *UserSSHKeyCreateInput {
 type UserSSHKeyCreateInput struct {
 	// the public key, in OpenSSH authorized_keys form
 	PublicKey string `json:"publicKey,omitempty" yaml:"publicKey,omitempty"`
+	// what to call this key, at most 160 characters. Absent derives it from the
+	// public key's own comment
+	Title *string `json:"title,omitempty" yaml:"title,omitempty"`
 	// whose key this is. ABSENT MEANS THE CALLING USER, which is the idiom
 	// AccessKey.List already established. Naming somebody else is how an
 	// administrator seeds a key at onboarding, or for a person whose SSO is broken
@@ -7468,6 +7551,16 @@ func (e *UserSSHKeyCreateInput) GetPublicKey() string {
 // SetPublicKey sets the value for the field publicKey
 func (e *UserSSHKeyCreateInput) SetPublicKey(publicKey string) {
 	e.PublicKey = publicKey
+}
+
+// GetTitle returns the value for the field title
+func (e *UserSSHKeyCreateInput) GetTitle() *string {
+	return e.Title
+}
+
+// SetTitle sets the value for the field title
+func (e *UserSSHKeyCreateInput) SetTitle(title *string) {
+	e.Title = title
 }
 
 // GetUsername returns the value for the field username
@@ -7762,6 +7855,132 @@ func (e *UserSSHKeyDestroyOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e UserSSHKeyDestroyOutput) MarshalJSON() ([]byte, error) {
 	alias := userSSHKeyDestroyOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewUserSSHKeySetTitleInput creates a new UserSSHKeySetTitleInput
+func NewUserSSHKeySetTitleInput() *UserSSHKeySetTitleInput {
+	s := &UserSSHKeySetTitleInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserSSHKeySetTitleInput struct
+type UserSSHKeySetTitleInput struct {
+	Fingerprint string `json:"fingerprint,omitempty" yaml:"fingerprint,omitempty"`
+	// absent clears it, so the title falls back to the public key's own comment
+	Title *string `json:"title,omitempty" yaml:"title,omitempty"`
+	// absent means the calling user, as on Create, List and Destroy
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
+}
+
+// GetFingerprint returns the value for the field fingerprint
+func (e *UserSSHKeySetTitleInput) GetFingerprint() string {
+	return e.Fingerprint
+}
+
+// SetFingerprint sets the value for the field fingerprint
+func (e *UserSSHKeySetTitleInput) SetFingerprint(fingerprint string) {
+	e.Fingerprint = fingerprint
+}
+
+// GetTitle returns the value for the field title
+func (e *UserSSHKeySetTitleInput) GetTitle() *string {
+	return e.Title
+}
+
+// SetTitle sets the value for the field title
+func (e *UserSSHKeySetTitleInput) SetTitle(title *string) {
+	e.Title = title
+}
+
+// GetUsername returns the value for the field username
+func (e *UserSSHKeySetTitleInput) GetUsername() *string {
+	return e.Username
+}
+
+// SetUsername sets the value for the field username
+func (e *UserSSHKeySetTitleInput) SetUsername(username *string) {
+	e.Username = username
+}
+
+// StructPath returns StructPath
+func (e *UserSSHKeySetTitleInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserSSHKeySetTitleInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserSSHKeySetTitleInput) InitializeDefaults() {
+}
+
+// userSSHKeySetTitleInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userSSHKeySetTitleInputAlias UserSSHKeySetTitleInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserSSHKeySetTitleInput) UnmarshalJSON(data []byte) error {
+	var alias userSSHKeySetTitleInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserSSHKeySetTitleInput)(&alias)).InitializeDefaults()
+	*e = UserSSHKeySetTitleInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserSSHKeySetTitleInput) MarshalJSON() ([]byte, error) {
+	alias := userSSHKeySetTitleInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewUserSSHKeySetTitleOutput creates a new UserSSHKeySetTitleOutput
+func NewUserSSHKeySetTitleOutput() *UserSSHKeySetTitleOutput {
+	s := &UserSSHKeySetTitleOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserSSHKeySetTitleOutput struct
+type UserSSHKeySetTitleOutput struct {
+	SshKey *UserSSHKey `json:"sshKey,omitempty" yaml:"sshKey,omitempty"`
+}
+
+// GetSshKey returns the value for the field sshKey
+func (e *UserSSHKeySetTitleOutput) GetSshKey() *UserSSHKey {
+	return e.SshKey
+}
+
+// SetSshKey sets the value for the field sshKey
+func (e *UserSSHKeySetTitleOutput) SetSshKey(sshKey *UserSSHKey) {
+	e.SshKey = sshKey
+}
+
+// StructPath returns StructPath
+func (e *UserSSHKeySetTitleOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserSSHKeySetTitleOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserSSHKeySetTitleOutput) InitializeDefaults() {
+}
+
+// userSSHKeySetTitleOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userSSHKeySetTitleOutputAlias UserSSHKeySetTitleOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserSSHKeySetTitleOutput) UnmarshalJSON(data []byte) error {
+	var alias userSSHKeySetTitleOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserSSHKeySetTitleOutput)(&alias)).InitializeDefaults()
+	*e = UserSSHKeySetTitleOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserSSHKeySetTitleOutput) MarshalJSON() ([]byte, error) {
+	alias := userSSHKeySetTitleOutputAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -14380,6 +14599,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathInvalidSSHKeyTitleError, err = pk.NewType(
+		"InvalidSSHKeyTitleError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidSSHKeyTitleError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathUserCreateInput, err = pk.NewType(
 		"UserCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -14654,6 +14882,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"UserSSHKeyDestroyOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserSSHKeyDestroyOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathUserSSHKeySetTitleInput, err = pk.NewType(
+		"UserSSHKeySetTitleInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserSSHKeySetTitleInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathUserSSHKeySetTitleOutput, err = pk.NewType(
+		"UserSSHKeySetTitleOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserSSHKeySetTitleOutput()
 		}),
 	)
 	if err != nil {
@@ -16001,6 +16247,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
 	op.RegisterProblemType(SpecularMeta().InvalidSSHPublicKeyErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidSSHKeyTitleErrorStruct())
 	op.RegisterProblemType(SpecularMeta().SSHKeyAlreadyExistsErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
@@ -16026,6 +16273,19 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().UserSSHKeyDestroyInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resUserSSHKey.NewOperation("SetTitle")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().UserSSHKeySetTitleInputStruct())
+	op.SetOutput(SpecularMeta().UserSSHKeySetTitleInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidSSHKeyTitleErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -17383,6 +17643,7 @@ type UserSSHKeyResourceClient struct {
 	create    *clientruntime.Operation
 	list      *clientruntime.Operation
 	destroy   *clientruntime.Operation
+	setTitle  *clientruntime.Operation
 }
 
 func newUserSSHKeyResourceClient(
@@ -17397,6 +17658,7 @@ func newUserSSHKeyResourceClient(
 	r.create = res.FindOperation("Create")
 	r.list = res.FindOperation("List")
 	r.destroy = res.FindOperation("Destroy")
+	r.setTitle = res.FindOperation("SetTitle")
 	return r, nil
 }
 
@@ -17439,6 +17701,20 @@ func (res *UserSSHKeyResourceClient) Destroy(ctx context.Context, input *UserSSH
 		return nil, err
 	}
 	output := o.(*UserSSHKeyDestroyOutput)
+	return output, nil
+}
+
+// SetTitle - Sets or clears what a person calls one of their keys
+// Requires permission action iam:CreateUserSSHKey over resource iam:User(<username>).SSHKey(<fingerprint>)
+func (res *UserSSHKeyResourceClient) SetTitle(ctx context.Context, input *UserSSHKeySetTitleInput) (*UserSSHKeySetTitleOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.setTitle,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*UserSSHKeySetTitleOutput)
 	return output, nil
 }
 
@@ -18846,6 +19122,7 @@ type SpecularMetaInfo struct {
 	structPathUserSSHKey                                                  *clientruntime.StructDefinition
 	structPathInvalidSSHPublicKeyError                                    *clientruntime.StructDefinition
 	structPathSSHKeyAlreadyExistsError                                    *clientruntime.StructDefinition
+	structPathInvalidSSHKeyTitleError                                     *clientruntime.StructDefinition
 	structPathUserCreateInput                                             *clientruntime.StructDefinition
 	structPathUserCreateOutput                                            *clientruntime.StructDefinition
 	structPathUserGetInput                                                *clientruntime.StructDefinition
@@ -18877,6 +19154,8 @@ type SpecularMetaInfo struct {
 	structPathUserSSHKeyListOutput                                        *clientruntime.StructDefinition
 	structPathUserSSHKeyDestroyInput                                      *clientruntime.StructDefinition
 	structPathUserSSHKeyDestroyOutput                                     *clientruntime.StructDefinition
+	structPathUserSSHKeySetTitleInput                                     *clientruntime.StructDefinition
+	structPathUserSSHKeySetTitleOutput                                    *clientruntime.StructDefinition
 	structPathUserGroupListInput                                          *clientruntime.StructDefinition
 	structPathUserGroupListOutput                                         *clientruntime.StructDefinition
 	structPathInlinePolicy                                                *clientruntime.StructDefinition
@@ -19422,6 +19701,11 @@ func (m *SpecularMetaInfo) SSHKeyAlreadyExistsErrorStruct() *clientruntime.Struc
 	return m.structPathSSHKeyAlreadyExistsError
 }
 
+// InvalidSSHKeyTitleErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidSSHKeyTitleErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidSSHKeyTitleError
+}
+
 // UserCreateInputStruct allows easy access to structure
 func (m *SpecularMetaInfo) UserCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserCreateInput
@@ -19575,6 +19859,16 @@ func (m *SpecularMetaInfo) UserSSHKeyDestroyInputStruct() *clientruntime.StructD
 // UserSSHKeyDestroyOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) UserSSHKeyDestroyOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserSSHKeyDestroyOutput
+}
+
+// UserSSHKeySetTitleInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserSSHKeySetTitleInputStruct() *clientruntime.StructDefinition {
+	return m.structPathUserSSHKeySetTitleInput
+}
+
+// UserSSHKeySetTitleOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserSSHKeySetTitleOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathUserSSHKeySetTitleOutput
 }
 
 // UserGroupListInputStruct allows easy access to structure
