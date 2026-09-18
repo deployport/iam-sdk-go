@@ -6015,13 +6015,13 @@ func NewSSHKeyAlreadyExistsError() *SSHKeyAlreadyExistsError {
 	return s
 }
 
-// SSHKeyAlreadyExistsError - Occurs when this public key is already on a user in this account, including the caller's own.
-// UNIQUENESS IS ACCOUNT-WIDE AND NOT PER USER, AND IT IS A SECURITY PROPERTY RATHER THAN TIDINESS. The authorized_keys marker carries the USER, so one key on two users writes two lines with the same bytes and different owners. Revoking one leaves the other, and whoever holds that private key still has a shell on every machine the second user can reach. An administrator who removed somebody would believe they had.
+// SSHKeyAlreadyExistsError - Occurs when this public key is already registered, whether on a user in this account, including the caller's own, or in another account entirely.
+// UNIQUENESS IS PLATFORM-WIDE AND NOT PER USER, AND IT IS A SECURITY PROPERTY RATHER THAN TIDINESS. The authorized_keys marker carries the USER, so one key on two users writes two lines with the same bytes and different owners. Revoking one leaves the other, and whoever holds that private key still has a shell on every machine the second user can reach. An administrator who removed somebody would believe they had.
 type SSHKeyAlreadyExistsError struct {
 	Fingerprint string `json:"fingerprint,omitempty" yaml:"fingerprint,omitempty"`
 	Message     string `json:"message,omitempty" yaml:"message,omitempty"`
-	// the user who already holds it, so the refusal is actionable rather than only true
-	Username string `json:"username,omitempty" yaml:"username,omitempty"`
+	// the user who already holds it, so the refusal is actionable rather than only true. ABSENT when another account registered the key, because naming a person the caller cannot see would disclose more than it helps
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
 }
 
 // Error implements the error interface
@@ -6061,12 +6061,12 @@ func (e *SSHKeyAlreadyExistsError) SetMessage(message string) {
 }
 
 // GetUsername returns the value for the field username
-func (e *SSHKeyAlreadyExistsError) GetUsername() string {
+func (e *SSHKeyAlreadyExistsError) GetUsername() *string {
 	return e.Username
 }
 
 // SetUsername sets the value for the field username
-func (e *SSHKeyAlreadyExistsError) SetUsername(username string) {
+func (e *SSHKeyAlreadyExistsError) SetUsername(username *string) {
 	e.Username = username
 }
 
