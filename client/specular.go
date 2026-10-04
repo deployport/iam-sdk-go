@@ -2966,6 +2966,140 @@ func (e InvalidHandoffCodeError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountNameMismatchError creates a new AccountNameMismatchError
+func NewAccountNameMismatchError() *AccountNameMismatchError {
+	s := &AccountNameMismatchError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountNameMismatchError - Occurs when Account.Destroy names an account other than the caller's own
+type AccountNameMismatchError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *AccountNameMismatchError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [AccountNameMismatchError]
+func (e *AccountNameMismatchError) Is(err error) bool {
+	_, ok := err.(*AccountNameMismatchError)
+	return ok
+}
+
+// IsAccountNameMismatchError indicates whether the given error chain contains an error of type [AccountNameMismatchError]
+func IsAccountNameMismatchError(err error) bool {
+	return errors.Is(err, &AccountNameMismatchError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountNameMismatchError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountNameMismatchError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *AccountNameMismatchError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountNameMismatchError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountNameMismatchError) InitializeDefaults() {
+}
+
+// accountNameMismatchErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountNameMismatchErrorAlias AccountNameMismatchError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountNameMismatchError) UnmarshalJSON(data []byte) error {
+	var alias accountNameMismatchErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountNameMismatchError)(&alias)).InitializeDefaults()
+	*e = AccountNameMismatchError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountNameMismatchError) MarshalJSON() ([]byte, error) {
+	alias := accountNameMismatchErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountNotDestroyableError creates a new AccountNotDestroyableError
+func NewAccountNotDestroyableError() *AccountNotDestroyableError {
+	s := &AccountNotDestroyableError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountNotDestroyableError - Occurs when the account is one no caller may destroy, such as the global account
+type AccountNotDestroyableError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *AccountNotDestroyableError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [AccountNotDestroyableError]
+func (e *AccountNotDestroyableError) Is(err error) bool {
+	_, ok := err.(*AccountNotDestroyableError)
+	return ok
+}
+
+// IsAccountNotDestroyableError indicates whether the given error chain contains an error of type [AccountNotDestroyableError]
+func IsAccountNotDestroyableError(err error) bool {
+	return errors.Is(err, &AccountNotDestroyableError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountNotDestroyableError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountNotDestroyableError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *AccountNotDestroyableError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountNotDestroyableError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountNotDestroyableError) InitializeDefaults() {
+}
+
+// accountNotDestroyableErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountNotDestroyableErrorAlias AccountNotDestroyableError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountNotDestroyableError) UnmarshalJSON(data []byte) error {
+	var alias accountNotDestroyableErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountNotDestroyableError)(&alias)).InitializeDefaults()
+	*e = AccountNotDestroyableError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountNotDestroyableError) MarshalJSON() ([]byte, error) {
+	alias := accountNotDestroyableErrorAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateInput creates a new AccountCreateInput
 func NewAccountCreateInput() *AccountCreateInput {
 	s := &AccountCreateInput{}
@@ -3132,6 +3266,128 @@ func (e *AccountCreateInvalidNameError) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e AccountCreateInvalidNameError) MarshalJSON() ([]byte, error) {
 	alias := accountCreateInvalidNameErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountDestroyInput creates a new AccountDestroyInput
+func NewAccountDestroyInput() *AccountDestroyInput {
+	s := &AccountDestroyInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountDestroyInput struct
+type AccountDestroyInput struct {
+	// the caller's account name, typed again, so a credential pointed at the wrong account destroys nothing
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *AccountDestroyInput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountDestroyInput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountDestroyInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountDestroyInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountDestroyInput) InitializeDefaults() {
+}
+
+// accountDestroyInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountDestroyInputAlias AccountDestroyInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountDestroyInput) UnmarshalJSON(data []byte) error {
+	var alias accountDestroyInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountDestroyInput)(&alias)).InitializeDefaults()
+	*e = AccountDestroyInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountDestroyInput) MarshalJSON() ([]byte, error) {
+	alias := accountDestroyInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountDestroyOutput creates a new AccountDestroyOutput
+func NewAccountDestroyOutput() *AccountDestroyOutput {
+	s := &AccountDestroyOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountDestroyOutput struct
+type AccountDestroyOutput struct {
+	// what happens next, written for the person who asked
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+	// the account's state as this call leaves it, always destroying
+	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountDestroyOutput) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountDestroyOutput) SetMessage(message string) {
+	e.Message = message
+}
+
+// GetState returns the value for the field state
+func (e *AccountDestroyOutput) GetState() AccountState {
+	return e.State
+}
+
+// SetState sets the value for the field state
+func (e *AccountDestroyOutput) SetState(state AccountState) {
+	e.State = state
+}
+
+// StructPath returns StructPath
+func (e *AccountDestroyOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountDestroyOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountDestroyOutput) InitializeDefaults() {
+	if e.State == "" {
+		e.State = AccountStateActive
+	}
+}
+
+// accountDestroyOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountDestroyOutputAlias AccountDestroyOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountDestroyOutput) UnmarshalJSON(data []byte) error {
+	var alias accountDestroyOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountDestroyOutput)(&alias)).InitializeDefaults()
+	*e = AccountDestroyOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountDestroyOutput) MarshalJSON() ([]byte, error) {
+	alias := accountDestroyOutputAlias(e)
+	if alias.State == AccountStateActive {
+		alias.State = ""
+	}
 	return json.Marshal(alias)
 }
 
@@ -4824,6 +5080,8 @@ type MemberAccount struct {
 	// accounts are returned never-entered first (newest membership first), then the
 	// rest, most recent first.
 	LastEnteredAt *time.Time `json:"lastEnteredAt,omitempty" yaml:"lastEnteredAt,omitempty"`
+	// active, or destroying while its destruction runs. A destroyed account is not listed
+	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
 // GetAccountName returns the value for the field accountName
@@ -4846,6 +5104,16 @@ func (e *MemberAccount) SetLastEnteredAt(lastEnteredAt *time.Time) {
 	e.LastEnteredAt = lastEnteredAt
 }
 
+// GetState returns the value for the field state
+func (e *MemberAccount) GetState() AccountState {
+	return e.State
+}
+
+// SetState sets the value for the field state
+func (e *MemberAccount) SetState(state AccountState) {
+	e.State = state
+}
+
 // StructPath returns StructPath
 func (e *MemberAccount) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathMemberAccount.Path()
@@ -4853,6 +5121,9 @@ func (e *MemberAccount) StructPath() clientruntime.StructPath {
 
 // InitializeDefaults initializes the default values in the struct
 func (e *MemberAccount) InitializeDefaults() {
+	if e.State == "" {
+		e.State = AccountStateActive
+	}
 }
 
 // memberAccountAlias is defined to help pre and post JSON marshaling without recursive loops
@@ -4872,6 +5143,9 @@ func (e *MemberAccount) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e MemberAccount) MarshalJSON() ([]byte, error) {
 	alias := memberAccountAlias(e)
+	if alias.State == AccountStateActive {
+		alias.State = ""
+	}
 	return json.Marshal(alias)
 }
 
@@ -13787,6 +14061,35 @@ func TrustStatementEffectAllConstants() []TrustStatementEffect {
 	}
 }
 
+// AccountState entity
+// The condition an account is in. Active is first, so an absent value reads as active
+type AccountState string
+
+// AccountStateActive = "active" - the account is in use
+const AccountStateActive AccountState = "active"
+
+// AccountStateDestroying = "destroying" - its destruction has begun: every credential in the account is refused, and each Deployport service is removing what it stores for it
+const AccountStateDestroying AccountState = "destroying"
+
+// String returns the string representation of the enum
+func (en AccountState) String() string {
+	return string(en)
+}
+
+// Optional returns the optional value
+func (en AccountState) Optional() *AccountState {
+	c := en
+	return &c
+}
+
+// AccountStateAllConstants returns all constants in enum AccountState
+func AccountStateAllConstants() []AccountState {
+	return []AccountState{
+		AccountStateActive,
+		AccountStateDestroying,
+	}
+}
+
 // PolicyStatementEffect entity
 type PolicyStatementEffect string
 
@@ -14158,6 +14461,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathAccountNameMismatchError, err = pk.NewType(
+		"AccountNameMismatchError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountNameMismatchError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountNotDestroyableError, err = pk.NewType(
+		"AccountNotDestroyableError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountNotDestroyableError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathAccountCreateInput, err = pk.NewType(
 		"AccountCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -14180,6 +14501,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"AccountCreateInvalidNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountCreateInvalidNameError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountDestroyInput, err = pk.NewType(
+		"AccountDestroyInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountDestroyInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountDestroyOutput, err = pk.NewType(
+		"AccountDestroyOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountDestroyOutput()
 		}),
 	)
 	if err != nil {
@@ -15897,6 +16236,20 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	op, err = resAccount.NewOperation("Destroy")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountDestroyInputStruct())
+	op.SetOutput(SpecularMeta().AccountDestroyInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountNameMismatchErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountNotDestroyableErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
 	op, err = resAccount.NewOperation("AssumeIdentity")
 	if err != nil {
 		return nil, err
@@ -17051,6 +17404,7 @@ type AccountResourceClient struct {
 	SSO                    *AccountSSOResourceClient
 	OIDCProvider           *AccountOIDCProviderResourceClient
 	create                 *clientruntime.Operation
+	destroy                *clientruntime.Operation
 	assumeIdentity         *clientruntime.Operation
 	beginAssumeIdentity    *clientruntime.Operation
 	completeAssumeIdentity *clientruntime.Operation
@@ -17075,6 +17429,7 @@ func newAccountResourceClient(
 		return nil, err
 	}
 	r.create = res.FindOperation("Create")
+	r.destroy = res.FindOperation("Destroy")
 	r.assumeIdentity = res.FindOperation("AssumeIdentity")
 	r.beginAssumeIdentity = res.FindOperation("BeginAssumeIdentity")
 	r.completeAssumeIdentity = res.FindOperation("CompleteAssumeIdentity")
@@ -17092,6 +17447,21 @@ func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCrea
 		return nil, err
 	}
 	output := o.(*AccountCreateOutput)
+	return output, nil
+}
+
+// Destroy - Starts the destruction of the caller's account.
+// Every owner receives an email when the destruction starts and another when it completes.
+// Requires iam:DestroyAccount.
+func (res *AccountResourceClient) Destroy(ctx context.Context, input *AccountDestroyInput) (*AccountDestroyOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.destroy,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountDestroyOutput)
 	return output, nil
 }
 
@@ -19073,9 +19443,13 @@ type SpecularMetaInfo struct {
 	structPathInvalidWebIdentityTokenError                                *clientruntime.StructDefinition
 	structPathInvalidPrincipalDRNError                                    *clientruntime.StructDefinition
 	structPathInvalidHandoffCodeError                                     *clientruntime.StructDefinition
+	structPathAccountNameMismatchError                                    *clientruntime.StructDefinition
+	structPathAccountNotDestroyableError                                  *clientruntime.StructDefinition
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
+	structPathAccountDestroyInput                                         *clientruntime.StructDefinition
+	structPathAccountDestroyOutput                                        *clientruntime.StructDefinition
 	structPathAccountAssumeIdentityInput                                  *clientruntime.StructDefinition
 	structPathAccountAssumeIdentityOutput                                 *clientruntime.StructDefinition
 	structPathAccountBeginAssumeIdentityInput                             *clientruntime.StructDefinition
@@ -19456,6 +19830,16 @@ func (m *SpecularMetaInfo) InvalidHandoffCodeErrorStruct() *clientruntime.Struct
 	return m.structPathInvalidHandoffCodeError
 }
 
+// AccountNameMismatchErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountNameMismatchErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountNameMismatchError
+}
+
+// AccountNotDestroyableErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountNotDestroyableErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountNotDestroyableError
+}
+
 // AccountCreateInputStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountCreateInputStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInput
@@ -19469,6 +19853,16 @@ func (m *SpecularMetaInfo) AccountCreateOutputStruct() *clientruntime.StructDefi
 // AccountCreateInvalidNameErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountCreateInvalidNameErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInvalidNameError
+}
+
+// AccountDestroyInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountDestroyInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountDestroyInput
+}
+
+// AccountDestroyOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountDestroyOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountDestroyOutput
 }
 
 // AccountAssumeIdentityInputStruct allows easy access to structure
