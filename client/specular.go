@@ -742,7 +742,7 @@ func NewManagedByService() *ManagedByService {
 // ManagedByService - Marks a resource as owned by a service. Present only when managed; its presence is
 // the read-only "managed" signal for the console banner.
 type ManagedByService struct {
-	// the managing service principal FQDN, e.g. "uplink.deployport.io"
+	// the managing service principal FQDN, e.g. "machinery.deployport.io"
 	Service string `json:"service,omitempty" yaml:"service,omitempty"`
 }
 
@@ -3161,6 +3161,8 @@ func NewAccountCreateOutput() *AccountCreateOutput {
 // AccountCreateOutput struct
 type AccountCreateOutput struct {
 	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
+	// settingUp until every Deployport service has prepared the account, then active
+	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
 // GetAccount returns the value for the field account
@@ -3173,6 +3175,16 @@ func (e *AccountCreateOutput) SetAccount(account *Account) {
 	e.Account = account
 }
 
+// GetState returns the value for the field state
+func (e *AccountCreateOutput) GetState() AccountState {
+	return e.State
+}
+
+// SetState sets the value for the field state
+func (e *AccountCreateOutput) SetState(state AccountState) {
+	e.State = state
+}
+
 // StructPath returns StructPath
 func (e *AccountCreateOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountCreateOutput.Path()
@@ -3180,6 +3192,9 @@ func (e *AccountCreateOutput) StructPath() clientruntime.StructPath {
 
 // InitializeDefaults initializes the default values in the struct
 func (e *AccountCreateOutput) InitializeDefaults() {
+	if e.State == "" {
+		e.State = AccountStateActive
+	}
 }
 
 // accountCreateOutputAlias is defined to help pre and post JSON marshaling without recursive loops
@@ -3199,6 +3214,9 @@ func (e *AccountCreateOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e AccountCreateOutput) MarshalJSON() ([]byte, error) {
 	alias := accountCreateOutputAlias(e)
+	if alias.State == AccountStateActive {
+		alias.State = ""
+	}
 	return json.Marshal(alias)
 }
 
@@ -5080,7 +5098,7 @@ type MemberAccount struct {
 	// accounts are returned never-entered first (newest membership first), then the
 	// rest, most recent first.
 	LastEnteredAt *time.Time `json:"lastEnteredAt,omitempty" yaml:"lastEnteredAt,omitempty"`
-	// active, or destroying while its destruction runs. A destroyed account is not listed
+	// active, settingUp while Account.Create prepares it, or destroying while its destruction runs. A destroyed account is not listed
 	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
@@ -6957,7 +6975,7 @@ type UserListInput struct {
 	// authored. Absent returns both, which is today's behaviour and keeps every
 	// existing caller correct
 	Managed *bool `json:"managed,omitempty" yaml:"managed,omitempty"`
-	// the managing service principal FQDN, e.g. "uplink.deployport.io", to
+	// the managing service principal FQDN, e.g. "machinery.deployport.io", to
 	// return only that service's users. Absent applies no service filter
 	ManagedByService *string `json:"managedByService,omitempty" yaml:"managedByService,omitempty"`
 }
@@ -10346,7 +10364,7 @@ type GroupListInput struct {
 	// authored. Absent returns both, which is today's behaviour and keeps every
 	// existing caller correct
 	Managed *bool `json:"managed,omitempty" yaml:"managed,omitempty"`
-	// the managing service principal FQDN, e.g. "uplink.deployport.io", to
+	// the managing service principal FQDN, e.g. "machinery.deployport.io", to
 	// return only that service's groups. Absent applies no service filter
 	ManagedByService *string `json:"managedByService,omitempty" yaml:"managedByService,omitempty"`
 }
@@ -13481,7 +13499,7 @@ type SessionIdentityOutput struct {
 	// present only when acting via a service-linked role
 	ManagedBy *ManagedByService `json:"managedBy,omitempty" yaml:"managedBy,omitempty"`
 	// DRN of the calling principal: iam:User(alice), iam:Role(deployer), or
-	// iam:Service(uplink.deployport.io) when the caller is a service itself
+	// iam:Service(machinery.deployport.io) when the caller is a service itself
 	PrincipalDrn string `json:"principalDrn,omitempty" yaml:"principalDrn,omitempty"`
 }
 
@@ -14071,6 +14089,9 @@ const AccountStateActive AccountState = "active"
 // AccountStateDestroying = "destroying" - its destruction has begun: every credential in the account is refused, and each Deployport service is removing what it stores for it
 const AccountStateDestroying AccountState = "destroying"
 
+// AccountStateSettingUp = "settingUp" - Account.Create has begun and IAM and every Deployport service are still preparing the account. Signing in to it is refused until it is active
+const AccountStateSettingUp AccountState = "settingUp"
+
 // String returns the string representation of the enum
 func (en AccountState) String() string {
 	return string(en)
@@ -14087,6 +14108,7 @@ func AccountStateAllConstants() []AccountState {
 	return []AccountState{
 		AccountStateActive,
 		AccountStateDestroying,
+		AccountStateSettingUp,
 	}
 }
 
@@ -17438,6 +17460,8 @@ func newAccountResourceClient(
 
 // Create - Creates a new Account with the given name
 // Create account only works for users of the "global" account
+// The answer is settingUp until IAM and every Deployport service have prepared the account, then active
+// The same caller repeating the call with the same name continues that setup and answers its current state
 func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCreateInput) (*AccountCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
 		Operation: res.create,
