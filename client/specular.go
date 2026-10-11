@@ -3100,6 +3100,85 @@ func (e AccountNotDestroyableError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountDestructionNotApprovedError creates a new AccountDestructionNotApprovedError
+func NewAccountDestructionNotApprovedError() *AccountDestructionNotApprovedError {
+	s := &AccountDestructionNotApprovedError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountDestructionNotApprovedError - Occurs when Account.Destroy is called before every service that checks an account approved its destruction in the last minute
+type AccountDestructionNotApprovedError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+	// the services whose approval is missing, e.g. "billing.deployport.io". Each one approves through a check of its own, which the console runs first
+	Services []string `json:"services,omitempty" yaml:"services,omitempty"`
+}
+
+// Error implements the error interface
+func (e *AccountDestructionNotApprovedError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [AccountDestructionNotApprovedError]
+func (e *AccountDestructionNotApprovedError) Is(err error) bool {
+	_, ok := err.(*AccountDestructionNotApprovedError)
+	return ok
+}
+
+// IsAccountDestructionNotApprovedError indicates whether the given error chain contains an error of type [AccountDestructionNotApprovedError]
+func IsAccountDestructionNotApprovedError(err error) bool {
+	return errors.Is(err, &AccountDestructionNotApprovedError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountDestructionNotApprovedError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountDestructionNotApprovedError) SetMessage(message string) {
+	e.Message = message
+}
+
+// GetServices returns the value for the field services
+func (e *AccountDestructionNotApprovedError) GetServices() []string {
+	return e.Services
+}
+
+// SetServices sets the value for the field services
+func (e *AccountDestructionNotApprovedError) SetServices(services []string) {
+	e.Services = services
+}
+
+// StructPath returns StructPath
+func (e *AccountDestructionNotApprovedError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountDestructionNotApprovedError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountDestructionNotApprovedError) InitializeDefaults() {
+}
+
+// accountDestructionNotApprovedErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountDestructionNotApprovedErrorAlias AccountDestructionNotApprovedError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountDestructionNotApprovedError) UnmarshalJSON(data []byte) error {
+	var alias accountDestructionNotApprovedErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountDestructionNotApprovedError)(&alias)).InitializeDefaults()
+	*e = AccountDestructionNotApprovedError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountDestructionNotApprovedError) MarshalJSON() ([]byte, error) {
+	alias := accountDestructionNotApprovedErrorAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateInput creates a new AccountCreateInput
 func NewAccountCreateInput() *AccountCreateInput {
 	s := &AccountCreateInput{}
@@ -14501,6 +14580,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathAccountDestructionNotApprovedError, err = pk.NewType(
+		"AccountDestructionNotApprovedError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountDestructionNotApprovedError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathAccountCreateInput, err = pk.NewType(
 		"AccountCreateInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -16269,6 +16357,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
 	op.RegisterProblemType(SpecularMeta().AccountNameMismatchErrorStruct())
 	op.RegisterProblemType(SpecularMeta().AccountNotDestroyableErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountDestructionNotApprovedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -19469,6 +19558,7 @@ type SpecularMetaInfo struct {
 	structPathInvalidHandoffCodeError                                     *clientruntime.StructDefinition
 	structPathAccountNameMismatchError                                    *clientruntime.StructDefinition
 	structPathAccountNotDestroyableError                                  *clientruntime.StructDefinition
+	structPathAccountDestructionNotApprovedError                          *clientruntime.StructDefinition
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
@@ -19862,6 +19952,11 @@ func (m *SpecularMetaInfo) AccountNameMismatchErrorStruct() *clientruntime.Struc
 // AccountNotDestroyableErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountNotDestroyableErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountNotDestroyableError
+}
+
+// AccountDestructionNotApprovedErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountDestructionNotApprovedErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountDestructionNotApprovedError
 }
 
 // AccountCreateInputStruct allows easy access to structure
