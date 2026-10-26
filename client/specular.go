@@ -3179,6 +3179,74 @@ func (e AccountDestructionNotApprovedError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountEntryRefusedError creates a new AccountEntryRefusedError
+func NewAccountEntryRefusedError() *AccountEntryRefusedError {
+	s := &AccountEntryRefusedError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountEntryRefusedError - Occurs when the signed identity may not enter the named account: it is not a member, or no such account exists.
+// One problem for both, so a caller learns nothing about which accounts exist.
+type AccountEntryRefusedError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *AccountEntryRefusedError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [AccountEntryRefusedError]
+func (e *AccountEntryRefusedError) Is(err error) bool {
+	_, ok := err.(*AccountEntryRefusedError)
+	return ok
+}
+
+// IsAccountEntryRefusedError indicates whether the given error chain contains an error of type [AccountEntryRefusedError]
+func IsAccountEntryRefusedError(err error) bool {
+	return errors.Is(err, &AccountEntryRefusedError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *AccountEntryRefusedError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *AccountEntryRefusedError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *AccountEntryRefusedError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountEntryRefusedError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountEntryRefusedError) InitializeDefaults() {
+}
+
+// accountEntryRefusedErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountEntryRefusedErrorAlias AccountEntryRefusedError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountEntryRefusedError) UnmarshalJSON(data []byte) error {
+	var alias accountEntryRefusedErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountEntryRefusedError)(&alias)).InitializeDefaults()
+	*e = AccountEntryRefusedError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountEntryRefusedError) MarshalJSON() ([]byte, error) {
+	alias := accountEntryRefusedErrorAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountCreateInput creates a new AccountCreateInput
 func NewAccountCreateInput() *AccountCreateInput {
 	s := &AccountCreateInput{}
@@ -13869,6 +13937,623 @@ func (e SessionCompleteHandoffOutput) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewFeedbackViewport creates a new FeedbackViewport
+func NewFeedbackViewport() *FeedbackViewport {
+	s := &FeedbackViewport{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackViewport - The visible area of the client's window, in logical pixels
+type FeedbackViewport struct {
+	// 1 to 20,000
+	Height int32 `json:"height,omitempty" yaml:"height,omitempty"`
+	// 1 to 20,000
+	Width int32 `json:"width,omitempty" yaml:"width,omitempty"`
+}
+
+// GetHeight returns the value for the field height
+func (e *FeedbackViewport) GetHeight() int32 {
+	return e.Height
+}
+
+// SetHeight sets the value for the field height
+func (e *FeedbackViewport) SetHeight(height int32) {
+	e.Height = height
+}
+
+// GetWidth returns the value for the field width
+func (e *FeedbackViewport) GetWidth() int32 {
+	return e.Width
+}
+
+// SetWidth sets the value for the field width
+func (e *FeedbackViewport) SetWidth(width int32) {
+	e.Width = width
+}
+
+// StructPath returns StructPath
+func (e *FeedbackViewport) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackViewport.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackViewport) InitializeDefaults() {
+}
+
+// feedbackViewportAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackViewportAlias FeedbackViewport
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackViewport) UnmarshalJSON(data []byte) error {
+	var alias feedbackViewportAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackViewport)(&alias)).InitializeDefaults()
+	*e = FeedbackViewport(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackViewport) MarshalJSON() ([]byte, error) {
+	alias := feedbackViewportAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackElementNode creates a new FeedbackElementNode
+func NewFeedbackElementNode() *FeedbackElementNode {
+	s := &FeedbackElementNode{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackElementNode - One node of what the person pointed at: the element itself or one of its ancestors
+type FeedbackElementNode struct {
+	// the UI component that drew the node, when the client knows it. At most 64 characters
+	Component *string `json:"component,omitempty" yaml:"component,omitempty"`
+	// what the node is. The console and the desktop app send the HTML tag name. 1 to 32 characters
+	Kind string `json:"kind,omitempty" yaml:"kind,omitempty"`
+	// what the node's author labelled it, never what it contains, so a value typed into a field never travels here. At most 120 characters
+	Name *string `json:"name,omitempty" yaml:"name,omitempty"`
+	// the role the node's author gave it. Absent when none was given. At most 32 characters
+	Role *string `json:"role,omitempty" yaml:"role,omitempty"`
+}
+
+// GetComponent returns the value for the field component
+func (e *FeedbackElementNode) GetComponent() *string {
+	return e.Component
+}
+
+// SetComponent sets the value for the field component
+func (e *FeedbackElementNode) SetComponent(component *string) {
+	e.Component = component
+}
+
+// GetKind returns the value for the field kind
+func (e *FeedbackElementNode) GetKind() string {
+	return e.Kind
+}
+
+// SetKind sets the value for the field kind
+func (e *FeedbackElementNode) SetKind(kind string) {
+	e.Kind = kind
+}
+
+// GetName returns the value for the field name
+func (e *FeedbackElementNode) GetName() *string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *FeedbackElementNode) SetName(name *string) {
+	e.Name = name
+}
+
+// GetRole returns the value for the field role
+func (e *FeedbackElementNode) GetRole() *string {
+	return e.Role
+}
+
+// SetRole sets the value for the field role
+func (e *FeedbackElementNode) SetRole(role *string) {
+	e.Role = role
+}
+
+// StructPath returns StructPath
+func (e *FeedbackElementNode) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackElementNode.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackElementNode) InitializeDefaults() {
+}
+
+// feedbackElementNodeAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackElementNodeAlias FeedbackElementNode
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackElementNode) UnmarshalJSON(data []byte) error {
+	var alias feedbackElementNodeAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackElementNode)(&alias)).InitializeDefaults()
+	*e = FeedbackElementNode(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackElementNode) MarshalJSON() ([]byte, error) {
+	alias := feedbackElementNodeAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackElement creates a new FeedbackElement
+func NewFeedbackElement() *FeedbackElement {
+	s := &FeedbackElement{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackElement - What the person pointed at, in the client's own terms
+type FeedbackElement struct {
+	// how a developer finds the element again. The console and the desktop app send a CSS selector. 1 to 1,024 characters
+	Locator string `json:"locator,omitempty" yaml:"locator,omitempty"`
+	// the element's own text, whitespace collapsed. Absent when it has none. At most 300 characters
+	Text *string `json:"text,omitempty" yaml:"text,omitempty"`
+	// the element first, then its ancestors, nearest first. At most 24 nodes
+	Tree []*FeedbackElementNode `json:"tree,omitempty" yaml:"tree,omitempty"`
+}
+
+// GetLocator returns the value for the field locator
+func (e *FeedbackElement) GetLocator() string {
+	return e.Locator
+}
+
+// SetLocator sets the value for the field locator
+func (e *FeedbackElement) SetLocator(locator string) {
+	e.Locator = locator
+}
+
+// GetText returns the value for the field text
+func (e *FeedbackElement) GetText() *string {
+	return e.Text
+}
+
+// SetText sets the value for the field text
+func (e *FeedbackElement) SetText(text *string) {
+	e.Text = text
+}
+
+// GetTree returns the value for the field tree
+func (e *FeedbackElement) GetTree() []*FeedbackElementNode {
+	return e.Tree
+}
+
+// SetTree sets the value for the field tree
+func (e *FeedbackElement) SetTree(tree []*FeedbackElementNode) {
+	e.Tree = tree
+}
+
+// StructPath returns StructPath
+func (e *FeedbackElement) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackElement.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackElement) InitializeDefaults() {
+}
+
+// feedbackElementAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackElementAlias FeedbackElement
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackElement) UnmarshalJSON(data []byte) error {
+	var alias feedbackElementAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackElement)(&alias)).InitializeDefaults()
+	*e = FeedbackElement(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackElement) MarshalJSON() ([]byte, error) {
+	alias := feedbackElementAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidFeedbackError creates a new InvalidFeedbackError
+func NewInvalidFeedbackError() *InvalidFeedbackError {
+	s := &InvalidFeedbackError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidFeedbackError - Occurs when an input is outside its limits. The message is the sentence a person reads, and field names the input for a developer.
+type InvalidFeedbackError struct {
+	// the input outside its limits, as a path into the input, e.g. "element.tree[3].name"
+	Field   string `json:"field,omitempty" yaml:"field,omitempty"`
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidFeedbackError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidFeedbackError]
+func (e *InvalidFeedbackError) Is(err error) bool {
+	_, ok := err.(*InvalidFeedbackError)
+	return ok
+}
+
+// IsInvalidFeedbackError indicates whether the given error chain contains an error of type [InvalidFeedbackError]
+func IsInvalidFeedbackError(err error) bool {
+	return errors.Is(err, &InvalidFeedbackError{})
+}
+
+// GetField returns the value for the field field
+func (e *InvalidFeedbackError) GetField() string {
+	return e.Field
+}
+
+// SetField sets the value for the field field
+func (e *InvalidFeedbackError) SetField(field string) {
+	e.Field = field
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidFeedbackError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidFeedbackError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidFeedbackError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidFeedbackError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidFeedbackError) InitializeDefaults() {
+}
+
+// invalidFeedbackErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidFeedbackErrorAlias InvalidFeedbackError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidFeedbackError) UnmarshalJSON(data []byte) error {
+	var alias invalidFeedbackErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidFeedbackError)(&alias)).InitializeDefaults()
+	*e = InvalidFeedbackError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidFeedbackError) MarshalJSON() ([]byte, error) {
+	alias := invalidFeedbackErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackTooLargeError creates a new FeedbackTooLargeError
+func NewFeedbackTooLargeError() *FeedbackTooLargeError {
+	s := &FeedbackTooLargeError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackTooLargeError - Occurs when the request body is over 3 MiB. Nothing else about the request is read.
+type FeedbackTooLargeError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *FeedbackTooLargeError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [FeedbackTooLargeError]
+func (e *FeedbackTooLargeError) Is(err error) bool {
+	_, ok := err.(*FeedbackTooLargeError)
+	return ok
+}
+
+// IsFeedbackTooLargeError indicates whether the given error chain contains an error of type [FeedbackTooLargeError]
+func IsFeedbackTooLargeError(err error) bool {
+	return errors.Is(err, &FeedbackTooLargeError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *FeedbackTooLargeError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *FeedbackTooLargeError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *FeedbackTooLargeError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackTooLargeError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackTooLargeError) InitializeDefaults() {
+}
+
+// feedbackTooLargeErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackTooLargeErrorAlias FeedbackTooLargeError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackTooLargeError) UnmarshalJSON(data []byte) error {
+	var alias feedbackTooLargeErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackTooLargeError)(&alias)).InitializeDefaults()
+	*e = FeedbackTooLargeError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackTooLargeError) MarshalJSON() ([]byte, error) {
+	alias := feedbackTooLargeErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackNotSentError creates a new FeedbackNotSentError
+func NewFeedbackNotSentError() *FeedbackNotSentError {
+	s := &FeedbackNotSentError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackNotSentError - Occurs when a valid report could not be filed. The message says whether trying again can help.
+type FeedbackNotSentError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *FeedbackNotSentError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [FeedbackNotSentError]
+func (e *FeedbackNotSentError) Is(err error) bool {
+	_, ok := err.(*FeedbackNotSentError)
+	return ok
+}
+
+// IsFeedbackNotSentError indicates whether the given error chain contains an error of type [FeedbackNotSentError]
+func IsFeedbackNotSentError(err error) bool {
+	return errors.Is(err, &FeedbackNotSentError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *FeedbackNotSentError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *FeedbackNotSentError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *FeedbackNotSentError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackNotSentError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackNotSentError) InitializeDefaults() {
+}
+
+// feedbackNotSentErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackNotSentErrorAlias FeedbackNotSentError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackNotSentError) UnmarshalJSON(data []byte) error {
+	var alias feedbackNotSentErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackNotSentError)(&alias)).InitializeDefaults()
+	*e = FeedbackNotSentError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackNotSentError) MarshalJSON() ([]byte, error) {
+	alias := feedbackNotSentErrorAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackSendInput creates a new FeedbackSendInput
+func NewFeedbackSendInput() *FeedbackSendInput {
+	s := &FeedbackSendInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackSendInput struct
+type FeedbackSendInput struct {
+	// what the client is, e.g. "console" or "desktop". 1 to 32 characters of a to z, 0 to 9 and the dash
+	ClientName string `json:"clientName,omitempty" yaml:"clientName,omitempty"`
+	// the client's own build, e.g. "v0.20.0". 1 to 64 characters of letters, digits, the dot, the underscore and the dash
+	ClientVersion string `json:"clientVersion,omitempty" yaml:"clientVersion,omitempty"`
+	// what the person pointed at. Absent when the client has no way to point
+	Element *FeedbackElement `json:"element,omitempty" yaml:"element,omitempty"`
+	// where in the client the person was. The console sends the page URL without its fragment. A client with no address bar, like the desktop app, names the screen it shows. 1 to 2,048 characters
+	Location string `json:"location,omitempty" yaml:"location,omitempty"`
+	// what the person wrote: 1 to 5,000 characters after trimming
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+	// a PNG of what the person pointed at, at most 2 MiB. Absent unless the person chose to attach one
+	Screenshot []byte `json:"screenshot,omitempty" yaml:"screenshot,omitempty"`
+	// the text the person had selected. Absent when there was none. At most 2,000 characters
+	SelectedText *string `json:"selectedText,omitempty" yaml:"selectedText,omitempty"`
+	// absent when the client has no window
+	Viewport *FeedbackViewport `json:"viewport,omitempty" yaml:"viewport,omitempty"`
+}
+
+// GetClientName returns the value for the field clientName
+func (e *FeedbackSendInput) GetClientName() string {
+	return e.ClientName
+}
+
+// SetClientName sets the value for the field clientName
+func (e *FeedbackSendInput) SetClientName(clientName string) {
+	e.ClientName = clientName
+}
+
+// GetClientVersion returns the value for the field clientVersion
+func (e *FeedbackSendInput) GetClientVersion() string {
+	return e.ClientVersion
+}
+
+// SetClientVersion sets the value for the field clientVersion
+func (e *FeedbackSendInput) SetClientVersion(clientVersion string) {
+	e.ClientVersion = clientVersion
+}
+
+// GetElement returns the value for the field element
+func (e *FeedbackSendInput) GetElement() *FeedbackElement {
+	return e.Element
+}
+
+// SetElement sets the value for the field element
+func (e *FeedbackSendInput) SetElement(element *FeedbackElement) {
+	e.Element = element
+}
+
+// GetLocation returns the value for the field location
+func (e *FeedbackSendInput) GetLocation() string {
+	return e.Location
+}
+
+// SetLocation sets the value for the field location
+func (e *FeedbackSendInput) SetLocation(location string) {
+	e.Location = location
+}
+
+// GetMessage returns the value for the field message
+func (e *FeedbackSendInput) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *FeedbackSendInput) SetMessage(message string) {
+	e.Message = message
+}
+
+// GetScreenshot returns the value for the field screenshot
+func (e *FeedbackSendInput) GetScreenshot() []byte {
+	return e.Screenshot
+}
+
+// SetScreenshot sets the value for the field screenshot
+func (e *FeedbackSendInput) SetScreenshot(screenshot []byte) {
+	e.Screenshot = screenshot
+}
+
+// GetSelectedText returns the value for the field selectedText
+func (e *FeedbackSendInput) GetSelectedText() *string {
+	return e.SelectedText
+}
+
+// SetSelectedText sets the value for the field selectedText
+func (e *FeedbackSendInput) SetSelectedText(selectedText *string) {
+	e.SelectedText = selectedText
+}
+
+// GetViewport returns the value for the field viewport
+func (e *FeedbackSendInput) GetViewport() *FeedbackViewport {
+	return e.Viewport
+}
+
+// SetViewport sets the value for the field viewport
+func (e *FeedbackSendInput) SetViewport(viewport *FeedbackViewport) {
+	e.Viewport = viewport
+}
+
+// StructPath returns StructPath
+func (e *FeedbackSendInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackSendInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackSendInput) InitializeDefaults() {
+}
+
+// feedbackSendInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackSendInputAlias FeedbackSendInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackSendInput) UnmarshalJSON(data []byte) error {
+	var alias feedbackSendInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackSendInput)(&alias)).InitializeDefaults()
+	*e = FeedbackSendInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackSendInput) MarshalJSON() ([]byte, error) {
+	alias := feedbackSendInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewFeedbackSendOutput creates a new FeedbackSendOutput
+func NewFeedbackSendOutput() *FeedbackSendOutput {
+	s := &FeedbackSendOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// FeedbackSendOutput struct
+type FeedbackSendOutput struct {
+}
+
+// StructPath returns StructPath
+func (e *FeedbackSendOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathFeedbackSendOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *FeedbackSendOutput) InitializeDefaults() {
+}
+
+// feedbackSendOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type feedbackSendOutputAlias FeedbackSendOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *FeedbackSendOutput) UnmarshalJSON(data []byte) error {
+	var alias feedbackSendOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*FeedbackSendOutput)(&alias)).InitializeDefaults()
+	*e = FeedbackSendOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e FeedbackSendOutput) MarshalJSON() ([]byte, error) {
+	alias := feedbackSendOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewServiceCatalogListInput creates a new ServiceCatalogListInput
 func NewServiceCatalogListInput() *ServiceCatalogListInput {
 	s := &ServiceCatalogListInput{}
@@ -14584,6 +15269,15 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"AccountDestructionNotApprovedError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountDestructionNotApprovedError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountEntryRefusedError, err = pk.NewType(
+		"AccountEntryRefusedError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountEntryRefusedError()
 		}),
 	)
 	if err != nil {
@@ -16281,6 +16975,78 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathFeedbackViewport, err = pk.NewType(
+		"FeedbackViewport",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackViewport()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackElementNode, err = pk.NewType(
+		"FeedbackElementNode",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackElementNode()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackElement, err = pk.NewType(
+		"FeedbackElement",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackElement()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidFeedbackError, err = pk.NewType(
+		"InvalidFeedbackError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidFeedbackError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackTooLargeError, err = pk.NewType(
+		"FeedbackTooLargeError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackTooLargeError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackNotSentError, err = pk.NewType(
+		"FeedbackNotSentError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackNotSentError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackSendInput, err = pk.NewType(
+		"FeedbackSendInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackSendInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathFeedbackSendOutput, err = pk.NewType(
+		"FeedbackSendOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewFeedbackSendOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathServiceCatalogListInput, err = pk.NewType(
 		"ServiceCatalogListInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -16370,6 +17136,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().AccountAssumeIdentityInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountEntryRefusedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -16382,6 +17149,7 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetOutput(SpecularMeta().AccountBeginAssumeIdentityInputStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
 	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().AccountEntryRefusedErrorStruct())
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
@@ -17478,6 +18246,28 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	op.SetInput(SpecularMeta().SessionCompleteHandoffInputStruct())
 	op.SetOutput(SpecularMeta().SessionCompleteHandoffInputStruct())
 	op.RegisterProblemType(SpecularMeta().InvalidHandoffCodeErrorStruct())
+
+	resFeedback, err := pk.NewResource("Feedback")
+	if err != nil {
+		return nil, err
+	}
+	_ = resFeedback
+
+	op, err = resFeedback.NewOperation("Send")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().FeedbackSendInputStruct())
+	op.SetOutput(SpecularMeta().FeedbackSendInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ThrottledErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidFeedbackErrorStruct())
+	op.RegisterProblemType(SpecularMeta().FeedbackTooLargeErrorStruct())
+	op.RegisterProblemType(SpecularMeta().FeedbackNotSentErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
 	resServiceCatalog, err := pk.NewResource("ServiceCatalog")
 	if err != nil {
@@ -19326,6 +20116,41 @@ func (res *SessionResourceClient) CompleteHandoff(ctx context.Context, input *Se
 	return output, nil
 }
 
+// FeedbackResourceClient is the FeedbackResourceClient resource client
+type FeedbackResourceClient struct {
+	transport clientruntime.Transport
+	res       *clientruntime.Resource
+	send      *clientruntime.Operation
+}
+
+func newFeedbackResourceClient(
+	transport clientruntime.Transport,
+	finder clientruntime.ResourceFinder,
+) (*FeedbackResourceClient, error) {
+	res := finder.FindResource("Feedback")
+	r := &FeedbackResourceClient{
+		transport: transport,
+		res:       res,
+	}
+	r.send = res.FindOperation("Send")
+	return r, nil
+}
+
+// Send - Sends one report and answers once it is filed, so an empty answer means it was filed.
+// Refused with corelib:ForbiddenError unless the caller is a user signed in with SSO. Too many reports in a rolling hour, from one person in one account or from everyone in one region, are refused with corelib:ThrottledError, whose retryAfterMs says when to try again.
+// A screenshot that cannot be stored is left out, and the report is filed without it.
+func (res *FeedbackResourceClient) Send(ctx context.Context, input *FeedbackSendInput) (*FeedbackSendOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.send,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*FeedbackSendOutput)
+	return output, nil
+}
+
 // ServiceCatalogResourceClient is the ServiceCatalogResourceClient resource client
 type ServiceCatalogResourceClient struct {
 	transport clientruntime.Transport
@@ -19406,6 +20231,10 @@ type Client struct {
 	// session-keepalive, session-revoke and session-handoff, and attached when an
 	// identity is assumed.
 	Session *SessionResourceClient
+	// Feedback - Feedback a person sends about what they see in a client. A client that draws HTML, like the console and the desktop app, fills every field. A client that draws none sends the words, where it was and what it is.
+	// The sender is the calling credential, read from the signed request and never from the input. Only a user signed in with SSO may send, in any account, the global account included. No permission action is checked: the SSO rule and the rate limits are the gate, so no policy has to be attached for it to work.
+	// Every limit below counts Unicode code points, not bytes or UTF-16 units.
+	Feedback *FeedbackResourceClient
 	// ServiceCatalog - ServiceCatalog is public/anonymous reference data: the full set of actions and
 	// resource types each service supports, used to power identity-policy builders.
 	// No signed request and no permission required.
@@ -19496,6 +20325,10 @@ func NewClient(options ...clientruntime.Option) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+	c.Feedback, err = newFeedbackResourceClient(transport, pk)
+	if err != nil {
+		return nil, err
+	}
 	c.ServiceCatalog, err = newServiceCatalogResourceClient(transport, pk)
 	if err != nil {
 		return nil, err
@@ -19559,6 +20392,7 @@ type SpecularMetaInfo struct {
 	structPathAccountNameMismatchError                                    *clientruntime.StructDefinition
 	structPathAccountNotDestroyableError                                  *clientruntime.StructDefinition
 	structPathAccountDestructionNotApprovedError                          *clientruntime.StructDefinition
+	structPathAccountEntryRefusedError                                    *clientruntime.StructDefinition
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
@@ -19747,6 +20581,14 @@ type SpecularMetaInfo struct {
 	structPathSessionBeginHandoffOutput                                   *clientruntime.StructDefinition
 	structPathSessionCompleteHandoffInput                                 *clientruntime.StructDefinition
 	structPathSessionCompleteHandoffOutput                                *clientruntime.StructDefinition
+	structPathFeedbackViewport                                            *clientruntime.StructDefinition
+	structPathFeedbackElementNode                                         *clientruntime.StructDefinition
+	structPathFeedbackElement                                             *clientruntime.StructDefinition
+	structPathInvalidFeedbackError                                        *clientruntime.StructDefinition
+	structPathFeedbackTooLargeError                                       *clientruntime.StructDefinition
+	structPathFeedbackNotSentError                                        *clientruntime.StructDefinition
+	structPathFeedbackSendInput                                           *clientruntime.StructDefinition
+	structPathFeedbackSendOutput                                          *clientruntime.StructDefinition
 	structPathServiceCatalogListInput                                     *clientruntime.StructDefinition
 	structPathServiceCatalogListOutput                                    *clientruntime.StructDefinition
 	structPathServiceCatalogGetInput                                      *clientruntime.StructDefinition
@@ -19957,6 +20799,11 @@ func (m *SpecularMetaInfo) AccountNotDestroyableErrorStruct() *clientruntime.Str
 // AccountDestructionNotApprovedErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountDestructionNotApprovedErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountDestructionNotApprovedError
+}
+
+// AccountEntryRefusedErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountEntryRefusedErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountEntryRefusedError
 }
 
 // AccountCreateInputStruct allows easy access to structure
@@ -20897,6 +21744,46 @@ func (m *SpecularMetaInfo) SessionCompleteHandoffInputStruct() *clientruntime.St
 // SessionCompleteHandoffOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) SessionCompleteHandoffOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathSessionCompleteHandoffOutput
+}
+
+// FeedbackViewportStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackViewportStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackViewport
+}
+
+// FeedbackElementNodeStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackElementNodeStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackElementNode
+}
+
+// FeedbackElementStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackElementStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackElement
+}
+
+// InvalidFeedbackErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidFeedbackErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidFeedbackError
+}
+
+// FeedbackTooLargeErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackTooLargeErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackTooLargeError
+}
+
+// FeedbackNotSentErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackNotSentErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackNotSentError
+}
+
+// FeedbackSendInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackSendInputStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackSendInput
+}
+
+// FeedbackSendOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) FeedbackSendOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathFeedbackSendOutput
 }
 
 // ServiceCatalogListInputStruct allows easy access to structure
