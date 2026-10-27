@@ -1327,6 +1327,140 @@ func (e SSOFlow) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountAppearance creates a new AccountAppearance
+func NewAccountAppearance() *AccountAppearance {
+	s := &AccountAppearance{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountAppearance - The icon and the palette an account shows in the accounts hub, so a person finds it by its own
+// mark instead of the Deployport one.
+type AccountAppearance struct {
+	// the palette name, for example "teal". It is a name, never a colour value, so each client
+	// resolves it to its own light and dark pair
+	Color string `json:"color,omitempty" yaml:"color,omitempty"`
+	// the lucide icon name, spelled the way lucide spells it in camelCase, for example "server". A
+	// client draws it by name, and shows the Deployport mark when it cannot draw it
+	Icon string `json:"icon,omitempty" yaml:"icon,omitempty"`
+}
+
+// GetColor returns the value for the field color
+func (e *AccountAppearance) GetColor() string {
+	return e.Color
+}
+
+// SetColor sets the value for the field color
+func (e *AccountAppearance) SetColor(color string) {
+	e.Color = color
+}
+
+// GetIcon returns the value for the field icon
+func (e *AccountAppearance) GetIcon() string {
+	return e.Icon
+}
+
+// SetIcon sets the value for the field icon
+func (e *AccountAppearance) SetIcon(icon string) {
+	e.Icon = icon
+}
+
+// StructPath returns StructPath
+func (e *AccountAppearance) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountAppearance.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountAppearance) InitializeDefaults() {
+}
+
+// accountAppearanceAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountAppearanceAlias AccountAppearance
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountAppearance) UnmarshalJSON(data []byte) error {
+	var alias accountAppearanceAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountAppearance)(&alias)).InitializeDefaults()
+	*e = AccountAppearance(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountAppearance) MarshalJSON() ([]byte, error) {
+	alias := accountAppearanceAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewInvalidAppearanceError creates a new InvalidAppearanceError
+func NewInvalidAppearanceError() *InvalidAppearanceError {
+	s := &InvalidAppearanceError{}
+	s.InitializeDefaults()
+	return s
+}
+
+// InvalidAppearanceError - The icon or the palette is not a name a client can draw.
+type InvalidAppearanceError struct {
+	Message string `json:"message,omitempty" yaml:"message,omitempty"`
+}
+
+// Error implements the error interface
+func (e *InvalidAppearanceError) Error() string {
+	return e.GetMessage()
+}
+
+// Is indicates whether the given error chain contains an error of type [InvalidAppearanceError]
+func (e *InvalidAppearanceError) Is(err error) bool {
+	_, ok := err.(*InvalidAppearanceError)
+	return ok
+}
+
+// IsInvalidAppearanceError indicates whether the given error chain contains an error of type [InvalidAppearanceError]
+func IsInvalidAppearanceError(err error) bool {
+	return errors.Is(err, &InvalidAppearanceError{})
+}
+
+// GetMessage returns the value for the field message
+func (e *InvalidAppearanceError) GetMessage() string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *InvalidAppearanceError) SetMessage(message string) {
+	e.Message = message
+}
+
+// StructPath returns StructPath
+func (e *InvalidAppearanceError) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathInvalidAppearanceError.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *InvalidAppearanceError) InitializeDefaults() {
+}
+
+// invalidAppearanceErrorAlias is defined to help pre and post JSON marshaling without recursive loops
+type invalidAppearanceErrorAlias InvalidAppearanceError
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *InvalidAppearanceError) UnmarshalJSON(data []byte) error {
+	var alias invalidAppearanceErrorAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*InvalidAppearanceError)(&alias)).InitializeDefaults()
+	*e = InvalidAppearanceError(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e InvalidAppearanceError) MarshalJSON() ([]byte, error) {
+	alias := invalidAppearanceErrorAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccount creates a new Account
 func NewAccount() *Account {
 	s := &Account{}
@@ -1336,7 +1470,20 @@ func NewAccount() *Account {
 
 // Account struct
 type Account struct {
-	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+	// the icon and palette this account shows in the accounts hub. ABSENT when nobody chose one,
+	// and the hub shows the Deployport mark
+	Appearance *AccountAppearance `json:"appearance,omitempty" yaml:"appearance,omitempty"`
+	Name       string             `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetAppearance returns the value for the field appearance
+func (e *Account) GetAppearance() *AccountAppearance {
+	return e.Appearance
+}
+
+// SetAppearance sets the value for the field appearance
+func (e *Account) SetAppearance(appearance *AccountAppearance) {
+	e.Appearance = appearance
 }
 
 // GetName returns the value for the field name
@@ -3434,6 +3581,200 @@ func (e AccountCreateInvalidNameError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountGetInput creates a new AccountGetInput
+func NewAccountGetInput() *AccountGetInput {
+	s := &AccountGetInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountGetInput struct
+type AccountGetInput struct {
+}
+
+// StructPath returns StructPath
+func (e *AccountGetInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountGetInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountGetInput) InitializeDefaults() {
+}
+
+// accountGetInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountGetInputAlias AccountGetInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountGetInput) UnmarshalJSON(data []byte) error {
+	var alias accountGetInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountGetInput)(&alias)).InitializeDefaults()
+	*e = AccountGetInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountGetInput) MarshalJSON() ([]byte, error) {
+	alias := accountGetInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountGetOutput creates a new AccountGetOutput
+func NewAccountGetOutput() *AccountGetOutput {
+	s := &AccountGetOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountGetOutput struct
+type AccountGetOutput struct {
+	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
+}
+
+// GetAccount returns the value for the field account
+func (e *AccountGetOutput) GetAccount() *Account {
+	return e.Account
+}
+
+// SetAccount sets the value for the field account
+func (e *AccountGetOutput) SetAccount(account *Account) {
+	e.Account = account
+}
+
+// StructPath returns StructPath
+func (e *AccountGetOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountGetOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountGetOutput) InitializeDefaults() {
+}
+
+// accountGetOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountGetOutputAlias AccountGetOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountGetOutput) UnmarshalJSON(data []byte) error {
+	var alias accountGetOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountGetOutput)(&alias)).InitializeDefaults()
+	*e = AccountGetOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountGetOutput) MarshalJSON() ([]byte, error) {
+	alias := accountGetOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountSetAppearanceInput creates a new AccountSetAppearanceInput
+func NewAccountSetAppearanceInput() *AccountSetAppearanceInput {
+	s := &AccountSetAppearanceInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountSetAppearanceInput struct
+type AccountSetAppearanceInput struct {
+	// the icon and palette to show. Omit it to clear what is set
+	Appearance *AccountAppearance `json:"appearance,omitempty" yaml:"appearance,omitempty"`
+}
+
+// GetAppearance returns the value for the field appearance
+func (e *AccountSetAppearanceInput) GetAppearance() *AccountAppearance {
+	return e.Appearance
+}
+
+// SetAppearance sets the value for the field appearance
+func (e *AccountSetAppearanceInput) SetAppearance(appearance *AccountAppearance) {
+	e.Appearance = appearance
+}
+
+// StructPath returns StructPath
+func (e *AccountSetAppearanceInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSetAppearanceInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSetAppearanceInput) InitializeDefaults() {
+}
+
+// accountSetAppearanceInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSetAppearanceInputAlias AccountSetAppearanceInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSetAppearanceInput) UnmarshalJSON(data []byte) error {
+	var alias accountSetAppearanceInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSetAppearanceInput)(&alias)).InitializeDefaults()
+	*e = AccountSetAppearanceInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSetAppearanceInput) MarshalJSON() ([]byte, error) {
+	alias := accountSetAppearanceInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountSetAppearanceOutput creates a new AccountSetAppearanceOutput
+func NewAccountSetAppearanceOutput() *AccountSetAppearanceOutput {
+	s := &AccountSetAppearanceOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountSetAppearanceOutput struct
+type AccountSetAppearanceOutput struct {
+	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
+}
+
+// GetAccount returns the value for the field account
+func (e *AccountSetAppearanceOutput) GetAccount() *Account {
+	return e.Account
+}
+
+// SetAccount sets the value for the field account
+func (e *AccountSetAppearanceOutput) SetAccount(account *Account) {
+	e.Account = account
+}
+
+// StructPath returns StructPath
+func (e *AccountSetAppearanceOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSetAppearanceOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSetAppearanceOutput) InitializeDefaults() {
+}
+
+// accountSetAppearanceOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSetAppearanceOutputAlias AccountSetAppearanceOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSetAppearanceOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSetAppearanceOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSetAppearanceOutput)(&alias)).InitializeDefaults()
+	*e = AccountSetAppearanceOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSetAppearanceOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSetAppearanceOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountDestroyInput creates a new AccountDestroyInput
 func NewAccountDestroyInput() *AccountDestroyInput {
 	s := &AccountDestroyInput{}
@@ -5240,6 +5581,8 @@ func NewMemberAccount() *MemberAccount {
 // MemberAccount struct
 type MemberAccount struct {
 	AccountName string `json:"accountName,omitempty" yaml:"accountName,omitempty"`
+	// the icon and palette this account shows in the accounts hub. ABSENT when nobody chose one
+	Appearance *AccountAppearance `json:"appearance,omitempty" yaml:"appearance,omitempty"`
 	// when the user was last inside this account, either by assuming an identity in
 	// it or by signing straight into it. unset if they were never in it.
 	// accounts are returned never-entered first (newest membership first), then the
@@ -5257,6 +5600,16 @@ func (e *MemberAccount) GetAccountName() string {
 // SetAccountName sets the value for the field accountName
 func (e *MemberAccount) SetAccountName(accountName string) {
 	e.AccountName = accountName
+}
+
+// GetAppearance returns the value for the field appearance
+func (e *MemberAccount) GetAppearance() *AccountAppearance {
+	return e.Appearance
+}
+
+// SetAppearance sets the value for the field appearance
+func (e *MemberAccount) SetAppearance(appearance *AccountAppearance) {
+	e.Appearance = appearance
 }
 
 // GetLastEnteredAt returns the value for the field lastEnteredAt
@@ -15049,6 +15402,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathAccountAppearance, err = pk.NewType(
+		"AccountAppearance",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountAppearance()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathInvalidAppearanceError, err = pk.NewType(
+		"InvalidAppearanceError",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewInvalidAppearanceError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathAccount, err = pk.NewType(
 		"Account",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -15305,6 +15676,42 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"AccountCreateInvalidNameError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewAccountCreateInvalidNameError()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountGetInput, err = pk.NewType(
+		"AccountGetInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountGetInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountGetOutput, err = pk.NewType(
+		"AccountGetOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountGetOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountSetAppearanceInput, err = pk.NewType(
+		"AccountSetAppearanceInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountSetAppearanceInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountSetAppearanceOutput, err = pk.NewType(
+		"AccountSetAppearanceOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountSetAppearanceOutput()
 		}),
 	)
 	if err != nil {
@@ -17112,6 +17519,31 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	op, err = resAccount.NewOperation("Get")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountGetInputStruct())
+	op.SetOutput(SpecularMeta().AccountGetInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
+	op, err = resAccount.NewOperation("SetAppearance")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountSetAppearanceInputStruct())
+	op.SetOutput(SpecularMeta().AccountSetAppearanceInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidAppearanceErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
 	op, err = resAccount.NewOperation("Destroy")
 	if err != nil {
 		return nil, err
@@ -18305,6 +18737,8 @@ type AccountResourceClient struct {
 	SSO                    *AccountSSOResourceClient
 	OIDCProvider           *AccountOIDCProviderResourceClient
 	create                 *clientruntime.Operation
+	get                    *clientruntime.Operation
+	setAppearance          *clientruntime.Operation
 	destroy                *clientruntime.Operation
 	assumeIdentity         *clientruntime.Operation
 	beginAssumeIdentity    *clientruntime.Operation
@@ -18330,6 +18764,8 @@ func newAccountResourceClient(
 		return nil, err
 	}
 	r.create = res.FindOperation("Create")
+	r.get = res.FindOperation("Get")
+	r.setAppearance = res.FindOperation("SetAppearance")
 	r.destroy = res.FindOperation("Destroy")
 	r.assumeIdentity = res.FindOperation("AssumeIdentity")
 	r.beginAssumeIdentity = res.FindOperation("BeginAssumeIdentity")
@@ -18350,6 +18786,36 @@ func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCrea
 		return nil, err
 	}
 	output := o.(*AccountCreateOutput)
+	return output, nil
+}
+
+// Get - Returns the caller's own account: its name and the icon it shows in the accounts hub.
+// It takes no input for the same reason User.Get takes no username: the caller can only ever
+// read the account its credential belongs to, so there is no other account it could ask for.
+func (res *AccountResourceClient) Get(ctx context.Context, input *AccountGetInput) (*AccountGetOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.get,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountGetOutput)
+	return output, nil
+}
+
+// SetAppearance - Sets the icon and palette this account shows in the accounts hub.
+// Omit the appearance to clear it, and the hub shows the Deployport mark again.
+// Requires iam:SetAccountAppearance.
+func (res *AccountResourceClient) SetAppearance(ctx context.Context, input *AccountSetAppearanceInput) (*AccountSetAppearanceOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.setAppearance,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountSetAppearanceOutput)
 	return output, nil
 }
 
@@ -20367,6 +20833,8 @@ type SpecularMetaInfo struct {
 	structPathCredentials                                                 *clientruntime.StructDefinition
 	structPathSSOProviderUnavailableError                                 *clientruntime.StructDefinition
 	structPathSSOFlow                                                     *clientruntime.StructDefinition
+	structPathAccountAppearance                                           *clientruntime.StructDefinition
+	structPathInvalidAppearanceError                                      *clientruntime.StructDefinition
 	structPathAccount                                                     *clientruntime.StructDefinition
 	structPathRegionEndpoint                                              *clientruntime.StructDefinition
 	structPathRegionInfo                                                  *clientruntime.StructDefinition
@@ -20396,6 +20864,10 @@ type SpecularMetaInfo struct {
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
+	structPathAccountGetInput                                             *clientruntime.StructDefinition
+	structPathAccountGetOutput                                            *clientruntime.StructDefinition
+	structPathAccountSetAppearanceInput                                   *clientruntime.StructDefinition
+	structPathAccountSetAppearanceOutput                                  *clientruntime.StructDefinition
 	structPathAccountDestroyInput                                         *clientruntime.StructDefinition
 	structPathAccountDestroyOutput                                        *clientruntime.StructDefinition
 	structPathAccountAssumeIdentityInput                                  *clientruntime.StructDefinition
@@ -20676,6 +21148,16 @@ func (m *SpecularMetaInfo) SSOFlowStruct() *clientruntime.StructDefinition {
 	return m.structPathSSOFlow
 }
 
+// AccountAppearanceStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountAppearanceStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountAppearance
+}
+
+// InvalidAppearanceErrorStruct allows easy access to structure
+func (m *SpecularMetaInfo) InvalidAppearanceErrorStruct() *clientruntime.StructDefinition {
+	return m.structPathInvalidAppearanceError
+}
+
 // AccountStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountStruct() *clientruntime.StructDefinition {
 	return m.structPathAccount
@@ -20819,6 +21301,26 @@ func (m *SpecularMetaInfo) AccountCreateOutputStruct() *clientruntime.StructDefi
 // AccountCreateInvalidNameErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountCreateInvalidNameErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInvalidNameError
+}
+
+// AccountGetInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountGetInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountGetInput
+}
+
+// AccountGetOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountGetOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountGetOutput
+}
+
+// AccountSetAppearanceInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSetAppearanceInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSetAppearanceInput
+}
+
+// AccountSetAppearanceOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSetAppearanceOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSetAppearanceOutput
 }
 
 // AccountDestroyInputStruct allows easy access to structure
