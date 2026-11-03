@@ -7131,6 +7131,165 @@ func (e UserSSHKeyImportSkip) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewUserGitHubKeyPreview creates a new UserGitHubKeyPreview
+func NewUserGitHubKeyPreview() *UserGitHubKeyPreview {
+	s := &UserGitHubKeyPreview{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserGitHubKeyPreview - One line a GitHub user publishes, as a preview reads it.
+type UserGitHubKeyPreview struct {
+	// the key's fingerprint when the line parsed, and ABSENT when it is not a key this service stores
+	Fingerprint *string `json:"fingerprint,omitempty" yaml:"fingerprint,omitempty"`
+	// why it cannot be imported, in this service's own words. ABSENT when it can, which includes the Omitted state: leaving a key out is a choice and needs no refusal
+	Message *string `json:"message,omitempty" yaml:"message,omitempty"`
+	// the line exactly as GitHub published it
+	PublicKey string `json:"publicKey,omitempty" yaml:"publicKey,omitempty"`
+	// what importing would do with it
+	State UserGitHubKeyState `json:"state,omitempty" yaml:"state,omitempty"`
+	// what this key would be called, which is the OpenSSH comment it carries and the fingerprint when it carries none. ABSENT for a line that is not a key
+	Title *string `json:"title,omitempty" yaml:"title,omitempty"`
+}
+
+// GetFingerprint returns the value for the field fingerprint
+func (e *UserGitHubKeyPreview) GetFingerprint() *string {
+	return e.Fingerprint
+}
+
+// SetFingerprint sets the value for the field fingerprint
+func (e *UserGitHubKeyPreview) SetFingerprint(fingerprint *string) {
+	e.Fingerprint = fingerprint
+}
+
+// GetMessage returns the value for the field message
+func (e *UserGitHubKeyPreview) GetMessage() *string {
+	return e.Message
+}
+
+// SetMessage sets the value for the field message
+func (e *UserGitHubKeyPreview) SetMessage(message *string) {
+	e.Message = message
+}
+
+// GetPublicKey returns the value for the field publicKey
+func (e *UserGitHubKeyPreview) GetPublicKey() string {
+	return e.PublicKey
+}
+
+// SetPublicKey sets the value for the field publicKey
+func (e *UserGitHubKeyPreview) SetPublicKey(publicKey string) {
+	e.PublicKey = publicKey
+}
+
+// GetState returns the value for the field state
+func (e *UserGitHubKeyPreview) GetState() UserGitHubKeyState {
+	return e.State
+}
+
+// SetState sets the value for the field state
+func (e *UserGitHubKeyPreview) SetState(state UserGitHubKeyState) {
+	e.State = state
+}
+
+// GetTitle returns the value for the field title
+func (e *UserGitHubKeyPreview) GetTitle() *string {
+	return e.Title
+}
+
+// SetTitle sets the value for the field title
+func (e *UserGitHubKeyPreview) SetTitle(title *string) {
+	e.Title = title
+}
+
+// StructPath returns StructPath
+func (e *UserGitHubKeyPreview) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGitHubKeyPreview.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGitHubKeyPreview) InitializeDefaults() {
+	if e.State == "" {
+		e.State = UserGitHubKeyStateAvailable
+	}
+}
+
+// userGitHubKeyPreviewAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGitHubKeyPreviewAlias UserGitHubKeyPreview
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGitHubKeyPreview) UnmarshalJSON(data []byte) error {
+	var alias userGitHubKeyPreviewAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGitHubKeyPreview)(&alias)).InitializeDefaults()
+	*e = UserGitHubKeyPreview(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGitHubKeyPreview) MarshalJSON() ([]byte, error) {
+	alias := userGitHubKeyPreviewAlias(e)
+	if alias.State == UserGitHubKeyStateAvailable {
+		alias.State = ""
+	}
+	return json.Marshal(alias)
+}
+
+// NewUserGitHubKeySelection creates a new UserGitHubKeySelection
+func NewUserGitHubKeySelection() *UserGitHubKeySelection {
+	s := &UserGitHubKeySelection{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserGitHubKeySelection - Which published keys an import adds.
+// IT IS A STRUCT RATHER THAN A BARE LIST BECAUSE AN EMPTY LIST IS A REAL CHOICE AND A MISSING ONE IS NOT. Absent means every available key, which is "import everything new"; present with an empty list means the person unchecked every row, and the two must not collapse into one request.
+type UserGitHubKeySelection struct {
+	// the fingerprints to add, which are the identities the preview answered. A fingerprint this GitHub user does not publish is IGNORED rather than refused, so a selection can only ever pick from the published list and never beyond it
+	Fingerprints []string `json:"fingerprints,omitempty" yaml:"fingerprints,omitempty"`
+}
+
+// GetFingerprints returns the value for the field fingerprints
+func (e *UserGitHubKeySelection) GetFingerprints() []string {
+	return e.Fingerprints
+}
+
+// SetFingerprints sets the value for the field fingerprints
+func (e *UserGitHubKeySelection) SetFingerprints(fingerprints []string) {
+	e.Fingerprints = fingerprints
+}
+
+// StructPath returns StructPath
+func (e *UserGitHubKeySelection) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGitHubKeySelection.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGitHubKeySelection) InitializeDefaults() {
+}
+
+// userGitHubKeySelectionAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGitHubKeySelectionAlias UserGitHubKeySelection
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGitHubKeySelection) UnmarshalJSON(data []byte) error {
+	var alias userGitHubKeySelectionAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGitHubKeySelection)(&alias)).InitializeDefaults()
+	*e = UserGitHubKeySelection(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGitHubKeySelection) MarshalJSON() ([]byte, error) {
+	alias := userGitHubKeySelectionAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewInvalidGitHubUserError creates a new InvalidGitHubUserError
 func NewInvalidGitHubUserError() *InvalidGitHubUserError {
 	s := &InvalidGitHubUserError{}
@@ -9240,6 +9399,8 @@ func NewUserGitHubKeySourceSyncInput() *UserGitHubKeySourceSyncInput {
 type UserGitHubKeySourceSyncInput struct {
 	// the GitHub user name, e.g. "johan"
 	Login string `json:"login,omitempty" yaml:"login,omitempty"`
+	// which of the published keys to add. ABSENT means every available key, which is every key this platform does not have and the person has not omitted before
+	Selection *UserGitHubKeySelection `json:"selection,omitempty" yaml:"selection,omitempty"`
 	// whose keys these are. ABSENT MEANS THE CALLING USER, as on every operation of this resource's sibling
 	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
 }
@@ -9252,6 +9413,16 @@ func (e *UserGitHubKeySourceSyncInput) GetLogin() string {
 // SetLogin sets the value for the field login
 func (e *UserGitHubKeySourceSyncInput) SetLogin(login string) {
 	e.Login = login
+}
+
+// GetSelection returns the value for the field selection
+func (e *UserGitHubKeySourceSyncInput) GetSelection() *UserGitHubKeySelection {
+	return e.Selection
+}
+
+// SetSelection sets the value for the field selection
+func (e *UserGitHubKeySourceSyncInput) SetSelection(selection *UserGitHubKeySelection) {
+	e.Selection = selection
 }
 
 // GetUsername returns the value for the field username
@@ -9304,7 +9475,7 @@ func NewUserGitHubKeySourceSyncOutput() *UserGitHubKeySourceSyncOutput {
 type UserGitHubKeySourceSyncOutput struct {
 	// the keys this read added
 	Imported []*UserSSHKey `json:"imported,omitempty" yaml:"imported,omitempty"`
-	// the published keys that were not added, each with this service's reason
+	// the published keys this read could not add, each with this service's reason. A key the person left out of a selection is NOT here: leaving it out is a choice, not a refusal, and it is already visible as omitted on the next Preview
 	Skipped []*UserSSHKeyImportSkip `json:"skipped,omitempty" yaml:"skipped,omitempty"`
 	// the source, with syncedAt set to this read
 	Source *UserGitHubKeySource `json:"source,omitempty" yaml:"source,omitempty"`
@@ -9366,6 +9537,134 @@ func (e *UserGitHubKeySourceSyncOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e UserGitHubKeySourceSyncOutput) MarshalJSON() ([]byte, error) {
 	alias := userGitHubKeySourceSyncOutputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewUserGitHubKeySourcePreviewInput creates a new UserGitHubKeySourcePreviewInput
+func NewUserGitHubKeySourcePreviewInput() *UserGitHubKeySourcePreviewInput {
+	s := &UserGitHubKeySourcePreviewInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserGitHubKeySourcePreviewInput struct
+type UserGitHubKeySourcePreviewInput struct {
+	// the GitHub user name, e.g. "johan"
+	Login string `json:"login,omitempty" yaml:"login,omitempty"`
+	// absent means the calling user, as on Import
+	Username *string `json:"username,omitempty" yaml:"username,omitempty"`
+}
+
+// GetLogin returns the value for the field login
+func (e *UserGitHubKeySourcePreviewInput) GetLogin() string {
+	return e.Login
+}
+
+// SetLogin sets the value for the field login
+func (e *UserGitHubKeySourcePreviewInput) SetLogin(login string) {
+	e.Login = login
+}
+
+// GetUsername returns the value for the field username
+func (e *UserGitHubKeySourcePreviewInput) GetUsername() *string {
+	return e.Username
+}
+
+// SetUsername sets the value for the field username
+func (e *UserGitHubKeySourcePreviewInput) SetUsername(username *string) {
+	e.Username = username
+}
+
+// StructPath returns StructPath
+func (e *UserGitHubKeySourcePreviewInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGitHubKeySourcePreviewInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGitHubKeySourcePreviewInput) InitializeDefaults() {
+}
+
+// userGitHubKeySourcePreviewInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGitHubKeySourcePreviewInputAlias UserGitHubKeySourcePreviewInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGitHubKeySourcePreviewInput) UnmarshalJSON(data []byte) error {
+	var alias userGitHubKeySourcePreviewInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGitHubKeySourcePreviewInput)(&alias)).InitializeDefaults()
+	*e = UserGitHubKeySourcePreviewInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGitHubKeySourcePreviewInput) MarshalJSON() ([]byte, error) {
+	alias := userGitHubKeySourcePreviewInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewUserGitHubKeySourcePreviewOutput creates a new UserGitHubKeySourcePreviewOutput
+func NewUserGitHubKeySourcePreviewOutput() *UserGitHubKeySourcePreviewOutput {
+	s := &UserGitHubKeySourcePreviewOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// UserGitHubKeySourcePreviewOutput struct
+type UserGitHubKeySourcePreviewOutput struct {
+	// every key that GitHub publishes for that user, in the order GitHub lists them
+	Keys []*UserGitHubKeyPreview `json:"keys,omitempty" yaml:"keys,omitempty"`
+	// the name this preview read, lower-cased
+	Login string `json:"login,omitempty" yaml:"login,omitempty"`
+}
+
+// GetKeys returns the value for the field keys
+func (e *UserGitHubKeySourcePreviewOutput) GetKeys() []*UserGitHubKeyPreview {
+	return e.Keys
+}
+
+// SetKeys sets the value for the field keys
+func (e *UserGitHubKeySourcePreviewOutput) SetKeys(keys []*UserGitHubKeyPreview) {
+	e.Keys = keys
+}
+
+// GetLogin returns the value for the field login
+func (e *UserGitHubKeySourcePreviewOutput) GetLogin() string {
+	return e.Login
+}
+
+// SetLogin sets the value for the field login
+func (e *UserGitHubKeySourcePreviewOutput) SetLogin(login string) {
+	e.Login = login
+}
+
+// StructPath returns StructPath
+func (e *UserGitHubKeySourcePreviewOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathUserGitHubKeySourcePreviewOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *UserGitHubKeySourcePreviewOutput) InitializeDefaults() {
+}
+
+// userGitHubKeySourcePreviewOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type userGitHubKeySourcePreviewOutputAlias UserGitHubKeySourcePreviewOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *UserGitHubKeySourcePreviewOutput) UnmarshalJSON(data []byte) error {
+	var alias userGitHubKeySourcePreviewOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*UserGitHubKeySourcePreviewOutput)(&alias)).InitializeDefaults()
+	*e = UserGitHubKeySourcePreviewOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e UserGitHubKeySourcePreviewOutput) MarshalJSON() ([]byte, error) {
+	alias := userGitHubKeySourcePreviewOutputAlias(e)
 	return json.Marshal(alias)
 }
 
@@ -16085,6 +16384,48 @@ func UserSSHKeyOriginAllConstants() []UserSSHKeyOrigin {
 	}
 }
 
+// UserGitHubKeyState entity
+// What one published key means for this user right now.
+// THE STATES ARE THE CHOICE A PERSON CAN MAKE: Available can be imported, Omitted is one they left out on purpose and this service remembers, Added and Registered cannot be imported again, and Invalid never could.
+type UserGitHubKeyState string
+
+// UserGitHubKeyStateAvailable = "available" - nothing on this platform holds it and the person has not left it out, so importing would add it
+const UserGitHubKeyStateAvailable UserGitHubKeyState = "available"
+
+// UserGitHubKeyStateAdded = "added" - this source already added it to this user
+const UserGitHubKeyStateAdded UserGitHubKeyState = "added"
+
+// UserGitHubKeyStateRegistered = "registered" - this platform already holds it somewhere else, on another user of this account or in another account entirely, so it cannot be added again. message names the holder only when the holder is in this account
+const UserGitHubKeyStateRegistered UserGitHubKeyState = "registered"
+
+// UserGitHubKeyStateOmitted = "omitted" - the person left it out of an import, and the omission is what a later sync honours
+const UserGitHubKeyStateOmitted UserGitHubKeyState = "omitted"
+
+// UserGitHubKeyStateInvalid = "invalid" - the published line is not a key this service stores
+const UserGitHubKeyStateInvalid UserGitHubKeyState = "invalid"
+
+// String returns the string representation of the enum
+func (en UserGitHubKeyState) String() string {
+	return string(en)
+}
+
+// Optional returns the optional value
+func (en UserGitHubKeyState) Optional() *UserGitHubKeyState {
+	c := en
+	return &c
+}
+
+// UserGitHubKeyStateAllConstants returns all constants in enum UserGitHubKeyState
+func UserGitHubKeyStateAllConstants() []UserGitHubKeyState {
+	return []UserGitHubKeyState{
+		UserGitHubKeyStateAvailable,
+		UserGitHubKeyStateAdded,
+		UserGitHubKeyStateRegistered,
+		UserGitHubKeyStateOmitted,
+		UserGitHubKeyStateInvalid,
+	}
+}
+
 var packagePath = clientruntime.ModulePathFromTrustedValues(
 	"deployport",
 	"iam",
@@ -17004,6 +17345,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathUserGitHubKeyPreview, err = pk.NewType(
+		"UserGitHubKeyPreview",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserGitHubKeyPreview()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathUserGitHubKeySelection, err = pk.NewType(
+		"UserGitHubKeySelection",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserGitHubKeySelection()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathInvalidGitHubUserError, err = pk.NewType(
 		"InvalidGitHubUserError",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -17350,6 +17709,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 		"UserGitHubKeySourceSyncOutput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
 			return NewUserGitHubKeySourceSyncOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathUserGitHubKeySourcePreviewInput, err = pk.NewType(
+		"UserGitHubKeySourcePreviewInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserGitHubKeySourcePreviewInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathUserGitHubKeySourcePreviewOutput, err = pk.NewType(
+		"UserGitHubKeySourcePreviewOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewUserGitHubKeySourcePreviewOutput()
 		}),
 	)
 	if err != nil {
@@ -18913,6 +19290,23 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	op, err = resUserGitHubKeySource.NewOperation("Preview")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().UserGitHubKeySourcePreviewInputStruct())
+	op.SetOutput(SpecularMeta().UserGitHubKeySourcePreviewInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+	op.RegisterProblemType(SpecularMeta().UserNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().InvalidGitHubUserErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GitHubUserNotFoundErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GitHubKeyLimitErrorStruct())
+	op.RegisterProblemType(SpecularMeta().GitHubUnavailableErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
 	op, err = resUserGitHubKeySource.NewOperation("List")
 	if err != nil {
 		return nil, err
@@ -20454,6 +20848,7 @@ type UserGitHubKeySourceResourceClient struct {
 	transport clientruntime.Transport
 	res       *clientruntime.Resource
 	sync      *clientruntime.Operation
+	preview   *clientruntime.Operation
 	list      *clientruntime.Operation
 	remove    *clientruntime.Operation
 }
@@ -20468,12 +20863,14 @@ func newUserGitHubKeySourceResourceClient(
 		res:       res,
 	}
 	r.sync = res.FindOperation("Sync")
+	r.preview = res.FindOperation("Preview")
 	r.list = res.FindOperation("List")
 	r.remove = res.FindOperation("Remove")
 	return r, nil
 }
 
-// Sync - Reads every key the GitHub user publishes and adds the ones nobody on this platform holds. The first call is the import and every later call for the same login is the re-sync.
+// Sync - Reads every key the GitHub user publishes and adds the ones this platform does not have yet. The first call is the import and every later call for the same login is the re-sync.
+// A KEY LEFT OUT OF THE SELECTION IS REMEMBERED AS OMITTED, so the next sync leaves it out too and the person does not have to say it again.
 // Requires permission action iam:CreateUserSSHKey over resource iam:User(<username>).SSHKey(*)
 func (res *UserGitHubKeySourceResourceClient) Sync(ctx context.Context, input *UserGitHubKeySourceSyncInput) (*UserGitHubKeySourceSyncOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -20484,6 +20881,20 @@ func (res *UserGitHubKeySourceResourceClient) Sync(ctx context.Context, input *U
 		return nil, err
 	}
 	output := o.(*UserGitHubKeySourceSyncOutput)
+	return output, nil
+}
+
+// Preview - Reads what importing the GitHub user's keys would do, WITHOUT IMPORTING ANYTHING AND WITHOUT RECORDING A SOURCE. Every published key carries what it means right now: available, already added, already registered somewhere on this platform, omitted by the person before, or not a key at all.
+// Requires permission action iam:ListUserSSHKeys over resource iam:User(<username>)
+func (res *UserGitHubKeySourceResourceClient) Preview(ctx context.Context, input *UserGitHubKeySourcePreviewInput) (*UserGitHubKeySourcePreviewOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.preview,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*UserGitHubKeySourcePreviewOutput)
 	return output, nil
 }
 
@@ -21977,6 +22388,8 @@ type SpecularMetaInfo struct {
 	structPathInvalidSSHKeyTitleError                                     *clientruntime.StructDefinition
 	structPathUserGitHubKeySource                                         *clientruntime.StructDefinition
 	structPathUserSSHKeyImportSkip                                        *clientruntime.StructDefinition
+	structPathUserGitHubKeyPreview                                        *clientruntime.StructDefinition
+	structPathUserGitHubKeySelection                                      *clientruntime.StructDefinition
 	structPathInvalidGitHubUserError                                      *clientruntime.StructDefinition
 	structPathGitHubUserNotFoundError                                     *clientruntime.StructDefinition
 	structPathGitHubKeyLimitError                                         *clientruntime.StructDefinition
@@ -22016,6 +22429,8 @@ type SpecularMetaInfo struct {
 	structPathUserSSHKeySetTitleOutput                                    *clientruntime.StructDefinition
 	structPathUserGitHubKeySourceSyncInput                                *clientruntime.StructDefinition
 	structPathUserGitHubKeySourceSyncOutput                               *clientruntime.StructDefinition
+	structPathUserGitHubKeySourcePreviewInput                             *clientruntime.StructDefinition
+	structPathUserGitHubKeySourcePreviewOutput                            *clientruntime.StructDefinition
 	structPathUserGitHubKeySourceListInput                                *clientruntime.StructDefinition
 	structPathUserGitHubKeySourceListOutput                               *clientruntime.StructDefinition
 	structPathUserGitHubKeySourceRemoveInput                              *clientruntime.StructDefinition
@@ -22648,6 +23063,16 @@ func (m *SpecularMetaInfo) UserSSHKeyImportSkipStruct() *clientruntime.StructDef
 	return m.structPathUserSSHKeyImportSkip
 }
 
+// UserGitHubKeyPreviewStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGitHubKeyPreviewStruct() *clientruntime.StructDefinition {
+	return m.structPathUserGitHubKeyPreview
+}
+
+// UserGitHubKeySelectionStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGitHubKeySelectionStruct() *clientruntime.StructDefinition {
+	return m.structPathUserGitHubKeySelection
+}
+
 // InvalidGitHubUserErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) InvalidGitHubUserErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathInvalidGitHubUserError
@@ -22841,6 +23266,16 @@ func (m *SpecularMetaInfo) UserGitHubKeySourceSyncInputStruct() *clientruntime.S
 // UserGitHubKeySourceSyncOutputStruct allows easy access to structure
 func (m *SpecularMetaInfo) UserGitHubKeySourceSyncOutputStruct() *clientruntime.StructDefinition {
 	return m.structPathUserGitHubKeySourceSyncOutput
+}
+
+// UserGitHubKeySourcePreviewInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGitHubKeySourcePreviewInputStruct() *clientruntime.StructDefinition {
+	return m.structPathUserGitHubKeySourcePreviewInput
+}
+
+// UserGitHubKeySourcePreviewOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) UserGitHubKeySourcePreviewOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathUserGitHubKeySourcePreviewOutput
 }
 
 // UserGitHubKeySourceListInputStruct allows easy access to structure
