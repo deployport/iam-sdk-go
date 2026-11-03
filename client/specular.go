@@ -6650,6 +6650,10 @@ type UserSSHKey struct {
 	// the GitHub user whose published keys this key arrived with, and ABSENT otherwise. Present
 	// exactly when origin is GitHub
 	GithubLogin *string `json:"githubLogin,omitempty" yaml:"githubLogin,omitempty"`
+	// true when this key belongs to the person's user in the global account and this answer is
+	// an account that inherits it. A person carries ONE set of keys for every account they
+	// belong to, so an account's page shows them and says it does not own them
+	Inherited bool `json:"inherited,omitempty" yaml:"inherited,omitempty"`
 	// what added this key. A key stored before sources existed carries no attribute and reads
 	// as Submitted, which is the answer that needs no migration
 	Origin UserSSHKeyOrigin `json:"origin,omitempty" yaml:"origin,omitempty"`
@@ -6698,6 +6702,16 @@ func (e *UserSSHKey) GetGithubLogin() *string {
 // SetGithubLogin sets the value for the field githubLogin
 func (e *UserSSHKey) SetGithubLogin(githubLogin *string) {
 	e.GithubLogin = githubLogin
+}
+
+// GetInherited returns the value for the field inherited
+func (e *UserSSHKey) GetInherited() bool {
+	return e.Inherited
+}
+
+// SetInherited sets the value for the field inherited
+func (e *UserSSHKey) SetInherited(inherited bool) {
+	e.Inherited = inherited
 }
 
 // GetOrigin returns the value for the field origin
@@ -20788,6 +20802,7 @@ func newUserSSHKeyResourceClient(
 }
 
 // Create - Adds a public key to the given user
+// A KEY THIS PERSON ALREADY HOLDS ANYWHERE IS ADOPTED rather than refused: pasting it again is how somebody moves a key they registered before their accounts were linked, and it answers that key. A key somebody ELSE holds is refused.
 // Requires permission action iam:CreateUserSSHKey over resource iam:User(<username>).SSHKey
 func (res *UserSSHKeyResourceClient) Create(ctx context.Context, input *UserSSHKeyCreateInput) (*UserSSHKeyCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -20802,6 +20817,7 @@ func (res *UserSSHKeyResourceClient) Create(ctx context.Context, input *UserSSHK
 }
 
 // List - Returns the SSH keys for the given user or the current user
+// IT ANSWERS THE PERSON'S WHOLE SET, and every key is marked inherited when this account does not own it, which is every account the person joined rather than the global one.
 // Requires permission action iam:ListUserSSHKeys over resource iam:User(<username>)
 func (res *UserSSHKeyResourceClient) List(ctx context.Context, input *UserSSHKeyListInput) (*UserSSHKeyListOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
