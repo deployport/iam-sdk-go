@@ -3455,7 +3455,7 @@ func NewAccountCreateOutput() *AccountCreateOutput {
 // AccountCreateOutput struct
 type AccountCreateOutput struct {
 	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
-	// settingUp until every Deployport service has prepared the account, then active
+	// creating until IAM has made the account, settingUp until every Deployport service has prepared it, then active
 	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
@@ -3631,6 +3631,8 @@ func NewAccountGetOutput() *AccountGetOutput {
 // AccountGetOutput struct
 type AccountGetOutput struct {
 	Account *Account `json:"account,omitempty" yaml:"account,omitempty"`
+	// creating until IAM has made the account, settingUp until every Deployport service has prepared it, then active
+	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
 // GetAccount returns the value for the field account
@@ -3643,6 +3645,16 @@ func (e *AccountGetOutput) SetAccount(account *Account) {
 	e.Account = account
 }
 
+// GetState returns the value for the field state
+func (e *AccountGetOutput) GetState() AccountState {
+	return e.State
+}
+
+// SetState sets the value for the field state
+func (e *AccountGetOutput) SetState(state AccountState) {
+	e.State = state
+}
+
 // StructPath returns StructPath
 func (e *AccountGetOutput) StructPath() clientruntime.StructPath {
 	return *localSpecularMeta.structPathAccountGetOutput.Path()
@@ -3650,6 +3662,9 @@ func (e *AccountGetOutput) StructPath() clientruntime.StructPath {
 
 // InitializeDefaults initializes the default values in the struct
 func (e *AccountGetOutput) InitializeDefaults() {
+	if e.State == "" {
+		e.State = AccountStateActive
+	}
 }
 
 // accountGetOutputAlias is defined to help pre and post JSON marshaling without recursive loops
@@ -3669,6 +3684,9 @@ func (e *AccountGetOutput) UnmarshalJSON(data []byte) error {
 // MarshalJSON implements json.Marshaler
 func (e AccountGetOutput) MarshalJSON() ([]byte, error) {
 	alias := accountGetOutputAlias(e)
+	if alias.State == AccountStateActive {
+		alias.State = ""
+	}
 	return json.Marshal(alias)
 }
 
@@ -5588,7 +5606,7 @@ type MemberAccount struct {
 	// accounts are returned never-entered first (newest membership first), then the
 	// rest, most recent first.
 	LastEnteredAt *time.Time `json:"lastEnteredAt,omitempty" yaml:"lastEnteredAt,omitempty"`
-	// active, settingUp while Account.Create prepares it, or destroying while its destruction runs. A destroyed account is not listed
+	// active, creating while IAM makes the account, settingUp while Deployport services prepare it, or destroying while its destruction runs. Only a settingUp or active account may be entered. A destroyed account is not listed
 	State AccountState `json:"state,omitempty" yaml:"state,omitempty"`
 }
 
@@ -16304,8 +16322,11 @@ const AccountStateActive AccountState = "active"
 // AccountStateDestroying = "destroying" - its destruction has begun: every credential in the account is refused, and each Deployport service is removing what it stores for it
 const AccountStateDestroying AccountState = "destroying"
 
-// AccountStateSettingUp = "settingUp" - Account.Create has begun and IAM and every Deployport service are still preparing the account. Signing in to it is refused until it is active
+// AccountStateSettingUp = "settingUp" - IAM has made the account and its owner may sign in to it. Deployport services are still preparing it, and a service may refuse the account's calls until it has prepared it
 const AccountStateSettingUp AccountState = "settingUp"
+
+// AccountStateCreating = "creating" - Account.Create has begun and IAM has not finished making the account. Signing in to it is refused until it is settingUp or active
+const AccountStateCreating AccountState = "creating"
 
 // String returns the string representation of the enum
 func (en AccountState) String() string {
@@ -16324,6 +16345,7 @@ func AccountStateAllConstants() []AccountState {
 		AccountStateActive,
 		AccountStateDestroying,
 		AccountStateSettingUp,
+		AccountStateCreating,
 	}
 }
 
@@ -20156,7 +20178,8 @@ func newAccountResourceClient(
 
 // Create - Creates a new Account with the given name
 // Create account only works for users of the "global" account
-// The answer is settingUp until IAM and every Deployport service have prepared the account, then active
+// The answer is settingUp once IAM has made the account, and its owner may then sign in to it. It is active once every Deployport service has prepared the account
+// It is creating when IAM has not finished making the account, and IAM finishes it without another call
 // The same caller repeating the call with the same name continues that setup and answers its current state
 func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCreateInput) (*AccountCreateOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
@@ -20170,7 +20193,7 @@ func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCrea
 	return output, nil
 }
 
-// Get - Returns the caller's own account: its name and the icon it shows in the accounts hub.
+// Get - Returns the caller's own account: its name, the icon it shows in the accounts hub, and its state.
 // It takes no input for the same reason User.Get takes no username: the caller can only ever
 // read the account its credential belongs to, so there is no other account it could ask for.
 func (res *AccountResourceClient) Get(ctx context.Context, input *AccountGetInput) (*AccountGetOutput, error) {
@@ -20202,6 +20225,7 @@ func (res *AccountResourceClient) SetAppearance(ctx context.Context, input *Acco
 
 // Destroy - Starts the destruction of the caller's account.
 // Every owner receives an email when the destruction starts and another when it completes.
+// Refused with ForbiddenError while the account is settingUp.
 // Requires iam:DestroyAccount.
 func (res *AccountResourceClient) Destroy(ctx context.Context, input *AccountDestroyInput) (*AccountDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
