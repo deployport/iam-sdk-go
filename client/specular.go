@@ -20225,7 +20225,7 @@ func (res *AccountResourceClient) SetAppearance(ctx context.Context, input *Acco
 
 // Destroy - Starts the destruction of the caller's account.
 // Every owner receives an email when the destruction starts and another when it completes.
-// Refused with ForbiddenError while the account is settingUp.
+// Refused with ForbiddenError while the account is creating or settingUp.
 // Requires iam:DestroyAccount.
 func (res *AccountResourceClient) Destroy(ctx context.Context, input *AccountDestroyInput) (*AccountDestroyOutput, error) {
 	o, err := res.transport.Execute(ctx, &clientruntime.Request{
