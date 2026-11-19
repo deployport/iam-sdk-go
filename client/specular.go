@@ -3590,6 +3590,18 @@ func NewAccountSuggestNameInput() *AccountSuggestNameInput {
 
 // AccountSuggestNameInput struct
 type AccountSuggestNameInput struct {
+	// the text a person typed for the name, e.g. "Andres and Johan demo", which becomes "andres-and-johan-demo", with "-" and 4 digits added when that name is taken or too short. It is not stored. Absent, or text with no Latin letter in it, answers a name like "brave-harbor-4821"
+	Title *string `json:"title,omitempty" yaml:"title,omitempty"`
+}
+
+// GetTitle returns the value for the field title
+func (e *AccountSuggestNameInput) GetTitle() *string {
+	return e.Title
+}
+
+// SetTitle sets the value for the field title
+func (e *AccountSuggestNameInput) SetTitle(title *string) {
+	e.Title = title
 }
 
 // StructPath returns StructPath
@@ -20317,7 +20329,7 @@ func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCrea
 	return output, nil
 }
 
-// SuggestName - Suggests a name for a new account, so the form that creates one can offer it to a person with no name in mind
+// SuggestName - Suggests a name for a new account, so the form that creates one can offer it to a person with no name in mind, or show the name the text they typed becomes
 // It reserves nothing: no account had the name when it was suggested, Create checks it again, and another caller may have taken it by then
 // Suggest name only works for users of the "global" account, the same as Create
 func (res *AccountResourceClient) SuggestName(ctx context.Context, input *AccountSuggestNameInput) (*AccountSuggestNameOutput, error) {
