@@ -3581,6 +3581,98 @@ func (e AccountCreateInvalidNameError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(alias)
 }
 
+// NewAccountSuggestNameInput creates a new AccountSuggestNameInput
+func NewAccountSuggestNameInput() *AccountSuggestNameInput {
+	s := &AccountSuggestNameInput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountSuggestNameInput struct
+type AccountSuggestNameInput struct {
+}
+
+// StructPath returns StructPath
+func (e *AccountSuggestNameInput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSuggestNameInput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSuggestNameInput) InitializeDefaults() {
+}
+
+// accountSuggestNameInputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSuggestNameInputAlias AccountSuggestNameInput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSuggestNameInput) UnmarshalJSON(data []byte) error {
+	var alias accountSuggestNameInputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSuggestNameInput)(&alias)).InitializeDefaults()
+	*e = AccountSuggestNameInput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSuggestNameInput) MarshalJSON() ([]byte, error) {
+	alias := accountSuggestNameInputAlias(e)
+	return json.Marshal(alias)
+}
+
+// NewAccountSuggestNameOutput creates a new AccountSuggestNameOutput
+func NewAccountSuggestNameOutput() *AccountSuggestNameOutput {
+	s := &AccountSuggestNameOutput{}
+	s.InitializeDefaults()
+	return s
+}
+
+// AccountSuggestNameOutput struct
+type AccountSuggestNameOutput struct {
+	// the suggested name, e.g. "brave-harbor-4821". Create's name rule accepts it, and no account, destroyed accounts included, had it when it was suggested
+	Name string `json:"name,omitempty" yaml:"name,omitempty"`
+}
+
+// GetName returns the value for the field name
+func (e *AccountSuggestNameOutput) GetName() string {
+	return e.Name
+}
+
+// SetName sets the value for the field name
+func (e *AccountSuggestNameOutput) SetName(name string) {
+	e.Name = name
+}
+
+// StructPath returns StructPath
+func (e *AccountSuggestNameOutput) StructPath() clientruntime.StructPath {
+	return *localSpecularMeta.structPathAccountSuggestNameOutput.Path()
+}
+
+// InitializeDefaults initializes the default values in the struct
+func (e *AccountSuggestNameOutput) InitializeDefaults() {
+}
+
+// accountSuggestNameOutputAlias is defined to help pre and post JSON marshaling without recursive loops
+type accountSuggestNameOutputAlias AccountSuggestNameOutput
+
+// UnmarshalJSON implements json.Unmarshaler
+func (e *AccountSuggestNameOutput) UnmarshalJSON(data []byte) error {
+	var alias accountSuggestNameOutputAlias
+	if err := json.Unmarshal(data, &alias); err != nil {
+		return err
+	}
+	((*AccountSuggestNameOutput)(&alias)).InitializeDefaults()
+	*e = AccountSuggestNameOutput(alias)
+	return nil
+}
+
+// MarshalJSON implements json.Marshaler
+func (e AccountSuggestNameOutput) MarshalJSON() ([]byte, error) {
+	alias := accountSuggestNameOutputAlias(e)
+	return json.Marshal(alias)
+}
+
 // NewAccountGetInput creates a new AccountGetInput
 func NewAccountGetInput() *AccountGetInput {
 	s := &AccountGetInput{}
@@ -16872,6 +16964,24 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 	if err != nil {
 		return nil, err
 	}
+	localSpecularMeta.structPathAccountSuggestNameInput, err = pk.NewType(
+		"AccountSuggestNameInput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountSuggestNameInput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
+	localSpecularMeta.structPathAccountSuggestNameOutput, err = pk.NewType(
+		"AccountSuggestNameOutput",
+		clientruntime.TypeBuilder(func() clientruntime.Struct {
+			return NewAccountSuggestNameOutput()
+		}),
+	)
+	if err != nil {
+		return nil, err
+	}
 	localSpecularMeta.structPathAccountGetInput, err = pk.NewType(
 		"AccountGetInput",
 		clientruntime.TypeBuilder(func() clientruntime.Struct {
@@ -18854,6 +18964,18 @@ func newSpecularPackage() (pk *clientruntime.Package, err error) {
 
 	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
 
+	op, err = resAccount.NewOperation("SuggestName")
+	if err != nil {
+		return nil, err
+	}
+
+	op.SetInput(SpecularMeta().AccountSuggestNameInputStruct())
+	op.SetOutput(SpecularMeta().AccountSuggestNameInputStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().AccessDeniedErrorStruct())
+	op.RegisterProblemType(godeployportcomapiservicescorelib.SpecularMeta().ForbiddenErrorStruct())
+
+	op.AddAnnotation(&godeployportcomapiservicescorelib.SignedOperationV1{})
+
 	op, err = resAccount.NewOperation("Get")
 	if err != nil {
 		return nil, err
@@ -20140,6 +20262,7 @@ type AccountResourceClient struct {
 	SSO                    *AccountSSOResourceClient
 	OIDCProvider           *AccountOIDCProviderResourceClient
 	create                 *clientruntime.Operation
+	suggestName            *clientruntime.Operation
 	get                    *clientruntime.Operation
 	setAppearance          *clientruntime.Operation
 	destroy                *clientruntime.Operation
@@ -20167,6 +20290,7 @@ func newAccountResourceClient(
 		return nil, err
 	}
 	r.create = res.FindOperation("Create")
+	r.suggestName = res.FindOperation("SuggestName")
 	r.get = res.FindOperation("Get")
 	r.setAppearance = res.FindOperation("SetAppearance")
 	r.destroy = res.FindOperation("Destroy")
@@ -20190,6 +20314,21 @@ func (res *AccountResourceClient) Create(ctx context.Context, input *AccountCrea
 		return nil, err
 	}
 	output := o.(*AccountCreateOutput)
+	return output, nil
+}
+
+// SuggestName - Suggests a name for a new account, so the form that creates one can offer it to a person with no name in mind
+// It reserves nothing: no account had the name when it was suggested, Create checks it again, and another caller may have taken it by then
+// Suggest name only works for users of the "global" account, the same as Create
+func (res *AccountResourceClient) SuggestName(ctx context.Context, input *AccountSuggestNameInput) (*AccountSuggestNameOutput, error) {
+	o, err := res.transport.Execute(ctx, &clientruntime.Request{
+		Operation: res.suggestName,
+		Input:     input,
+	})
+	if err != nil {
+		return nil, err
+	}
+	output := o.(*AccountSuggestNameOutput)
 	return output, nil
 }
 
@@ -22359,6 +22498,8 @@ type SpecularMetaInfo struct {
 	structPathAccountCreateInput                                          *clientruntime.StructDefinition
 	structPathAccountCreateOutput                                         *clientruntime.StructDefinition
 	structPathAccountCreateInvalidNameError                               *clientruntime.StructDefinition
+	structPathAccountSuggestNameInput                                     *clientruntime.StructDefinition
+	structPathAccountSuggestNameOutput                                    *clientruntime.StructDefinition
 	structPathAccountGetInput                                             *clientruntime.StructDefinition
 	structPathAccountGetOutput                                            *clientruntime.StructDefinition
 	structPathAccountSetAppearanceInput                                   *clientruntime.StructDefinition
@@ -22812,6 +22953,16 @@ func (m *SpecularMetaInfo) AccountCreateOutputStruct() *clientruntime.StructDefi
 // AccountCreateInvalidNameErrorStruct allows easy access to structure
 func (m *SpecularMetaInfo) AccountCreateInvalidNameErrorStruct() *clientruntime.StructDefinition {
 	return m.structPathAccountCreateInvalidNameError
+}
+
+// AccountSuggestNameInputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSuggestNameInputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSuggestNameInput
+}
+
+// AccountSuggestNameOutputStruct allows easy access to structure
+func (m *SpecularMetaInfo) AccountSuggestNameOutputStruct() *clientruntime.StructDefinition {
+	return m.structPathAccountSuggestNameOutput
 }
 
 // AccountGetInputStruct allows easy access to structure
